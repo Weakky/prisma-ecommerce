@@ -14,7 +14,7 @@ class OrderIcon extends React.PureComponent {
     super(props);
 
     this.state = {
-      itemsCount: -1,
+      itemsCount: 0,
     };
   }
 
@@ -28,6 +28,8 @@ class OrderIcon extends React.PureComponent {
         this.setState({
           itemsCount: sumBy(data.me.cart, (lineItem) => lineItem.quantity)
         });
+      } else {
+        this.setState({ itemsCount: 0 });
       }
     });
   }
