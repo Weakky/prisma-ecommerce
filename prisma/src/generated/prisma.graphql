@@ -1,5 +1,5 @@
 # source: http://localhost:4466/aromaclop/dev
-# timestamp: Sun May 13 2018 17:04:35 GMT+0200 (CEST)
+# timestamp: Sun May 13 2018 18:56:47 GMT+0200 (CEST)
 
 type AggregateAttribute {
   count: Int!
@@ -726,6 +726,8 @@ input CategoryWhereInput {
 input CategoryWhereUniqueInput {
   id: ID
 }
+
+scalar DateTime
 
 type File implements Node {
   id: ID!
@@ -1677,6 +1679,8 @@ input OptionWhereUniqueInput {
 
 type Order implements Node {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   owner(where: UserWhereInput): User!
   lineItems(where: OrderLineItemWhereInput, orderBy: OrderLineItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderLineItem!]
   totalPrice: Float!
@@ -1730,7 +1734,7 @@ type OrderLineItem implements Node {
   id: ID!
   quantity: Int!
   variant(where: VariantWhereInput): Variant!
-  owner(where: UserWhereInput): User!
+  owner(where: UserWhereInput): User
 }
 
 """A connection to a list of items."""
@@ -1746,7 +1750,7 @@ type OrderLineItemConnection {
 input OrderLineItemCreateInput {
   quantity: Int!
   variant: VariantCreateOneInput!
-  owner: UserCreateOneWithoutCartInput!
+  owner: UserCreateOneWithoutCartInput
 }
 
 input OrderLineItemCreateManyInput {
@@ -1967,6 +1971,10 @@ input OrderLineItemWhereUniqueInput {
 enum OrderOrderByInput {
   id_ASC
   id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   totalPrice_ASC
   totalPrice_DESC
   totalRefunded_ASC
@@ -1975,14 +1983,12 @@ enum OrderOrderByInput {
   totalTax_DESC
   orderStatus_ASC
   orderStatus_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
 }
 
 type OrderPreviousValues {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   totalPrice: Float!
   totalRefunded: Float!
   totalTax: Float!
@@ -2120,6 +2126,50 @@ input OrderWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   totalPrice: Float
 
   """All values that are not equal to given value."""
@@ -3114,6 +3164,7 @@ input UserUpdateInput {
 input UserUpdateOneWithoutCartInput {
   create: UserCreateWithoutCartInput
   connect: UserWhereUniqueInput
+  disconnect: Boolean
   delete: Boolean
   update: UserUpdateWithoutCartDataInput
   upsert: UserUpsertWithoutCartInput

@@ -48,4 +48,7 @@ export const Query = {
     }
     return ctx.db.query.attributes({...args}, info);
   },
+  allOrders(parent, args, ctx: Context, info) {
+    return ctx.db.query.orders({}, info);
+  }
 };

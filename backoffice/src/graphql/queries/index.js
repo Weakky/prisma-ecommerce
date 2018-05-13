@@ -83,23 +83,35 @@ export const ListAllOrdersQuery = gql`
   query allOrders {
     allOrders {
       id
-      state
+      orderStatus
       owner {
         firstName
         lastName
       }
       createdAt
-      items {
-        taxon {
+      lineItems {
+        id
+        quantity
+        variant {
+          id
+          price
           product {
-            name
+            id
             imageUrl
-          }
-          taxon {
             name
+          }
+          selectedOptions {
+            id
+            option {
+              id
+              name
+            }
+            value {
+              id
+              name
+            }
           }
         }
-        quantity
       }
     }
   }

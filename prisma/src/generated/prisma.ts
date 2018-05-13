@@ -850,6 +850,8 @@ input CategoryWhereUniqueInput {
   id: ID
 }
 
+scalar DateTime
+
 type File implements Node {
   id: ID!
   name: String!
@@ -1895,6 +1897,8 @@ input OptionWhereUniqueInput {
 
 type Order implements Node {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   owner(where: UserWhereInput): User!
   lineItems(where: OrderLineItemWhereInput, orderBy: OrderLineItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderLineItem!]
   totalPrice: Float!
@@ -1958,7 +1962,7 @@ type OrderLineItem implements Node {
   id: ID!
   quantity: Int!
   variant(where: VariantWhereInput): Variant!
-  owner(where: UserWhereInput): User!
+  owner(where: UserWhereInput): User
 }
 
 """
@@ -1979,7 +1983,7 @@ type OrderLineItemConnection {
 input OrderLineItemCreateInput {
   quantity: Int!
   variant: VariantCreateOneInput!
-  owner: UserCreateOneWithoutCartInput!
+  owner: UserCreateOneWithoutCartInput
 }
 
 input OrderLineItemCreateManyInput {
@@ -2229,6 +2233,10 @@ input OrderLineItemWhereUniqueInput {
 enum OrderOrderByInput {
   id_ASC
   id_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   totalPrice_ASC
   totalPrice_DESC
   totalRefunded_ASC
@@ -2237,14 +2245,12 @@ enum OrderOrderByInput {
   totalTax_DESC
   orderStatus_ASC
   orderStatus_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
 }
 
 type OrderPreviousValues {
   id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
   totalPrice: Float!
   totalRefunded: Float!
   totalTax: Float!
@@ -2399,6 +2405,64 @@ input OrderWhereInput {
   All values not ending with the given string.
   """
   id_not_ends_with: ID
+  createdAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  createdAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  createdAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  createdAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  createdAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  createdAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  createdAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  updatedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  updatedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  updatedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  updatedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  updatedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  updatedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  updatedAt_gte: DateTime
   totalPrice: Float
   """
   All values that are not equal to given value.
@@ -3488,6 +3552,7 @@ input UserUpdateInput {
 input UserUpdateOneWithoutCartInput {
   create: UserCreateWithoutCartInput
   connect: UserWhereUniqueInput
+  disconnect: Boolean
   delete: Boolean
   update: UserUpdateWithoutCartDataInput
   upsert: UserUpsertWithoutCartInput
@@ -4461,6 +4526,10 @@ export type BrandOrderByInput =
 export type OrderOrderByInput = 
   'id_ASC' |
   'id_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
   'totalPrice_ASC' |
   'totalPrice_DESC' |
   'totalRefunded_ASC' |
@@ -4468,11 +4537,7 @@ export type OrderOrderByInput =
   'totalTax_ASC' |
   'totalTax_DESC' |
   'orderStatus_ASC' |
-  'orderStatus_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC'
+  'orderStatus_DESC'
 
 export type MutationType = 
   'CREATED' |
@@ -4504,12 +4569,9 @@ export type UserOrderByInput =
   'createdAt_ASC' |
   'createdAt_DESC'
 
-export interface OrderCreateWithoutOwnerInput {
-  totalPrice: Float
-  totalRefunded: Float
-  totalTax: Float
-  orderStatus: OrderStatus
-  lineItems?: OrderLineItemCreateManyInput
+export interface OrderCreateManyWithoutOwnerInput {
+  create?: OrderCreateWithoutOwnerInput[] | OrderCreateWithoutOwnerInput
+  connect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput
 }
 
 export interface BrandWhereInput {
@@ -4591,18 +4653,22 @@ export interface VariantWhereInput {
   product?: ProductWhereInput
 }
 
+export interface OptionCreateWithoutCategoryInput {
+  name: String
+  values?: OptionValueCreateManyInput
+}
+
+export interface OptionValueUpdateOneInput {
+  create?: OptionValueCreateInput
+  connect?: OptionValueWhereUniqueInput
+  delete?: Boolean
+  update?: OptionValueUpdateDataInput
+  upsert?: OptionValueUpsertNestedInput
+}
+
 export interface OptionValueCreateManyInput {
   create?: OptionValueCreateInput[] | OptionValueCreateInput
   connect?: OptionValueWhereUniqueInput[] | OptionValueWhereUniqueInput
-}
-
-export interface OptionValueUpsertNestedInput {
-  update: OptionValueUpdateDataInput
-  create: OptionValueCreateInput
-}
-
-export interface OptionValueCreateInput {
-  name: String
 }
 
 export interface BrandUpdateInput {
@@ -4610,10 +4676,8 @@ export interface BrandUpdateInput {
   category?: CategoryUpdateOneInput
 }
 
-export interface OptionCreateInput {
+export interface OptionValueCreateInput {
   name: String
-  values?: OptionValueCreateManyInput
-  category: CategoryCreateOneWithoutOptionsInput
 }
 
 export interface SelectedOptionWhereInput {
@@ -4639,9 +4703,10 @@ export interface SelectedOptionWhereInput {
   value?: OptionValueWhereInput
 }
 
-export interface CategoryCreateOneWithoutOptionsInput {
-  create?: CategoryCreateWithoutOptionsInput
-  connect?: CategoryWhereUniqueInput
+export interface OptionCreateInput {
+  name: String
+  values?: OptionValueCreateManyInput
+  category: CategoryCreateOneWithoutOptionsInput
 }
 
 export interface OrderSubscriptionWhereInput {
@@ -4655,8 +4720,9 @@ export interface OrderSubscriptionWhereInput {
   node?: OrderWhereInput
 }
 
-export interface CategoryCreateWithoutOptionsInput {
-  name: String
+export interface CategoryCreateOneWithoutOptionsInput {
+  create?: CategoryCreateWithoutOptionsInput
+  connect?: CategoryWhereUniqueInput
 }
 
 export interface UserSubscriptionWhereInput {
@@ -4670,10 +4736,8 @@ export interface UserSubscriptionWhereInput {
   node?: UserWhereInput
 }
 
-export interface SelectedOptionCreateInput {
-  option: OptionCreateOneInput
-  variant: VariantCreateOneWithoutSelectedOptionsInput
-  value: OptionValueCreateOneInput
+export interface CategoryCreateWithoutOptionsInput {
+  name: String
 }
 
 export interface AttributeSubscriptionWhereInput {
@@ -4687,9 +4751,10 @@ export interface AttributeSubscriptionWhereInput {
   node?: AttributeWhereInput
 }
 
-export interface OptionCreateOneInput {
-  create?: OptionCreateInput
-  connect?: OptionWhereUniqueInput
+export interface SelectedOptionCreateInput {
+  option: OptionCreateOneInput
+  variant: VariantCreateOneWithoutSelectedOptionsInput
+  value: OptionValueCreateOneInput
 }
 
 export interface UserWhereInput {
@@ -4792,9 +4857,9 @@ export interface UserWhereInput {
   orders_none?: OrderWhereInput
 }
 
-export interface VariantCreateOneWithoutSelectedOptionsInput {
-  create?: VariantCreateWithoutSelectedOptionsInput
-  connect?: VariantWhereUniqueInput
+export interface OptionCreateOneInput {
+  create?: OptionCreateInput
+  connect?: OptionWhereUniqueInput
 }
 
 export interface OrderLineItemWhereInput {
@@ -4827,10 +4892,9 @@ export interface OrderLineItemWhereInput {
   owner?: UserWhereInput
 }
 
-export interface VariantCreateWithoutSelectedOptionsInput {
-  price: Float
-  available: Boolean
-  product: ProductCreateOneWithoutVariantsInput
+export interface VariantCreateOneWithoutSelectedOptionsInput {
+  create?: VariantCreateWithoutSelectedOptionsInput
+  connect?: VariantWhereUniqueInput
 }
 
 export interface SelectedOptionSubscriptionWhereInput {
@@ -4844,9 +4908,10 @@ export interface SelectedOptionSubscriptionWhereInput {
   node?: SelectedOptionWhereInput
 }
 
-export interface ProductCreateOneWithoutVariantsInput {
-  create?: ProductCreateWithoutVariantsInput
-  connect?: ProductWhereUniqueInput
+export interface VariantCreateWithoutSelectedOptionsInput {
+  price: Float
+  available: Boolean
+  product: ProductCreateOneWithoutVariantsInput
 }
 
 export interface OptionSubscriptionWhereInput {
@@ -4860,56 +4925,15 @@ export interface OptionSubscriptionWhereInput {
   node?: OptionWhereInput
 }
 
-export interface ProductCreateWithoutVariantsInput {
-  name: String
-  description?: String
-  SKU?: String
-  displayPrice: Float
-  available: Boolean
-  imageUrl?: String
-  brand: BrandCreateOneInput
-  category: CategoryCreateOneInput
-  options?: OptionCreateManyInput
-  unavailableOptionsValues?: OptionValueCreateManyInput
-  attributes?: AttributeCreateManyWithoutProductsInput
+export interface ProductCreateOneWithoutVariantsInput {
+  create?: ProductCreateWithoutVariantsInput
+  connect?: ProductWhereUniqueInput
 }
 
-export interface CategorySubscriptionWhereInput {
-  AND?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput
-  OR?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput
-  NOT?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: CategoryWhereInput
-}
-
-export interface BrandCreateOneInput {
-  create?: BrandCreateInput
-  connect?: BrandWhereUniqueInput
-}
-
-export interface BrandSubscriptionWhereInput {
-  AND?: BrandSubscriptionWhereInput[] | BrandSubscriptionWhereInput
-  OR?: BrandSubscriptionWhereInput[] | BrandSubscriptionWhereInput
-  NOT?: BrandSubscriptionWhereInput[] | BrandSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: BrandWhereInput
-}
-
-export interface OptionCreateManyInput {
-  create?: OptionCreateInput[] | OptionCreateInput
-  connect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
-}
-
-export interface CategoryWhereInput {
-  AND?: CategoryWhereInput[] | CategoryWhereInput
-  OR?: CategoryWhereInput[] | CategoryWhereInput
-  NOT?: CategoryWhereInput[] | CategoryWhereInput
+export interface OptionValueWhereInput {
+  AND?: OptionValueWhereInput[] | OptionValueWhereInput
+  OR?: OptionValueWhereInput[] | OptionValueWhereInput
+  NOT?: OptionValueWhereInput[] | OptionValueWhereInput
   id?: ID_Input
   id_not?: ID_Input
   id_in?: ID_Input[] | ID_Input
@@ -4938,9 +4962,157 @@ export interface CategoryWhereInput {
   name_not_starts_with?: String
   name_ends_with?: String
   name_not_ends_with?: String
-  options_every?: OptionWhereInput
-  options_some?: OptionWhereInput
-  options_none?: OptionWhereInput
+}
+
+export interface ProductCreateWithoutVariantsInput {
+  name: String
+  description?: String
+  SKU?: String
+  displayPrice: Float
+  available: Boolean
+  imageUrl?: String
+  brand: BrandCreateOneInput
+  category: CategoryCreateOneInput
+  options?: OptionCreateManyInput
+  unavailableOptionsValues?: OptionValueCreateManyInput
+  attributes?: AttributeCreateManyWithoutProductsInput
+}
+
+export interface OptionWhereInput {
+  AND?: OptionWhereInput[] | OptionWhereInput
+  OR?: OptionWhereInput[] | OptionWhereInput
+  NOT?: OptionWhereInput[] | OptionWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  values_every?: OptionValueWhereInput
+  values_some?: OptionValueWhereInput
+  values_none?: OptionValueWhereInput
+  category?: CategoryWhereInput
+}
+
+export interface BrandCreateOneInput {
+  create?: BrandCreateInput
+  connect?: BrandWhereUniqueInput
+}
+
+export interface FileWhereInput {
+  AND?: FileWhereInput[] | FileWhereInput
+  OR?: FileWhereInput[] | FileWhereInput
+  NOT?: FileWhereInput[] | FileWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  url?: String
+  url_not?: String
+  url_in?: String[] | String
+  url_not_in?: String[] | String
+  url_lt?: String
+  url_lte?: String
+  url_gt?: String
+  url_gte?: String
+  url_contains?: String
+  url_not_contains?: String
+  url_starts_with?: String
+  url_not_starts_with?: String
+  url_ends_with?: String
+  url_not_ends_with?: String
+  contentType?: String
+  contentType_not?: String
+  contentType_in?: String[] | String
+  contentType_not_in?: String[] | String
+  contentType_lt?: String
+  contentType_lte?: String
+  contentType_gt?: String
+  contentType_gte?: String
+  contentType_contains?: String
+  contentType_not_contains?: String
+  contentType_starts_with?: String
+  contentType_not_starts_with?: String
+  contentType_ends_with?: String
+  contentType_not_ends_with?: String
+  secret?: String
+  secret_not?: String
+  secret_in?: String[] | String
+  secret_not_in?: String[] | String
+  secret_lt?: String
+  secret_lte?: String
+  secret_gt?: String
+  secret_gte?: String
+  secret_contains?: String
+  secret_not_contains?: String
+  secret_starts_with?: String
+  secret_not_starts_with?: String
+  secret_ends_with?: String
+  secret_not_ends_with?: String
+  size?: Int
+  size_not?: Int
+  size_in?: Int[] | Int
+  size_not_in?: Int[] | Int
+  size_lt?: Int
+  size_lte?: Int
+  size_gt?: Int
+  size_gte?: Int
+}
+
+export interface OptionCreateManyInput {
+  create?: OptionCreateInput[] | OptionCreateInput
+  connect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
+}
+
+export interface UserUpsertWithoutOrdersInput {
+  update: UserUpdateWithoutOrdersDataInput
+  create: UserCreateWithoutOrdersInput
 }
 
 export interface AttributeCreateManyWithoutProductsInput {
@@ -4948,7 +5120,7 @@ export interface AttributeCreateManyWithoutProductsInput {
   connect?: AttributeWhereUniqueInput[] | AttributeWhereUniqueInput
 }
 
-export interface BrandWhereUniqueInput {
+export interface CategoryWhereUniqueInput {
   id?: ID_Input
 }
 
@@ -4957,7 +5129,7 @@ export interface AttributeCreateWithoutProductsInput {
   category: CategoryCreateOneInput
 }
 
-export interface OptionWhereUniqueInput {
+export interface OptionValueWhereUniqueInput {
   id?: ID_Input
 }
 
@@ -4966,7 +5138,7 @@ export interface OptionValueCreateOneInput {
   connect?: OptionValueWhereUniqueInput
 }
 
-export interface SelectedOptionWhereUniqueInput {
+export interface VariantWhereUniqueInput {
   id?: ID_Input
 }
 
@@ -4977,7 +5149,7 @@ export interface VariantCreateInput {
   product: ProductCreateOneWithoutVariantsInput
 }
 
-export interface AttributeWhereUniqueInput {
+export interface ProductWhereUniqueInput {
   id?: ID_Input
 }
 
@@ -4986,9 +5158,10 @@ export interface SelectedOptionCreateManyWithoutVariantInput {
   connect?: SelectedOptionWhereUniqueInput[] | SelectedOptionWhereUniqueInput
 }
 
-export interface UserWhereUniqueInput {
+export interface FileWhereUniqueInput {
   id?: ID_Input
-  email?: String
+  url?: String
+  secret?: String
 }
 
 export interface SelectedOptionCreateWithoutVariantInput {
@@ -4996,7 +5169,7 @@ export interface SelectedOptionCreateWithoutVariantInput {
   value: OptionValueCreateOneInput
 }
 
-export interface OrderWhereUniqueInput {
+export interface OrderLineItemWhereUniqueInput {
   id?: ID_Input
 }
 
@@ -5006,9 +5179,12 @@ export interface AttributeCreateInput {
   products?: ProductCreateManyWithoutAttributesInput
 }
 
-export interface UserUpsertWithoutOrdersInput {
-  update: UserUpdateWithoutOrdersDataInput
-  create: UserCreateWithoutOrdersInput
+export interface UserUpdateOneWithoutOrdersInput {
+  create?: UserCreateWithoutOrdersInput
+  connect?: UserWhereUniqueInput
+  delete?: Boolean
+  update?: UserUpdateWithoutOrdersDataInput
+  upsert?: UserUpsertWithoutOrdersInput
 }
 
 export interface ProductCreateManyWithoutAttributesInput {
@@ -5016,12 +5192,12 @@ export interface ProductCreateManyWithoutAttributesInput {
   connect?: ProductWhereUniqueInput[] | ProductWhereUniqueInput
 }
 
-export interface UserUpdateOneWithoutOrdersInput {
-  create?: UserCreateWithoutOrdersInput
-  connect?: UserWhereUniqueInput
-  delete?: Boolean
-  update?: UserUpdateWithoutOrdersDataInput
-  upsert?: UserUpsertWithoutOrdersInput
+export interface FileUpdateInput {
+  name?: String
+  url?: String
+  contentType?: String
+  secret?: String
+  size?: Int
 }
 
 export interface ProductCreateWithoutAttributesInput {
@@ -5038,29 +5214,15 @@ export interface ProductCreateWithoutAttributesInput {
   variants?: VariantCreateManyWithoutProductInput
 }
 
-export interface FileUpdateInput {
-  name?: String
-  url?: String
-  contentType?: String
-  secret?: String
-  size?: Int
-}
-
-export interface VariantCreateManyWithoutProductInput {
-  create?: VariantCreateWithoutProductInput[] | VariantCreateWithoutProductInput
-  connect?: VariantWhereUniqueInput[] | VariantWhereUniqueInput
-}
-
 export interface OrderLineItemUpsertWithWhereUniqueNestedInput {
   where: OrderLineItemWhereUniqueInput
   update: OrderLineItemUpdateDataInput
   create: OrderLineItemCreateInput
 }
 
-export interface VariantCreateWithoutProductInput {
-  price: Float
-  available: Boolean
-  selectedOptions?: SelectedOptionCreateManyWithoutVariantInput
+export interface VariantCreateManyWithoutProductInput {
+  create?: VariantCreateWithoutProductInput[] | VariantCreateWithoutProductInput
+  connect?: VariantWhereUniqueInput[] | VariantWhereUniqueInput
 }
 
 export interface UserUpdateWithoutCartDataInput {
@@ -5071,6 +5233,18 @@ export interface UserUpdateWithoutCartDataInput {
   role?: Role
   stripeCustomerId?: String
   orders?: OrderUpdateManyWithoutOwnerInput
+}
+
+export interface VariantCreateWithoutProductInput {
+  price: Float
+  available: Boolean
+  selectedOptions?: SelectedOptionCreateManyWithoutVariantInput
+}
+
+export interface OrderLineItemUpdateDataInput {
+  quantity?: Int
+  variant?: VariantUpdateOneInput
+  owner?: UserUpdateOneWithoutCartInput
 }
 
 export interface ProductCreateInput {
@@ -5088,10 +5262,13 @@ export interface ProductCreateInput {
   attributes?: AttributeCreateManyWithoutProductsInput
 }
 
-export interface OrderLineItemUpdateDataInput {
-  quantity?: Int
-  variant?: VariantUpdateOneInput
-  owner?: UserUpdateOneWithoutCartInput
+export interface OrderLineItemUpdateManyInput {
+  create?: OrderLineItemCreateInput[] | OrderLineItemCreateInput
+  connect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
+  disconnect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
+  delete?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
+  update?: OrderLineItemUpdateWithWhereUniqueNestedInput[] | OrderLineItemUpdateWithWhereUniqueNestedInput
+  upsert?: OrderLineItemUpsertWithWhereUniqueNestedInput[] | OrderLineItemUpsertWithWhereUniqueNestedInput
 }
 
 export interface UserCreateInput {
@@ -5105,28 +5282,14 @@ export interface UserCreateInput {
   orders?: OrderCreateManyWithoutOwnerInput
 }
 
-export interface OrderLineItemUpdateManyInput {
-  create?: OrderLineItemCreateInput[] | OrderLineItemCreateInput
-  connect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
-  disconnect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
-  delete?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
-  update?: OrderLineItemUpdateWithWhereUniqueNestedInput[] | OrderLineItemUpdateWithWhereUniqueNestedInput
-  upsert?: OrderLineItemUpsertWithWhereUniqueNestedInput[] | OrderLineItemUpsertWithWhereUniqueNestedInput
-}
-
-export interface OrderLineItemCreateManyWithoutOwnerInput {
-  create?: OrderLineItemCreateWithoutOwnerInput[] | OrderLineItemCreateWithoutOwnerInput
-  connect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
-}
-
 export interface OrderUpdateWithWhereUniqueWithoutOwnerInput {
   where: OrderWhereUniqueInput
   data: OrderUpdateWithoutOwnerDataInput
 }
 
-export interface OrderLineItemCreateWithoutOwnerInput {
-  quantity: Int
-  variant: VariantCreateOneInput
+export interface OrderLineItemCreateManyWithoutOwnerInput {
+  create?: OrderLineItemCreateWithoutOwnerInput[] | OrderLineItemCreateWithoutOwnerInput
+  connect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
 }
 
 export interface OrderLineItemUpsertWithWhereUniqueWithoutOwnerInput {
@@ -5135,9 +5298,9 @@ export interface OrderLineItemUpsertWithWhereUniqueWithoutOwnerInput {
   create: OrderLineItemCreateWithoutOwnerInput
 }
 
-export interface VariantCreateOneInput {
-  create?: VariantCreateInput
-  connect?: VariantWhereUniqueInput
+export interface OrderLineItemCreateWithoutOwnerInput {
+  quantity: Int
+  variant: VariantCreateOneInput
 }
 
 export interface VariantUpdateDataInput {
@@ -5147,9 +5310,9 @@ export interface VariantUpdateDataInput {
   product?: ProductUpdateOneWithoutVariantsInput
 }
 
-export interface OrderCreateManyWithoutOwnerInput {
-  create?: OrderCreateWithoutOwnerInput[] | OrderCreateWithoutOwnerInput
-  connect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput
+export interface VariantCreateOneInput {
+  create?: VariantCreateInput
+  connect?: VariantWhereUniqueInput
 }
 
 export interface OrderLineItemUpdateWithoutOwnerDataInput {
@@ -5157,13 +5320,11 @@ export interface OrderLineItemUpdateWithoutOwnerDataInput {
   variant?: VariantUpdateOneInput
 }
 
-export interface SelectedOptionUpdateManyWithoutVariantInput {
-  create?: SelectedOptionCreateWithoutVariantInput[] | SelectedOptionCreateWithoutVariantInput
-  connect?: SelectedOptionWhereUniqueInput[] | SelectedOptionWhereUniqueInput
-  disconnect?: SelectedOptionWhereUniqueInput[] | SelectedOptionWhereUniqueInput
-  delete?: SelectedOptionWhereUniqueInput[] | SelectedOptionWhereUniqueInput
-  update?: SelectedOptionUpdateWithWhereUniqueWithoutVariantInput[] | SelectedOptionUpdateWithWhereUniqueWithoutVariantInput
-  upsert?: SelectedOptionUpsertWithWhereUniqueWithoutVariantInput[] | SelectedOptionUpsertWithWhereUniqueWithoutVariantInput
+export interface VariantUpdateInput {
+  price?: Float
+  available?: Boolean
+  selectedOptions?: SelectedOptionUpdateManyWithoutVariantInput
+  product?: ProductUpdateOneWithoutVariantsInput
 }
 
 export interface OrderLineItemUpdateManyWithoutOwnerInput {
@@ -5175,9 +5336,12 @@ export interface OrderLineItemUpdateManyWithoutOwnerInput {
   upsert?: OrderLineItemUpsertWithWhereUniqueWithoutOwnerInput[] | OrderLineItemUpsertWithWhereUniqueWithoutOwnerInput
 }
 
-export interface OrderLineItemCreateManyInput {
-  create?: OrderLineItemCreateInput[] | OrderLineItemCreateInput
-  connect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
+export interface OrderCreateWithoutOwnerInput {
+  totalPrice: Float
+  totalRefunded: Float
+  totalTax: Float
+  orderStatus: OrderStatus
+  lineItems?: OrderLineItemCreateManyInput
 }
 
 export interface ProductUpdateInput {
@@ -5195,10 +5359,9 @@ export interface ProductUpdateInput {
   attributes?: AttributeUpdateManyWithoutProductsInput
 }
 
-export interface OrderLineItemCreateInput {
-  quantity: Int
-  variant: VariantCreateOneInput
-  owner: UserCreateOneWithoutCartInput
+export interface OrderLineItemCreateManyInput {
+  create?: OrderLineItemCreateInput[] | OrderLineItemCreateInput
+  connect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
 }
 
 export interface VariantUpsertWithWhereUniqueWithoutProductInput {
@@ -5207,9 +5370,10 @@ export interface VariantUpsertWithWhereUniqueWithoutProductInput {
   create: VariantCreateWithoutProductInput
 }
 
-export interface UserCreateOneWithoutCartInput {
-  create?: UserCreateWithoutCartInput
-  connect?: UserWhereUniqueInput
+export interface OrderLineItemCreateInput {
+  quantity: Int
+  variant: VariantCreateOneInput
+  owner?: UserCreateOneWithoutCartInput
 }
 
 export interface VariantUpdateWithWhereUniqueWithoutProductInput {
@@ -5217,14 +5381,9 @@ export interface VariantUpdateWithWhereUniqueWithoutProductInput {
   data: VariantUpdateWithoutProductDataInput
 }
 
-export interface UserCreateWithoutCartInput {
-  email: String
-  password: String
-  firstName?: String
-  lastName?: String
-  role?: Role
-  stripeCustomerId?: String
-  orders?: OrderCreateManyWithoutOwnerInput
+export interface UserCreateOneWithoutCartInput {
+  create?: UserCreateWithoutCartInput
+  connect?: UserWhereUniqueInput
 }
 
 export interface ProductUpdateWithoutAttributesDataInput {
@@ -5241,12 +5400,14 @@ export interface ProductUpdateWithoutAttributesDataInput {
   variants?: VariantUpdateManyWithoutProductInput
 }
 
-export interface FileCreateInput {
-  name: String
-  url: String
-  contentType: String
-  secret: String
-  size: Int
+export interface UserCreateWithoutCartInput {
+  email: String
+  password: String
+  firstName?: String
+  lastName?: String
+  role?: Role
+  stripeCustomerId?: String
+  orders?: OrderCreateManyWithoutOwnerInput
 }
 
 export interface ProductUpdateManyWithoutAttributesInput {
@@ -5258,6 +5419,20 @@ export interface ProductUpdateManyWithoutAttributesInput {
   upsert?: ProductUpsertWithWhereUniqueWithoutAttributesInput[] | ProductUpsertWithWhereUniqueWithoutAttributesInput
 }
 
+export interface FileCreateInput {
+  name: String
+  url: String
+  contentType: String
+  secret: String
+  size: Int
+}
+
+export interface SelectedOptionUpsertWithWhereUniqueWithoutVariantInput {
+  where: SelectedOptionWhereUniqueInput
+  update: SelectedOptionUpdateWithoutVariantDataInput
+  create: SelectedOptionCreateWithoutVariantInput
+}
+
 export interface OrderCreateInput {
   totalPrice: Float
   totalRefunded: Float
@@ -5267,10 +5442,9 @@ export interface OrderCreateInput {
   lineItems?: OrderLineItemCreateManyInput
 }
 
-export interface SelectedOptionUpsertWithWhereUniqueWithoutVariantInput {
+export interface SelectedOptionUpdateWithWhereUniqueWithoutVariantInput {
   where: SelectedOptionWhereUniqueInput
-  update: SelectedOptionUpdateWithoutVariantDataInput
-  create: SelectedOptionCreateWithoutVariantInput
+  data: SelectedOptionUpdateWithoutVariantDataInput
 }
 
 export interface UserCreateOneWithoutOrdersInput {
@@ -5278,21 +5452,19 @@ export interface UserCreateOneWithoutOrdersInput {
   connect?: UserWhereUniqueInput
 }
 
-export interface SelectedOptionUpdateWithWhereUniqueWithoutVariantInput {
-  where: SelectedOptionWhereUniqueInput
-  data: SelectedOptionUpdateWithoutVariantDataInput
+export interface BrandCreateInput {
+  name: String
+  category: CategoryCreateOneInput
 }
 
-export interface VariantUpdateInput {
-  price?: Float
-  available?: Boolean
-  selectedOptions?: SelectedOptionUpdateManyWithoutVariantInput
-  product?: ProductUpdateOneWithoutVariantsInput
+export interface OptionValueUpsertNestedInput {
+  update: OptionValueUpdateDataInput
+  create: OptionValueCreateInput
 }
 
-export interface CategoryCreateOneInput {
-  create?: CategoryCreateInput
-  connect?: CategoryWhereUniqueInput
+export interface CategoryCreateInput {
+  name: String
+  options?: OptionCreateManyWithoutCategoryInput
 }
 
 export interface ProductWhereInput {
@@ -5395,19 +5567,6 @@ export interface ProductWhereInput {
   attributes_none?: AttributeWhereInput
 }
 
-export interface OptionCreateManyWithoutCategoryInput {
-  create?: OptionCreateWithoutCategoryInput[] | OptionCreateWithoutCategoryInput
-  connect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
-}
-
-export interface CategoryUpdateOneInput {
-  create?: CategoryCreateInput
-  connect?: CategoryWhereUniqueInput
-  delete?: Boolean
-  update?: CategoryUpdateDataInput
-  upsert?: CategoryUpsertNestedInput
-}
-
 export interface AttributeWhereInput {
   AND?: AttributeWhereInput[] | AttributeWhereInput
   OR?: AttributeWhereInput[] | AttributeWhereInput
@@ -5446,9 +5605,12 @@ export interface AttributeWhereInput {
   products_none?: ProductWhereInput
 }
 
-export interface CategoryUpdateDataInput {
-  name?: String
-  options?: OptionUpdateManyWithoutCategoryInput
+export interface CategoryUpdateOneInput {
+  create?: CategoryCreateInput
+  connect?: CategoryWhereUniqueInput
+  delete?: Boolean
+  update?: CategoryUpdateDataInput
+  upsert?: CategoryUpsertNestedInput
 }
 
 export interface FileSubscriptionWhereInput {
@@ -5462,13 +5624,9 @@ export interface FileSubscriptionWhereInput {
   node?: FileWhereInput
 }
 
-export interface OptionUpdateManyWithoutCategoryInput {
-  create?: OptionCreateWithoutCategoryInput[] | OptionCreateWithoutCategoryInput
-  connect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
-  disconnect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
-  delete?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
-  update?: OptionUpdateWithWhereUniqueWithoutCategoryInput[] | OptionUpdateWithWhereUniqueWithoutCategoryInput
-  upsert?: OptionUpsertWithWhereUniqueWithoutCategoryInput[] | OptionUpsertWithWhereUniqueWithoutCategoryInput
+export interface CategoryUpdateDataInput {
+  name?: String
+  options?: OptionUpdateManyWithoutCategoryInput
 }
 
 export interface VariantSubscriptionWhereInput {
@@ -5482,9 +5640,13 @@ export interface VariantSubscriptionWhereInput {
   node?: VariantWhereInput
 }
 
-export interface OptionUpdateWithWhereUniqueWithoutCategoryInput {
-  where: OptionWhereUniqueInput
-  data: OptionUpdateWithoutCategoryDataInput
+export interface OptionUpdateManyWithoutCategoryInput {
+  create?: OptionCreateWithoutCategoryInput[] | OptionCreateWithoutCategoryInput
+  connect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
+  disconnect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
+  delete?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
+  update?: OptionUpdateWithWhereUniqueWithoutCategoryInput[] | OptionUpdateWithWhereUniqueWithoutCategoryInput
+  upsert?: OptionUpsertWithWhereUniqueWithoutCategoryInput[] | OptionUpsertWithWhereUniqueWithoutCategoryInput
 }
 
 export interface OrderWhereInput {
@@ -5505,6 +5667,22 @@ export interface OrderWhereInput {
   id_not_starts_with?: ID_Input
   id_ends_with?: ID_Input
   id_not_ends_with?: ID_Input
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
   totalPrice?: Float
   totalPrice_not?: Float
   totalPrice_in?: Float[] | Float
@@ -5539,43 +5717,31 @@ export interface OrderWhereInput {
   lineItems_none?: OrderLineItemWhereInput
 }
 
+export interface OptionUpdateWithWhereUniqueWithoutCategoryInput {
+  where: OptionWhereUniqueInput
+  data: OptionUpdateWithoutCategoryDataInput
+}
+
+export interface CategorySubscriptionWhereInput {
+  AND?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput
+  OR?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput
+  NOT?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: CategoryWhereInput
+}
+
 export interface OptionUpdateWithoutCategoryDataInput {
   name?: String
   values?: OptionValueUpdateManyInput
 }
 
-export interface OptionValueWhereInput {
-  AND?: OptionValueWhereInput[] | OptionValueWhereInput
-  OR?: OptionValueWhereInput[] | OptionValueWhereInput
-  NOT?: OptionValueWhereInput[] | OptionValueWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  name?: String
-  name_not?: String
-  name_in?: String[] | String
-  name_not_in?: String[] | String
-  name_lt?: String
-  name_lte?: String
-  name_gt?: String
-  name_gte?: String
-  name_contains?: String
-  name_not_contains?: String
-  name_starts_with?: String
-  name_not_starts_with?: String
-  name_ends_with?: String
-  name_not_ends_with?: String
+export interface OrderLineItemUpdateInput {
+  quantity?: Int
+  variant?: VariantUpdateOneInput
+  owner?: UserUpdateOneWithoutCartInput
 }
 
 export interface OptionValueUpdateManyInput {
@@ -5587,88 +5753,8 @@ export interface OptionValueUpdateManyInput {
   upsert?: OptionValueUpsertWithWhereUniqueNestedInput[] | OptionValueUpsertWithWhereUniqueNestedInput
 }
 
-export interface FileWhereInput {
-  AND?: FileWhereInput[] | FileWhereInput
-  OR?: FileWhereInput[] | FileWhereInput
-  NOT?: FileWhereInput[] | FileWhereInput
+export interface BrandWhereUniqueInput {
   id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  name?: String
-  name_not?: String
-  name_in?: String[] | String
-  name_not_in?: String[] | String
-  name_lt?: String
-  name_lte?: String
-  name_gt?: String
-  name_gte?: String
-  name_contains?: String
-  name_not_contains?: String
-  name_starts_with?: String
-  name_not_starts_with?: String
-  name_ends_with?: String
-  name_not_ends_with?: String
-  url?: String
-  url_not?: String
-  url_in?: String[] | String
-  url_not_in?: String[] | String
-  url_lt?: String
-  url_lte?: String
-  url_gt?: String
-  url_gte?: String
-  url_contains?: String
-  url_not_contains?: String
-  url_starts_with?: String
-  url_not_starts_with?: String
-  url_ends_with?: String
-  url_not_ends_with?: String
-  contentType?: String
-  contentType_not?: String
-  contentType_in?: String[] | String
-  contentType_not_in?: String[] | String
-  contentType_lt?: String
-  contentType_lte?: String
-  contentType_gt?: String
-  contentType_gte?: String
-  contentType_contains?: String
-  contentType_not_contains?: String
-  contentType_starts_with?: String
-  contentType_not_starts_with?: String
-  contentType_ends_with?: String
-  contentType_not_ends_with?: String
-  secret?: String
-  secret_not?: String
-  secret_in?: String[] | String
-  secret_not_in?: String[] | String
-  secret_lt?: String
-  secret_lte?: String
-  secret_gt?: String
-  secret_gte?: String
-  secret_contains?: String
-  secret_not_contains?: String
-  secret_starts_with?: String
-  secret_not_starts_with?: String
-  secret_ends_with?: String
-  secret_not_ends_with?: String
-  size?: Int
-  size_not?: Int
-  size_in?: Int[] | Int
-  size_not_in?: Int[] | Int
-  size_lt?: Int
-  size_lte?: Int
-  size_gt?: Int
-  size_gte?: Int
 }
 
 export interface OptionValueUpdateWithWhereUniqueNestedInput {
@@ -5676,7 +5762,7 @@ export interface OptionValueUpdateWithWhereUniqueNestedInput {
   data: OptionValueUpdateDataInput
 }
 
-export interface CategoryWhereUniqueInput {
+export interface SelectedOptionWhereUniqueInput {
   id?: ID_Input
 }
 
@@ -5684,26 +5770,15 @@ export interface OptionValueUpdateDataInput {
   name?: String
 }
 
-export interface VariantWhereUniqueInput {
+export interface UserWhereUniqueInput {
   id?: ID_Input
+  email?: String
 }
 
 export interface OptionValueUpsertWithWhereUniqueNestedInput {
   where: OptionValueWhereUniqueInput
   update: OptionValueUpdateDataInput
   create: OptionValueCreateInput
-}
-
-export interface FileWhereUniqueInput {
-  id?: ID_Input
-  url?: String
-  secret?: String
-}
-
-export interface OptionUpsertWithWhereUniqueWithoutCategoryInput {
-  where: OptionWhereUniqueInput
-  update: OptionUpdateWithoutCategoryDataInput
-  create: OptionCreateWithoutCategoryInput
 }
 
 export interface UserUpdateWithoutOrdersDataInput {
@@ -5716,9 +5791,10 @@ export interface UserUpdateWithoutOrdersDataInput {
   cart?: OrderLineItemUpdateManyWithoutOwnerInput
 }
 
-export interface CategoryUpsertNestedInput {
-  update: CategoryUpdateDataInput
-  create: CategoryCreateInput
+export interface OptionUpsertWithWhereUniqueWithoutCategoryInput {
+  where: OptionWhereUniqueInput
+  update: OptionUpdateWithoutCategoryDataInput
+  create: OptionCreateWithoutCategoryInput
 }
 
 export interface OrderUpsertWithWhereUniqueWithoutOwnerInput {
@@ -5727,23 +5803,23 @@ export interface OrderUpsertWithWhereUniqueWithoutOwnerInput {
   create: OrderCreateWithoutOwnerInput
 }
 
-export interface CategoryUpdateInput {
-  name?: String
-  options?: OptionUpdateManyWithoutCategoryInput
+export interface CategoryUpsertNestedInput {
+  update: CategoryUpdateDataInput
+  create: CategoryCreateInput
 }
 
 export interface UserUpdateOneWithoutCartInput {
   create?: UserCreateWithoutCartInput
   connect?: UserWhereUniqueInput
+  disconnect?: Boolean
   delete?: Boolean
   update?: UserUpdateWithoutCartDataInput
   upsert?: UserUpsertWithoutCartInput
 }
 
-export interface OptionUpdateInput {
+export interface CategoryUpdateInput {
   name?: String
-  values?: OptionValueUpdateManyInput
-  category?: CategoryUpdateOneWithoutOptionsInput
+  options?: OptionUpdateManyWithoutCategoryInput
 }
 
 export interface OrderUpdateWithoutOwnerDataInput {
@@ -5754,6 +5830,17 @@ export interface OrderUpdateWithoutOwnerDataInput {
   lineItems?: OrderLineItemUpdateManyInput
 }
 
+export interface OptionUpdateInput {
+  name?: String
+  values?: OptionValueUpdateManyInput
+  category?: CategoryUpdateOneWithoutOptionsInput
+}
+
+export interface VariantUpsertNestedInput {
+  update: VariantUpdateDataInput
+  create: VariantCreateInput
+}
+
 export interface CategoryUpdateOneWithoutOptionsInput {
   create?: CategoryCreateWithoutOptionsInput
   connect?: CategoryWhereUniqueInput
@@ -5762,23 +5849,13 @@ export interface CategoryUpdateOneWithoutOptionsInput {
   upsert?: CategoryUpsertWithoutOptionsInput
 }
 
-export interface VariantUpsertNestedInput {
-  update: VariantUpdateDataInput
-  create: VariantCreateInput
-}
-
-export interface CategoryUpdateWithoutOptionsDataInput {
-  name?: String
-}
-
 export interface OrderLineItemUpdateWithWhereUniqueWithoutOwnerInput {
   where: OrderLineItemWhereUniqueInput
   data: OrderLineItemUpdateWithoutOwnerDataInput
 }
 
-export interface CategoryUpsertWithoutOptionsInput {
-  update: CategoryUpdateWithoutOptionsDataInput
-  create: CategoryCreateWithoutOptionsInput
+export interface CategoryUpdateWithoutOptionsDataInput {
+  name?: String
 }
 
 export interface ProductUpsertWithWhereUniqueWithoutAttributesInput {
@@ -5787,8 +5864,9 @@ export interface ProductUpsertWithWhereUniqueWithoutAttributesInput {
   create: ProductCreateWithoutAttributesInput
 }
 
-export interface OptionValueUpdateInput {
-  name?: String
+export interface CategoryUpsertWithoutOptionsInput {
+  update: CategoryUpdateWithoutOptionsDataInput
+  create: CategoryCreateWithoutOptionsInput
 }
 
 export interface VariantUpdateManyWithoutProductInput {
@@ -5800,16 +5878,29 @@ export interface VariantUpdateManyWithoutProductInput {
   upsert?: VariantUpsertWithWhereUniqueWithoutProductInput[] | VariantUpsertWithWhereUniqueWithoutProductInput
 }
 
-export interface SelectedOptionUpdateInput {
-  option?: OptionUpdateOneInput
-  variant?: VariantUpdateOneWithoutSelectedOptionsInput
-  value?: OptionValueUpdateOneInput
+export interface OptionValueUpdateInput {
+  name?: String
 }
 
 export interface AttributeUpdateInput {
   value?: String
   category?: CategoryUpdateOneInput
   products?: ProductUpdateManyWithoutAttributesInput
+}
+
+export interface SelectedOptionUpdateInput {
+  option?: OptionUpdateOneInput
+  variant?: VariantUpdateOneWithoutSelectedOptionsInput
+  value?: OptionValueUpdateOneInput
+}
+
+export interface SelectedOptionUpdateManyWithoutVariantInput {
+  create?: SelectedOptionCreateWithoutVariantInput[] | SelectedOptionCreateWithoutVariantInput
+  connect?: SelectedOptionWhereUniqueInput[] | SelectedOptionWhereUniqueInput
+  disconnect?: SelectedOptionWhereUniqueInput[] | SelectedOptionWhereUniqueInput
+  delete?: SelectedOptionWhereUniqueInput[] | SelectedOptionWhereUniqueInput
+  update?: SelectedOptionUpdateWithWhereUniqueWithoutVariantInput[] | SelectedOptionUpdateWithWhereUniqueWithoutVariantInput
+  upsert?: SelectedOptionUpsertWithWhereUniqueWithoutVariantInput[] | SelectedOptionUpsertWithWhereUniqueWithoutVariantInput
 }
 
 export interface OptionUpdateOneInput {
@@ -5820,25 +5911,15 @@ export interface OptionUpdateOneInput {
   upsert?: OptionUpsertNestedInput
 }
 
-export interface BrandCreateInput {
-  name: String
-  category: CategoryCreateOneInput
+export interface OptionCreateManyWithoutCategoryInput {
+  create?: OptionCreateWithoutCategoryInput[] | OptionCreateWithoutCategoryInput
+  connect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
 }
 
 export interface OptionUpdateDataInput {
   name?: String
   values?: OptionValueUpdateManyInput
   category?: CategoryUpdateOneWithoutOptionsInput
-}
-
-export interface OptionCreateWithoutCategoryInput {
-  name: String
-  values?: OptionValueCreateManyInput
-}
-
-export interface OptionUpsertNestedInput {
-  update: OptionUpdateDataInput
-  create: OptionCreateInput
 }
 
 export interface ProductSubscriptionWhereInput {
@@ -5852,12 +5933,9 @@ export interface ProductSubscriptionWhereInput {
   node?: ProductWhereInput
 }
 
-export interface VariantUpdateOneWithoutSelectedOptionsInput {
-  create?: VariantCreateWithoutSelectedOptionsInput
-  connect?: VariantWhereUniqueInput
-  delete?: Boolean
-  update?: VariantUpdateWithoutSelectedOptionsDataInput
-  upsert?: VariantUpsertWithoutSelectedOptionsInput
+export interface OptionUpsertNestedInput {
+  update: OptionUpdateDataInput
+  create: OptionCreateInput
 }
 
 export interface OptionValueSubscriptionWhereInput {
@@ -5871,16 +5949,59 @@ export interface OptionValueSubscriptionWhereInput {
   node?: OptionValueWhereInput
 }
 
+export interface VariantUpdateOneWithoutSelectedOptionsInput {
+  create?: VariantCreateWithoutSelectedOptionsInput
+  connect?: VariantWhereUniqueInput
+  delete?: Boolean
+  update?: VariantUpdateWithoutSelectedOptionsDataInput
+  upsert?: VariantUpsertWithoutSelectedOptionsInput
+}
+
+export interface CategoryWhereInput {
+  AND?: CategoryWhereInput[] | CategoryWhereInput
+  OR?: CategoryWhereInput[] | CategoryWhereInput
+  NOT?: CategoryWhereInput[] | CategoryWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  options_every?: OptionWhereInput
+  options_some?: OptionWhereInput
+  options_none?: OptionWhereInput
+}
+
 export interface VariantUpdateWithoutSelectedOptionsDataInput {
   price?: Float
   available?: Boolean
   product?: ProductUpdateOneWithoutVariantsInput
 }
 
-export interface OrderLineItemUpdateInput {
-  quantity?: Int
-  variant?: VariantUpdateOneInput
-  owner?: UserUpdateOneWithoutCartInput
+export interface AttributeWhereUniqueInput {
+  id?: ID_Input
 }
 
 export interface ProductUpdateOneWithoutVariantsInput {
@@ -5891,8 +6012,13 @@ export interface ProductUpdateOneWithoutVariantsInput {
   upsert?: ProductUpsertWithoutVariantsInput
 }
 
-export interface ProductWhereUniqueInput {
-  id?: ID_Input
+export interface OrderUpdateInput {
+  totalPrice?: Float
+  totalRefunded?: Float
+  totalTax?: Float
+  orderStatus?: OrderStatus
+  owner?: UserUpdateOneWithoutOrdersInput
+  lineItems?: OrderLineItemUpdateManyInput
 }
 
 export interface ProductUpdateWithoutVariantsDataInput {
@@ -5909,13 +6035,9 @@ export interface ProductUpdateWithoutVariantsDataInput {
   attributes?: AttributeUpdateManyWithoutProductsInput
 }
 
-export interface OrderUpdateInput {
-  totalPrice?: Float
-  totalRefunded?: Float
-  totalTax?: Float
-  orderStatus?: OrderStatus
-  owner?: UserUpdateOneWithoutOrdersInput
-  lineItems?: OrderLineItemUpdateManyInput
+export interface OrderLineItemUpdateWithWhereUniqueNestedInput {
+  where: OrderLineItemWhereUniqueInput
+  data: OrderLineItemUpdateDataInput
 }
 
 export interface BrandUpdateOneInput {
@@ -5926,16 +6048,6 @@ export interface BrandUpdateOneInput {
   upsert?: BrandUpsertNestedInput
 }
 
-export interface OrderLineItemUpdateWithWhereUniqueNestedInput {
-  where: OrderLineItemWhereUniqueInput
-  data: OrderLineItemUpdateDataInput
-}
-
-export interface BrandUpdateDataInput {
-  name?: String
-  category?: CategoryUpdateOneInput
-}
-
 export interface VariantUpdateOneInput {
   create?: VariantCreateInput
   connect?: VariantWhereUniqueInput
@@ -5944,15 +6056,25 @@ export interface VariantUpdateOneInput {
   upsert?: VariantUpsertNestedInput
 }
 
-export interface BrandUpsertNestedInput {
-  update: BrandUpdateDataInput
-  create: BrandCreateInput
+export interface BrandUpdateDataInput {
+  name?: String
+  category?: CategoryUpdateOneInput
 }
 
 export interface VariantUpdateWithoutProductDataInput {
   price?: Float
   available?: Boolean
   selectedOptions?: SelectedOptionUpdateManyWithoutVariantInput
+}
+
+export interface BrandUpsertNestedInput {
+  update: BrandUpdateDataInput
+  create: BrandCreateInput
+}
+
+export interface SelectedOptionUpdateWithoutVariantDataInput {
+  option?: OptionUpdateOneInput
+  value?: OptionValueUpdateOneInput
 }
 
 export interface OptionUpdateManyInput {
@@ -5962,16 +6084,6 @@ export interface OptionUpdateManyInput {
   delete?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
   update?: OptionUpdateWithWhereUniqueNestedInput[] | OptionUpdateWithWhereUniqueNestedInput
   upsert?: OptionUpsertWithWhereUniqueNestedInput[] | OptionUpsertWithWhereUniqueNestedInput
-}
-
-export interface SelectedOptionUpdateWithoutVariantDataInput {
-  option?: OptionUpdateOneInput
-  value?: OptionValueUpdateOneInput
-}
-
-export interface OptionUpdateWithWhereUniqueNestedInput {
-  where: OptionWhereUniqueInput
-  data: OptionUpdateDataInput
 }
 
 export interface OrderLineItemSubscriptionWhereInput {
@@ -5985,48 +6097,30 @@ export interface OrderLineItemSubscriptionWhereInput {
   node?: OrderLineItemWhereInput
 }
 
+export interface OptionUpdateWithWhereUniqueNestedInput {
+  where: OptionWhereUniqueInput
+  data: OptionUpdateDataInput
+}
+
+export interface BrandSubscriptionWhereInput {
+  AND?: BrandSubscriptionWhereInput[] | BrandSubscriptionWhereInput
+  OR?: BrandSubscriptionWhereInput[] | BrandSubscriptionWhereInput
+  NOT?: BrandSubscriptionWhereInput[] | BrandSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: BrandWhereInput
+}
+
 export interface OptionUpsertWithWhereUniqueNestedInput {
   where: OptionWhereUniqueInput
   update: OptionUpdateDataInput
   create: OptionCreateInput
 }
 
-export interface OptionWhereInput {
-  AND?: OptionWhereInput[] | OptionWhereInput
-  OR?: OptionWhereInput[] | OptionWhereInput
-  NOT?: OptionWhereInput[] | OptionWhereInput
+export interface OrderWhereUniqueInput {
   id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  name?: String
-  name_not?: String
-  name_in?: String[] | String
-  name_not_in?: String[] | String
-  name_lt?: String
-  name_lte?: String
-  name_gt?: String
-  name_gte?: String
-  name_contains?: String
-  name_not_contains?: String
-  name_starts_with?: String
-  name_not_starts_with?: String
-  name_ends_with?: String
-  name_not_ends_with?: String
-  values_every?: OptionValueWhereInput
-  values_some?: OptionValueWhereInput
-  values_none?: OptionValueWhereInput
-  category?: CategoryWhereInput
 }
 
 export interface AttributeUpdateManyWithoutProductsInput {
@@ -6038,15 +6132,6 @@ export interface AttributeUpdateManyWithoutProductsInput {
   upsert?: AttributeUpsertWithWhereUniqueWithoutProductsInput[] | AttributeUpsertWithWhereUniqueWithoutProductsInput
 }
 
-export interface OrderLineItemWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface AttributeUpdateWithWhereUniqueWithoutProductsInput {
-  where: AttributeWhereUniqueInput
-  data: AttributeUpdateWithoutProductsDataInput
-}
-
 export interface OrderUpdateManyWithoutOwnerInput {
   create?: OrderCreateWithoutOwnerInput[] | OrderCreateWithoutOwnerInput
   connect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput
@@ -6056,22 +6141,14 @@ export interface OrderUpdateManyWithoutOwnerInput {
   upsert?: OrderUpsertWithWhereUniqueWithoutOwnerInput[] | OrderUpsertWithWhereUniqueWithoutOwnerInput
 }
 
-export interface AttributeUpdateWithoutProductsDataInput {
-  value?: String
-  category?: CategoryUpdateOneInput
+export interface AttributeUpdateWithWhereUniqueWithoutProductsInput {
+  where: AttributeWhereUniqueInput
+  data: AttributeUpdateWithoutProductsDataInput
 }
 
 export interface ProductUpdateWithWhereUniqueWithoutAttributesInput {
   where: ProductWhereUniqueInput
   data: ProductUpdateWithoutAttributesDataInput
-}
-
-export interface OptionValueUpdateOneInput {
-  create?: OptionValueCreateInput
-  connect?: OptionValueWhereUniqueInput
-  delete?: Boolean
-  update?: OptionValueUpdateDataInput
-  upsert?: OptionValueUpsertNestedInput
 }
 
 export interface VariantUpsertWithoutSelectedOptionsInput {
@@ -6090,13 +6167,18 @@ export interface AttributeUpsertWithWhereUniqueWithoutProductsInput {
   create: AttributeCreateWithoutProductsInput
 }
 
-export interface OptionValueWhereUniqueInput {
+export interface AttributeUpdateWithoutProductsDataInput {
+  value?: String
+  category?: CategoryUpdateOneInput
+}
+
+export interface OptionWhereUniqueInput {
   id?: ID_Input
 }
 
-export interface CategoryCreateInput {
-  name: String
-  options?: OptionCreateManyWithoutCategoryInput
+export interface CategoryCreateOneInput {
+  create?: CategoryCreateInput
+  connect?: CategoryWhereUniqueInput
 }
 
 export interface UserUpdateInput {
@@ -6139,12 +6221,13 @@ export interface PageInfo {
   endCursor?: String
 }
 
-export interface Variant extends Node {
+export interface FilePreviousValues {
   id: ID_Output
-  selectedOptions?: SelectedOption[]
-  price: Float
-  available: Boolean
-  product: Product
+  name: String
+  url: String
+  contentType: String
+  secret: String
+  size: Int
 }
 
 /*
@@ -6157,6 +6240,18 @@ export interface BrandConnection {
   aggregate: AggregateBrand
 }
 
+export interface Order extends Node {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  owner: User
+  lineItems?: OrderLineItem[]
+  totalPrice: Float
+  totalRefunded: Float
+  totalTax: Float
+  orderStatus: OrderStatus
+}
+
 export interface File extends Node {
   id: ID_Output
   name: String
@@ -6164,13 +6259,6 @@ export interface File extends Node {
   contentType: String
   secret: String
   size: Int
-}
-
-export interface OrderLineItemSubscriptionPayload {
-  mutation: MutationType
-  node?: OrderLineItem
-  updatedFields?: String[]
-  previousValues?: OrderLineItemPreviousValues
 }
 
 /*
@@ -6182,19 +6270,19 @@ export interface OrderLineItemEdge {
   cursor: String
 }
 
-export interface BatchPayload {
-  count: Long
+export interface OrderLineItemSubscriptionPayload {
+  mutation: MutationType
+  node?: OrderLineItem
+  updatedFields?: String[]
+  previousValues?: OrderLineItemPreviousValues
 }
 
 export interface AggregateOrder {
   count: Int
 }
 
-export interface SelectedOption extends Node {
-  id: ID_Output
-  option: Option
-  variant: Variant
-  value: OptionValue
+export interface BatchPayload {
+  count: Long
 }
 
 /*
@@ -6207,14 +6295,11 @@ export interface OrderConnection {
   aggregate: AggregateOrder
 }
 
-export interface Order extends Node {
+export interface SelectedOption extends Node {
   id: ID_Output
-  owner: User
-  lineItems?: OrderLineItem[]
-  totalPrice: Float
-  totalRefunded: Float
-  totalTax: Float
-  orderStatus: OrderStatus
+  option: Option
+  variant: Variant
+  value: OptionValue
 }
 
 /*
@@ -6226,23 +6311,25 @@ export interface FileEdge {
   cursor: String
 }
 
-export interface OrderPreviousValues {
+export interface OrderLineItem extends Node {
   id: ID_Output
-  totalPrice: Float
-  totalRefunded: Float
-  totalTax: Float
-  orderStatus: OrderStatus
+  quantity: Int
+  variant: Variant
+  owner?: User
 }
 
 export interface AggregateUser {
   count: Int
 }
 
-export interface BrandSubscriptionPayload {
-  mutation: MutationType
-  node?: Brand
-  updatedFields?: String[]
-  previousValues?: BrandPreviousValues
+export interface OrderPreviousValues {
+  id: ID_Output
+  createdAt: DateTime
+  updatedAt: DateTime
+  totalPrice: Float
+  totalRefunded: Float
+  totalTax: Float
+  orderStatus: OrderStatus
 }
 
 /*
@@ -6255,9 +6342,11 @@ export interface UserConnection {
   aggregate: AggregateUser
 }
 
-export interface BrandPreviousValues {
-  id: ID_Output
-  name: String
+export interface BrandSubscriptionPayload {
+  mutation: MutationType
+  node?: Brand
+  updatedFields?: String[]
+  previousValues?: BrandPreviousValues
 }
 
 /*
@@ -6269,46 +6358,13 @@ export interface ProductEdge {
   cursor: String
 }
 
-export interface OrderLineItem extends Node {
-  id: ID_Output
-  quantity: Int
-  variant: Variant
-  owner: User
-}
-
-export interface AggregateAttribute {
-  count: Int
-}
-
-export interface CategorySubscriptionPayload {
-  mutation: MutationType
-  node?: Category
-  updatedFields?: String[]
-  previousValues?: CategoryPreviousValues
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface AttributeConnection {
-  pageInfo: PageInfo
-  edges: AttributeEdge[]
-  aggregate: AggregateAttribute
-}
-
-export interface CategoryPreviousValues {
+export interface BrandPreviousValues {
   id: ID_Output
   name: String
 }
 
-/*
- * An edge in a connection.
-
- */
-export interface VariantEdge {
-  node: Variant
-  cursor: String
+export interface AggregateAttribute {
+  count: Int
 }
 
 export interface User extends Node {
@@ -6323,15 +6379,46 @@ export interface User extends Node {
   stripeCustomerId?: String
 }
 
+/*
+ * A connection to a list of items.
+
+ */
+export interface AttributeConnection {
+  pageInfo: PageInfo
+  edges: AttributeEdge[]
+  aggregate: AggregateAttribute
+}
+
+export interface CategorySubscriptionPayload {
+  mutation: MutationType
+  node?: Category
+  updatedFields?: String[]
+  previousValues?: CategoryPreviousValues
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface VariantEdge {
+  node: Variant
+  cursor: String
+}
+
+export interface CategoryPreviousValues {
+  id: ID_Output
+  name: String
+}
+
 export interface AggregateSelectedOption {
   count: Int
 }
 
-export interface OptionSubscriptionPayload {
+export interface OrderSubscriptionPayload {
   mutation: MutationType
-  node?: Option
+  node?: Order
   updatedFields?: String[]
-  previousValues?: OptionPreviousValues
+  previousValues?: OrderPreviousValues
 }
 
 /*
@@ -6344,9 +6431,11 @@ export interface SelectedOptionConnection {
   aggregate: AggregateSelectedOption
 }
 
-export interface OptionPreviousValues {
-  id: ID_Output
-  name: String
+export interface OptionSubscriptionPayload {
+  mutation: MutationType
+  node?: Option
+  updatedFields?: String[]
+  previousValues?: OptionPreviousValues
 }
 
 /*
@@ -6358,22 +6447,19 @@ export interface OptionValueEdge {
   cursor: String
 }
 
-export interface OrderSubscriptionPayload {
-  mutation: MutationType
-  node?: Order
-  updatedFields?: String[]
-  previousValues?: OrderPreviousValues
+export interface OptionPreviousValues {
+  id: ID_Output
+  name: String
 }
 
 export interface AggregateOption {
   count: Int
 }
 
-export interface OptionValueSubscriptionPayload {
-  mutation: MutationType
-  node?: OptionValue
-  updatedFields?: String[]
-  previousValues?: OptionValuePreviousValues
+export interface Brand extends Node {
+  id: ID_Output
+  name: String
+  category: Category
 }
 
 /*
@@ -6386,9 +6472,11 @@ export interface OptionConnection {
   aggregate: AggregateOption
 }
 
-export interface OptionValuePreviousValues {
-  id: ID_Output
-  name: String
+export interface OptionValueSubscriptionPayload {
+  mutation: MutationType
+  node?: OptionValue
+  updatedFields?: String[]
+  previousValues?: OptionValuePreviousValues
 }
 
 /*
@@ -6400,13 +6488,24 @@ export interface CategoryEdge {
   cursor: String
 }
 
-export interface Brand extends Node {
+export interface OptionValuePreviousValues {
   id: ID_Output
   name: String
-  category: Category
 }
 
 export interface AggregateBrand {
+  count: Int
+}
+
+export interface Variant extends Node {
+  id: ID_Output
+  selectedOptions?: SelectedOption[]
+  price: Float
+  available: Boolean
+  product: Product
+}
+
+export interface AggregateOrderLineItem {
   count: Int
 }
 
@@ -6415,14 +6514,6 @@ export interface SelectedOptionSubscriptionPayload {
   node?: SelectedOption
   updatedFields?: String[]
   previousValues?: SelectedOptionPreviousValues
-}
-
-export interface AggregateOrderLineItem {
-  count: Int
-}
-
-export interface SelectedOptionPreviousValues {
-  id: ID_Output
 }
 
 /*
@@ -6434,10 +6525,8 @@ export interface OrderEdge {
   cursor: String
 }
 
-export interface Category extends Node {
+export interface SelectedOptionPreviousValues {
   id: ID_Output
-  name: String
-  options?: Option[]
 }
 
 /*
@@ -6450,21 +6539,21 @@ export interface FileConnection {
   aggregate: AggregateFile
 }
 
-export interface VariantSubscriptionPayload {
-  mutation: MutationType
-  node?: Variant
-  updatedFields?: String[]
-  previousValues?: VariantPreviousValues
+export interface Category extends Node {
+  id: ID_Output
+  name: String
+  options?: Option[]
 }
 
 export interface AggregateProduct {
   count: Int
 }
 
-export interface VariantPreviousValues {
-  id: ID_Output
-  price: Float
-  available: Boolean
+export interface VariantSubscriptionPayload {
+  mutation: MutationType
+  node?: Variant
+  updatedFields?: String[]
+  previousValues?: VariantPreviousValues
 }
 
 /*
@@ -6476,11 +6565,10 @@ export interface AttributeEdge {
   cursor: String
 }
 
-export interface Attribute extends Node {
+export interface VariantPreviousValues {
   id: ID_Output
-  value: String
-  category: Category
-  products?: Product[]
+  price: Float
+  available: Boolean
 }
 
 /*
@@ -6493,20 +6581,22 @@ export interface VariantConnection {
   aggregate: AggregateVariant
 }
 
-export interface AttributeSubscriptionPayload {
-  mutation: MutationType
-  node?: Attribute
-  updatedFields?: String[]
-  previousValues?: AttributePreviousValues
+export interface Attribute extends Node {
+  id: ID_Output
+  value: String
+  category: Category
+  products?: Product[]
 }
 
 export interface AggregateOptionValue {
   count: Int
 }
 
-export interface AttributePreviousValues {
-  id: ID_Output
-  value: String
+export interface AttributeSubscriptionPayload {
+  mutation: MutationType
+  node?: Attribute
+  updatedFields?: String[]
+  previousValues?: AttributePreviousValues
 }
 
 /*
@@ -6516,6 +6606,21 @@ export interface AttributePreviousValues {
 export interface OptionEdge {
   node: Option
   cursor: String
+}
+
+export interface AttributePreviousValues {
+  id: ID_Output
+  value: String
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface CategoryConnection {
+  pageInfo: PageInfo
+  edges: CategoryEdge[]
+  aggregate: AggregateCategory
 }
 
 export interface Option extends Node {
@@ -6529,10 +6634,10 @@ export interface Option extends Node {
  * A connection to a list of items.
 
  */
-export interface CategoryConnection {
+export interface OrderLineItemConnection {
   pageInfo: PageInfo
-  edges: CategoryEdge[]
-  aggregate: AggregateCategory
+  edges: OrderLineItemEdge[]
+  aggregate: AggregateOrderLineItem
 }
 
 export interface ProductSubscriptionPayload {
@@ -6543,13 +6648,12 @@ export interface ProductSubscriptionPayload {
 }
 
 /*
- * A connection to a list of items.
+ * An edge in a connection.
 
  */
-export interface OrderLineItemConnection {
-  pageInfo: PageInfo
-  edges: OrderLineItemEdge[]
-  aggregate: AggregateOrderLineItem
+export interface UserEdge {
+  node: User
+  cursor: String
 }
 
 export interface ProductPreviousValues {
@@ -6562,29 +6666,13 @@ export interface ProductPreviousValues {
   imageUrl?: String
 }
 
-/*
- * An edge in a connection.
-
- */
-export interface UserEdge {
-  node: User
-  cursor: String
+export interface AggregateVariant {
+  count: Int
 }
 
 export interface OptionValue extends Node {
   id: ID_Output
   name: String
-}
-
-export interface AggregateVariant {
-  count: Int
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType
-  node?: User
-  updatedFields?: String[]
-  previousValues?: UserPreviousValues
 }
 
 /*
@@ -6604,15 +6692,6 @@ export interface OptionValueConnection {
 export interface BrandEdge {
   node: Brand
   cursor: String
-}
-
-export interface FilePreviousValues {
-  id: ID_Output
-  name: String
-  url: String
-  contentType: String
-  secret: String
-  size: Int
 }
 
 export interface FileSubscriptionPayload {
@@ -6646,6 +6725,13 @@ export interface UserPreviousValues {
   lastName?: String
   role: Role
   stripeCustomerId?: String
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType
+  node?: User
+  updatedFields?: String[]
+  previousValues?: UserPreviousValues
 }
 
 export interface AggregateFile {
@@ -6706,6 +6792,8 @@ export type String = string
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
 export type Int = number
+
+export type DateTime = string
 
 export interface Schema {
   query: Query

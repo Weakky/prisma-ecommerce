@@ -14,7 +14,7 @@ import Search from './src/views/search/Search';
 import Browse from './src/views/browse/BrowseContainer';
 import Products from './src/views/products/ProductsContainer';
 import Basket from './src/views/basket/BasketContainer';
-import Recap from './src/views/recap/Recap';
+import Recap from './src/views/recap/RecapContainer';
 
 import Colors from './src/statics/colors';
 

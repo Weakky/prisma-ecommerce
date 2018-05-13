@@ -1,4 +1,4 @@
-# import User, Product, ProductConnection, Brand, Category, Variant, Option, Attribute, SelectedOption, Cart, OrderLineItem, PageInfo, AggregateProduct, ProductConnection, ProductSubscriptionPayload from "./generated/prisma.graphql"
+# import User, Product, ProductConnection, Brand, Category, Variant, Option, Attribute, SelectedOption, Cart, OrderLineItem, PageInfo, AggregateProduct, ProductConnection, ProductSubscriptionPayload, Order from "./generated/prisma.graphql"
 # import ProductCreateInput, BrandCreateInput, CategoryCreateInput from "./generated/prisma.graphql"
 # import ProductWhereInput, ProductOrderByInput from "./generated/prisma.graphql"
 
@@ -10,6 +10,7 @@ type Query {
   allOptions(categoryId: ID): [Option!]!
   allAttributes(categoryId: ID): [Attribute!]!
   allCategories: [Category!]
+  allOrders: [Order!]!
   
   product(id: ID!): Product
 

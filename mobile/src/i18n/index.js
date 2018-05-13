@@ -5,7 +5,7 @@
  *
  */
 
-const LANGUAGE = 'en';
+const LANGUAGE = 'fr';
 
 export function translate(key) {
  return translations[key] || key;
@@ -139,7 +139,7 @@ const translations = {
     //Recap translations
     summary: 'Récapitulatif',
     your_order: 'Votre commande',
-    when_take_order: 'Quand souhaitez-vous récupérer votre commande .',
+    when_take_order: 'Quand souhaitez-vous récupérer votre commande ?',
     finish_order: 'Finalisez votre commande',
     accept_gtc: 'En validant votre commande, vous acceptez l’intégralité de nos CGV ainsi que notre politique de gestion de vos informations personnelles.',
     total_excl_tax: 'Total HT',

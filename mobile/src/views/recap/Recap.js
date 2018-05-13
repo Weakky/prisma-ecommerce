@@ -70,7 +70,7 @@ const Recap = (props) => (
       </Title>
       <Button
         style={{ marginTop: 120, alignSelf: 'center' }}
-        onPress={() => {}}
+        onPress={props.checkout}
         label={translate('finish_order')}
         backgroundColor={Colors.red}
         labelColor={Colors.white}

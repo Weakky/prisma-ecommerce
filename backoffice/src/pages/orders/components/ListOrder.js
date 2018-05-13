@@ -38,14 +38,14 @@ class ListOrder extends Component {
       },
       {
         Header: 'Etat',
-        accessor: 'state',
+        accessor: 'orderStatus',
         Cell: props => (
           <p className="Reactable-cell">
             {
               {
-                PROCESSING: 'Traitement en cours',
-                PROCESSED: 'Traitée',
-                RECEIVED: 'Reçue',
+                SUBMITTED: 'Nouvelle commande',
+                PREPARED: 'Préparée',
+                PAID: 'Payée',
               }[props.value]
             }
           </p>
@@ -107,9 +107,10 @@ class ListOrder extends Component {
           className="animated Reactable-table -highlight"
           columns={columns}
           SubComponent={row => {
+            console.log(row);
             const columns = [
               {
-                accessor: 'taxon.product.imageUrl',
+                accessor: 'variant.product.imageUrl',
                 Cell: props => (
                   <img
                     className="Reactable-img"
@@ -121,13 +122,21 @@ class ListOrder extends Component {
               },
               {
                 Header: 'Nom',
-                accessor: 'taxon.product.name',
+                accessor: 'variant.product.name',
                 Cell: props => <p className="Reactable-cell">{props.value}</p>,
               },
               {
                 Header: 'Taxon',
-                accessor: 'taxon.taxon.name',
-                Cell: props => <p className="Reactable-cell">{props.value}</p>,
+                accessor: 'variant.selectedOptions',
+                Cell: props => (
+                  <div>
+                    { props.value.map((selectedOption) => (
+                      <p key={selectedOption.id} className="Reactable-cell">
+                        {`${selectedOption.option.name.toUpperCase()}: ${selectedOption.value.name.toUpperCase()}`}
+                      </p>
+                    ))}
+                  </div>
+                ),
               },
               {
                 Header: 'Quantité',
@@ -141,9 +150,9 @@ class ListOrder extends Component {
                 <ReactTable
                   className="Reactable-subTable"
                   noDataText="Aucune données"
-                  data={row.original.items}
+                  data={row.original.lineItems}
                   columns={columns}
-                  defaultPageSize={row.original.items ? row.original.items.length : 0}
+                  defaultPageSize={row.original.lineItems ? row.original.lineItems.length : 0}
                   showPagination={false}
                   sortable={false}
                 />

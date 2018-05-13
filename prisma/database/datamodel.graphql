@@ -83,6 +83,8 @@ type File {
 
 type Order {
   id: ID! @unique
+  createdAt: DateTime!
+  updatedAt: DateTime!
   owner: User! @relation(name: "UserOrders")
   lineItems: [OrderLineItem!]! @relation(name: "OrderLineItems" onDelete: CASCADE)
   totalPrice: Float!
@@ -95,7 +97,7 @@ type OrderLineItem {
   id: ID! @unique
   quantity: Int!
   variant: Variant!
-  owner: User! @relation(name: "UserCart")
+  owner: User @relation(name: "UserCart", onDelete: SET_NULL)
 }
 
 enum OrderStatus {
