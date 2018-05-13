@@ -30,6 +30,10 @@ export default {
               name
               imageUrl
               displayPrice
+              unavailableOptionsValues {
+                id
+                name
+              }
               brand {
                 id
                 name

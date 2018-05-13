@@ -114,6 +114,7 @@ class Basket extends Component {
                 onPressViewProduct={() => {
                   this.props.navigation.navigate('Product', {
                     productId: lineItem.variant.product.id,
+                    unavailableOptionsValues: lineItem.variant.product.unavailableOptionsValues
                   });
                 }}
                 onPressDeleteProduct={() => this.removeItemFromBasket(lineItem.id)}
