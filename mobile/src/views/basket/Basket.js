@@ -77,7 +77,7 @@ class Basket extends Component {
             }}
           >
             <Title size={22} color={Colors.text}>
-              Votre panier
+              {translate('your_cart')}
             </Title>
             {
               this.state.cart.length > 0 && (
