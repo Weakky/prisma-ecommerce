@@ -34,6 +34,25 @@ function getCombinations(arrays, combine = [], finalList = []) {
   return finalList;
 }
 
+export const findUnavailableOptionsValues = (variants, options) => {
+  const isOptionValueInSelectedOptions = (selectedOptions, optionValue) => {
+    return !!selectedOptions.find(selectedOption => selectedOption.valueId === optionValue.id);
+  };
+
+  const isInAllUnavailableVariants = (variants, optionValue) => {
+    return variants
+    // Get all variants in which the option value is
+      .filter(variant => isOptionValueInSelectedOptions(variant.selectedOptions, optionValue))
+      // Make sure those variants are all unavailable
+      .every(variant => !variant.available);
+  };
+
+  return _(options)
+    .flatMap(option => option.values)
+    .filter((optionValue) => isInAllUnavailableVariants(variants, optionValue))
+    .value();
+};
+
 class CreateProduct extends Component {
   constructor(props) {
     super(props);
@@ -413,6 +432,8 @@ class CreateProduct extends Component {
         valueId: selectedOption.value.id,
       })),
     }));
+    const unavailableOptionsValuesIds = findUnavailableOptionsValues(remappedVariants, selectedOptions)
+      .map(optionValue => optionValue.id);
 
     try {
       await this.props.upsertProduct({
@@ -425,6 +446,7 @@ class CreateProduct extends Component {
         optionIds,
         variants: remappedVariants,
         displayPrice,
+        unavailableOptionsValuesIds,
         imageUrl: uploadedImageUrl || imageUrl,
       });
     } catch (e) {

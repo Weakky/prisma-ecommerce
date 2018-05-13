@@ -181,6 +181,7 @@ export const CreateProductMutation = gql`
     $variants: [ProductVariantInput!]!
     $productId: ID,
     $attributesIds: [ID!]!
+    $unavailableOptionsValuesIds: [ID!]!
     $displayPrice: Float!
     $imageUrl: String
   ) {
@@ -194,6 +195,7 @@ export const CreateProductMutation = gql`
       variants: $variants
       productId: $productId
       attributesIds: $attributesIds
+      unavailableOptionsValuesIds: $unavailableOptionsValuesIds
       displayPrice: $displayPrice
     ) {
       id
@@ -246,9 +248,9 @@ export const CreateProductMutation = gql`
 
 export const CreateProductMutationOptions = {
   props: ({ mutate }) => ({
-    upsertProduct: ({ name, brandId, categoryId, available, optionIds, variants, productId, attributesIds, displayPrice, imageUrl }) =>
+    upsertProduct: ({ name, brandId, categoryId, available, optionIds, variants, productId, attributesIds, displayPrice, imageUrl, unavailableOptionsValuesIds }) =>
       mutate({
-        variables: { name, brandId, categoryId, available, optionIds, variants, productId, attributesIds, displayPrice, imageUrl },
+        variables: { name, brandId, categoryId, available, optionIds, variants, productId, attributesIds, displayPrice, imageUrl, unavailableOptionsValuesIds },
         update: (store, { data: { upsertProduct } }) => {
           const data = store.readQuery({ query: ListAllProductsQuery });
 

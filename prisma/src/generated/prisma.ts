@@ -2539,6 +2539,7 @@ type Product implements Node {
   SKU: String
   category(where: CategoryWhereInput): Category!
   options(where: OptionWhereInput, orderBy: OptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Option!]
+  unavailableOptionsValues(where: OptionValueWhereInput, orderBy: OptionValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OptionValue!]
   variants(where: VariantWhereInput, orderBy: VariantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Variant!]
   attributes(where: AttributeWhereInput, orderBy: AttributeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attribute!]
   displayPrice: Float!
@@ -2571,6 +2572,7 @@ input ProductCreateInput {
   brand: BrandCreateOneInput!
   category: CategoryCreateOneInput!
   options: OptionCreateManyInput
+  unavailableOptionsValues: OptionValueCreateManyInput
   variants: VariantCreateManyWithoutProductInput
   attributes: AttributeCreateManyWithoutProductsInput
 }
@@ -2595,6 +2597,7 @@ input ProductCreateWithoutAttributesInput {
   brand: BrandCreateOneInput!
   category: CategoryCreateOneInput!
   options: OptionCreateManyInput
+  unavailableOptionsValues: OptionValueCreateManyInput
   variants: VariantCreateManyWithoutProductInput
 }
 
@@ -2608,6 +2611,7 @@ input ProductCreateWithoutVariantsInput {
   brand: BrandCreateOneInput!
   category: CategoryCreateOneInput!
   options: OptionCreateManyInput
+  unavailableOptionsValues: OptionValueCreateManyInput
   attributes: AttributeCreateManyWithoutProductsInput
 }
 
@@ -2705,6 +2709,7 @@ input ProductUpdateInput {
   brand: BrandUpdateOneInput
   category: CategoryUpdateOneInput
   options: OptionUpdateManyInput
+  unavailableOptionsValues: OptionValueUpdateManyInput
   variants: VariantUpdateManyWithoutProductInput
   attributes: AttributeUpdateManyWithoutProductsInput
 }
@@ -2736,6 +2741,7 @@ input ProductUpdateWithoutAttributesDataInput {
   brand: BrandUpdateOneInput
   category: CategoryUpdateOneInput
   options: OptionUpdateManyInput
+  unavailableOptionsValues: OptionValueUpdateManyInput
   variants: VariantUpdateManyWithoutProductInput
 }
 
@@ -2749,6 +2755,7 @@ input ProductUpdateWithoutVariantsDataInput {
   brand: BrandUpdateOneInput
   category: CategoryUpdateOneInput
   options: OptionUpdateManyInput
+  unavailableOptionsValues: OptionValueUpdateManyInput
   attributes: AttributeUpdateManyWithoutProductsInput
 }
 
@@ -3085,6 +3092,9 @@ input ProductWhereInput {
   options_every: OptionWhereInput
   options_some: OptionWhereInput
   options_none: OptionWhereInput
+  unavailableOptionsValues_every: OptionValueWhereInput
+  unavailableOptionsValues_some: OptionValueWhereInput
+  unavailableOptionsValues_none: OptionValueWhereInput
   variants_every: VariantWhereInput
   variants_some: VariantWhereInput
   variants_none: VariantWhereInput
@@ -4860,6 +4870,7 @@ export interface ProductCreateWithoutVariantsInput {
   brand: BrandCreateOneInput
   category: CategoryCreateOneInput
   options?: OptionCreateManyInput
+  unavailableOptionsValues?: OptionValueCreateManyInput
   attributes?: AttributeCreateManyWithoutProductsInput
 }
 
@@ -5023,6 +5034,7 @@ export interface ProductCreateWithoutAttributesInput {
   brand: BrandCreateOneInput
   category: CategoryCreateOneInput
   options?: OptionCreateManyInput
+  unavailableOptionsValues?: OptionValueCreateManyInput
   variants?: VariantCreateManyWithoutProductInput
 }
 
@@ -5071,6 +5083,7 @@ export interface ProductCreateInput {
   brand: BrandCreateOneInput
   category: CategoryCreateOneInput
   options?: OptionCreateManyInput
+  unavailableOptionsValues?: OptionValueCreateManyInput
   variants?: VariantCreateManyWithoutProductInput
   attributes?: AttributeCreateManyWithoutProductsInput
 }
@@ -5177,6 +5190,7 @@ export interface ProductUpdateInput {
   brand?: BrandUpdateOneInput
   category?: CategoryUpdateOneInput
   options?: OptionUpdateManyInput
+  unavailableOptionsValues?: OptionValueUpdateManyInput
   variants?: VariantUpdateManyWithoutProductInput
   attributes?: AttributeUpdateManyWithoutProductsInput
 }
@@ -5223,6 +5237,7 @@ export interface ProductUpdateWithoutAttributesDataInput {
   brand?: BrandUpdateOneInput
   category?: CategoryUpdateOneInput
   options?: OptionUpdateManyInput
+  unavailableOptionsValues?: OptionValueUpdateManyInput
   variants?: VariantUpdateManyWithoutProductInput
 }
 
@@ -5369,6 +5384,9 @@ export interface ProductWhereInput {
   options_every?: OptionWhereInput
   options_some?: OptionWhereInput
   options_none?: OptionWhereInput
+  unavailableOptionsValues_every?: OptionValueWhereInput
+  unavailableOptionsValues_some?: OptionValueWhereInput
+  unavailableOptionsValues_none?: OptionValueWhereInput
   variants_every?: VariantWhereInput
   variants_some?: VariantWhereInput
   variants_none?: VariantWhereInput
@@ -5887,6 +5905,7 @@ export interface ProductUpdateWithoutVariantsDataInput {
   brand?: BrandUpdateOneInput
   category?: CategoryUpdateOneInput
   options?: OptionUpdateManyInput
+  unavailableOptionsValues?: OptionValueUpdateManyInput
   attributes?: AttributeUpdateManyWithoutProductsInput
 }
 
@@ -6611,6 +6630,7 @@ export interface Product extends Node {
   SKU?: String
   category: Category
   options?: Option[]
+  unavailableOptionsValues?: OptionValue[]
   variants?: Variant[]
   attributes?: Attribute[]
   displayPrice: Float

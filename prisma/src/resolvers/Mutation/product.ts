@@ -1,6 +1,5 @@
 import { Context } from '../../utils';
 import * as _ from 'lodash';
-import { Variant } from '../../generated/prisma';
 
 export const product = {
   async upsertProduct(parent, args, ctx: Context, info) {
@@ -23,6 +22,7 @@ export const product = {
           attributes { id }
           options { id }
           variants { id }
+          unavailableOptionsValues { id }
         }`
       );
 
@@ -57,6 +57,10 @@ export const product = {
         .map(optionId => ({ id: optionId }))
         .value();
 
+      // Disconnect/Reconnect all unavailableOptionsValues everytime for convenience
+      const unavailableOptionsValuesToDisconnect = currentProduct.unavailableOptionsValues.map(optionValue => ({ id: optionValue.id }));
+      const unavailableOptionsValuesToConnect = args.unavailableOptionsValuesIds.map(optionValueId => ({ id: optionValueId }));
+
       const variantsToCreate = _.differenceBy(args.variants, currentProduct.variants, 'id');
 
       const variantsToUpdate = args.variants
@@ -84,6 +88,10 @@ export const product = {
           options: {
             connect: optionsToConnect,
             disconnect: optionsToDisconnect
+          },
+          unavailableOptionsValues: {
+            connect: unavailableOptionsValuesToConnect,
+            disconnect: unavailableOptionsValuesToDisconnect,
           },
           description: "",
           displayPrice: args.displayPrice,

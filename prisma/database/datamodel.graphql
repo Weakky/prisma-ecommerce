@@ -52,6 +52,7 @@ type Product {
   SKU: String
   category: Category!
   options: [Option!]!
+  unavailableOptionsValues: [OptionValue!]!
   variants: [Variant!]! @relation(name: "ProductVariants" onDelete: CASCADE)
   attributes: [Attribute!]!
   displayPrice: Float!

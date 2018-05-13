@@ -71,7 +71,7 @@ export default graphql(query, {
           const newProducts = {
             ...prevState.products,
             edges: prevState.products.edges.map((edge) => {
-              if (edge.node.id !== subscriptionData.data.updatedProduct.id) {
+              if (edge.node.id !== subscriptionData.data.updatedProduct.node.id) {
                 return edge;
               }
 
@@ -79,8 +79,8 @@ export default graphql(query, {
                 ...edge,
                 node: {
                   ...edge.node,
-                  available: subscriptionData.data.updatedProduct.available,
-                  unavailableOptionsValues: subscriptionData.data.updatedProduct.unavailableOptionsValues
+                  available: subscriptionData.data.updatedProduct.node.available,
+                  unavailableOptionsValues: subscriptionData.data.updatedProduct.node.unavailableOptionsValues
                 }
               }
             })

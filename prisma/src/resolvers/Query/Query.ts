@@ -1,24 +1,17 @@
 import { getUserId, Context } from '../../utils'
-import { buildProductWithUnavailableOptionsValues } from '../../common/productWithUnavailableOptionsValues';
-import * as _ from 'lodash';
 
 export const Query = {
   me(parent, args, ctx: Context, info) {
     const id = getUserId(ctx);
     return ctx.db.query.user({ where: { id } }, info)
   },
-  async product(parent, args, ctx: Context, info) {
-    const product = await ctx.db.query.product({ where: { id: args.id } }, info);
-
-    return product;
+  product(parent, args, ctx: Context, info) {
+    return ctx.db.query.product({ where: { id: args.id } }, info);
   },
   allProducts(parent, args, ctx: Context, info) {
     return ctx.db.query.products({...args}, info);
   },
-  // searchProducts(parent, args, ctx: Context, info) {
-  //   return ctx.db.query.products({ where: { name_contains: args.query } }, info);
-  // },
-  async searchProducts(parent, args, ctx: Context, info) {
+  searchProducts(parent, args, ctx: Context, info) {
     const where = {
       ...(args.brandsIds && args.brandsIds.length > 0 && { brand: { id_in: args.brandsIds } }),
       ...(args.attributesIds && args.attributesIds.length > 0 && { attributes_some: { id_in: args.attributesIds } }),
@@ -27,56 +20,11 @@ export const Query = {
       ...(!!args.categoryId && { category: { id: args.categoryId } }),
     };
 
-    const productsConnection = await ctx.db.query.productsConnection({
+    return ctx.db.query.productsConnection({
       where,
       first: args.first,
       skip: args.skip
-    }, `{ 
-      aggregate { count }
-      edges {
-        node {
-          id
-          name
-          imageUrl
-          displayPrice
-          brand {
-            id
-            name
-          }
-          options {
-            id
-            values {
-              id
-              name
-            }
-          }
-          variants {
-            id
-            available
-            selectedOptions {
-              id
-              option {
-                id
-              }
-              value {
-                id
-                name
-              }
-            }
-          }
-        }
-      }
-    }`);
-
-    const productConnectionWithUnavailableOptionValues = {
-      ...productsConnection,
-      edges: productsConnection.edges.map(edge => ({
-        ...edge,
-        node: buildProductWithUnavailableOptionsValues(edge.node)
-      }))
-    };
-
-    return productConnectionWithUnavailableOptionValues;
+    }, info);
   },
   allBrands(parent, args, ctx: Context, info) {
     if (args.categoryId) {

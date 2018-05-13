@@ -1,4 +1,4 @@
-# import User, Product, ProductConnection, Brand, Category, Variant, Option, Attribute, SelectedOption, Cart, OrderLineItem, PageInfo, AggregateProduct, ProductSubscriptionPayload from "./generated/prisma.graphql"
+# import User, Product, ProductConnection, Brand, Category, Variant, Option, Attribute, SelectedOption, Cart, OrderLineItem, PageInfo, AggregateProduct, ProductConnection, ProductSubscriptionPayload from "./generated/prisma.graphql"
 # import ProductCreateInput, BrandCreateInput, CategoryCreateInput from "./generated/prisma.graphql"
 # import ProductWhereInput, ProductOrderByInput from "./generated/prisma.graphql"
 
@@ -21,7 +21,7 @@ type Query {
     categoryId: ID,
     first: Int!,
     skip: Int!
-  ): ProductConnectionWithUnavailableOptionsValues!
+  ): ProductConnection!
 }
 
 type Mutation {
@@ -42,6 +42,7 @@ type Mutation {
     optionIds: [ID!]!,
     variants: [ProductVariantInput!]!,
     attributesIds: [ID!]!,
+    unavailableOptionsValuesIds: [ID!]!,
     displayPrice: Float!,
     imageUrl: String
   ): Product
@@ -63,7 +64,7 @@ type Mutation {
 }
 
 type Subscription {
-  updatedProduct: ProductWithUnavailableOptionsValues
+  updatedProduct: ProductSubscriptionPayload
 }
 
 input OptionValueInput {
@@ -81,28 +82,6 @@ input ProductVariantInput {
 input SelectedOptionInput {
   optionId: ID!
   valueId: ID!
-}
-
-type ProductConnectionWithUnavailableOptionsValues {
-  pageInfo: PageInfo!
-
-  edges: [ProductEdge]!
-  aggregate: AggregateProduct!
-}
-
-type ProductEdge {
-  node: ProductWithUnavailableOptionsValues!
-  cursor: String!
-}
-
-type ProductWithUnavailableOptionsValues {
-  id: ID!
-  name: String!
-  brand: Brand!
-  displayPrice: Float!
-  available: Boolean!
-  imageUrl: String
-  unavailableOptionsValues: [OptionValue!]!
 }
 
 type AuthPayload {
