@@ -225,7 +225,7 @@ class Product extends React.Component {
         if (!selectedOption) { return; }
 
         if (forQuantity) {
-          return this.setState({quantity: selectedOption})
+          return this.setState({ quantity: selectedOption })
         }
 
         this.setState({
@@ -263,7 +263,7 @@ class Product extends React.Component {
 
     return {
       variantId: variant.id,
-      quantity: this.state.quantity
+      quantity: parseInt(this.state.quantity)
     }
   }
 

@@ -32,7 +32,7 @@ const defaultProps = {
   notAvailableTaxons: ['11 MG', '16 MG'],
 };
 
-const TaxonNotAvailable = (props) => (
+const OptionsValuesNotAvailable = (props) => (
   <View
     style={{
       padding: 7,
@@ -66,7 +66,7 @@ const TaxonNotAvailable = (props) => (
   </View>
 )
 
-TaxonNotAvailable.propTypes = {
+OptionsValuesNotAvailable.propTypes = {
   notAvailableTaxons: PropTypes.array
 }
 
@@ -126,7 +126,7 @@ const Card = ({
     </View>
     {
       unavailableOptionsValues.length > 0 && (
-        <TaxonNotAvailable unavailableOptionsValues={unavailableOptionsValues} />
+        <OptionsValuesNotAvailable unavailableOptionsValues={unavailableOptionsValues} />
       )
     }
   </TouchableOpacity>

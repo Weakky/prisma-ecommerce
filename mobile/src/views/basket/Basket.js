@@ -41,7 +41,7 @@ class Basket extends Component {
   }
 
   totalTTC() {
-    return sumBy(this.state.cart, lineItem => lineItem.quantity * lineItem.variant.price);
+    return parseFloat(sumBy(this.state.cart, lineItem => lineItem.quantity * lineItem.variant.price)).toFixed(2);
   }
 
   totalHT() {

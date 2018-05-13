@@ -48,7 +48,7 @@ class SignIn extends PureComponent {
   async authenticateUser() {
     const { email, password } = this.state;
 
-    await AsyncStorage.clear();
+    //await AsyncStorage.clear();
 
     this.setState({ error: '', loading: true });
 

@@ -39,7 +39,7 @@ const TempView = ({ navigation }) => (
 
 const ProductWithMappedProps = withMappedNavigationProps(Product);
 
-const BrowseNavigator = StackModalNavigator(
+const BrowseNavigator = StackNavigator(
   {
     Browse: { screen: Browse },
     Search: { screen: Search },
