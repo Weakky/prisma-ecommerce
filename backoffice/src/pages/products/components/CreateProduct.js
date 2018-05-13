@@ -439,7 +439,7 @@ class CreateProduct extends Component {
     await this.upsertProduct();
 
     this.setState(this.initialState);
-    this.props.history.push('/Produits');
+    this.props.history.push('/products');
   }
 }
 
