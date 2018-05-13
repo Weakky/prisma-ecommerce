@@ -37,9 +37,13 @@ class ListUser extends Component {
         filterable: true,
       },
       {
-        Header: 'Date de creation',
-        accessor: 'createdAt',
-        Cell: props => <p className="Reactable-cell">{props.value.substring(0, 10)}</p>,
+        Header: 'Name',
+        Cell: props => <p className="Reactable-cell">{`${props.original.firstName} ${props.original.lastName.toUpperCase()}`}</p>,
+      },
+      {
+        Header: 'Email',
+        accessor: 'email',
+        Cell: props => <p className="Reactable-cell">{props.value}</p>,
       },
     ];
     const buttons = [
@@ -57,7 +61,7 @@ class ListUser extends Component {
           loadingText="Rafraichissement des données.."
           loading={this.state.loading}
           noDataText="Aucune données"
-          data={this.props.data.allUsers}
+          data={this.props.data.allCustomers}
           className="animated Reactable-table -highlight"
           columns={columns}
         />

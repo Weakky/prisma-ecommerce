@@ -11,6 +11,7 @@ type Query {
   allAttributes(categoryId: ID): [Attribute!]!
   allCategories: [Category!]
   allOrders: [Order!]!
+  allCustomers: [User!]!
   
   product(id: ID!): Product
 

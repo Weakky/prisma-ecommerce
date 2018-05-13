@@ -50,5 +50,8 @@ export const Query = {
   },
   allOrders(parent, args, ctx: Context, info) {
     return ctx.db.query.orders({}, info);
+  },
+  allCustomers(parent, args, ctx: Context, info) {
+    return ctx.db.query.users({}, info);
   }
 };

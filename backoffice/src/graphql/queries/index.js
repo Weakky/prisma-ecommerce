@@ -71,10 +71,12 @@ export const ListAllProductsQuery = gql`
 
 
 export const ListAllUsersQuery = gql`
-	query allUsers {
-		allUsers {
+	query allCustomers {
+		allCustomers {
 			id
-			createdAt
+			firstName
+      lastName
+      email
 		}
 	}
 `;
