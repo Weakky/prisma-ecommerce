@@ -29,7 +29,7 @@ export const cart = {
     return ctx.db.mutation.createOrderLineItem({
       data: {
         owner: { connect: { id: userId } },
-        quantity: 1,
+        quantity: args.quantity,
         variant: { connect: { id: args.variantId } } 
       }
     }, info);
