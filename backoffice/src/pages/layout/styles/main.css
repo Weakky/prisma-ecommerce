@@ -1,0 +1,5 @@
+.main {
+  flex: 1;
+  overflow: auto;
+  background-color: #f9f9f9;
+}

@@ -1,0 +1,111 @@
+# import User, Product, ProductConnection, Brand, Category, Variant, Option, Attribute, SelectedOption, Cart, OrderLineItem, PageInfo, AggregateProduct, ProductSubscriptionPayload from "./generated/prisma.graphql"
+# import ProductCreateInput, BrandCreateInput, CategoryCreateInput from "./generated/prisma.graphql"
+# import ProductWhereInput, ProductOrderByInput from "./generated/prisma.graphql"
+
+type Query {
+  me: User
+
+  allProducts: [Product!]
+  allBrands(categoryId: ID): [Brand!]
+  allOptions(categoryId: ID): [Option!]!
+  allAttributes(categoryId: ID): [Attribute!]!
+  allCategories: [Category!]
+  
+  product(id: ID!): Product
+
+  searchProducts(
+    productName: String
+    brandsIds: [ID],
+    attributesIds: [ID],
+    optionsValuesIds: [ID],
+    categoryId: ID,
+    first: Int!,
+    skip: Int!
+  ): ProductConnectionWithUnavailableOptionsValues!
+}
+
+type Mutation {
+  signup(email: String!, password: String!, firstName: String!, lastName: String!): AuthPayload!
+  login(email: String!, password: String!): AuthPayload!
+
+  # Upsert mutations
+  upsertBrand(brandId: ID, categoryId: ID!, name: String!): Brand
+  upsertAttribute(attributeId: ID, categoryId: ID!, value: String!): Attribute
+  upsertCategory(categoryId: ID, name: String!): Category
+  upsertOption(optionId: ID, name: String!, values: [OptionValueInput!]!, categoryId: ID!): Option
+  upsertProduct(
+    productId: ID,
+    name: String!,
+    categoryId: ID!,
+    brandId: ID!,
+    available: Boolean!,
+    optionIds: [ID!]!,
+    variants: [ProductVariantInput!]!,
+    attributesIds: [ID!]!,
+    displayPrice: Float!,
+    imageUrl: String
+  ): Product
+
+  # Delete mutations
+  deleteProduct(productId: ID!): Product
+  deleteOption(optionId: ID!): Option
+  deleteBrand(brandId: ID!): Brand
+  deleteAttribute(attributeId: ID!): Attribute
+  deleteCategory(categoryId: ID!): Category
+
+  #Cart mutations
+  addItemToCart(variantId: ID!, quantity: Int!): OrderLineItem!
+  removeItemFromCart(lineItemId: ID!): OrderLineItem!
+  updateItemFromCart(lineItemId: ID!, variantId: ID!, quantity: Int!): OrderLineItem!
+
+  #Order mutations
+  checkout: Order
+}
+
+type Subscription {
+  updatedProduct: ProductWithUnavailableOptionsValues
+}
+
+input OptionValueInput {
+  id: ID
+  value: String!
+}
+
+input ProductVariantInput {
+  id: ID
+  price: Float!
+  available: Boolean!
+  selectedOptions: [SelectedOptionInput!]!
+}
+
+input SelectedOptionInput {
+  optionId: ID!
+  valueId: ID!
+}
+
+type ProductConnectionWithUnavailableOptionsValues {
+  pageInfo: PageInfo!
+
+  edges: [ProductEdge]!
+  aggregate: AggregateProduct!
+}
+
+type ProductEdge {
+  node: ProductWithUnavailableOptionsValues!
+  cursor: String!
+}
+
+type ProductWithUnavailableOptionsValues {
+  id: ID!
+  name: String!
+  brand: Brand!
+  displayPrice: Float!
+  available: Boolean!
+  imageUrl: String
+  unavailableOptionsValues: [OptionValue!]!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}

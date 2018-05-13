@@ -1,0 +1,28 @@
+.CreateOption-input {
+  width: 96%;
+  height: 34px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+
+.CreateOption-select {
+  margin-bottom: 10px;
+}
+
+.CreateOption-label {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 30px;
+  width: 96%;
+}
+
+.CreateOption-container {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+}

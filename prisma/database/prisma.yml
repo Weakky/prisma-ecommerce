@@ -1,0 +1,18 @@
+# the endpoint of your service (this also defines the cluster the service will be deployed to)
+endpoint: ${env:PRISMA_ENDPOINT}
+
+#secret: ${env:PRISMA_SECRET}
+disableAuth: true
+
+# the file path pointing to your data model
+datamodel: datamodel.graphql
+
+# seed your service with initial data based on seed.graphql
+seed:
+  import: seed.zip
+
+hooks:
+  post-deploy:
+    - echo "Deployment finished"
+    - graphql get-schema --project database
+    - graphql prepare

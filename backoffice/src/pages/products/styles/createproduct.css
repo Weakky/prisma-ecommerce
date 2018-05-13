@@ -1,0 +1,105 @@
+.Createproduct-container {
+  margin: 80px 7%;
+  width: 80%;
+  height: 80%;
+}
+
+.Createproduct-row-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.Createproduct-column-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 0.8;
+}
+
+.Createproduct-input {
+  width: 96%;
+  height: 34px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding-left: 10px;
+}
+
+.Createproduct-package-container {
+  margin-bottom: 5px;
+}
+
+.Createproduct-input-package {
+  margin-right: 5px;
+  height: 34px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding-left: 10px;
+}
+
+.Createproduct-delete-package {
+  border-radius: 2px;
+  padding: 5px;
+  background-color: #cc6155;
+  cursor: pointer;
+  color: #f9f9f9;
+  font-size: 12px;
+}
+
+.Createproduct-create-package {
+  border-radius: 2px;
+  padding: 6px;
+  background-color: #1abc9c;
+  cursor: pointer;
+  color: #f9f9f9;
+  font-size: 12px;
+}
+
+.Createproduct-label {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 30px;
+}
+
+.Createproduct-semi-label {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 30px;
+}
+
+.Createproduct-button {
+  width: 100%;
+  height: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #1abc9c;
+  color: rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.Createproduct-button:hover {
+  color: #f9f9f9;
+}
+
+.Createproduct-switch-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.Createproduct-switch {
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: bold;
+  color: #f9f9f9;
+  padding: 5px 10px 5px 10px;
+  margin-right: 5px;
+}
+
+#input-file {
+  display: none;
+}

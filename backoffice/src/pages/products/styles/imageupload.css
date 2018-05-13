@@ -1,0 +1,28 @@
+.Imageupload-label-file {
+  display: flex;
+  height: 120px;
+  width: 120px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  border: 1px dashed #cccccc;
+  cursor: pointer;
+  line-height: 30px;
+  margin: 15px;
+}
+
+.Imageupload-icon {
+  color: #cccccc;
+}
+
+.Imageupload-previewText {
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 30px;
+  font-style: italic;
+}
+
+.Imageupload-container {
+  margin-top: 15px;
+  flex: 0.2;
+}

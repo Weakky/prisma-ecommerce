@@ -1,0 +1,76 @@
+.Sidebar-container {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+  overflow: auto;
+  background: #1d2027;
+}
+
+.Sidebar-header {
+  height: 80px;
+  background-color: #1d2027;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #282c36;
+  border-right: 1px solid #282c36;
+}
+
+.Sidebar-user {
+  display: flex;
+  flex: 0.15;
+  border-bottom: 1px solid #282c36;
+  padding-left: 15px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.Sidebar-thumbnail {
+  color: rgba(255,255, 255, 0.6);
+  margin: 10px;
+}
+
+.Sidebar-logout {
+  color: #cc6155;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.Sidebar-nav {
+  padding: 15px 0px 15px 0px;
+  border-bottom: 1px solid #282c36;
+}
+
+.Sidebar-title {
+  color: #cc6155;
+  font-weight: 100;
+  font-size: 26px;
+  font-family: "Lobster", cursive;
+  margin-left: 10px;
+  user-select: none;
+}
+
+.Sidebar-icon {
+  color: #f9f9f9;
+}
+
+.Sidebar-status {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 20px;
+}
+
+.Sidebar-status-img {
+  height: 35px;
+}
+
+.Sidebar-status-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.2);
+  margin-bottom: 30px;
+  margin-top: 10px;
+}
+

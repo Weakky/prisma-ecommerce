@@ -1,0 +1,8 @@
+.Buttons-container {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    height: 80px;
+    align-items: center;
+    background-color: #1d2027;
+}

@@ -1,0 +1,28 @@
+.Resume-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 10px 10px 0px 10px;
+  border-radius: 3px;
+  background-color: rgba(26, 188, 156, 0.1);
+}
+
+.Resume-name {
+  margin-left: 10px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.Resume-message {
+  margin-left: 15px;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.Resume-icon {
+  margin-left: 10px;
+}
+
+.Resume-taxon {
+  font-weight: bold;
+}

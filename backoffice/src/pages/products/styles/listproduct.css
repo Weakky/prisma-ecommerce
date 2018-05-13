@@ -1,0 +1,54 @@
+.Listproduct-messages {
+  display: flex;
+  flex-direction: column;
+  height: 440px;
+  margin: 0 0 10px 0;
+  overflow: scroll;
+}
+
+.Listproduct-modal {
+  padding: 0 5px;
+}
+
+.Listproduct-delete {
+  border-radius: 2px;
+  padding: 5px;
+  background-color: #cc6155;
+  cursor: pointer;
+  color: #f9f9f9;
+  line-height: 60px;
+  font-size: 12px;
+}
+
+.Listproduct-delete:hover {
+  background-color: #d3746a;
+  opacity: 0.9;
+}
+
+.Listproduct-edit {
+  border-radius: 2px;
+  padding: 5px;
+  background-color: #1abc9c;
+  cursor: pointer;
+  color: #f9f9f9;
+  line-height: 60px;
+  font-size: 12px;
+}
+
+.Listproduct-edit:hover {
+  background-color: #1cd7b5;
+  opacity: 0.9;
+}
+
+.Listproduct-header-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1d2027;
+  height: 40px;
+}
+
+.Listproduct-header-label {
+  color: #f9f9f9;
+  font-size: 12px;
+}

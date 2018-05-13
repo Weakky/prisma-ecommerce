@@ -1,0 +1,109 @@
+type Brand {
+  id: ID! @unique
+  name: String!
+  category: Category!
+}
+
+type Category {
+  id: ID! @unique
+  name: String!
+  options: [Option!]!
+}
+
+type Option {
+  id: ID! @unique
+  name: String!
+  values: [OptionValue!]! @relation(name: "OptionOptionValues", onDelete: CASCADE)
+  category: Category!
+}
+
+type OptionValue {
+  id: ID! @unique
+  name: String!
+}
+
+type SelectedOption {
+  id: ID! @unique
+  option: Option!
+  variant: Variant!
+  value: OptionValue!
+} 
+
+type Variant {
+  id: ID! @unique
+  selectedOptions: [SelectedOption!]! @relation(name: "VariantOnSelectedOptions", onDelete: CASCADE)
+  price: Float!
+  available: Boolean!
+  product: Product!
+}
+
+type Attribute {
+  id: ID! @unique
+  value: String!
+  category: Category!
+  products: [Product!]!
+}
+
+type Product {
+  id: ID! @unique
+  name: String!
+  description: String
+  brand: Brand!
+  SKU: String
+  category: Category!
+  options: [Option!]!
+  variants: [Variant!]! @relation(name: "ProductVariants" onDelete: CASCADE)
+  attributes: [Attribute!]!
+  displayPrice: Float!
+  available: Boolean!
+  imageUrl: String
+}
+
+type User {
+  id: ID! @unique
+  email: String! @unique
+  password: String!
+  firstName: String
+  lastName: String
+  role: Role! @default(value: USER)
+  cart: [OrderLineItem!]! @relation(name: "UserCart" onDelete: CASCADE)
+  orders: [Order!]! @relation(name: "UserOrders")
+  stripeCustomerId: String
+}
+
+type File {
+  id: ID! @unique
+  name: String!
+  url: String! @unique
+  contentType: String!
+  secret: String! @unique
+  size: Int!
+}
+
+type Order {
+  id: ID! @unique
+  owner: User! @relation(name: "UserOrders")
+  lineItems: [OrderLineItem!]! @relation(name: "OrderLineItems" onDelete: CASCADE)
+  totalPrice: Float!
+  totalRefunded: Float!
+  totalTax: Float!
+  orderStatus: OrderStatus!
+}
+
+type OrderLineItem {
+  id: ID! @unique
+  quantity: Int!
+  variant: Variant!
+  owner: User! @relation(name: "UserCart")
+}
+
+enum OrderStatus {
+  SUBMITTED
+  PREPARED
+  PAID
+}
+
+enum Role {
+  USER
+  ADMIN
+}

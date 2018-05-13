@@ -1,0 +1,37 @@
+{
+  "name": "react-aromaclop-backoffice",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "apollo-client": "^1.9.0-0",
+    "axios": "^0.16.2",
+    "bluebird": "^3.5.0",
+    "chart.js": "^2.6.0",
+    "graphql-tag": "^2.4.2",
+    "lodash": "^4.17.4",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-apollo": "^1.4.4",
+    "react-awesome-modal": "^2.0.1",
+    "react-chartjs-2": "^2.5.5",
+    "react-dom": "^15.6.1",
+    "react-icons": "^2.2.5",
+    "react-intl": "^2.4.0",
+    "react-router": "^4.1.2",
+    "react-router-dom": "next",
+    "react-select": "^1.0.0-rc.5",
+    "react-spinkit": "^3.0.0",
+    "react-table": "^6.5.1",
+    "tachyons": "^4.7.4"
+  },
+  "devDependencies": {
+    "prettier": "latest",
+    "react-scripts": "1.0.10"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

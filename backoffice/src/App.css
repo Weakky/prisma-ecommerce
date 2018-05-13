@@ -1,0 +1,41 @@
+.App-link {
+  border-left: 3px solid #0f202e;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.3);
+  width: 100%;
+  padding: 3px 5px 3px 10px;
+  font-weight: 400;
+}
+
+.App-link-title {
+  margin: 15px 0px 15px 15px;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+.App-link-active {
+  color: #f9f9f9;
+}
+
+.App-link:hover {
+  border-left: 3px solid #cc6155;
+  background-color: #282c36;
+}
+
+.App-link-label {
+  margin: 10px 0 10px 0;
+  font-size: 12px;
+}
+
+.App-icon {
+  margin: 10px;
+}
+
+.App-separator {
+  width: 80%;
+  margin-top: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}

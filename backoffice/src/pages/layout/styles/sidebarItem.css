@@ -1,0 +1,7 @@
+.SidebarItem-item {
+  display: flex;
+  white-space: nowrap;
+  flex-direction: column;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

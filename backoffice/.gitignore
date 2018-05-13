@@ -1,0 +1,9 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Example user template
+
+# IntelliJ project files
+.idea
+node_modules
+out
+gen
+.vscode/settings.json

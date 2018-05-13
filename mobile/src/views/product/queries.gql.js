@@ -1,0 +1,54 @@
+import gql from 'graphql-tag';
+
+export default {
+  queryProductInfo: gql`
+    query product($productId: ID!) {
+      product(id: $productId) {
+        id
+        name
+        imageUrl
+        available
+        displayPrice
+        brand {
+          id
+          name
+        }
+        options {
+          id
+          name
+          values {
+            id
+            name
+          }
+        }
+        variants {
+          id
+          available
+          price
+          selectedOptions {
+            id
+            option {
+              id
+              name
+            }
+            value {
+              id
+              name
+            }
+          }
+        }
+      }
+    }
+  `,
+  addItemToCart: gql`
+    mutation addItemToCart($variantId: ID!, $quantity: Int!) {
+      addItemToCart(variantId: $variantId, quantity: $quantity) {
+        id
+        quantity
+        variant {
+          id
+        }
+      }
+    }
+  `
+};

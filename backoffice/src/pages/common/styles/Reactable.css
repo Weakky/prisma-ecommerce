@@ -1,0 +1,154 @@
+.Reactable-table {
+  height: calc(100vh - 100px);
+  background-color: #ffffff;
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1);
+  margin: 10px 10px 0 10px;
+}
+
+.ReactTable .rt-expander {
+  line-height: 60px;
+}
+
+.Reactable-container-subTable {
+  background-color: #f9f9f9;
+  padding: 20px;
+}
+
+.Reactable-subTable {
+  background-color: #ffffff;
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1);
+  margin: 10px 10px 0 10px;
+}
+
+.Reactable-delete {
+  border-radius: 2px;
+  padding: 5px;
+  background-color: #cc6155;
+  cursor: pointer;
+  color: #f9f9f9;
+  line-height: 60px;
+  font-size: 12px;
+}
+
+.Reactable-delete:hover {
+  background-color: #d3746a;
+  opacity: 0.9;
+}
+
+.Reactable-edit {
+  border-radius: 2px;
+  padding: 5px;
+  background-color: #1abc9c;
+  cursor: pointer;
+  color: #f9f9f9;
+  line-height: 60px;
+  font-size: 12px;
+}
+
+.Reactable-edit:hover {
+  background-color: #1abc9c;
+  opacity: 0.9;
+}
+
+.Reactable-cell {
+  line-height: 60px;
+  font-size: 12px;
+  margin: 0 0 0 5px;
+}
+
+.Reactable-vignette {
+  line-height: 60px;
+  background-color: #1abc9c;
+  font-size: 11px;
+  margin: 5px;
+  padding: 5px;
+  color: #f9f9f9;
+  border-radius: 2px;
+}
+
+.Reactable-cell-container {
+  flex: 1;
+  flex-direction: row;
+  text-align: center;
+}
+
+.Reactable-img {
+  border: 1px solid #f5f5f5;
+  border-radius: 4px;
+  padding: 3px;
+}
+
+.ReactTable {
+  border: 0 !important;
+}
+
+.ReactTable.-highlight .rt-tbody .rt-tr:not(.-padRow):hover {
+  background: rgba(0, 0, 0, 0.02) !important;
+}
+
+.ReactTable input:not([type="checkbox"]):not([type="radio"]),
+.ReactTable select {
+  color: #757575;
+  font-size: 13px;
+  font-family: "Roboto", sans-serif;
+}
+
+.ReactTable .-pagination .-pageInfo {
+  color: #757575;
+}
+
+.ReactTable .select-wrap select {
+  color: #757575;
+}
+
+.ReactTable .-pagination .-btn {
+  background: none !important;
+}
+
+.rt-resizable-header-content {
+  font-size: 14px;
+  color: #757575;
+  padding: 5px;
+}
+
+.ReactTable .rt-thead.-filters {
+  border: 0 !important;
+  margin-bottom: 15px;
+}
+
+.ReactTable .rt-tbody .rt-td {
+  border: 0 !important;
+}
+
+.ReactTable .rt-thead .rt-th,
+.ReactTable .rt-thead .rt-td {
+  border: 0 !important;
+}
+
+.ReactTable .rt-thead.-header {
+  box-shadow: none !important;
+}
+
+.ReactTable .-pagination {
+  box-shadow: none !important;
+  border: 0 !important;
+}
+
+.animated {
+  margin-top: 10px;
+  opacity: 1;
+  -webkit-animation: expand 0.5s;
+}
+
+@-webkit-keyframes expand {
+  0% {
+    margin-top: 1000px;
+    opacity: 0;
+
+  }
+  100% {
+    margin-top: 10px;
+    opacity: 1;
+
+  }
+}
