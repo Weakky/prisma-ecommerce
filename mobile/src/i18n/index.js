@@ -39,6 +39,10 @@ const translations = {
     thanks_trust: 'Thanks for your trust !',
     gathering_articles: 'Gathering articles...',
 
+    //Home translations
+    hello: 'Hello',
+    best_sales: 'Best-selling products',
+    new_products: 'New products',
 
     // Browse translations
     know_what_you_want: 'Do you know what you\'re looking for ?',
@@ -105,6 +109,11 @@ const translations = {
     hard_password: 'Faites en sorte que votre mot de passe soit impossible à deviner, même pour un membre de votre famille ou un ami(e)',
     thanks_trust: 'Merci de votre confiance !',
     gathering_articles: 'Récupération des articles...',
+
+    //Home translations
+    hello: 'Bonjour',
+    best_sales: 'Les meilleures ventes',
+    new_products: 'Les nouveautés',
 
     // Browse translations
     know_what_you_want: 'Vous savez ce que vous voulez ?',

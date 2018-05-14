@@ -16,10 +16,10 @@ import OptionsFilters from './filterByFields/OptionsFilters';
 import styles from './Filters.styles'
 import {translate} from '../../i18n'
 
-const FindProductButton = (props) => (
+export const FindProductButton = (props) => (
   <TouchableOpacity
     style={styles.findProductContainer}
-    onPress={props.applyFilters}
+    onPress={props.onPress}
   >
     <Title size={16} weight="100" style={{ marginRight: 14 }} color={Colors.white}>
       {translate('find_your_product')}
@@ -31,7 +31,7 @@ const FindProductButton = (props) => (
 )
 
 FindProductButton.propTypes = {
-  applyFilters: PropTypes.func,
+  onPress: PropTypes.func,
 };
 
 const Filters = (props) => {
@@ -79,7 +79,7 @@ const Filters = (props) => {
         />
       </ScrollView>
       { !props.asModal && (
-        <FindProductButton applyFilters={props.applyFilters} />
+        <FindProductButton onPress={props.applyFilters} />
       )}
     </View>
   );

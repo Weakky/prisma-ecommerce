@@ -34,7 +34,7 @@ const SubTotal = (props) => (
         marginLeft: 10,
       }}
     >
-      {props.totalPrice} €
+      {parseFloat(props.totalPrice).toFixed(2)} €
     </Text>
   </View>
 );

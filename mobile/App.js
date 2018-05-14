@@ -15,6 +15,7 @@ import Browse from './src/views/browse/BrowseContainer';
 import Products from './src/views/products/ProductsContainer';
 import Basket from './src/views/basket/BasketContainer';
 import Recap from './src/views/recap/RecapContainer';
+import HomeContainer from './src/views/home/HomeContainer'
 
 import Colors from './src/statics/colors';
 
@@ -65,7 +66,7 @@ const BasketNavigator = StackModalNavigator(
 const MainView = TabNavigator(
   {
     WelcomeTab: {
-      screen: TempView,
+      screen: HomeContainer,
       navigationOptions: {
         tabBarLabel: ' ',
         tabBarIcon: ({ tintColor }) => (

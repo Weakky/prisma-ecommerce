@@ -7,6 +7,9 @@ export default {
         id
         email
         firstName
+        orders {
+          id
+        }
         cart {
           id
           quantity

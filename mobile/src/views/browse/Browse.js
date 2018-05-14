@@ -18,7 +18,7 @@ class Browse extends React.PureComponent {
 
     this.state = {
       index: 0,
-      routes: [],
+      routes: [{ key: '1', title: '...' }],
     };
 
     this.onIndexChange = this.onIndexChange.bind(this);
