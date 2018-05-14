@@ -18,18 +18,16 @@ import Colors from '../../statics/colors';
 import Filters from '../filters/Filters';
 import {translate} from '../../i18n'
 
-//TODO: filtersEnabled now in state. setState({}) it properly
 class Products extends PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
       filtersModalVisible: false,
+      filtersEnabled: props.filtersEnabled,
+      filtersValues: props.filtersValues,
       refreshing: false,
     };
-
-    // filtersEnabled not in state as it's not used in render()
-    this.filtersEnabled = props.filtersEnabled;
 
     this.applyFilters = this.applyFilters.bind(this);
     this.closeModal = this.closeModal.bind(this);
@@ -41,18 +39,20 @@ class Products extends PureComponent {
     this.props.subscribeToProductUpdates();
   }
 
-  async applyFilters({ filtersEnabled, filtersValues }) {
-    this.setState({ filtersModalVisible: false });
-
-    await this.refetchProducts({ filtersEnabled, filtersValues });
+  applyFilters({ filtersEnabled, filtersValues }) {
+    this.setState({
+      filtersModalVisible: false,
+      filtersEnabled,
+      filtersValues
+    }, () => {
+      this.refetchProducts();
+    });
   }
 
-  refetchProducts({ filtersEnabled, filtersValues }) {
-    this.filtersEnabled = filtersEnabled;
-
+  refetchProducts() {
     return this.props.refetchProducts({
-      filtersEnabled,
-      filtersValues,
+      filtersEnabled: this.state.filtersEnabled,
+      filtersValues: this.state.filtersValues,
       filterType: this.props.filterType,
     });
   }
@@ -73,7 +73,7 @@ class Products extends PureComponent {
           filterType={this.props.filterType}
           closeModal={this.closeModal.bind(this)}
           applyFilters={this.applyFilters}
-          filtersEnabled={this.filtersEnabled}
+          filtersEnabled={this.state.filtersEnabled}
         />
       </Modal>
     );
@@ -158,7 +158,6 @@ class Products extends PureComponent {
               />
             </View>
           )}
-          onRefresh={this.refetchProducts}
           refreshing={this.state.refreshing}
           onEndReachedThreshold={0.5}
           onEndReached={this.loadMoreProducts}

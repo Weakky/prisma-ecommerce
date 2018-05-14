@@ -5,7 +5,7 @@
  *
  */
 
-const LANGUAGE = 'fr';
+const LANGUAGE = 'en';
 
 export function translate(key) {
  return translations[key] || key;

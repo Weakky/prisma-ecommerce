@@ -33,7 +33,7 @@ export default graphql(query, {
   }),
   props: ({ data }) => ({
     data,
-    hasMore: () => data.products.aggregate.count > data.products.length,
+    hasMore: () => data.products.aggregate.count > data.products.edges.length,
     refetchProducts: ({ filtersEnabled, filtersValues, filterType }) => (
       data.refetch({
         ...buildFilters(filtersEnabled, filtersValues, filterType),
@@ -46,7 +46,8 @@ export default graphql(query, {
           brandsIds: data.variables.brandsIds,
           attributesIds: data.variables.attributesIds,
           optionsValuesIds: data.variables.optionsValuesIds,
-          skip: data.products.length,
+          categoryId: data.variables.categoryId,
+          skip: data.products.edges.length,
         },
         updateQuery: (prevState, { fetchMoreResult }) => {
           if (!fetchMoreResult) {
@@ -54,8 +55,10 @@ export default graphql(query, {
           }
 
           return {
-            ...prevState,
-            products: [...prevState.products, ...fetchMoreResult.products],
+            products: {
+              ...prevState.products,
+              edges: [...prevState.products.edges, ...fetchMoreResult.products.edges]
+            }
           };
         },
       })
