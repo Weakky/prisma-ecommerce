@@ -100,6 +100,21 @@ type OrderLineItem {
   owner: User @relation(name: "UserCart", onDelete: SET_NULL)
 }
 
+type ShopMetadata {
+  id: ID! @unique
+  bestSalesProducts: [OrderableProduct!]! @relation(name: "BestSalesProducts")
+  newProducts: [OrderableProduct!]! @relation(name: "NewProducts")
+  MOTD: String
+}
+
+type OrderableProduct {
+  id: ID! @unique
+  product: Product!
+  position: Int!
+  metadataBestSale: ShopMetadata @relation(name: "BestSalesProducts")
+  metadataNewProduct: ShopMetadata @relation(name: "NewProducts")
+}
+
 enum OrderStatus {
   SUBMITTED
   PREPARED

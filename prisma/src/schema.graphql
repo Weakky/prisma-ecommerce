@@ -1,4 +1,4 @@
-# import User, Product, ProductConnection, Brand, Category, Variant, Option, Attribute, SelectedOption, Cart, OrderLineItem, PageInfo, AggregateProduct, ProductConnection, ProductSubscriptionPayload, Order from "./generated/prisma.graphql"
+# import User, Product, ProductConnection, Brand, Category, Variant, Option, Attribute, SelectedOption, Cart, OrderLineItem, PageInfo, AggregateProduct, ProductConnection, ProductSubscriptionPayload, Order, ShopMetadata from "./generated/prisma.graphql"
 # import ProductCreateInput, BrandCreateInput, CategoryCreateInput from "./generated/prisma.graphql"
 # import ProductWhereInput, ProductOrderByInput from "./generated/prisma.graphql"
 
@@ -14,6 +14,8 @@ type Query {
   allCustomers: [User!]!
   
   product(id: ID!): Product
+
+  shopMetadata: ShopMetadata
 
   searchProducts(
     productName: String
@@ -48,6 +50,11 @@ type Mutation {
     displayPrice: Float!,
     imageUrl: String
   ): Product
+
+  #Upsert Shop metadata
+  upsertBestSalesProducts(shopMetadataId: ID, bestSalesProducts: [OrderableProductInput!]!): ShopMetadata!
+  upsertNewProducts(shopMetadataId: ID, newProducts: [OrderableProductInput!]!): ShopMetadata!
+  upsertMOTD(shopMetadataId: ID, MOTD: String!): ShopMetadata!
 
   # Delete mutations
   deleteProduct(productId: ID!): Product
@@ -84,6 +91,12 @@ input ProductVariantInput {
 input SelectedOptionInput {
   optionId: ID!
   valueId: ID!
+}
+
+input OrderableProductInput {
+  id: ID,
+  productId: ID!
+  position: Int!
 }
 
 type AuthPayload {

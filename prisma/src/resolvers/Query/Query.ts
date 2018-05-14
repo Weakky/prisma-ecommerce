@@ -53,5 +53,13 @@ export const Query = {
   },
   allCustomers(parent, args, ctx: Context, info) {
     return ctx.db.query.users({}, info);
+  },
+  async shopMetadata(parent, args, ctx: Context, info) {
+    const metadatas = await ctx.db.query.shopMetadatas({ first: 1 }, info);
+
+    if (metadatas.length === 0) {
+      return null;
+    }
+    return metadatas[0];
   }
 };

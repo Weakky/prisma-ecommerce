@@ -6,9 +6,11 @@ import { category } from './category';
 import { option } from './option';
 import { order } from './order';
 import { product } from './product';
+import { shopMetadata  } from './shopMetadata';
 
 export default {
   ...auth,
+  ...shopMetadata,
   ...attribute,
   ...brand,
   ...cart,
