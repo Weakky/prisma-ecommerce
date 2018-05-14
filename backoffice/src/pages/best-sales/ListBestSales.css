@@ -1,0 +1,22 @@
+.ListBestSales-container {
+    padding: 30px 20%;
+}
+
+.ListBestSales-listItem {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #efefef;
+    box-sizing: border-box;
+    user-select: none;
+    color: #333;
+    font-weight: 400;
+}
+
+.ListBestSales-select {
+    margin-bottom: 10px;
+    flex: 1;
+}
+

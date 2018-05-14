@@ -20,30 +20,6 @@ const Sidebar = props => (
         <FormattedMessage id="logout" />
       </span>
     </div>
-    <div className="Sidebar-status">
-      <a rel="noopener noreferrer" target="_blank" href="https://status.graph.cool/">
-        <img
-          alt=""
-          src={require('../../../assets/img/graphcool.png')}
-          className="Sidebar-status-img"
-        />
-      </a>
-      <span className="Sidebar-status-label">
-        <FormattedMessage id="services_status" />
-      </span>
-      <a
-        rel="noopener noreferrer"
-        target="_blank"
-        href="https://localhost:4000"
-      >
-        <img
-          alt=""
-          src={require('../../../assets/img/graphql.png')}
-          className="Sidebar-status-img"
-        />
-      </a>
-      <span className="Sidebar-status-label">Playground</span>
-    </div>
   </div>
 );
 

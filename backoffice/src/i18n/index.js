@@ -6,6 +6,7 @@ export default {
     login: 'Login',
     logout: 'Logout',
     your_brand: 'Your brand',
+    save: 'Save',
 
     no_data: 'There are no data.',
     reloading_data: 'Reloading data...',
@@ -69,6 +70,15 @@ export default {
     reload_category: 'Reload categories',
     category_name: 'Category\'s name',
     select_category_first: 'Select a category first',
+
+    //Best sales translations
+    add_best_sales: 'Add a best sale',
+    reload_best_sales: 'Reload best sales',
+
+    //Metadata translations
+    best_sellers: 'Bestsellers products',
+    new_products: 'New products',
+    motd: 'Message of the day',
   },
   fr: {
     //Globals
@@ -77,6 +87,7 @@ export default {
     login: 'Se connecter',
     logout: 'Deconnexion',
     your_brand: 'Votre marque',
+    save: 'Enregistrer',
 
     no_data: 'Il n\'y a aucune données',
     reloading_data: 'Refrachissement des données...',
@@ -140,5 +151,10 @@ export default {
     reload_category: 'Rafrachir les catégories',
     category_name: 'Nom de la catégorie',
     select_category_first: 'Selectionnez une catégorie en premier',
+
+    //Metadata translations
+    best_sellers: 'Les meilleures ventes',
+    new_products: 'Les nouveautes',
+    motd: 'Le message du jour',
   }
 }

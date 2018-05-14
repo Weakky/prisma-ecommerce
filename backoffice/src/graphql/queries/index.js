@@ -188,3 +188,47 @@ export const ListAllAttributes = gql`
     }
   }
 `;
+
+export const ListAllBestSalesProducts = gql`
+  query allBestSalesProducts {
+    shopMetadata {
+      id
+      bestSalesProducts(orderBy: position_ASC) {
+        id
+        position
+        product {
+          id
+          name
+          imageUrl
+        }
+      }
+    }
+    allProducts {
+      id
+      name
+      imageUrl
+    }
+  }
+`;
+
+export const ListAllNewProductsQuery = gql`
+  query allNewProducts {
+    shopMetadata {
+      id
+      newProducts(orderBy: position_ASC) {
+        id
+        position
+        product {
+          id
+          name
+          imageUrl
+        }
+      }
+    }
+    allProducts {
+      id
+      name
+      imageUrl
+    }
+  }
+`;

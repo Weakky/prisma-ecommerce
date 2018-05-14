@@ -149,7 +149,7 @@ class ListCategory extends Component {
         <Buttons buttons={buttons} />
         <ReactTable
           loadingText={<FormattedMessage id="reloading_data" />}
-          loading={this.state.loading}
+          loading={this.state.loading || this.props.data.loading}
           noDataText={<FormattedMessage id="no_data" />}
           data={this.props.data.allCategories}
           columns={columns}

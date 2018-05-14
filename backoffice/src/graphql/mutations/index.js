@@ -278,3 +278,55 @@ export const AuthenticateUser = gql`
     }
   }
 `;
+
+export const UpsertBestSalesMutation = gql`
+  mutation upsertBestSales($bestSalesProducts: [OrderableProductInput!]!, $shopMetadataId: ID) {
+    upsertBestSalesProducts(bestSalesProducts: $bestSalesProducts, shopMetadataId: $shopMetadataId) {
+      bestSalesProducts {
+        id
+        position
+        product {
+          id
+          name
+          imageUrl
+        }
+      }
+    }
+  }
+`;
+
+export const UpsertBestSalesMutationOptions = {
+  props: ({ mutate }) => ({
+    upsertBestSales: ({ bestSalesProducts, shopMetadataId }) => (
+      mutate({
+        variables: { bestSalesProducts, shopMetadataId },
+      })
+    )
+  })
+};
+
+export const UpsertNewProductsMutation = gql`
+  mutation upsertNewProducts($newProducts: [OrderableProductInput!]!, $shopMetadataId: ID) {
+    upsertNewProducts(newProducts: $newProducts, shopMetadataId: $shopMetadataId) {
+      newProducts {
+        id
+        position
+        product {
+          id
+          name
+          imageUrl
+        }
+      }
+    }
+  }
+`;
+
+export const UpsertNewProductsMutationOptions = {
+  props: ({ mutate }) => ({
+    upsertNewProducts: ({ newProducts, shopMetadataId }) => (
+      mutate({
+        variables: { newProducts, shopMetadataId },
+      })
+    )
+  })
+};
