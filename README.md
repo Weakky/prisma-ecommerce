@@ -32,3 +32,8 @@ Almost everything on the react-native app is generated dynamically. The `E-LIQUI
 All the menus below, `Our categories`, `Our brands`, `Our nicotines rates` and `Our capacities` are respectively data you can configure from the backoffice as `Attributes`, `Brands`, and `Options`.
 
 All of these properties *must* be categorized, so that they belong under their own categories. (eg: Here, the brands, attributes and options are all different under the `ACCESORIES` menu)
+
+
+# Philosophy
+
+You'll quickly realize that there are no state-management library whatsoever. I'm actively militating against the wrong usage of those. Although a sweet Redux or MobX could have been used in some places (especially on the RN app), this app also acts as a showcase to promote vanilla React. Especially since the new Context API (Although I haven't updated React yet).
