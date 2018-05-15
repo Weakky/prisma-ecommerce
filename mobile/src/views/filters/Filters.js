@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ActivityIndicator, ScrollView, TouchableOpacity, View } from 'react-native';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {ActivityIndicator, ScrollView, View } from 'react-native';
 
-import Colors from '../../statics/colors'
-import Title from '../../components/title/Title';
 import ModalNavigationBar from '../../components/modal-navigation-bar/ModalNavigationBar';
+import BigRedButton from '../../components/big-red-button/BigRedButton'
 
 import EnhancedFilters from './HOC/FiltersHOC';
 
@@ -13,26 +11,9 @@ import CategoryFilters from './filterByFields/CategoryFilters';
 import BrandFilters from './filterByFields/BrandFilters';
 import OptionsFilters from './filterByFields/OptionsFilters';
 
+import Colors from '../../statics/colors'
 import styles from './Filters.styles'
 import {translate} from '../../i18n'
-
-export const FindProductButton = (props) => (
-  <TouchableOpacity
-    style={styles.findProductContainer}
-    onPress={props.onPress}
-  >
-    <Title size={16} weight="100" style={{ marginRight: 14 }} color={Colors.white}>
-      {translate('find_your_product')}
-    </Title>
-    <View style={{ marginTop: 3 }}>
-      <Ionicons size={22} color={Colors.white} name="ios-search" />
-    </View>
-  </TouchableOpacity>
-)
-
-FindProductButton.propTypes = {
-  onPress: PropTypes.func,
-};
 
 const Filters = (props) => {
   if (props.loading) {
@@ -79,7 +60,11 @@ const Filters = (props) => {
         />
       </ScrollView>
       { !props.asModal && (
-        <FindProductButton onPress={props.applyFilters} />
+        <BigRedButton
+          onPress={props.applyFilters}
+          label={translate('find_your_product')}
+          icon="ios-search"
+        />
       )}
     </View>
   );

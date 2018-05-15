@@ -1,28 +1,23 @@
 import gql from 'graphql-tag';
 
 
-export default gql`
-  query homeInformations {
+const homeInformation =  gql`
+  query homeInformation {
     me {
       id
       firstName,
-      orders {
+      orders(first: 1, orderBy: createdAt_DESC) {
         id
+        createdAt
         lineItems {
           id
           quantity
           variant {
             id
-            selectedOptions {
+            price
+            product {
               id
-              option {
-                id
-                name
-              }
-              value {
-                id
-                name
-              }
+              name
             }
           }
         }
@@ -30,7 +25,7 @@ export default gql`
       }
     }
     shopMetadata {
-      bestSalesProducts(orderBy: position_ASC) {
+      bestSalesProducts(orderBy: position_ASC, first: 5) {
         id
         product {
           id
@@ -47,7 +42,7 @@ export default gql`
           }
         }
       }
-      newProducts(orderBy: position_ASC) {
+      newProducts(orderBy: position_ASC, first: 5) {
         id
         product {
           id
@@ -67,3 +62,46 @@ export default gql`
     }
   }
 `;
+
+const addOrderToCart = gql`
+  mutation addOrderToCart($orderId: ID!, $replace: Boolean!) {
+    addOrderToCart(orderId: $orderId, replace: $replace) {
+      id
+      quantity
+      variant {
+        id
+        available
+        price
+        selectedOptions {
+          id
+          option {
+            id
+            name
+          }
+          value {
+            id
+            name
+          }
+        }
+        product {
+          id
+          name
+          imageUrl
+          unavailableOptionsValues {
+            id
+            name
+          }
+          brand {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+`;
+
+export default {
+  homeInformation,
+  addOrderToCart
+}

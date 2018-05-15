@@ -65,6 +65,7 @@ type Mutation {
 
   #Cart mutations
   addItemToCart(variantId: ID!, quantity: Int!): OrderLineItem!
+  addOrderToCart(orderId: ID!, replace: Boolean!): [OrderLineItem!]!
   removeItemFromCart(lineItemId: ID!): OrderLineItem!
   updateItemFromCart(lineItemId: ID!, variantId: ID!, quantity: Int!): OrderLineItem!
 

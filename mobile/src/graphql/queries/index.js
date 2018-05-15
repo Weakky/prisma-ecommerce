@@ -7,9 +7,7 @@ export default {
         id
         email
         firstName
-        orders {
-          id
-        }
+        orders { id }
         cart {
           id
           quantity
@@ -32,7 +30,6 @@ export default {
               id
               name
               imageUrl
-              displayPrice
               unavailableOptionsValues {
                 id
                 name

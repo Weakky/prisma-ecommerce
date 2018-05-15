@@ -43,6 +43,10 @@ const translations = {
     hello: 'Hello',
     best_sales: 'Best-selling products',
     new_products: 'New products',
+    add_to_cart: 'Add to cart',
+    your_last_order: 'Your last order',
+    replace_with_cart: 'Replace with cart',
+    merge_with_cart: 'Merge with cart',
 
     // Browse translations
     know_what_you_want: 'Do you know what you\'re looking for ?',
@@ -114,6 +118,10 @@ const translations = {
     hello: 'Bonjour',
     best_sales: 'Les meilleures ventes',
     new_products: 'Les nouveautés',
+    add_to_cart: 'Ajouter au panier',
+    your_last_order: 'Votre dernière commande',
+    replace_with_cart: 'Remplacer le panier',
+    merge_with_cart: 'Fusionner avec le panier',
 
     // Browse translations
     know_what_you_want: 'Vous savez ce que vous voulez ?',
