@@ -1,4 +1,4 @@
-import { Context } from '../../utils';
+import { Context, getUserId } from '../../utils';
 
 export const Subscription = {
   updatedProduct: {
@@ -8,5 +8,20 @@ export const Subscription = {
     resolve(payload, args, ctx: Context, info) {
       return payload.updatedProduct;
     }
+  },
+  waitFor3DSecure: {
+    subscribe: (parent, args, ctx: Context, info) => {
+      return ctx.db.subscription.order({
+        where: {
+          mutation_in: ['UPDATED'],
+          node: {
+            id: args.orderId
+          }
+        }
+      }, info);
+    },
+    resolve: (payload, args, context, info) => {
+      return payload.waitFor3DSecure;
+    },
   }
 };

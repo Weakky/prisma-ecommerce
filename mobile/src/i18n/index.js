@@ -86,6 +86,11 @@ const translations = {
     total_incl_tax: 'Total (incl tax)',
     total_vat: 'Total VAT',
 
+    //Payment translations
+    number: 'CARD NUMBER',
+    expiry: 'EXPIRY',
+    cvc: 'CVC/CCV'
+
   },
   fr: {
     login: 'Connexion',
@@ -163,6 +168,10 @@ const translations = {
     total_incl_tax: 'Total TTC',
     total_vat: 'Total TVA',
 
+    //Payment translations
+    number: 'NUMÉRO DE CARTE',
+    expiry: 'EXPIRATION',
+    cvc: 'CVC/CCV'
   }
 }[LANGUAGE];
 

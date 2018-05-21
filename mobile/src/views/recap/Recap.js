@@ -43,47 +43,54 @@ const Ticket = (props) => (
   </View>
 )
 
-const Recap = (props) => (
-  <View
-    style={{
-      flex: 1,
-      backgroundColor: Colors.white,
-      paddingTop: Platform.select({
-        ios: 20,
-        android: StatusBar.currentHeight,
-      }),
-      paddingLeft: 10,
-      paddingRight: 10,
-      paddingBottom: 10,
-    }}
-  >
-    <View style={{ marginTop: 10 }}>
-      <NavigationButton onPress={() => props.navigation.goBack()} back dark />
-      <Title style={{ marginBottom: 30, marginTop: 10 }} size={22} color={Colors.text}>
-        {translate('summary')}
-      </Title>
+const Recap = (props) => {
+
+  const onPressCheckout = async () => {
+    props.navigation.navigate('Payment');
+  }
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: Colors.white,
+        paddingTop: Platform.select({
+          ios: 20,
+          android: StatusBar.currentHeight,
+        }),
+        paddingLeft: 10,
+        paddingRight: 10,
+        paddingBottom: 10,
+      }}
+    >
+      <View style={{ marginTop: 10 }}>
+        <NavigationButton onPress={() => props.navigation.goBack()} back dark />
+        <Title style={{ marginBottom: 30, marginTop: 10 }} size={22} color={Colors.text}>
+          {translate('summary')}
+        </Title>
+      </View>
+      <View style={{ alignItems: 'center' }}>
+        <Ticket totalTTC={props.totalTTC} totalHT={props.totalHT} totalVAT={props.totalVAT}/>
+        <Title style={{ textAlign: 'center', marginTop: 30 }} font={font} color={Colors.text} size={16} weight="700">
+          {translate('when_take_order')}
+        </Title>
+        <Button
+          style={{ marginTop: 120, alignSelf: 'center' }}
+          onPress={onPressCheckout}
+          label={translate('finish_order')}
+          backgroundColor={Colors.red}
+          labelColor={Colors.white}
+          fontSize={16}
+          width={Dimensions.get('window').width * 0.8}
+          height={50}
+        />
+        <Title style={{ textAlign: 'center', marginTop: 24, paddingLeft: 20, paddingRight: 20 }} font={font} color={Colors.text} size={10}>
+          {translate('accept_gtc')}
+        </Title>
+      </View>
     </View>
-    <View style={{ alignItems: 'center' }}>
-      <Ticket totalTTC={props.totalTTC} totalHT={props.totalHT} totalVAT={props.totalVAT}/>
-      <Title style={{ textAlign: 'center', marginTop: 30 }} font={font} color={Colors.text} size={16} weight="700">
-        {translate('when_take_order')}
-      </Title>
-      <Button
-        style={{ marginTop: 120, alignSelf: 'center' }}
-        onPress={props.checkout}
-        label={translate('finish_order')}
-        backgroundColor={Colors.red}
-        labelColor={Colors.white}
-        fontSize={16}
-        width={Dimensions.get('window').width * 0.8}
-        height={50}
-      />
-      <Title style={{ textAlign: 'center', marginTop: 24, paddingLeft: 20, paddingRight: 20 }} font={font} color={Colors.text} size={10}>
-        {translate('accept_gtc')}
-      </Title>
-    </View>
-  </View>
-)
+  )
+}
 
 Recap.propTypes = {};
 Recap.defaultProps = {};

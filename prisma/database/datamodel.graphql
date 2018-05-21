@@ -25,7 +25,7 @@ type OptionValue {
 type SelectedOption {
   id: ID! @unique
   option: Option!
-  variant: Variant!
+  variant: Variant! @relation(name: "VariantOnSelectedOptions")
   value: OptionValue!
 } 
 
@@ -34,7 +34,7 @@ type Variant {
   selectedOptions: [SelectedOption!]! @relation(name: "VariantOnSelectedOptions", onDelete: CASCADE)
   price: Float!
   available: Boolean!
-  product: Product!
+  product: Product! @relation(name: "ProductVariants")
 }
 
 type Attribute {
@@ -115,10 +115,14 @@ type OrderableProduct {
   metadataNewProduct: ShopMetadata @relation(name: "NewProducts")
 }
 
+# SUBMITTED = Order created but not yet paid
+# PAID = Order created and successfully paid.
+# PREPARED = Order created, subccesfully paid, and prepared by the store.
 enum OrderStatus {
   SUBMITTED
-  PREPARED
   PAID
+  PREPARED,
+  FAILED
 }
 
 enum Role {

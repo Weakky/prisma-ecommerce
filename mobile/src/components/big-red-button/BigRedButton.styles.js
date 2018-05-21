@@ -3,7 +3,6 @@ import Colors from '../../statics/colors'
 
 export default StyleSheet.create({
   bigRedButton: {
-    marginBottom: 30,
     alignSelf: 'center',
     backgroundColor: Colors.red,
     flexDirection: 'row',

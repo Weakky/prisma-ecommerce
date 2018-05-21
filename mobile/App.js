@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, Platform } from 'react-native';
 import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
 import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -14,8 +14,10 @@ import Search from './src/views/search/Search';
 import Browse from './src/views/browse/BrowseContainer';
 import Products from './src/views/products/ProductsContainer';
 import Basket from './src/views/basket/BasketContainer';
-import Recap from './src/views/recap/RecapContainer';
+import Recap from './src/views/recap/Recap';
 import HomeContainer from './src/views/home/HomeContainer'
+import PaymentContainer from './src/views/payment/PaymentContainer';
+import Payment from './src/views/payment/Payment';
 
 import Colors from './src/statics/colors';
 
@@ -56,7 +58,8 @@ const BasketNavigator = StackModalNavigator(
   {
     Basket: { screen: Basket },
     Product: { screen: ProductWithMappedProps },
-    Recap: { screen: withMappedNavigationProps(Recap) }
+    Recap: { screen: withMappedNavigationProps(Recap) },
+    Payment: { screen: withMappedNavigationProps(PaymentContainer) },
   },
   {
     headerMode: 'none',
@@ -147,7 +150,9 @@ const Application = StackNavigator(
 // Change screen: with the view you wanna render the app
 const DebugView = StackNavigator(
   {
-    Temp: { screen: Recap },
+    Temp: {
+      screen: Payment,
+    },
   },
   {
     headerMode: 'none',
@@ -160,7 +165,7 @@ export default class App extends Component {
   render() {
     return (
       <ApolloProvider client={apolloClient}>
-        <Application/>
+        <Application />
       </ApolloProvider>
     );
   }

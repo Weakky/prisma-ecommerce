@@ -106,6 +106,12 @@
   version "0.0.30"
   resolved "https://registry.yarnpkg.com/@types/strip-json-comments/-/strip-json-comments-0.0.30.tgz#9aa30c04db212a9a0649d6ae6fd50accc40748a1"
 
+"@types/stripe@^5.0.10":
+  version "5.0.10"
+  resolved "https://registry.yarnpkg.com/@types/stripe/-/stripe-5.0.10.tgz#1c4fd7f2f52aa6a19db193aea05a0179f9f4806c"
+  dependencies:
+    "@types/node" "*"
+
 "@types/zen-observable@0.5.3", "@types/zen-observable@^0.5.3":
   version "0.5.3"
   resolved "https://registry.yarnpkg.com/@types/zen-observable/-/zen-observable-0.5.3.tgz#91b728599544efbb7386d8b6633693a3c2e7ade5"
@@ -4956,6 +4962,14 @@ strip-outer@^1.0.0:
   resolved "https://registry.yarnpkg.com/strip-outer/-/strip-outer-1.0.0.tgz#aac0ba60d2e90c5d4f275fd8869fd9a2d310ffb8"
   dependencies:
     escape-string-regexp "^1.0.2"
+
+stripe@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-6.0.0.tgz#b0884d1a9b5794c6f91ea8d13a2699e9ed2e2a6e"
+  dependencies:
+    lodash.isplainobject "^4.0.6"
+    qs "~6.5.1"
+    safe-buffer "^5.1.1"
 
 subscriptions-transport-ws@0.9.6:
   version "0.9.6"

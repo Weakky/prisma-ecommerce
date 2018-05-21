@@ -4,9 +4,9 @@ import { brand } from './brand';
 import { cart } from './cart';
 import { category } from './category';
 import { option } from './option';
-import { order } from './order';
 import { product } from './product';
 import { shopMetadata  } from './shopMetadata';
+import { payment } from './stripe';
 
 export default {
   ...auth,
@@ -16,6 +16,6 @@ export default {
   ...cart,
   ...category,
   ...option,
-  ...order,
   ...product,
+  ...payment,
 };

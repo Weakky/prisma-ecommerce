@@ -10,12 +10,14 @@
     "backup": "scripts/backup.sh"
   },
   "dependencies": {
+    "@types/stripe": "^5.0.10",
     "bcryptjs": "2.4.3",
     "bluebird": "^3.5.1",
     "graphql-yoga": "1.9.2",
     "jsonwebtoken": "8.2.1",
     "lodash": "^4.17.10",
-    "prisma-binding": "1.5.17"
+    "prisma-binding": "1.5.17",
+    "stripe": "^6.0.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "2.4.1",

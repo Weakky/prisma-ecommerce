@@ -11,10 +11,17 @@ import { getMainDefinition } from 'apollo-utilities';
 
 import StorageKeys from '../statics/storage-keys';
 
+let cachedToken = '';
 
-// export async function hasToken() {
-//   return AsyncStorage.getItem(StorageKeys.GC_TOKEN);
-// }
+async function getAuthorizationToken() {
+  const token = cachedToken
+    ? cachedToken
+    : await AsyncStorage.getItem(StorageKeys.GC_TOKEN);
+
+  cachedToken = token;
+
+  return token;
+}
 
 export function setupApolloClient() {
 
@@ -28,15 +35,11 @@ export function setupApolloClient() {
   const httpLink = new HttpLink({
     uri: 'http://localhost:4000/',
   });
-  
-  let cachedToken = '';
 
   const authMiddleware = setContext((_, { headers }) => new Promise(async (resolve) => {
 
     // get the authentication token from local storage if it exists
-    const token = cachedToken
-    ? cachedToken
-    : await AsyncStorage.getItem(StorageKeys.GC_TOKEN);
+    const token = await getAuthorizationToken();
 
     cachedToken = token;
 

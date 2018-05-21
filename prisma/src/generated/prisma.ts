@@ -2551,8 +2551,9 @@ type OrderPreviousValues {
 
 enum OrderStatus {
   SUBMITTED
-  PREPARED
   PAID
+  PREPARED
+  FAILED
 }
 
 type OrderSubscriptionPayload {
@@ -5040,8 +5041,9 @@ type Subscription {
 
 export type OrderStatus = 
   'SUBMITTED' |
+  'PAID' |
   'PREPARED' |
-  'PAID'
+  'FAILED'
 
 export type SelectedOptionOrderByInput = 
   'id_ASC' |
