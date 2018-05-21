@@ -87,9 +87,16 @@ const translations = {
     total_vat: 'Total VAT',
 
     //Payment translations
+
+    pay: 'Pay',
+    pay_button: 'Pay',
     number: 'CARD NUMBER',
     expiry: 'EXPIRY',
-    cvc: 'CVC/CCV'
+    cvc: 'CVC/CCV',
+    status_submitted: 'Redirecting towards your bank service...',
+    status_waiting: 'Waiting for your bank confirmation...',
+    status_paid: 'Payment done !',
+    status_failed: 'Payment failed.'
 
   },
   fr: {
@@ -169,9 +176,15 @@ const translations = {
     total_vat: 'Total TVA',
 
     //Payment translations
+    pay: 'Paiement',
+    pay_button: 'Payer',
     number: 'NUMÉRO DE CARTE',
     expiry: 'EXPIRATION',
-    cvc: 'CVC/CCV'
+    cvc: 'CVC/CCV',
+    status_submitted: 'Redirection vers votre banque en cours...',
+    status_waiting: 'En attente de confirmation de votre banque...',
+    status_paid: 'Paiement effectué !',
+    status_failed: 'Paiement échoué.',
   }
 }[LANGUAGE];
 

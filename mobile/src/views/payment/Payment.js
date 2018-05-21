@@ -1,16 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import stripe, { PaymentCardTextField } from 'tipsi-stripe';
-import {View, StyleSheet, Text, Linking, Platform, StatusBar, ScrollView, KeyboardAvoidingView} from 'react-native'
+import {View, StyleSheet, Linking, Platform, StatusBar } from 'react-native'
 import _ from 'lodash';
-
+import stripe from 'tipsi-stripe';
 import {CreditCardInput} from 'react-native-credit-card-input';
-import Colors from '../../statics/colors'
-import {translate} from '../../i18n'
-import font from '../../assets/fonts';
+
 import NavigationButton from '../../components/navigation-button/NavigationButton'
 import Title from '../../components/title/Title'
 import BigRedButton from '../../components/big-red-button/BigRedButton'
+
+import {translate} from '../../i18n'
+import Colors from '../../statics/colors'
+import font from '../../assets/fonts';
 
 const publishableKey = 'pk_test_jnC9LmAtNttjgGpR7bF1Px6Y';
 
@@ -37,10 +37,10 @@ const PAYMENT_STATUSES = {
 };
 
 const PAYMENT_STATUSES_TO_MESSAGE = {
-  SUBMITTED: 'Redirection vers votre banque en cours...',
-  WAITING: 'En attente de confirmation de votre banque...',
-  PAID: 'Paiement effectué !',
-  FAILED: 'Paiement échoué.',
+  SUBMITTED: translate('status_submitted'),
+  WAITING: translate('status_waiting'),
+  PAID: translate('status_paid'),
+  FAILED: translate('status_failed'),
   NONE: '',
 }
 
@@ -155,7 +155,7 @@ export default class Payment extends React.PureComponent {
         <View style={{ marginTop: 8, marginBottom: 8 }}>
           <NavigationButton onPress={() => this.props.navigation.goBack()} back dark />
           <Title style={{ marginTop: 8 }} size={22} color={Colors.text}>
-            Paiement
+            {translate('pay')}
           </Title>
         </View>
           <CreditCardInput
@@ -176,7 +176,7 @@ export default class Payment extends React.PureComponent {
               label={
                 this.state.status === PAYMENT_STATUSES.PAID
                   ? PAYMENT_STATUSES_TO_MESSAGE[this.state.status]
-                  : 'Payer'
+                  : translate('pay_button')
               }
               disabled={!this.state.card.valid || this.state.status === PAYMENT_STATUSES.PAID}
               loading={this.state.loading}
