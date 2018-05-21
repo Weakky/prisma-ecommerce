@@ -27,7 +27,8 @@
     "react-native-vector-icons": "^4.4.2",
     "react-navigation": "^1.0.0-beta.21",
     "react-navigation-props-mapper": "^0.1.2",
-    "subscriptions-transport-ws": "^0.9.4"
+    "subscriptions-transport-ws": "^0.9.4",
+    "tipsi-stripe": "^5.2.1"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^3.2.13",

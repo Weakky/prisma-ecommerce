@@ -1,0 +1,7 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'Aromaclop' do
+  pod 'Stripe', '~> 11.2.0'
+  inherit! :search_paths
+end
