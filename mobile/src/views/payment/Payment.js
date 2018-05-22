@@ -1,15 +1,15 @@
 import React from 'react';
-import {View, StyleSheet, Linking, Platform, StatusBar } from 'react-native'
+import { View, StyleSheet, Linking, Platform, StatusBar } from 'react-native';
 import _ from 'lodash';
 import stripe from 'tipsi-stripe';
-import {CreditCardInput} from 'react-native-credit-card-input';
+import { CreditCardInput } from 'react-native-credit-card-input';
 
-import NavigationButton from '../../components/navigation-button/NavigationButton'
-import Title from '../../components/title/Title'
-import BigRedButton from '../../components/big-red-button/BigRedButton'
+import NavigationButton from '../../components/navigation-button/NavigationButton';
+import Title from '../../components/title/Title';
+import BigRedButton from '../../components/big-red-button/BigRedButton';
 
-import {translate} from '../../i18n'
-import Colors from '../../statics/colors'
+import { translate } from '../../i18n';
+import Colors from '../../statics/colors';
 import font from '../../assets/fonts';
 
 const publishableKey = 'pk_test_jnC9LmAtNttjgGpR7bF1Px6Y';
@@ -33,7 +33,7 @@ const PAYMENT_STATUSES = {
   WAITING: 'WAITING',
   PAID: 'PAID',
   FAILED: 'FAILED',
-  NONE: 'NONE'
+  NONE: 'NONE',
 };
 
 const PAYMENT_STATUSES_TO_MESSAGE = {
@@ -42,7 +42,7 @@ const PAYMENT_STATUSES_TO_MESSAGE = {
   PAID: translate('status_paid'),
   FAILED: translate('status_failed'),
   NONE: '',
-}
+};
 
 export default class Payment extends React.PureComponent {
   constructor(props) {
@@ -73,35 +73,42 @@ export default class Payment extends React.PureComponent {
     if (newOrder) {
       this.setState({
         status: PAYMENT_STATUSES[newOrder.orderStatus],
-        loading: newOrder.orderStatus === 'SUBMITTED'
+        loading: newOrder.orderStatus === 'SUBMITTED',
       });
     }
   }
 
   handleCardPayPress = async () => {
     try {
-      this.setState({ loading: true, token: null })
+      this.setState({ loading: true, token: null });
       const token = await stripe.createTokenWithCard({
         number: this.state.card.number,
         expMonth: this.state.card.expMonth,
         expYear: this.state.card.expYear,
-        cvc: this.state.card.cvc
+        cvc: this.state.card.cvc,
       });
 
       const { data } = await this.props.pay({
-        stripeTokenId: token.tokenId
+        stripeTokenId: token.tokenId,
       });
 
       const payPayload = data.pay;
 
       // If payment was instantly chargeable
       if (!payPayload.redirectUrl && payPayload.order.orderStatus === 'PAID') {
-        return this.setState({ loading: false, status: PAYMENT_STATUSES.PAID, orderId: payPayload.order.id});
+        return this.setState({
+          loading: false,
+          status: PAYMENT_STATUSES.PAID,
+          orderId: payPayload.order.id,
+        });
       }
 
       // If 3D Secure payment
       if (payPayload.redirectUrl && payPayload.order.orderStatus === 'SUBMITTED') {
-        this.setState({ orderId: payPayload.order.id, status: PAYMENT_STATUSES.SUBMITTED });
+        this.setState({
+          orderId: payPayload.order.id,
+          status: PAYMENT_STATUSES.SUBMITTED,
+        });
 
         setTimeout(() => {
           redirect3DSecure(payPayload.redirectUrl);
@@ -109,7 +116,7 @@ export default class Payment extends React.PureComponent {
         }, 1500);
 
         this.props.waitFor3DSecure({
-          orderId: payPayload.order.id
+          orderId: payPayload.order.id,
         });
 
         return;
@@ -117,14 +124,15 @@ export default class Payment extends React.PureComponent {
 
       // If it failed
       this.setState({ loading: false, status: PAYMENT_STATUSES.FAILED });
-
     } catch (error) {
-      this.setState({ loading: false })
+      this.setState({ loading: false });
     }
-  }
+  };
 
   findNewOrder(orderStatuses) {
-    if (orderStatuses.loading) { return null }
+    if (orderStatuses.loading) {
+      return null;
+    }
 
     const newOrder = _.last(orderStatuses.me.orders);
 
@@ -139,9 +147,9 @@ export default class Payment extends React.PureComponent {
           expMonth: parseInt(form.values.expiry.split('/')[0]),
           expYear: parseInt(form.values.expiry.split('/')[1]),
           cvc: form.values.cvc,
-          valid: form.valid
-        }
-      })
+          valid: form.valid,
+        },
+      });
     }
   }
 
@@ -158,38 +166,38 @@ export default class Payment extends React.PureComponent {
             {translate('pay')}
           </Title>
         </View>
-          <CreditCardInput
-            autoFocus
-            cardScale={0.7}
-            inputStyle={styles.creditCardInput}
-            inputContainerStyle={styles.creditCardInputContainer}
-            labelStyle={styles.creditCardLabel}
-            labels={{
-              number: translate('number'),
-              expiry: translate('expiry'),
-              cvc: translate('cvc')
-            }}
-            onChange={this.onCreditCardInputChange}
-          />
-          <View style={{ marginTop: 16, marginBottom: 16 }}>
-            <BigRedButton
-              label={
-                this.state.status === PAYMENT_STATUSES.PAID
-                  ? PAYMENT_STATUSES_TO_MESSAGE[this.state.status]
-                  : translate('pay_button')
-              }
-              disabled={!this.state.card.valid || this.state.status === PAYMENT_STATUSES.PAID}
-              loading={this.state.loading}
-              onPress={this.handleCardPayPress}
-            />
-          </View>
-          <Title font={font} color={Colors.text} style={{ alignSelf: 'center' }}>
-            {
-              this.state.orderId
-                && this.state.status !== PAYMENT_STATUSES.PAID
-                && PAYMENT_STATUSES_TO_MESSAGE[this.state.status]
+        <CreditCardInput
+          autoFocus
+          cardScale={0.7}
+          inputStyle={styles.creditCardInput}
+          inputContainerStyle={styles.creditCardInputContainer}
+          labelStyle={styles.creditCardLabel}
+          labels={{
+            number: translate('number'),
+            expiry: translate('expiry'),
+            cvc: translate('cvc'),
+          }}
+          onChange={this.onCreditCardInputChange}
+        />
+        <View style={{ marginTop: 16, marginBottom: 16 }}>
+          <BigRedButton
+            label={
+              this.state.status === PAYMENT_STATUSES.PAID
+                ? PAYMENT_STATUSES_TO_MESSAGE[this.state.status]
+                : translate('pay_button')
             }
-          </Title>
+            disabled={
+              !this.state.card.valid || this.state.status === PAYMENT_STATUSES.PAID
+            }
+            loading={this.state.loading}
+            onPress={this.handleCardPayPress}
+          />
+        </View>
+        <Title font={font} color={Colors.text} style={{ alignSelf: 'center' }}>
+          {this.state.orderId &&
+            this.state.status !== PAYMENT_STATUSES.PAID &&
+            PAYMENT_STATUSES_TO_MESSAGE[this.state.status]}
+        </Title>
       </View>
     );
   }
@@ -213,11 +221,11 @@ const styles = StyleSheet.create({
   creditCardInput: {
     color: '#449aeb',
     fontFamily: font,
-    fontSize: 19
+    fontSize: 19,
   },
   creditCardLabel: {
     fontFamily: font,
     color: Colors.text,
-    fontSize: 11
-  }
-})
+    fontSize: 11,
+  },
+});

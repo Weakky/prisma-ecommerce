@@ -2,16 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Card.styles';
 
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {translate} from '../../i18n'
+import { translate } from '../../i18n';
 
 const propTypes = {
   loading: PropTypes.bool.isRequired,
@@ -32,7 +26,7 @@ const defaultProps = {
   notAvailableTaxons: ['11 MG', '16 MG'],
 };
 
-const OptionsValuesNotAvailable = (props) => (
+const OptionsValuesNotAvailable = props => (
   <View
     style={{
       padding: 7,
@@ -60,15 +54,15 @@ const OptionsValuesNotAvailable = (props) => (
           marginLeft: 10,
         }}
       >
-        { props.unavailableOptionsValues.map(option => option.name).join(', ') }
+        {props.unavailableOptionsValues.map(option => option.name).join(', ')}
       </Text>
     </Text>
   </View>
-)
+);
 
 OptionsValuesNotAvailable.propTypes = {
-  notAvailableTaxons: PropTypes.array
-}
+  notAvailableTaxons: PropTypes.array,
+};
 
 const Card = ({
   loading,
@@ -77,7 +71,7 @@ const Card = ({
   name,
   brand,
   price,
-  unavailableOptionsValues
+  unavailableOptionsValues,
 }) => (
   <TouchableOpacity onPress={() => onPress()}>
     <View
@@ -124,11 +118,9 @@ const Card = ({
         <Ionicons name="ios-arrow-forward-outline" />
       </View>
     </View>
-    {
-      unavailableOptionsValues.length > 0 && (
-        <OptionsValuesNotAvailable unavailableOptionsValues={unavailableOptionsValues} />
-      )
-    }
+    {unavailableOptionsValues.length > 0 && (
+      <OptionsValuesNotAvailable unavailableOptionsValues={unavailableOptionsValues} />
+    )}
   </TouchableOpacity>
 );
 

@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import query from './query.gql';
 import { withApollo } from 'react-apollo';
 
-export const EnhancedSearch = (WrappedComponent) =>
+export const EnhancedSearch = WrappedComponent =>
   withApollo(
     class SearchContainer extends PureComponent {
       constructor(props) {
@@ -10,7 +10,7 @@ export const EnhancedSearch = (WrappedComponent) =>
 
         this.state = {
           products: [],
-          queryText: ''
+          queryText: '',
         };
 
         this.performSearch = this.performSearch.bind(this);
@@ -20,7 +20,7 @@ export const EnhancedSearch = (WrappedComponent) =>
       resetSearch() {
         this.setState({
           products: [],
-          queryText: ''
+          queryText: '',
         });
       }
 
@@ -36,7 +36,7 @@ export const EnhancedSearch = (WrappedComponent) =>
           });
 
           this.setState({ products: data.searchProducts.edges });
-        })
+        });
       }
 
       render() {
@@ -50,5 +50,5 @@ export const EnhancedSearch = (WrappedComponent) =>
           />
         );
       }
-    }
+    },
   );

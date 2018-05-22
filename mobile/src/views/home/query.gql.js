@@ -1,11 +1,13 @@
 import gql from 'graphql-tag';
 
-
-const homeInformation =  gql`
+const homeInformation = gql`
   query homeInformation {
     me {
       id
-      firstName,
+      firstName
+      cart {
+        id
+      }
       orders(first: 1, orderBy: createdAt_DESC) {
         id
         createdAt
@@ -103,5 +105,5 @@ const addOrderToCart = gql`
 
 export default {
   homeInformation,
-  addOrderToCart
-}
+  addOrderToCart,
+};

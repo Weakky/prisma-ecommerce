@@ -26,7 +26,7 @@ class OrderIcon extends React.PureComponent {
     Observable.from(query).forEach(({ data }) => {
       if (data.me.cart.length > 0) {
         this.setState({
-          itemsCount: sumBy(data.me.cart, (lineItem) => lineItem.quantity)
+          itemsCount: sumBy(data.me.cart, lineItem => lineItem.quantity),
         });
       } else {
         this.setState({ itemsCount: 0 });

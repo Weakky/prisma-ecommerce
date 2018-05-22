@@ -7,17 +7,16 @@ import Input from '../../../components/input/Input';
 import Title from '../../../components/title/Title';
 import NavigationButton from '../../../components/navigation-button/NavigationButton';
 import { translate } from '../../../i18n';
-import styles from "../SignUp.styles";
+import styles from '../SignUp.styles';
 
 class FirstStep extends React.PureComponent {
-
   constructor(props) {
     super(props);
 
     this.state = {
       firstName: '',
       lastName: '',
-    }
+    };
   }
 
   focusNextField(nextField) {
@@ -33,7 +32,11 @@ class FirstStep extends React.PureComponent {
       <View>
         <View style={{ flex: 1 }}>
           <NavigationButton onPress={() => this.props.navigation.goBack()} back />
-          <Title style={{ marginBottom: 50, marginTop: 10 }} size={22} color={Colors.white}>
+          <Title
+            style={{ marginBottom: 50, marginTop: 10 }}
+            size={22}
+            color={Colors.white}
+          >
             {translate('whats_your_name')}
           </Title>
           <Input
@@ -41,16 +44,16 @@ class FirstStep extends React.PureComponent {
             style={{ marginBottom: 20 }}
             label={translate('first_name')}
             autoCapitalize="words"
-            onChangeText={(firstName) => this.setState({ firstName })}
+            onChangeText={firstName => this.setState({ firstName })}
             value={this.state.firstName}
-            onSubmit={(firstName) => firstName && this.focusNextField('1')}
+            onSubmit={firstName => firstName && this.focusNextField('1')}
           />
           <Input
             ref="1"
             label={translate('last_name')}
             returnKey="next"
             autoCapitalize="characters"
-            onChangeText={(lastName) => this.setState({ lastName: lastName.toUpperCase() })}
+            onChangeText={lastName => this.setState({ lastName: lastName.toUpperCase() })}
             value={this.state.lastName}
             onSubmit={() => this.props.nextStep(this.state)}
           />

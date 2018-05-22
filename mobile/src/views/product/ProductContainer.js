@@ -4,7 +4,6 @@ import queries from './queries.gql';
 import commonQueries from '../../graphql/queries';
 import Product from './Product';
 
-
 // TODO: Speed up mutation by updating the store manually instead of refetchQueries
 export default compose(
   withApollo,
@@ -20,5 +19,5 @@ export default compose(
           ],
         }),
     }),
-  })
+  }),
 )(Product);

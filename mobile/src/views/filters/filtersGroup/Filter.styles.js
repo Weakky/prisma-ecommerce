@@ -9,5 +9,5 @@ export default StyleSheet.create({
     paddingLeft: 7,
     paddingRight: 7,
     borderRadius: 4,
-  }
-})
+  },
+});

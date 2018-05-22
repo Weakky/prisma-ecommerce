@@ -1,6 +1,5 @@
 import gql from 'graphql-tag';
 
-
 export default {
   pay: gql`
     mutation pay($stripeTokenId: String!) {
@@ -39,5 +38,5 @@ export default {
         }
       }
     }
-  `
+  `,
 };

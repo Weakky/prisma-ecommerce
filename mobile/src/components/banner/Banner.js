@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Text, TouchableWithoutFeedback, StyleSheet, View} from 'react-native';
+import { Text, TouchableWithoutFeedback, StyleSheet, View } from 'react-native';
 
 import styles from './Banner.styles';
 
@@ -38,15 +38,7 @@ class Banner extends Component {
   }
 
   render() {
-    const {
-      selected,
-      shop,
-      address,
-      postal,
-      city,
-      tel,
-      opening,
-    } = this.props;
+    const { selected, shop, address, postal, city, tel, opening } = this.props;
 
     return (
       <TouchableWithoutFeedback onPress={this.onBannerSelected}>
@@ -54,27 +46,17 @@ class Banner extends Component {
           style={[
             styles.container,
             {
-              backgroundColor: selected
-                ? 'rgba(255, 255, 255, 0.1)'
-                : 'transparent',
+              backgroundColor: selected ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
             },
           ]}
         >
-          <Text style={StyleSheet.flatten([styles.text, styles.title])}>
-            {shop}
-          </Text>
-          <Text style={StyleSheet.flatten([styles.text, styles.margin])}>
-            {address}
-          </Text>
+          <Text style={StyleSheet.flatten([styles.text, styles.title])}>{shop}</Text>
+          <Text style={StyleSheet.flatten([styles.text, styles.margin])}>{address}</Text>
           <Text style={styles.text}>
             {postal}
-            <Text style={StyleSheet.flatten([styles.text, styles.bold])}>
-              , {city}
-            </Text>
+            <Text style={StyleSheet.flatten([styles.text, styles.bold])}>, {city}</Text>
           </Text>
-          <Text style={StyleSheet.flatten([styles.text, styles.margin])}>
-            {tel}
-          </Text>
+          <Text style={StyleSheet.flatten([styles.text, styles.margin])}>{tel}</Text>
           <Text style={styles.text}>{opening}</Text>
         </View>
       </TouchableWithoutFeedback>

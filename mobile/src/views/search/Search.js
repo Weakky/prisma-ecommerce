@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  View,
-  FlatList,
-  Keyboard,
-} from 'react-native';
+import { View, FlatList, Keyboard, StyleSheet } from 'react-native';
 
 import { EnhancedSearch } from './SearchHOC';
 
@@ -11,18 +7,12 @@ import Input from '../../components/input/Input';
 import Colors from '../../statics/colors/index';
 
 import Title from '../../components/title/Title';
-import ModalNavigationBar from '../../components/modal-navigation-bar/ModalNavigationBar'
-import Card from '../../components/card/Card'
-import {translate} from '../../i18n'
+import ModalNavigationBar from '../../components/modal-navigation-bar/ModalNavigationBar';
+import Card from '../../components/card/Card';
+import { translate } from '../../i18n';
 
-const Search = (props) => (
-  <View
-    style={{
-      flex: 1,
-      backgroundColor: Colors.white,
-      padding: 20,
-    }}
-  >
+const Search = props => (
+  <View style={styles.container}>
     <ModalNavigationBar
       onPressRight={props.resetSearch}
       rightText={translate('reinitialize')}
@@ -36,14 +26,7 @@ const Search = (props) => (
       placeHolderColor={Colors.grey}
       cursorColor={Colors.grey}
       returnKey="done"
-      style={{
-        color: 'black',
-        marginBottom: 15,
-        height: 50,
-        fontSize: 22,
-        fontWeight: 'bold',
-        borderBottomColor: Colors.grey,
-      }}
+      style={styles.searchInput}
       value={props.queryText}
     />
 
@@ -58,13 +41,15 @@ const Search = (props) => (
       keyExtractor={item => item.node.id}
       keyboardShouldPersistTaps="always"
       keyboardDismissMode="on-drag"
-      renderItem={({ item: { node: product }  }) => (
+      renderItem={({ item: { node: product } }) => (
         <View key={product.id} style={{ marginBottom: 5 }}>
           <Card
-            onPress={() => props.navigation.navigate('Product', {
-              productId: product.id,
-              unavailableOptionsValues: product.unavailableOptionsValues
-            })}
+            onPress={() =>
+              props.navigation.navigate('Product', {
+                productId: product.id,
+                unavailableOptionsValues: product.unavailableOptionsValues,
+              })
+            }
             loading={false}
             brand={product.brand.name}
             name={product.name}

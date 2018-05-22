@@ -1,11 +1,11 @@
 import React from 'react';
 import FilterGroup from '../filtersGroup/FiltersGroup';
-import Filter from '../filtersGroup/Filter'
-import {translate} from '../../../i18n'
+import Filter from '../filtersGroup/Filter';
+import { translate } from '../../../i18n';
 
 const filterName = 'attributes';
 
-const CategoryFilters = (props) => (
+const CategoryFilters = props => (
   <FilterGroup title={translate('our_categories')}>
     <Filter
       name="TOUS"
@@ -16,8 +16,7 @@ const CategoryFilters = (props) => (
       <Filter
         key={attribute.id}
         name={attribute.value}
-        setFilter={() =>
-          props.setFilter([filterName, attribute.id])}
+        setFilter={() => props.setFilter([filterName, attribute.id])}
         selected={props.filtersEnabled[filterName].includes(attribute.id)}
       />
     ))}

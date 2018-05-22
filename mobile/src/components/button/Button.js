@@ -1,67 +1,77 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Text, TouchableOpacity, Dimensions} from 'react-native';
+import { Text, TouchableOpacity, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import color from "../../statics/colors/index";
+import color from '../../statics/colors/index';
 import styles from './Button.styles';
 
 const propTypes = {
-	style: PropTypes.object,
-	onPress: PropTypes.func.isRequired,
-	label: PropTypes.string.isRequired,
-	labelColor: PropTypes.string,
-	icon: PropTypes.string,
-	iconColor: PropTypes.string,
-	backgroundColor: PropTypes.string,
-	height: PropTypes.number,
-	width: PropTypes.number,
-	borderColor: PropTypes.string,
-	fontSize: PropTypes.number
+  style: PropTypes.object,
+  onPress: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
+  labelColor: PropTypes.string,
+  icon: PropTypes.string,
+  iconColor: PropTypes.string,
+  backgroundColor: PropTypes.string,
+  height: PropTypes.number,
+  width: PropTypes.number,
+  borderColor: PropTypes.string,
+  fontSize: PropTypes.number,
 };
 
 const defaultProps = {
-	style: {},
-	labelColor: color.white,
-	iconColor: color.white,
-	backgroundColor: 'transparent',
-	height: 50,
-	width: Dimensions.get('window').width - 40,
-	borderColor: color.white,
-	fontSize: 14,
+  style: {},
+  labelColor: color.white,
+  iconColor: color.white,
+  backgroundColor: 'transparent',
+  height: 50,
+  width: Dimensions.get('window').width - 40,
+  borderColor: color.white,
+  fontSize: 14,
 };
 
-const Button = (props) => {
-	const {
-		onPress,
-		label,
-		labelColor,
-		icon,
-		iconColor,
-		backgroundColor,
-		height,
-		width,
-		borderColor,
-		fontSize
-	} = props;
-	return (
-		<TouchableOpacity
-			onPress={onPress}
-			style={[styles.touchable, {
-				height: height,
-				width: width,
-				backgroundColor: backgroundColor,
-				borderColor: borderColor,
-			}, props.style]}>
-			{icon && <Icon size={24} name={icon} color={iconColor}/>}
-			<Text style={[styles.text, {
-				color: labelColor,
-				fontSize: fontSize
-			}]}>
-				{label}
-			</Text>
-		</TouchableOpacity>
-	)
+const Button = props => {
+  const {
+    onPress,
+    label,
+    labelColor,
+    icon,
+    iconColor,
+    backgroundColor,
+    height,
+    width,
+    borderColor,
+    fontSize,
+  } = props;
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={[
+        styles.touchable,
+        {
+          height: height,
+          width: width,
+          backgroundColor: backgroundColor,
+          borderColor: borderColor,
+        },
+        props.style,
+      ]}
+    >
+      {icon && <Icon size={24} name={icon} color={iconColor} />}
+      <Text
+        style={[
+          styles.text,
+          {
+            color: labelColor,
+            fontSize: fontSize,
+          },
+        ]}
+      >
+        {label}
+      </Text>
+    </TouchableOpacity>
+  );
 };
 
 Button.propTypes = propTypes;

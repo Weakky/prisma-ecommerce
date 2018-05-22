@@ -5,10 +5,10 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   logo: {
     height: 150,
     width: 150,
-  }
+  },
 });

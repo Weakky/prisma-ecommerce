@@ -1,22 +1,16 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import {
-  View,
-  TouchableOpacity,
-  Modal,
-  ActivityIndicator,
-  FlatList,
-  Platform,
-  StatusBar,
-} from 'react-native';
+import { View, TouchableOpacity, Modal, ActivityIndicator, FlatList } from 'react-native';
 
 import NavigationButton from '../../components/navigation-button/NavigationButton';
 import Title from '../../components/title/Title';
 import Card from '../../components/card/Card';
-import Colors from '../../statics/colors';
-
 import Filters from '../filters/Filters';
-import {translate} from '../../i18n'
+
+import Colors from '../../statics/colors';
+import { translate } from '../../i18n';
+
+import styles from './Products.styles';
 
 class Products extends PureComponent {
   constructor(props) {
@@ -40,13 +34,16 @@ class Products extends PureComponent {
   }
 
   applyFilters({ filtersEnabled, filtersValues }) {
-    this.setState({
-      filtersModalVisible: false,
-      filtersEnabled,
-      filtersValues
-    }, () => {
-      this.refetchProducts();
-    });
+    this.setState(
+      {
+        filtersModalVisible: false,
+        filtersEnabled,
+        filtersValues,
+      },
+      () => {
+        this.refetchProducts();
+      },
+    );
   }
 
   refetchProducts() {
@@ -92,39 +89,18 @@ class Products extends PureComponent {
   render() {
     if (this.props.data.loading) {
       return (
-        <View
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-        >
+        <View style={styles.loadingIndicator}>
           <ActivityIndicator animating />
         </View>
       );
     }
 
     return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: Colors.white,
-          paddingTop: Platform.select({
-            ios: 20,
-            android: StatusBar.currentHeight,
-          }),
-        }}
-      >
+      <View style={styles.container}>
         {this.renderFiltersModal()}
         <View style={{ padding: 15 }}>
-          <NavigationButton
-            dark
-            back
-            onPress={() => this.props.navigation.goBack()}
-          />
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
+          <NavigationButton dark back onPress={() => this.props.navigation.goBack()} />
+          <View style={styles.containerTitle}>
             <Title size={22} color={Colors.text}>
               {translate('your_results')}
             </Title>
@@ -146,7 +122,7 @@ class Products extends PureComponent {
                 onPress={() =>
                   this.props.navigation.navigate('Product', {
                     productId: product.id,
-                    unavailableOptionsValues: product.unavailableOptionsValues
+                    unavailableOptionsValues: product.unavailableOptionsValues,
                   })
                 }
                 loading={false}

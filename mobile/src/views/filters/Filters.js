@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ActivityIndicator, ScrollView, View } from 'react-native';
+import { ActivityIndicator, ScrollView, View } from 'react-native';
 
 import ModalNavigationBar from '../../components/modal-navigation-bar/ModalNavigationBar';
-import BigRedButton from '../../components/big-red-button/BigRedButton'
+import BigRedButton from '../../components/big-red-button/BigRedButton';
 
 import EnhancedFilters from './HOC/FiltersHOC';
 
@@ -11,17 +11,17 @@ import CategoryFilters from './filterByFields/CategoryFilters';
 import BrandFilters from './filterByFields/BrandFilters';
 import OptionsFilters from './filterByFields/OptionsFilters';
 
-import Colors from '../../statics/colors'
-import styles from './Filters.styles'
-import {translate} from '../../i18n'
+import Colors from '../../statics/colors';
+import styles from './Filters.styles';
+import { translate } from '../../i18n';
 
-const Filters = (props) => {
+const Filters = props => {
   if (props.loading) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator animating />
       </View>
-    )
+    );
   }
 
   return (
@@ -32,7 +32,7 @@ const Filters = (props) => {
         padding: 20,
       }}
     >
-      { props.asModal && (
+      {props.asModal && (
         <ModalNavigationBar
           rightText="Appliquer"
           onPressRight={props.applyFilters}
@@ -59,7 +59,7 @@ const Filters = (props) => {
           filterType={props.filterType}
         />
       </ScrollView>
-      { !props.asModal && (
+      {!props.asModal && (
         <BigRedButton
           onPress={props.applyFilters}
           label={translate('find_your_product')}
@@ -68,7 +68,7 @@ const Filters = (props) => {
       )}
     </View>
   );
-}
+};
 
 Filters.propTypes = {
   filtersEnabled: PropTypes.object,

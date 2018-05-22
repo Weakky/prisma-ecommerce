@@ -17,7 +17,7 @@ const StackModalNavigator = (routeConfigs, navigatorConfig) => {
     {
       mode: 'modal',
       headerMode: 'none',
-    }
+    },
   );
 };
 

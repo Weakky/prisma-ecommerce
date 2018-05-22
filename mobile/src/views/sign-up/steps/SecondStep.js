@@ -5,8 +5,8 @@ import Colors from '../../../statics/colors';
 
 import Title from '../../../components/title/Title';
 import Button from '../../../components/button/Button';
-import NavigationButton from "../../../components/navigation-button/NavigationButton";
-import {translate} from '../../../i18n'
+import NavigationButton from '../../../components/navigation-button/NavigationButton';
+import { translate } from '../../../i18n';
 
 const lawSubtitle = {
   firstPart: "Selon l'article",
@@ -23,14 +23,10 @@ class SecondStep extends PureComponent {
     return (
       <View style={{ backgroundColor: 'transparent' }}>
         <NavigationButton onPress={() => this.props.previousStep()} back />
-        <Title
-          style={{ marginBottom: 20, marginTop: 10 }}
-          color={Colors.white}
-          size={22}
-        >
+        <Title style={{ marginBottom: 20, marginTop: 10 }} color={Colors.white} size={22}>
           {translate('are_you_major')}
         </Title>
-        <Title size={14} color={Colors.white} style={{ marginBottom: 30 }} >
+        <Title size={14} color={Colors.white} style={{ marginBottom: 30 }}>
           {lawSubtitle.firstPart}&nbsp;
           {lawSubtitle.secondPart}
           {lawSubtitle.thirdPart}
@@ -43,11 +39,7 @@ class SecondStep extends PureComponent {
           labelColor={Colors.red}
           fontSize={14}
         />
-        <Button
-          onPress={() => {}}
-          label={translate('cancel_sign_up')}
-          fontSize={14}
-        />
+        <Button onPress={() => {}} label={translate('cancel_sign_up')} fontSize={14} />
       </View>
     );
   }

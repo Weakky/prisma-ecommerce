@@ -5,14 +5,13 @@ import { boolean } from '@storybook/addon-knobs';
 import NavigationButton from './NavigationButton';
 
 function log() {
-  console.log('Done')
+  console.log('Done');
 }
 
-storiesOf('NavigationButton', module)
-  .add('default', () => (
-    <NavigationButton
-      next={boolean('Next', true)}
-      disable={boolean('Disable', true)}
-      callback={log}
-    />
-  ));
+storiesOf('NavigationButton', module).add('default', () => (
+  <NavigationButton
+    next={boolean('Next', true)}
+    disable={boolean('Disable', true)}
+    callback={log}
+  />
+));

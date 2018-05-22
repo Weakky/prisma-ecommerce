@@ -8,7 +8,6 @@ import Products from './Products';
 const PRODUCTS_PER_PAGE = 10;
 
 function buildFilters(filtersEnabled, filtersValues, filterType) {
-
   const enabledOptionsValues = filtersValues.options.map(option => {
     return filtersEnabled[option.name];
   });
@@ -19,12 +18,12 @@ function buildFilters(filtersEnabled, filtersValues, filterType) {
     brandsIds: filtersEnabled.brands,
     attributesIds: filtersEnabled.attributes,
     optionsValuesIds,
-    categoryId: filterType
-  }
+    categoryId: filterType,
+  };
 }
 
 export default graphql(query, {
-  options: (props) => ({
+  options: props => ({
     variables: {
       ...buildFilters(props.filtersEnabled, props.filtersValues, props.filterType),
       skip: 0,
@@ -34,13 +33,13 @@ export default graphql(query, {
   props: ({ data }) => ({
     data,
     hasMore: () => data.products.aggregate.count > data.products.edges.length,
-    refetchProducts: ({ filtersEnabled, filtersValues, filterType }) => (
+    refetchProducts: ({ filtersEnabled, filtersValues, filterType }) =>
       data.refetch({
         ...buildFilters(filtersEnabled, filtersValues, filterType),
         skip: 0,
         first: PRODUCTS_PER_PAGE,
-      })),
-    loadMoreProducts: () => (
+      }),
+    loadMoreProducts: () =>
       data.fetchMore({
         variables: {
           brandsIds: data.variables.brandsIds,
@@ -57,13 +56,12 @@ export default graphql(query, {
           return {
             products: {
               ...prevState.products,
-              edges: [...prevState.products.edges, ...fetchMoreResult.products.edges]
-            }
+              edges: [...prevState.products.edges, ...fetchMoreResult.products.edges],
+            },
           };
         },
-      })
-    ),
-    subscribeToProductUpdates: () => (
+      }),
+    subscribeToProductUpdates: () =>
       data.subscribeToMore({
         document: subscription,
         updateQuery: (prevState, { subscriptionData }) => {
@@ -73,7 +71,7 @@ export default graphql(query, {
 
           const newProducts = {
             ...prevState.products,
-            edges: prevState.products.edges.map((edge) => {
+            edges: prevState.products.edges.map(edge => {
               if (edge.node.id !== subscriptionData.data.updatedProduct.node.id) {
                 return edge;
               }
@@ -83,20 +81,18 @@ export default graphql(query, {
                 node: {
                   ...edge.node,
                   available: subscriptionData.data.updatedProduct.node.available,
-                  unavailableOptionsValues: subscriptionData.data.updatedProduct.node.unavailableOptionsValues
-                }
-              }
-            })
-          }
+                  unavailableOptionsValues:
+                    subscriptionData.data.updatedProduct.node.unavailableOptionsValues,
+                },
+              };
+            }),
+          };
 
           return {
             ...prevState,
-            products: newProducts
+            products: newProducts,
           };
-        }
-      })
-    )
+        },
+      }),
   }),
 })(Products);
-
-

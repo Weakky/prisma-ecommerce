@@ -1,10 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Platform, StatusBar } from 'react-native';
-import {
-  TabBar,
-  TabViewAnimated,
-  TabViewPagerPan,
-} from 'react-native-tab-view';
+import { TabBar, TabViewAnimated, TabViewPagerPan } from 'react-native-tab-view';
 
 import Colors from '../../statics/colors';
 
@@ -33,9 +29,9 @@ class Browse extends React.PureComponent {
       routes: data.categories.map((category, key) => ({
         key: `${key}`,
         categoryId: category.id,
-        title: category.name
-      }))
-    })
+        title: category.name,
+      })),
+    });
   }
 
   onIndexChange(index) {
@@ -66,14 +62,20 @@ class Browse extends React.PureComponent {
   }
 
   applyFilters({ filtersValues, filtersEnabled }, filterType) {
-    this.props.navigation.navigate('Products', { filtersValues, filtersEnabled, filterType });
+    this.props.navigation.navigate('Products', {
+      filtersValues,
+      filtersEnabled,
+      filterType,
+    });
   }
 
   renderScene({ route }) {
     return (
       <Filters
         filterType={route.categoryId}
-        applyFilters={({ filtersEnabled, filtersValues }) => this.applyFilters({ filtersEnabled, filtersValues }, route.categoryId)}
+        applyFilters={({ filtersEnabled, filtersValues }) =>
+          this.applyFilters({ filtersEnabled, filtersValues }, route.categoryId)
+        }
       />
     );
   }
@@ -95,7 +97,6 @@ class Browse extends React.PureComponent {
   }
 
   render() {
-
     const { data } = this.props;
 
     if (data.loading) {
@@ -103,16 +104,7 @@ class Browse extends React.PureComponent {
     }
 
     return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: Colors.white,
-          paddingTop: Platform.select({
-            ios: 20,
-            android: StatusBar.currentHeight,
-          }),
-        }}
-      >
+      <View style={styles.container}>
         <StatusBar barStyle="dark-content" />
         <SearchBox navigation={this.props.navigation} />
         <TabViewAnimated
@@ -131,3 +123,14 @@ Browse.propTypes = {};
 Browse.defaultProps = {};
 
 export default Browse;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.white,
+    paddingTop: Platform.select({
+      ios: 20,
+      android: StatusBar.currentHeight,
+    }),
+  },
+});

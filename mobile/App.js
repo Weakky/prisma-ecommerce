@@ -15,7 +15,7 @@ import Browse from './src/views/browse/BrowseContainer';
 import Products from './src/views/products/ProductsContainer';
 import Basket from './src/views/basket/BasketContainer';
 import Recap from './src/views/recap/Recap';
-import HomeContainer from './src/views/home/HomeContainer'
+import HomeContainer from './src/views/home/HomeContainer';
 import PaymentContainer from './src/views/payment/PaymentContainer';
 import Payment from './src/views/payment/Payment';
 
@@ -51,7 +51,7 @@ const BrowseNavigator = StackNavigator(
   },
   {
     headerMode: 'none',
-  }
+  },
 );
 
 const BasketNavigator = StackModalNavigator(
@@ -63,7 +63,7 @@ const BasketNavigator = StackModalNavigator(
   },
   {
     headerMode: 'none',
-  }
+  },
 );
 
 const MainView = TabNavigator(
@@ -73,11 +73,7 @@ const MainView = TabNavigator(
       navigationOptions: {
         tabBarLabel: ' ',
         tabBarIcon: ({ tintColor }) => (
-          <Ionicons
-            name="ios-home-outline"
-            size={22}
-            style={{ color: tintColor }}
-          />
+          <Ionicons name="ios-home-outline" size={22} style={{ color: tintColor }} />
         ),
       },
     },
@@ -86,11 +82,7 @@ const MainView = TabNavigator(
       navigationOptions: {
         tabBarLabel: ' ',
         tabBarIcon: ({ tintColor }) => (
-          <Ionicons
-            name="ios-search-outline"
-            size={22}
-            style={{ color: tintColor }}
-          />
+          <Ionicons name="ios-search-outline" size={22} style={{ color: tintColor }} />
         ),
       },
     },
@@ -98,9 +90,7 @@ const MainView = TabNavigator(
       screen: BasketNavigator,
       navigationOptions: {
         tabBarLabel: ' ',
-        tabBarIcon: ({ tintColor }) => (
-          <OrderIcon tintColor={tintColor} />
-        ),
+        tabBarIcon: ({ tintColor }) => <OrderIcon tintColor={tintColor} />,
       },
     },
     ProfileTab: {
@@ -108,11 +98,7 @@ const MainView = TabNavigator(
       navigationOptions: {
         tabBarLabel: ' ',
         tabBarIcon: ({ tintColor }) => (
-          <Ionicons
-            name="ios-person-outline"
-            size={22}
-            style={{ color: tintColor }}
-          />
+          <Ionicons name="ios-person-outline" size={22} style={{ color: tintColor }} />
         ),
       },
     },
@@ -125,14 +111,14 @@ const MainView = TabNavigator(
       inactiveTintColor: Colors.text,
       style: {
         borderTopColor: Colors.grey,
-        height: 40
+        height: 40,
       },
       tabStyle: {
         backgroundColor: Colors.white,
       },
-      showLabel: false
+      showLabel: false,
     },
-  }
+  },
 );
 
 const Application = StackNavigator(
@@ -144,7 +130,7 @@ const Application = StackNavigator(
   },
   {
     headerMode: 'none',
-  }
+  },
 );
 
 // Change screen: with the view you wanna render the app
@@ -156,7 +142,7 @@ const DebugView = StackNavigator(
   },
   {
     headerMode: 'none',
-  }
+  },
 );
 
 const apolloClient = setupApolloClient();

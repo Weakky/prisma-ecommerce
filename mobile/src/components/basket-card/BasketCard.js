@@ -7,7 +7,7 @@ import SubTotal from './sub-total/SubTotal';
 import Colors from '../../statics/colors';
 import font from '../../assets/fonts';
 import Title from '../title/Title';
-import {translate} from '../../i18n'
+import { translate } from '../../i18n';
 
 const propTypes = {
   source: PropTypes.object,
@@ -19,7 +19,7 @@ const propTypes = {
   quantity: PropTypes.number,
   font: PropTypes.string,
   onPressViewProduct: PropTypes.func.isRequired,
-  onPressDeleteProduct: PropTypes.func.isRequired
+  onPressDeleteProduct: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
@@ -30,7 +30,7 @@ const defaultProps = {
   price: 5.95,
 };
 
-const BasketCard = (props) => (
+const BasketCard = props => (
   <View>
     <View
       style={{
@@ -52,19 +52,19 @@ const BasketCard = (props) => (
           }}
         />
         <View style={{ flex: 1, flexDirection: 'column', marginLeft: 5, marginTop: 10 }}>
-          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+          <View
+            style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}
+          >
             <Title font={font} size={12} weight="500">
               {props.name.toUpperCase()}
-              <Title
-                font={font}
-                size={8}
-                weight="600"
-                color="rgba(72, 72, 72, 0.4)"
-              >
+              <Title font={font} size={8} weight="600" color="rgba(72, 72, 72, 0.4)">
                 &nbsp;/&nbsp;{props.brand.toUpperCase()}
               </Title>
             </Title>
-            <TouchableOpacity style={{ marginRight: 10, marginTop: -8 }} onPress={props.onPressDeleteProduct}>
+            <TouchableOpacity
+              style={{ marginRight: 10, marginTop: -8 }}
+              onPress={props.onPressDeleteProduct}
+            >
               <Title
                 font={font}
                 weight="700"
@@ -76,34 +76,68 @@ const BasketCard = (props) => (
               </Title>
             </TouchableOpacity>
           </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-              <View style={{ flex: 1, flexDirection: 'column' }}>
-                <TouchableOpacity onPress={props.onPressViewProduct}>
-                  <Title
-                    font={font}
-                    weight="300"
-                    size={11}
-                    color="#484848"
-                    style={{ marginTop: 5 }}
-                  >
-                    {translate('see_product')}
-                  </Title>
-                </TouchableOpacity>
-                <View style={{ marginTop: 5, flex: 1 }}>
-                  {
-                    props.selectedOptions.map(selectedOption => (
-                      <View key={selectedOption.id} style={{ flex: 1, flexDirection: 'row', alignItems: 'center', marginBottom: 4 }}>
-                        <Title style={{ marginRight: 5 }} font={font} size={8} color="rgba(71,71,71,0.6)" weight="700">{selectedOption.option.name.toUpperCase()}</Title>
-                        <Title font={font} size={11} color="rgba(71,71,71,0.8)" weight="700">{selectedOption.value.name}</Title>
-                      </View>
-                    ))
-                  }
-                </View>
-              </View>
-              <TouchableOpacity style={{ height: 43, width: 43, borderRadius: 5, backgroundColor: 'rgba(221,221,221, 0.3)', justifyContent: 'center', alignItems: 'center', marginRight: 10 }}>
-                <Title font={font} size={28} color="rgba(0,0,0,0.7)" weight="300">{props.quantity}</Title>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <View style={{ flex: 1, flexDirection: 'column' }}>
+              <TouchableOpacity onPress={props.onPressViewProduct}>
+                <Title
+                  font={font}
+                  weight="300"
+                  size={11}
+                  color="#484848"
+                  style={{ marginTop: 5 }}
+                >
+                  {translate('see_product')}
+                </Title>
               </TouchableOpacity>
+              <View style={{ marginTop: 5, flex: 1 }}>
+                {props.selectedOptions.map(selectedOption => (
+                  <View
+                    key={selectedOption.id}
+                    style={{
+                      flex: 1,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginBottom: 4,
+                    }}
+                  >
+                    <Title
+                      style={{ marginRight: 5 }}
+                      font={font}
+                      size={8}
+                      color="rgba(71,71,71,0.6)"
+                      weight="700"
+                    >
+                      {selectedOption.option.name.toUpperCase()}
+                    </Title>
+                    <Title font={font} size={11} color="rgba(71,71,71,0.8)" weight="700">
+                      {selectedOption.value.name}
+                    </Title>
+                  </View>
+                ))}
+              </View>
             </View>
+            <TouchableOpacity
+              style={{
+                height: 43,
+                width: 43,
+                borderRadius: 5,
+                backgroundColor: 'rgba(221,221,221, 0.3)',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginRight: 10,
+              }}
+            >
+              <Title font={font} size={28} color="rgba(0,0,0,0.7)" weight="300">
+                {props.quantity}
+              </Title>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </View>

@@ -60,7 +60,7 @@ class SignIn extends PureComponent {
     }
 
     try {
-      const { data }  = await this.props.authenticateUser({
+      const { data } = await this.props.authenticateUser({
         email,
         password,
       });
@@ -70,7 +70,6 @@ class SignIn extends PureComponent {
       this.setState({ loading: false }, () => {
         this.props.navigation.navigate('MainView');
       });
-
     } catch (e) {
       console.log(e);
       this.setState({
@@ -84,10 +83,7 @@ class SignIn extends PureComponent {
     return (
       <KeyboardAwareCenteredView>
         <View style={styles.container}>
-          <NavigationButton
-            onPress={() => this.props.navigation.goBack()}
-            back
-          />
+          <NavigationButton onPress={() => this.props.navigation.goBack()} back />
           <Title
             style={{ marginBottom: 50, marginTop: 10 }}
             size={22}
@@ -100,8 +96,8 @@ class SignIn extends PureComponent {
             style={{ marginBottom: 20 }}
             label={translate('email')}
             autoCapitalize="none"
-            onChangeText={(email) => this.setState({ email })}
-            onSubmit={(email) => email && this.focusNextField('1')}
+            onChangeText={email => this.setState({ email })}
+            onSubmit={email => email && this.focusNextField('1')}
             value={this.state.email}
             withValidation
             validationFunction={this.validateEmail}
@@ -112,15 +108,13 @@ class SignIn extends PureComponent {
             secure
             returnKey="next"
             autoCapitalize="none"
-            onChangeText={(password) => this.setState({ password })}
+            onChangeText={password => this.setState({ password })}
             onSubmit={this.authenticateUser}
             value={this.state.password}
             withValidation
             validationFunction={this.validatePassword}
           />
-          {this.state.loading && (
-            <ActivityIndicator color={colors.white} animating />
-          )}
+          {this.state.loading && <ActivityIndicator color={colors.white} animating />}
           {!!this.state.error && (
             <Title
               color={colors.white}

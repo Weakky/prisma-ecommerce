@@ -1,18 +1,18 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
-import {Text, View, Picker} from 'react-native'
+import { Text, View, Picker } from 'react-native';
 
-const Selector = (props) => (
+const Selector = props => (
   <Picker
     selectedValue="java"
-    onValueChange={(itemValue, itemIndex) => this.setState({language: itemValue})}>
+    onValueChange={(itemValue, itemIndex) => this.setState({ language: itemValue })}
+  >
     <Picker.Item label="Javafsdfsdf" value="java" />
     <Picker.Item label="JavaScript" value="js" />
   </Picker>
-)
+);
 
 class TaxonSelector extends Component {
-
   constructor(props) {
     super(props);
 

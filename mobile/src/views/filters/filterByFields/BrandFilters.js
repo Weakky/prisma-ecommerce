@@ -1,11 +1,11 @@
 import React from 'react';
 import FilterGroup from '../filtersGroup/FiltersGroup';
-import Filter from '../filtersGroup/Filter'
-import {translate} from '../../../i18n'
+import Filter from '../filtersGroup/Filter';
+import { translate } from '../../../i18n';
 
-const filterName = 'brands'
+const filterName = 'brands';
 
-const BrandFilters = (props) => (
+const BrandFilters = props => (
   <FilterGroup title={translate('our_brands')}>
     <Filter
       name="TOUS"
@@ -16,8 +16,7 @@ const BrandFilters = (props) => (
       <Filter
         key={brand.id}
         name={brand.name}
-        setFilter={() =>
-          props.setFilter([filterName, brand.id])}
+        setFilter={() => props.setFilter([filterName, brand.id])}
         selected={props.filtersEnabled[filterName].includes(brand.id)}
       />
     ))}

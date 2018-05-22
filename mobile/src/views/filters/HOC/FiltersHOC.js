@@ -4,7 +4,7 @@ import { withApollo } from 'react-apollo';
 
 import query from '../query.gql';
 
-export default (WrappedComponent) => (
+export default WrappedComponent =>
   withApollo(
     class FiltersContainer extends Component {
       constructor(props) {
@@ -13,7 +13,7 @@ export default (WrappedComponent) => (
         this.state = {
           loading: true,
           filtersValues: {
-            ...props.filtersValues
+            ...props.filtersValues,
           },
           filtersEnabled: {
             brands: [],
@@ -76,7 +76,7 @@ export default (WrappedComponent) => (
             filtersEnabled: {
               ...this.state.filtersEnabled,
               [filterName]: this.state.filtersEnabled[filterName].filter(
-                value => value !== filterValue
+                value => value !== filterValue,
               ),
             },
           });
@@ -85,10 +85,7 @@ export default (WrappedComponent) => (
           this.setState({
             filtersEnabled: {
               ...this.state.filtersEnabled,
-              [filterName]: [
-                ...this.state.filtersEnabled[filterName],
-                filterValue,
-              ],
+              [filterName]: [...this.state.filtersEnabled[filterName], filterValue],
             },
           });
         }
@@ -97,7 +94,7 @@ export default (WrappedComponent) => (
       applyFilters() {
         this.props.applyFilters({
           filtersEnabled: this.state.filtersEnabled,
-          filtersValues: this.state.filtersValues
+          filtersValues: this.state.filtersValues,
         });
       }
 
@@ -113,6 +110,5 @@ export default (WrappedComponent) => (
           />
         );
       }
-    }
-  )
-);
+    },
+  );

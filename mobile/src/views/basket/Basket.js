@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FlatList, Platform, StatusBar, View, StyleSheet } from 'react-native';
 
-import sumBy from 'lodash/sumBy'
+import sumBy from 'lodash/sumBy';
 import { withApollo } from 'react-apollo';
 import { Observable } from 'apollo-client-preset';
 
@@ -13,14 +13,14 @@ import commonQueries from '../../graphql/queries';
 
 import BasketCard from '../../components/basket-card/BasketCard';
 import Button from '../../components/button/Button';
-import {translate} from '../../i18n'
+import { translate } from '../../i18n';
 
 class Basket extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      cart: []
+      cart: [],
     };
 
     this.removeItemFromBasket = this.removeItemFromBasket.bind(this);
@@ -41,7 +41,9 @@ class Basket extends Component {
   }
 
   totalTTC() {
-    return parseFloat(sumBy(this.state.cart, lineItem => lineItem.quantity * lineItem.variant.price)).toFixed(2);
+    return parseFloat(
+      sumBy(this.state.cart, lineItem => lineItem.quantity * lineItem.variant.price),
+    ).toFixed(2);
   }
 
   totalHT() {
@@ -58,49 +60,34 @@ class Basket extends Component {
     }
 
     return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: Colors.white,
-          paddingTop: Platform.select({
-            ios: 20,
-            android: StatusBar.currentHeight,
-          }),
-        }}
-      >
+      <View style={styles.container}>
         <View style={{ padding: 15 }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
+          <View style={styles.containerTitle}>
             <Title size={22} color={Colors.text}>
               {translate('your_cart')}
             </Title>
-            {
-              this.state.cart.length > 0 && (
-                <Button
-                  label={translate('continue')}
-                  onPress={() => this.props.navigation.navigate('Recap', {
+            {this.state.cart.length > 0 && (
+              <Button
+                label={translate('continue')}
+                onPress={() =>
+                  this.props.navigation.navigate('Recap', {
                     totalTTC: this.totalTTC(),
                     totalHT: this.totalHT(),
-                    totalVAT: this.totalVAT()
-                  })}
-                  backgroundColor={Colors.red}
-                  labelColor={Colors.white}
-                  fontSize={16}
-                  width={150}
-                  height={35}
-                />
-              )
-            }
+                    totalVAT: this.totalVAT(),
+                  })
+                }
+                backgroundColor={Colors.red}
+                labelColor={Colors.white}
+                fontSize={16}
+                width={150}
+                height={35}
+              />
+            )}
           </View>
         </View>
         <FlatList
           data={this.state.cart}
-          keyExtractor={(item) => item.id}
+          keyExtractor={item => item.id}
           renderItem={({ item: lineItem }) => (
             <View style={{ padding: 5 }}>
               <BasketCard
@@ -114,7 +101,8 @@ class Basket extends Component {
                 onPressViewProduct={() => {
                   this.props.navigation.navigate('Product', {
                     productId: lineItem.variant.product.id,
-                    unavailableOptionsValues: lineItem.variant.product.unavailableOptionsValues
+                    unavailableOptionsValues:
+                      lineItem.variant.product.unavailableOptionsValues,
                   });
                 }}
                 onPressDeleteProduct={() => this.removeItemFromBasket(lineItem.id)}
@@ -122,13 +110,14 @@ class Basket extends Component {
             </View>
           )}
         />
-        <View style={{ flexDirection: 'row', height: 44, backgroundColor: 'rgba(249, 249, 249, 0.8)', borderColor: 'rgba(151, 151, 151, 0.5)', borderTopWidth: StyleSheet.hairlineWidth, alignItems: 'center', justifyContent: 'space-between', paddingLeft: 10, paddingRight: 10 }}>
-          <Title font={font} size={15} color="#484848" weight="500">{translate('total_price')}</Title>
+        <View style={styles.totalPriceContainer}>
+          <Title font={font} size={15} color="#484848" weight="500">
+            {translate('total_price')}
+          </Title>
           <Title font={font} size={18} color="#484848" weight="700">
-            {
-              this.totalTTC()
-            }
-            €</Title>
+            {this.totalTTC()}
+            €
+          </Title>
         </View>
       </View>
     );
@@ -139,3 +128,30 @@ Basket.propTypes = {};
 Basket.defaultProps = {};
 
 export default withApollo(Basket);
+
+const styles = StyleSheet.create({
+  totalPriceContainer: {
+    flexDirection: 'row',
+    height: 44,
+    backgroundColor: 'rgba(249, 249, 249, 0.8)',
+    borderColor: 'rgba(151, 151, 151, 0.5)',
+    borderTopWidth: StyleSheet.hairlineWidth,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  containerTitle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: Colors.white,
+    paddingTop: Platform.select({
+      ios: 20,
+      android: StatusBar.currentHeight,
+    }),
+  },
+});

@@ -1,5 +1,5 @@
-import {Dimensions, StyleSheet} from 'react-native';
-import Colors from '../../statics/colors'
+import { Dimensions, StyleSheet } from 'react-native';
+import Colors from '../../statics/colors';
 
 export default StyleSheet.create({
   loadingContainer: {
@@ -18,7 +18,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 45,
-    width: Dimensions.get('window').width * .85,
+    width: Dimensions.get('window').width * 0.85,
     borderRadius: 100,
-  }
-})
+  },
+});

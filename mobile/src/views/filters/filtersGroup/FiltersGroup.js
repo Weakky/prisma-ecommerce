@@ -5,14 +5,12 @@ import { View } from 'react-native';
 import Colors from '../../../statics/colors';
 import Title from '../../../components/title/Title';
 
-const FiltersGroup = (props) => (
+const FiltersGroup = props => (
   <View style={{ marginBottom: 10 }}>
     <Title color={Colors.text} size={22} style={{ marginBottom: 10 }}>
       {props.title}
     </Title>
-    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-      { props.children }
-    </View>
+    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>{props.children}</View>
   </View>
 );
 
@@ -25,4 +23,3 @@ FiltersGroup.propTypes = {
 };
 
 export default FiltersGroup;
-

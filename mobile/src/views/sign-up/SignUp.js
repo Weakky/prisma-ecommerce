@@ -7,7 +7,7 @@ import ThirdStep from './steps/ThirdStep';
 import FourthStep from './steps/FourthStep';
 import FinalStep from './steps/FinalStep';
 
-import KeyboardAwareCenteredView from "../../components/layout/KeyboardAwareCenteredView";
+import KeyboardAwareCenteredView from '../../components/layout/KeyboardAwareCenteredView';
 
 class SignUp extends Component {
   constructor(props) {
@@ -49,26 +49,11 @@ class SignUp extends Component {
           />
         );
       case 2:
-        return (
-          <SecondStep
-            previousStep={this.previousStep}
-            nextStep={this.nextStep}
-          />
-        );
+        return <SecondStep previousStep={this.previousStep} nextStep={this.nextStep} />;
       case 3:
-        return (
-          <ThirdStep
-            previousStep={this.previousStep}
-            nextStep={this.nextStep}
-          />
-        );
+        return <ThirdStep previousStep={this.previousStep} nextStep={this.nextStep} />;
       case 4:
-        return (
-          <FourthStep
-            previousStep={this.previousStep}
-            nextStep={this.nextStep}
-          />
-        );
+        return <FourthStep previousStep={this.previousStep} nextStep={this.nextStep} />;
       case 5:
         setTimeout(() => {
           StatusBar.setBarStyle('dark-content');
@@ -80,9 +65,7 @@ class SignUp extends Component {
 
   render() {
     return (
-      <KeyboardAwareCenteredView>
-          {this.renderCurrentStep()}
-      </KeyboardAwareCenteredView>
+      <KeyboardAwareCenteredView>{this.renderCurrentStep()}</KeyboardAwareCenteredView>
     );
   }
 }

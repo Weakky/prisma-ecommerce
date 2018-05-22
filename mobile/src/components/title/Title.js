@@ -35,7 +35,7 @@ const Title = ({ children, style, size, weight, color, font, fontStyle }) => (
         color: color,
         backgroundColor: 'transparent',
       },
-			...style
+      ...style,
     }}
   >
     {children}

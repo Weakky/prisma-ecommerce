@@ -6,7 +6,7 @@ import queries from './query.gql';
 export default compose(
   graphql(queries.orderStatuses, {
     name: 'orderStatuses',
-    props: (props) => ({
+    props: props => ({
       ...props,
       waitFor3DSecure: ({ orderId }) => {
         return props.orderStatuses.subscribeToMore({
@@ -20,20 +20,22 @@ export default compose(
               me: {
                 ...prev.me,
                 cart: updatedOrder.orderStatus === 'PAID' ? [] : prev.me.cart,
-                orders: prev.me.orders.map((order) => {
-                  if (order.id !== updatedOrder.id) { return order }
+                orders: prev.me.orders.map(order => {
+                  if (order.id !== updatedOrder.id) {
+                    return order;
+                  }
 
                   return {
                     ...order,
                     orderStatus: updatedOrder.orderStatus,
-                  }
-                })
-              }
-            }
-          }
-        })
-      }
-    })
+                  };
+                }),
+              },
+            };
+          },
+        });
+      },
+    }),
   }),
   graphql(queries.pay, {
     props: ({ mutate }) => ({
@@ -53,5 +55,5 @@ export default compose(
           },
         }),
     }),
-  })
+  }),
 )(Payment);

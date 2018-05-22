@@ -1,12 +1,12 @@
 import React from 'react';
-import {TouchableOpacity, View} from 'react-native'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import { TouchableOpacity, View } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import font from '../../assets/fonts'
-import Colors from '../../statics/colors/index'
+import font from '../../assets/fonts';
+import Colors from '../../statics/colors/index';
 
-import Title from '../../components/title/Title'
-import {translate} from '../../i18n'
+import Title from '../../components/title/Title';
+import { translate } from '../../i18n';
 
 const SearchBox = props => (
   <TouchableOpacity

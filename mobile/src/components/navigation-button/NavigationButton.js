@@ -32,20 +32,14 @@ const NavigationButton = ({ dark, back, enabled, onPress }) => {
           }}
           onPress={onPress}
         >
-          <Icon
-            name="md-arrow-back"
-            size={22}
-            color={dark ? color.text : color.white}
-          />
+          <Icon name="md-arrow-back" size={22} color={dark ? color.text : color.white} />
         </TouchableOpacity>
       ) : (
         <TouchableOpacity
           style={[
             styles.touchable,
             {
-              backgroundColor: enabled
-                ? color.white
-                : 'rgba(255, 255, 255, 0.1)',
+              backgroundColor: enabled ? color.white : 'rgba(255, 255, 255, 0.1)',
             },
           ]}
           onPress={onPress}

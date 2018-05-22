@@ -4,7 +4,7 @@ import { StyleSheet, ActivityIndicator, View } from 'react-native';
 import Title from '../../../components/title/Title';
 
 import Colors from '../../../statics/colors';
-import {translate} from '../../../i18n'
+import { translate } from '../../../i18n';
 
 const FinalStep = () => (
   <View style={[styles.container, { justifyContent: 'space-around' }]}>

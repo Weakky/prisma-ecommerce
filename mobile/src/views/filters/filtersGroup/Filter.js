@@ -9,10 +9,7 @@ import styles from './Filter.styles';
 const Filter = ({ setFilter, name, selected }) => (
   <TouchableOpacity
     onPress={setFilter}
-    style={[
-      styles.filterContainer,
-      { backgroundColor: selected ? '#f2d2d2' : '#eee' },
-    ]}
+    style={[styles.filterContainer, { backgroundColor: selected ? '#f2d2d2' : '#eee' }]}
   >
     <Text style={{ marginRight: 5, color: Colors.text }}>{name}</Text>
   </TouchableOpacity>

@@ -1,3 +1,3 @@
-import FilterGroup from './FiltersGroup'
+import FilterGroup from './FiltersGroup';
 
 export default FilterGroup;

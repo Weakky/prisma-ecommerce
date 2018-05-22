@@ -4,12 +4,11 @@ import { View } from 'react-native';
 
 import Title from '../../../components/title/Title';
 import Input from '../../../components/input/Input';
-import NavigationButton from "../../../components/navigation-button/NavigationButton";
-import styles from "../SignUp.styles";
-import {translate} from '../../../i18n'
+import NavigationButton from '../../../components/navigation-button/NavigationButton';
+import styles from '../SignUp.styles';
+import { translate } from '../../../i18n';
 
 class FourthStep extends PureComponent {
-
   constructor(props) {
     super(props);
 
@@ -32,14 +31,18 @@ class FourthStep extends PureComponent {
       <View>
         <View style={{ flex: 1, backgroundColor: 'transparent' }}>
           <NavigationButton onPress={() => this.props.previousStep()} back />
-          <Title style={{ marginBottom: 50, marginTop: 10 }} size={22} color={Colors.white}>
+          <Title
+            style={{ marginBottom: 50, marginTop: 10 }}
+            size={22}
+            color={Colors.white}
+          >
             {translate('finish_sign_up')}&nbsp;!
           </Title>
           <Input
             style={{ marginBottom: 20 }}
             autoFocus
             label={translate('email')}
-            onChangeText={(email) => this.setState({ email })}
+            onChangeText={email => this.setState({ email })}
             value={this.state.email}
             onSubmit={() => this.focusNextField('1')}
           />
@@ -49,7 +52,7 @@ class FourthStep extends PureComponent {
             returnKey="next"
             helper={translate('hard_password')}
             secure
-            onChangeText={(password) => this.setState({ password })}
+            onChangeText={password => this.setState({ password })}
             value={this.state.password}
             onSubmit={() => this.props.nextStep(this.state)}
           />

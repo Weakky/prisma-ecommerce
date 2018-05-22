@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native'
-import Colors from '../../statics/colors'
+import { StyleSheet } from 'react-native';
+import Colors from '../../statics/colors';
 
 export default StyleSheet.create({
   iconContainer: { marginTop: 8 },
@@ -16,4 +16,4 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   badgeText: { color: Colors.white, fontSize: 9 },
-})
+});

@@ -12,9 +12,9 @@ export default StyleSheet.create({
   },
   container: {
     width: 40,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   icon: {
     zIndex: 10,
-  }
+  },
 });

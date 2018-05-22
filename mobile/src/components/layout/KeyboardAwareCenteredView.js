@@ -1,14 +1,10 @@
 import React from 'react';
-import {
-  KeyboardAvoidingView,
-  StatusBar,
-  Platform
-} from 'react-native';
+import { KeyboardAvoidingView, StatusBar, Platform } from 'react-native';
 
 import Gradient from '../gradient/Gradient';
 import styles from './KeyboardAwareCenteredView.styles';
 
-const KeyboardAwareCenteredView = (props) => (
+const KeyboardAwareCenteredView = props => (
   <Gradient>
     <StatusBar barStyle="light-content" />
     <KeyboardAvoidingView

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, Text, View } from 'react-native';
-import {translate} from '../../../i18n'
+import { translate } from '../../../i18n';
 
-const SubTotal = (props) => (
+const SubTotal = props => (
   <View
     style={{
       padding: 7,
@@ -44,4 +44,3 @@ SubTotal.propTypes = {
 };
 
 export default SubTotal;
-

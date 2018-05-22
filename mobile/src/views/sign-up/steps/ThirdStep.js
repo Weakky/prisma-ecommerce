@@ -6,8 +6,8 @@ import { View } from 'react-native';
 import Colors from '../../../statics/colors';
 import Title from '../../../components/title/Title';
 import Button from '../../../components/button/Button';
-import NavigationButton from "../../../components/navigation-button/NavigationButton";
-import {translate} from '../../../i18n'
+import NavigationButton from '../../../components/navigation-button/NavigationButton';
+import { translate } from '../../../i18n';
 
 const physicalShopData = {
   shop1: {
@@ -48,7 +48,11 @@ class ThirdStep extends PureComponent {
       <View>
         <View style={{ marginLeft: 20 }}>
           <NavigationButton onPress={() => this.props.previousStep()} back />
-          <Title style={{ marginBottom: 20, marginTop: 10 }} color={Colors.white} size={22}>
+          <Title
+            style={{ marginBottom: 20, marginTop: 10 }}
+            color={Colors.white}
+            size={22}
+          >
             {translate('choose_your_store')}
           </Title>
           <Title size={14} color={Colors.white} style={{ marginBottom: 30 }}>
@@ -57,16 +61,12 @@ class ThirdStep extends PureComponent {
         </View>
         <Banner
           {...physicalShopData.shop1}
-          selected={
-            this.state.selectedShop === physicalShopData.shop1.shop
-          }
+          selected={this.state.selectedShop === physicalShopData.shop1.shop}
           onBannerSelected={this.onBannerSelected}
         />
         <Banner
           {...physicalShopData.shop2}
-          selected={
-            this.state.selectedShop === physicalShopData.shop2.shop
-          }
+          selected={this.state.selectedShop === physicalShopData.shop2.shop}
           onBannerSelected={this.onBannerSelected}
         />
         {this.state.selectedShop && (
