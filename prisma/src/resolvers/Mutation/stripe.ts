@@ -73,7 +73,7 @@ export async function createChargeWithOrder(params: CreateChargeInput, db: Prism
   }
 }
 
-export async function createChargeAndUpdateOrder(params: CreateChargeAndUpdateOrder, db: Prisma) {
+export async function createChargeAndUpdateOrder(params: CreateChargeAndUpdateOrder, db: Prisma): Promise<void> {
   const { charge, error } = await createCharge({ sourceId: params.sourceId, amount: params.amount, email: params.email });
   const orderStatus = (!error && charge && charge.status === 'succeeded') ? 'PAID' : 'FAILED';
 
@@ -81,8 +81,12 @@ export async function createChargeAndUpdateOrder(params: CreateChargeAndUpdateOr
     await emptyCartForUser(params.userId, db);
   }
 
-  await db.mutation.updateOrder({
-    where: { id: params.orderId },
+  await updateOrder(params.orderId, orderStatus);
+}
+
+export async function updateOrder(orderId: string, orderStatus: OrderStatus): Promise<Order> {
+  return db.mutation.updateOrder({
+    where: { id: orderId },
     data: { orderStatus }
   });
 }
@@ -108,21 +112,6 @@ function create3DSecureSource({ sourceId, metadata, amount }) {
     },
     metadata
   });
-}
-
-function stripe3DSStatusChangedHandler(source) {
-  if (source.status == 'chargeable') {
-    var msg = '3D Secure authentication succeeded: ' + source.id + '. In a real app you would send this source ID to your backend to create the charge.';
-    console.log(msg);
-    return true;
-  } else if (source.status == 'failed') {
-    var msg = '3D Secure authentication failed.';
-    console.log(msg);
-  } else if (source.status != 'pending') {
-    var msg = "Unexpected 3D Secure status: " + source.status;
-    console.log(msg);
-  }
-  return false;
 }
 
 export const payment = {

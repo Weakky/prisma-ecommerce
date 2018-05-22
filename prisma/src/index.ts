@@ -1,7 +1,7 @@
 import { GraphQLServer } from 'graphql-yoga'
 import { Prisma } from './generated/prisma'
 import resolvers from './resolvers';
-import { createChargeWithOrder, createChargeAndUpdateOrder } from './resolvers/Mutation/stripe';
+import { createChargeWithOrder, createChargeAndUpdateOrder, updateOrder } from './resolvers/Mutation/stripe';
 import * as Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -73,7 +73,8 @@ server.express.post('/stripe', rawBodyParser, async (req, res, next) => {
     object.object === 'source' &&
     object.status === 'failed'
   ) {
-    console.log('❌ Payment failed !');
+    const source = object;
+    await updateOrder(source.metadata.orderId, 'FAILED');
   }
 
   next();

@@ -54,7 +54,7 @@ export default class Payment extends React.PureComponent {
       paid: false,
       error: '',
       orderId: '',
-      status: PAYMENT_STATUSES.WAITING,
+      status: PAYMENT_STATUSES.NONE,
       card: {
         number: '',
         expMonth: '',
@@ -68,7 +68,7 @@ export default class Payment extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const newOrder = this.findNewOrder();
+    const newOrder = this.findNewOrder(nextProps.orderStatuses);
 
     if (newOrder) {
       this.setState({
@@ -123,10 +123,10 @@ export default class Payment extends React.PureComponent {
     }
   }
 
-  findNewOrder() {
-    if (this.props.orderStatuses.loading) { return null }
+  findNewOrder(orderStatuses) {
+    if (orderStatuses.loading) { return null }
 
-    const newOrder = _.last(this.props.orderStatuses.me.orders);
+    const newOrder = _.last(orderStatuses.me.orders);
 
     return newOrder.id === this.state.orderId ? newOrder : null;
   }

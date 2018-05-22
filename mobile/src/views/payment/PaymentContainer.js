@@ -26,7 +26,6 @@ export default compose(
                   return {
                     ...order,
                     orderStatus: updatedOrder.orderStatus,
-                    newOrder: true
                   }
                 })
               }
@@ -48,10 +47,7 @@ export default compose(
               data.me.cart = [];
             }
 
-            data.me.orders.push({
-              ...pay.order,
-              newOrder: true
-            });
+            data.me.orders.push(pay.order);
 
             store.writeQuery({ query: queries.orderStatuses, data });
           },

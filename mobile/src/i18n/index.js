@@ -96,7 +96,7 @@ const translations = {
     status_submitted: 'Redirecting towards your bank service...',
     status_waiting: 'Waiting for your bank confirmation...',
     status_paid: 'Payment done !',
-    status_failed: 'Payment failed.'
+    status_failed: 'Payment failed. Please retry.'
 
   },
   fr: {
@@ -184,7 +184,7 @@ const translations = {
     status_submitted: 'Redirection vers votre banque en cours...',
     status_waiting: 'En attente de confirmation de votre banque...',
     status_paid: 'Paiement effectué !',
-    status_failed: 'Paiement échoué.',
+    status_failed: 'Paiement échoué. Réssayez.',
   }
 }[LANGUAGE];
 
