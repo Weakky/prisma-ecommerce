@@ -2,7 +2,7 @@
 <p align="center">
   <img height=100" src="https://d1k5w7mbrh6vq5.cloudfront.net/images/cache/cc/5b/b9/cc5bb931b5f5fb8914609572a9dc51c1.png">
 </p>
-<p align="center">                                                                                                               <strong>A prisma e-commerce real-world complete example 🚀</strong>
+<p align="center">                                                                                                               <strong>A prisma e-commerce real-world fullstack example 🚀</strong>
 </p>
 
 Homepage view             |  Browsing product view          | Cart view            | Payment view
