@@ -1,40 +1,48 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  container: {
-    backgroundColor: 'rgba(255, 255, 255, 1)',
-    borderWidth: 1,
-    borderColor: 'rgba(0, 0, 0, 0.05)',
-    borderRadius: 3,
-  },
-  imageUrl: {
-    flex: 0.8,
-    backgroundColor: '#F9F9F9',
-  },
-  preview: {
-    flex: 1,
-  },
-  content: {
-    flex: 0.2,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    borderTopWidth: 1,
-    borderColor: 'rgba(0, 0, 0, 0.05)',
-  },
-  left: {
-    fontSize: 12,
+  productPrice: {
+    fontFamily: 'Avenir Next',
     fontWeight: '600',
-    paddingLeft: 10,
-  },
-  right: {
     fontSize: 12,
-    paddingRight: 10,
+    color: '#484848',
+    marginTop: 5,
   },
-  loadingContent: {
-    margin: 5,
-    backgroundColor: '#F4F4F4',
-    borderRadius: 100,
-    height: 15,
+  productBrand: {
+    fontFamily: 'Avenir Next',
+    fontWeight: '600',
+    fontSize: 10,
+    color: 'rgba(72, 72, 72, 0.4)',
+  },
+  productImage: { width: 60, height: 60, margin: 5 },
+  productName: { fontFamily: 'Avenir Next', fontWeight: '300', fontSize: 14 },
+  container: {
+    backgroundColor: '#F9F9F9',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#ddd',
+    height: 77,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  optionValueContent: {
+    fontFamily: 'Avenir Next',
+    fontWeight: '600',
+    fontSize: 11,
+    marginLeft: 10,
+  },
+  optionValueTitle: {
+    fontFamily: 'Avenir Next',
+    fontSize: 11,
+    marginLeft: 3,
+  },
+  optionValueContainer: {
+    padding: 7,
+    backgroundColor: '#F2E3E3',
+    borderLeftWidth: StyleSheet.hairlineWidth,
+    borderRightWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: '#ddd',
+    justifyContent: 'center',
   },
 });

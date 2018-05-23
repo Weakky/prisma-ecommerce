@@ -1,11 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import styles from './Card.styles';
-
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import { translate } from '../../i18n';
+
+import styles from './Card.styles';
 
 const propTypes = {
   loading: PropTypes.bool.isRequired,
@@ -27,33 +28,10 @@ const defaultProps = {
 };
 
 const OptionsValuesNotAvailable = props => (
-  <View
-    style={{
-      padding: 7,
-      backgroundColor: '#F2E3E3',
-      borderLeftWidth: StyleSheet.hairlineWidth,
-      borderRightWidth: StyleSheet.hairlineWidth,
-      borderBottomWidth: StyleSheet.hairlineWidth,
-      borderColor: '#ddd',
-      justifyContent: 'center',
-    }}
-  >
-    <Text
-      style={{
-        fontFamily: 'Avenir Next',
-        fontSize: 11,
-        marginLeft: 3,
-      }}
-    >
+  <View style={styles.optionValueContainer}>
+    <Text style={styles.optionValueTitle}>
       {translate('no_longer_available_options')}&nbsp;
-      <Text
-        style={{
-          fontFamily: 'Avenir Next',
-          fontWeight: '600',
-          fontSize: 11,
-          marginLeft: 10,
-        }}
-      >
+      <Text style={styles.optionValueContent}>
         {props.unavailableOptionsValues.map(option => option.name).join(', ')}
       </Text>
     </Text>
@@ -74,44 +52,13 @@ const Card = ({
   unavailableOptionsValues,
 }) => (
   <TouchableOpacity onPress={() => onPress()}>
-    <View
-      style={{
-        backgroundColor: '#F9F9F9',
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: '#ddd',
-        height: 77,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }}
-    >
+    <View style={styles.container}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Image style={{ width: 60, height: 60, margin: 5 }} source={source} />
+        <Image style={styles.productImage} source={source} />
         <View style={{ marginLeft: 5 }}>
-          <Text style={{ fontFamily: 'Avenir Next', fontWeight: '300', fontSize: 14 }}>
-            {name}
-          </Text>
-          <Text
-            style={{
-              fontFamily: 'Avenir Next',
-              fontWeight: '600',
-              fontSize: 10,
-              color: 'rgba(72, 72, 72, 0.4)',
-            }}
-          >
-            {brand.toUpperCase()}
-          </Text>
-          <Text
-            style={{
-              fontFamily: 'Avenir Next',
-              fontWeight: '600',
-              fontSize: 12,
-              color: '#484848',
-              marginTop: 5,
-            }}
-          >
-            {price.toString()}&nbsp;€
-          </Text>
+          <Text style={styles.productName}>{name}</Text>
+          <Text style={styles.productBrand}>{brand.toUpperCase()}</Text>
+          <Text style={styles.productPrice}>{price.toString()}&nbsp;€</Text>
         </View>
       </View>
       <View style={{ marginRight: 15 }}>
@@ -128,3 +75,4 @@ Card.propTypes = propTypes;
 Card.defaultProps = defaultProps;
 
 export default Card;
+

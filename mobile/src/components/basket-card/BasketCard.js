@@ -32,29 +32,12 @@ const defaultProps = {
 
 const BasketCard = props => (
   <View>
-    <View
-      style={{
-        backgroundColor: 'rgba(249, 249, 249, 0.8)',
-        borderWidth: StyleSheet.hairlineWidth,
-        borderColor: '#ddd',
-        flexDirection: 'row',
-        alignItems: 'center',
-      }}
-    >
+    <View style={styles.basketCardContainer}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Image style={{ width: 50, height: 50, margin: 5 }} source={props.source} />
-        <View
-          style={{
-            height: 60,
-            width: StyleSheet.hairlineWidth,
-            backgroundColor: '#ddd',
-            margin: 3,
-          }}
-        />
-        <View style={{ flex: 1, flexDirection: 'column', marginLeft: 5, marginTop: 10 }}>
-          <View
-            style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}
-          >
+        <Image style={styles.thumbnail} source={props.source} />
+        <View style={styles.separator} />
+        <View style={styles.basketCardSubContainer}>
+          <View style={styles.topContainer}>
             <Title font={font} size={12} weight="500">
               {props.name.toUpperCase()}
               <Title font={font} size={8} weight="600" color="rgba(72, 72, 72, 0.4)">
@@ -76,13 +59,7 @@ const BasketCard = props => (
               </Title>
             </TouchableOpacity>
           </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
+          <View style={styles.bottomContainer}>
             <View style={{ flex: 1, flexDirection: 'column' }}>
               <TouchableOpacity onPress={props.onPressViewProduct}>
                 <Title
@@ -97,15 +74,7 @@ const BasketCard = props => (
               </TouchableOpacity>
               <View style={{ marginTop: 5, flex: 1 }}>
                 {props.selectedOptions.map(selectedOption => (
-                  <View
-                    key={selectedOption.id}
-                    style={{
-                      flex: 1,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      marginBottom: 4,
-                    }}
-                  >
+                  <View key={selectedOption.id} style={styles.optionContainer}>
                     <Title
                       style={{ marginRight: 5 }}
                       font={font}
@@ -122,17 +91,7 @@ const BasketCard = props => (
                 ))}
               </View>
             </View>
-            <TouchableOpacity
-              style={{
-                height: 43,
-                width: 43,
-                borderRadius: 5,
-                backgroundColor: 'rgba(221,221,221, 0.3)',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginRight: 10,
-              }}
-            >
+            <TouchableOpacity style={styles.quantityContainer}>
               <Title font={font} size={28} color="rgba(0,0,0,0.7)" weight="300">
                 {props.quantity}
               </Title>
@@ -149,3 +108,47 @@ BasketCard.propTypes = propTypes;
 BasketCard.defaultProps = defaultProps;
 
 export default BasketCard;
+
+const styles = StyleSheet.create({
+  bottomContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  optionContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  quantityContainer: {
+    height: 43,
+    width: 43,
+    borderRadius: 5,
+    backgroundColor: 'rgba(221,221,221, 0.3)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 10,
+  },
+  topContainer: { flex: 1, flexDirection: 'row', justifyContent: 'space-between' },
+  basketCardSubContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    marginLeft: 5,
+    marginTop: 10,
+  },
+  separator: {
+    height: 60,
+    width: StyleSheet.hairlineWidth,
+    backgroundColor: '#ddd',
+    margin: 3,
+  },
+  thumbnail: { width: 50, height: 50, margin: 5 },
+  basketCardContainer: {
+    backgroundColor: 'rgba(249, 249, 249, 0.8)',
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#ddd',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+});

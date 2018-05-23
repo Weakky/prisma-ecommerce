@@ -26,7 +26,7 @@ const Container = (props) => {
 
   if (props.asScroll) {
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, props.containerStyle]}>
         {topBar}
         <ScrollView contentContainerStyle={[styles.subContainer, props.innerStyle]}>
           {props.children}
