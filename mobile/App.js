@@ -17,7 +17,7 @@ import Basket from './src/views/basket/BasketContainer';
 import Recap from './src/views/recap/Recap';
 import HomeContainer from './src/views/home/HomeContainer';
 import PaymentContainer from './src/views/payment/PaymentContainer';
-import Payment from './src/views/payment/Payment';
+import Settings from './src/views/settings/Settings';
 
 import Colors from './src/statics/colors';
 
@@ -137,7 +137,7 @@ const Application = StackNavigator(
 const DebugView = StackNavigator(
   {
     Temp: {
-      screen: Payment,
+      screen: Login,
     },
   },
   {

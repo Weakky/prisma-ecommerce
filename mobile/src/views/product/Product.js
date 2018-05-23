@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Image, TouchableOpacity, Text } from 'react-native';
+import { View, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-import Picker from 'react-native-picker';
-
-import Title from '../../components/title/Title';
 import Icon from 'react-native-vector-icons/Ionicons';
 import EntypoIcons from 'react-native-vector-icons/Entypo';
+import Picker from 'react-native-picker';
 
-import styles from './Product.styles';
-import colors from '../../statics/colors';
-import font from '../../assets/fonts';
+import Container from '../../components/layout/Container';
+import Title from '../../components/title/Title';
 
 import queries from './queries.gql';
+
+import colors from '../../statics/colors';
+import font from '../../assets/fonts';
+import styles from './Product.styles';
 
 const propTypes = {
   productId: PropTypes.string.isRequired,
@@ -108,13 +109,13 @@ const ProductSheet = ({
       {product.displayPrice}&nbsp;€
     </Title>
 
-    <Title size={12} font={font} style={styles.productSheetDescription}>
+    <Title size={12} font={font} style={StyleSheet.flatten(styles.productSheetDescription)}>
       {product.description || 'Default description'}
     </Title>
   </View>
 );
 
-class Product extends React.Component {
+class Product extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -243,14 +244,7 @@ class Product extends React.Component {
     }
 
     return (
-      <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.goBack()}
-          style={styles.close}
-        >
-          <Icon name="ios-arrow-back-outline" size={21} color={colors.text} />
-        </TouchableOpacity>
-
+      <Container navigation={this.props.navigation}>
         <ProductSheet
           product={this.state.product}
           selectedOptions={this.state.selectedOptions}
@@ -266,7 +260,7 @@ class Product extends React.Component {
         >
           <Icon name="ios-cart" color={colors.white} size={35} />
         </TouchableOpacity>
-      </View>
+      </Container>
     );
   }
 }

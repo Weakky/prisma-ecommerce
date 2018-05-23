@@ -1,24 +1,19 @@
 import React, { Component } from 'react';
-import {
-  Platform,
-  StatusBar,
-  View,
-  StyleSheet,
-  Text,
-  ScrollView,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
+
 import capitalize from 'lodash/capitalize';
 
-import Colors from '../../statics/colors';
-import Title from '../../components/title/Title';
-
-import { translate } from '../../i18n';
+import Container from '../../components/layout/Container';
+import FullLoading from '../../components/loading/FullLoading';
 import Card from '../../components/card/Card';
-import font from '../../assets/fonts';
 import BigRedButton from '../../components/big-red-button/BigRedButton';
+
+import Title from '../../components/title/Title';
+import { translate } from '../../i18n';
+
+import Colors from '../../statics/colors';
+import font from '../../assets/fonts';
 import styles from './Home.styles';
 
 const SimpleProductList = props => (
@@ -159,50 +154,43 @@ class Home extends Component {
 
   render() {
     if (this.props.data.loading) {
-      return null;
+      return <FullLoading />;
     }
 
     const { me, shopMetadata } = this.props.data;
 
     return (
-      <View style={styles.container}>
-        <ScrollView contentContainerStyle={{ padding: 15 }}>
-          <View style={styles.titleContainer}>
-            <Title size={22} color={Colors.text}>
-              {`${translate('hello')}, ${capitalize(me.firstName)} !`}
-            </Title>
-          </View>
-          <View style={styles.messageOfTheDay}>
-            <Text>MESSAGE OF THE DAY (TODO LATER)</Text>
-          </View>
-          {me.orders.length === 0 && (
-            <BigRedButton
-              onPress={() => this.props.navigation.navigate('Browse')}
-              label={translate('find_your_product')}
-              icon="ios-search"
-            />
-          )}
-          {me.orders.length > 0 && (
-            <LastOrder
-              order={me.orders[0]}
-              loading={this.state.loading}
-              onPressAddToCart={this.onPressAddToCart}
-              askToReplaceOrMergeOrder={this.state.askToReplaceOrMergeOrder}
-              addOrderToCart={this.addOrderToCart}
-            />
-          )}
-          <SimpleProductList
-            title={translate('best_sales')}
-            orderableProducts={shopMetadata.bestSalesProducts}
-            navigation={this.props.navigation}
+      <Container asScroll title={`${translate('hello')}, ${capitalize(me.firstName)} !`}>
+        <View style={styles.messageOfTheDay}>
+          <Text>MESSAGE OF THE DAY (TODO LATER)</Text>
+        </View>
+        {me.orders.length === 0 && (
+          <BigRedButton
+            onPress={() => this.props.navigation.navigate('Browse')}
+            label={translate('find_your_product')}
+            icon="ios-search"
           />
-          <SimpleProductList
-            title={translate('new_products')}
-            orderableProducts={shopMetadata.newProducts}
-            navigation={this.props.navigation}
+        )}
+        {me.orders.length > 0 && (
+          <LastOrder
+            order={me.orders[0]}
+            loading={this.state.loading}
+            onPressAddToCart={this.onPressAddToCart}
+            askToReplaceOrMergeOrder={this.state.askToReplaceOrMergeOrder}
+            addOrderToCart={this.addOrderToCart}
           />
-        </ScrollView>
-      </View>
+        )}
+        <SimpleProductList
+          title={translate('best_sales')}
+          orderableProducts={shopMetadata.bestSalesProducts}
+          navigation={this.props.navigation}
+        />
+        <SimpleProductList
+          title={translate('new_products')}
+          orderableProducts={shopMetadata.newProducts}
+          navigation={this.props.navigation}
+        />
+      </Container>
     );
   }
 }

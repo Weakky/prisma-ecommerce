@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
       android: StatusBar.currentHeight,
     }),
   },
-  loadingIndicator: { flex: 1, justifyContent: 'center', alignItems: 'center' },
 });
 
 export default styles;

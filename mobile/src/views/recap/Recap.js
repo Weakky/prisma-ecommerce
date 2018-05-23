@@ -1,14 +1,15 @@
 import React from 'react';
 import { View, Dimensions, StyleSheet } from 'react-native';
 
+import Container from '../../components/layout/Container';
+import Button from '../../components/button/Button';
+import Title from '../../components/title/Title';
+
+import { translate } from '../../i18n';
+
 import Colors from '../../statics/colors';
 import font from '../../assets/fonts';
-import Title from '../../components/title/Title';
-import Button from '../../components/button/Button';
-import NavigationButton from '../../components/navigation-button/NavigationButton';
-
 import styles from './Recap.styles';
-import { translate } from '../../i18n';
 
 const RecapRow = props => (
   <View style={styles.recapRowContainer}>
@@ -44,13 +45,10 @@ const Ticket = props => (
 );
 
 const Recap = props => (
-  <View style={styles.container}>
-    <View style={{ marginTop: 10 }}>
-      <NavigationButton onPress={() => props.navigation.goBack()} back dark />
-      <Title style={{ marginBottom: 30, marginTop: 10 }} size={22} color={Colors.text}>
-        {translate('summary')}
-      </Title>
-    </View>
+  <Container
+    title={translate('summary')}
+    navigation={props.navigation}
+  >
     <View style={{ alignItems: 'center' }}>
       <Ticket
         totalTTC={props.totalTTC}
@@ -85,7 +83,7 @@ const Recap = props => (
         {translate('accept_gtc')}
       </Title>
     </View>
-  </View>
+  </Container>
 );
 
 Recap.propTypes = {};

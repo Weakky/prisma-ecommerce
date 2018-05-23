@@ -5,15 +5,17 @@ import sumBy from 'lodash/sumBy';
 import { withApollo } from 'react-apollo';
 import { Observable } from 'apollo-client-preset';
 
-import Colors from '../../statics/colors';
-import font from '../../assets/fonts';
+import Container from '../../components/layout/Container';
+import Button from '../../components/button/Button';
+import BasketCard from '../../components/basket-card/BasketCard';
 import Title from '../../components/title/Title';
 
-import commonQueries from '../../graphql/queries';
-
-import BasketCard from '../../components/basket-card/BasketCard';
-import Button from '../../components/button/Button';
 import { translate } from '../../i18n';
+
+import Colors from '../../statics/colors';
+import font from '../../assets/fonts';
+
+import commonQueries from '../../graphql/queries';
 
 class Basket extends Component {
   constructor(props) {
@@ -41,17 +43,42 @@ class Basket extends Component {
   }
 
   totalTTC() {
-    return parseFloat(
-      sumBy(this.state.cart, lineItem => lineItem.quantity * lineItem.variant.price),
+    return sumBy(
+      this.state.cart,
+      lineItem => lineItem.quantity * lineItem.variant.price,
     ).toFixed(2);
   }
 
   totalHT() {
-    return parseFloat(this.totalTTC() * 0.8).toFixed(2);
+    return (this.totalTTC() * 0.8).toFixed(2);
   }
 
   totalVAT() {
-    return parseFloat(this.totalTTC() - this.totalHT()).toFixed(2);
+    return (this.totalTTC() - this.totalHT()).toFixed(2);
+  }
+
+  renderContinueButton() {
+    if (this.state.cart.length === 0) {
+      return null;
+    }
+
+    return (
+      <Button
+        label={translate('continue')}
+        onPress={() =>
+          this.props.navigation.navigate('Recap', {
+            totalTTC: this.totalTTC(),
+            totalHT: this.totalHT(),
+            totalVAT: this.totalVAT(),
+          })
+        }
+        backgroundColor={Colors.red}
+        labelColor={Colors.white}
+        fontSize={16}
+        width={150}
+        height={35}
+      />
+    );
   }
 
   render() {
@@ -60,31 +87,11 @@ class Basket extends Component {
     }
 
     return (
-      <View style={styles.container}>
-        <View style={{ padding: 15 }}>
-          <View style={styles.containerTitle}>
-            <Title size={22} color={Colors.text}>
-              {translate('your_cart')}
-            </Title>
-            {this.state.cart.length > 0 && (
-              <Button
-                label={translate('continue')}
-                onPress={() =>
-                  this.props.navigation.navigate('Recap', {
-                    totalTTC: this.totalTTC(),
-                    totalHT: this.totalHT(),
-                    totalVAT: this.totalVAT(),
-                  })
-                }
-                backgroundColor={Colors.red}
-                labelColor={Colors.white}
-                fontSize={16}
-                width={150}
-                height={35}
-              />
-            )}
-          </View>
-        </View>
+      <Container
+        title={translate('your_cart')}
+        leftButton={this.renderContinueButton()}
+        innerStyle={{ marginTop: 16, padding: 0, flex: 1 }}
+      >
         <FlatList
           data={this.state.cart}
           keyExtractor={item => item.id}
@@ -119,7 +126,7 @@ class Basket extends Component {
             €
           </Title>
         </View>
-      </View>
+      </Container>
     );
   }
 }

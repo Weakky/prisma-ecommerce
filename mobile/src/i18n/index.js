@@ -19,6 +19,7 @@ const translations = {
 
     // Globals
     yes: 'Yes',
+    loading: 'Loading...',
     cancel_sign_up: 'Cancel sign up',
     email: 'E-mail address',
     password: 'Password',
@@ -106,6 +107,7 @@ const translations = {
 
     // Globals
     yes: 'Oui',
+    loading: 'Chargement en cours...',
     email: 'Addresse email',
     password: 'Mot de passe',
     sign_in: 'Connectez-vous !',

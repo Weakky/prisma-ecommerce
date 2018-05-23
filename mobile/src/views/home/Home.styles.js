@@ -12,7 +12,7 @@ export default StyleSheet.create({
     borderRadius: 100,
   },
   messageOfTheDay: {
-    marginTop: 20,
+    marginTop: 16,
     marginBottom: 20,
     padding: 15,
     backgroundColor: 'rgba(240, 240, 240, 0.4)',

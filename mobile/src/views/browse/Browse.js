@@ -2,10 +2,10 @@ import React from 'react';
 import { View, StyleSheet, Platform, StatusBar } from 'react-native';
 import { TabBar, TabViewAnimated, TabViewPagerPan } from 'react-native-tab-view';
 
-import Colors from '../../statics/colors';
-
-import SearchBox from '../search/SearchBox';
 import Title from '../../components/title/Title';
+import SearchBox from '../search/SearchBox';
+
+import Colors from '../../statics/colors';
 import Filters from '../filters/Filters';
 
 class Browse extends React.PureComponent {

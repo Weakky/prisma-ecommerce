@@ -1,14 +1,16 @@
 import React from 'react';
 import { View, StyleSheet, Linking, Platform, StatusBar } from 'react-native';
-import _ from 'lodash';
-import stripe from 'tipsi-stripe';
-import { CreditCardInput } from 'react-native-credit-card-input';
 
-import NavigationButton from '../../components/navigation-button/NavigationButton';
+import _ from 'lodash';
+import { CreditCardInput } from 'react-native-credit-card-input';
+import stripe from 'tipsi-stripe';
+
+import Container from '../../components/layout/Container';
 import Title from '../../components/title/Title';
 import BigRedButton from '../../components/big-red-button/BigRedButton';
 
 import { translate } from '../../i18n';
+
 import Colors from '../../statics/colors';
 import font from '../../assets/fonts';
 
@@ -159,13 +161,7 @@ export default class Payment extends React.PureComponent {
     }
 
     return (
-      <View style={styles.container}>
-        <View style={{ marginTop: 8, marginBottom: 8 }}>
-          <NavigationButton onPress={() => this.props.navigation.goBack()} back dark />
-          <Title style={{ marginTop: 8 }} size={22} color={Colors.text}>
-            {translate('pay')}
-          </Title>
-        </View>
+      <Container title={translate('pay')} navigation={this.props.navigation}>
         <CreditCardInput
           autoFocus
           cardScale={0.7}
@@ -198,7 +194,7 @@ export default class Payment extends React.PureComponent {
             this.state.status !== PAYMENT_STATUSES.PAID &&
             PAYMENT_STATUSES_TO_MESSAGE[this.state.status]}
         </Title>
-      </View>
+      </Container>
     );
   }
 }

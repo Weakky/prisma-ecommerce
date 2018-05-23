@@ -1,16 +1,16 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { View, TouchableOpacity, Modal, ActivityIndicator, FlatList } from 'react-native';
+import { View, TouchableOpacity, Modal, FlatList } from 'react-native';
 
-import NavigationButton from '../../components/navigation-button/NavigationButton';
+import Container from '../../components/layout/Container';
+import FullLoading from '../../components/loading/FullLoading';
 import Title from '../../components/title/Title';
 import Card from '../../components/card/Card';
+
 import Filters from '../filters/Filters';
 
 import Colors from '../../statics/colors';
 import { translate } from '../../i18n';
-
-import styles from './Products.styles';
 
 class Products extends PureComponent {
   constructor(props) {
@@ -86,33 +86,28 @@ class Products extends PureComponent {
     }
   }
 
+  renderFilterButton() {
+    return (
+      <TouchableOpacity onPress={() => this.setState({ filtersModalVisible: true })}>
+        <Title size={14} color={Colors.text}>
+          {translate('filter')}
+        </Title>
+      </TouchableOpacity>
+    );
+  }
+
   render() {
     if (this.props.data.loading) {
-      return (
-        <View style={styles.loadingIndicator}>
-          <ActivityIndicator animating />
-        </View>
-      );
+      return <FullLoading />;
     }
 
     return (
-      <View style={styles.container}>
+      <Container
+        title={translate('your_results')}
+        leftButton={this.renderFilterButton()}
+        navigation={this.props.navigation}
+      >
         {this.renderFiltersModal()}
-        <View style={{ padding: 15 }}>
-          <NavigationButton dark back onPress={() => this.props.navigation.goBack()} />
-          <View style={styles.containerTitle}>
-            <Title size={22} color={Colors.text}>
-              {translate('your_results')}
-            </Title>
-            <TouchableOpacity
-              onPress={() => this.setState({ filtersModalVisible: true })}
-            >
-              <Title size={14} color={Colors.text}>
-                {translate('filter')}
-              </Title>
-            </TouchableOpacity>
-          </View>
-        </View>
         <FlatList
           data={this.props.data.products.edges}
           keyExtractor={({ node: product }) => product.id}
@@ -138,7 +133,7 @@ class Products extends PureComponent {
           onEndReachedThreshold={0.5}
           onEndReached={this.loadMoreProducts}
         />
-      </View>
+      </Container>
     );
   }
 }
