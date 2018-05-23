@@ -7,28 +7,28 @@ import Title from '../title/Title';
 import NavigationButton from '../navigation-button/NavigationButton';
 
 
-const Container = (props) => {
-  const topBar = (
-    <View style={styles.containerTitle}>
-      <View>
-        {props.navigation && (
-          <NavigationButton onPress={() => props.navigation.goBack()} back dark />
-        )}
-        {props.title && (
-          <Title size={22} color={Colors.text}>
-            {props.title}
-          </Title>
-        )}
-      </View>
-      {props.leftButton}
+const TopBar = (props) => (
+  <View style={[styles.containerTitle, { paddingLeft: props.asScroll ? 0 : 16 }]}>
+    <View>
+      {props.navigation && (
+        <NavigationButton onPress={() => props.navigation.goBack()} back dark />
+      )}
+      {props.title && (
+        <Title size={22} color={Colors.text}>
+          {props.title}
+        </Title>
+      )}
     </View>
-  );
+    {props.leftButton}
+  </View>
+);
 
+const Container = (props) => {
   if (props.asScroll) {
     return (
       <View style={[styles.container, props.containerStyle]}>
-        {topBar}
         <ScrollView contentContainerStyle={[styles.subContainer, props.innerStyle]}>
+          <TopBar {...props} />
           {props.children}
         </ScrollView>
       </View>
@@ -37,7 +37,7 @@ const Container = (props) => {
 
   return (
     <View style={[styles.container, props.containerStyle]}>
-      {topBar}
+      <TopBar {...props} />
       <View style={[styles.subContainer, props.innerStyle]}>
         {props.children}
       </View>
@@ -64,14 +64,13 @@ const styles = StyleSheet.create({
     }),
   },
   subContainer: {
-    padding: 15,
+    padding: 16,
   },
   containerTitle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingTop: 16,
-    paddingLeft: 16,
     paddingRight: 16,
   },
 });

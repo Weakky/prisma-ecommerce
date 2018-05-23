@@ -53,5 +53,8 @@ export default StyleSheet.create({
     marginBottom: 8,
     marginTop: 8,
   },
-  simpleProductListContainer: { flex: 1, marginBottom: 20 },
+  simpleProductListContainer: {
+    flex: 1,
+    marginBottom: 20,
+  },
 });

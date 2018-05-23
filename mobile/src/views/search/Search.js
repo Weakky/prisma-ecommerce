@@ -1,15 +1,16 @@
 import React from 'react';
-import { View, FlatList, Keyboard, StyleSheet } from 'react-native';
+import { View, FlatList, Keyboard } from 'react-native';
 
+import Card from '../../components/card/Card';
+import Title from '../../components/title/Title';
+import ModalNavigationBar from '../../components/modal-navigation-bar/ModalNavigationBar';
 import { EnhancedSearch } from './SearchHOC';
+
+import { translate } from '../../i18n';
 
 import Input from '../../components/input/Input';
 import Colors from '../../statics/colors/index';
-
-import Title from '../../components/title/Title';
-import ModalNavigationBar from '../../components/modal-navigation-bar/ModalNavigationBar';
-import Card from '../../components/card/Card';
-import { translate } from '../../i18n';
+import styles from './Search.styles';
 
 const Search = props => (
   <View style={styles.container}>

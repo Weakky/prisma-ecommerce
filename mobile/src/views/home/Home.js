@@ -18,26 +18,25 @@ import styles from './Home.styles';
 
 const SimpleProductList = props => (
   <View style={styles.simpleProductListContainer}>
-    <Title size={18} color={Colors.text}>
+    <Title style={{ marginBottom: 8 }}size={18} color={Colors.text}>
       {props.title}
     </Title>
     {props.orderableProducts.map(({ id, product }) => (
-      <View key={id} style={{ padding: 5 }}>
-        <Card
-          onPress={() =>
-            props.navigation.navigate('Product', {
-              productId: product.id,
-              unavailableOptionsValues: product.unavailableOptionsValues,
-            })
-          }
-          loading={false}
-          brand={product.brand.name}
-          name={product.name}
-          source={{ uri: product.imageUrl }}
-          price={product.displayPrice}
-          unavailableOptionsValues={product.unavailableOptionsValues}
-        />
-      </View>
+      <Card
+        key={id}
+        onPress={() =>
+          props.navigation.navigate('Product', {
+            productId: product.id,
+            unavailableOptionsValues: product.unavailableOptionsValues,
+          })
+        }
+        loading={false}
+        brand={product.brand.name}
+        name={product.name}
+        source={{ uri: product.imageUrl }}
+        price={product.displayPrice}
+        unavailableOptionsValues={product.unavailableOptionsValues}
+      />
     ))}
   </View>
 );
