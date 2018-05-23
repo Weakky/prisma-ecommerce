@@ -49,7 +49,7 @@ const OptionsValuesNotAvailable = props => (
       <Text
         style={{
           fontFamily: 'Avenir Next',
-          fontWeight: '700',
+          fontWeight: '600',
           fontSize: 11,
           marginLeft: 10,
         }}
@@ -104,7 +104,7 @@ const Card = ({
           <Text
             style={{
               fontFamily: 'Avenir Next',
-              fontWeight: '700',
+              fontWeight: '600',
               fontSize: 12,
               color: '#484848',
               marginTop: 5,

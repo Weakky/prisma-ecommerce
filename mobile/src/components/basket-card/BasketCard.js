@@ -67,7 +67,7 @@ const BasketCard = props => (
             >
               <Title
                 font={font}
-                weight="700"
+                weight="600"
                 size={10}
                 color={Colors.red}
                 style={{ marginTop: 5 }}
@@ -111,11 +111,11 @@ const BasketCard = props => (
                       font={font}
                       size={8}
                       color="rgba(71,71,71,0.6)"
-                      weight="700"
+                      weight="600"
                     >
                       {selectedOption.option.name.toUpperCase()}
                     </Title>
-                    <Title font={font} size={11} color="rgba(71,71,71,0.8)" weight="700">
+                    <Title font={font} size={11} color="rgba(71,71,71,0.8)" weight="600">
                       {selectedOption.value.name}
                     </Title>
                   </View>

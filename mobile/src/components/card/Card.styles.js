@@ -24,7 +24,7 @@ export default StyleSheet.create({
   },
   left: {
     fontSize: 12,
-    fontWeight: '700',
+    fontWeight: '600',
     paddingLeft: 10,
   },
   right: {

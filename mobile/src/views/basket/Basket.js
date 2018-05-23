@@ -121,7 +121,7 @@ class Basket extends Component {
           <Title font={font} size={15} color="#484848" weight="500">
             {translate('total_price')}
           </Title>
-          <Title font={font} size={18} color="#484848" weight="700">
+          <Title font={font} size={18} color="#484848" weight="600">
             {this.totalTTC()}
             €
           </Title>

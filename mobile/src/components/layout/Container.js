@@ -36,7 +36,7 @@ const Container = (props) => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, props.containerStyle]}>
       {topBar}
       <View style={[styles.subContainer, props.innerStyle]}>
         {props.children}
@@ -51,6 +51,7 @@ Container.propTypes = {
   leftButton: PropTypes.node,
   asScroll: PropTypes.bool,
   innerStyle: PropTypes.object,
+  containerStyle: PropTypes.object,
 };
 
 const styles = StyleSheet.create({

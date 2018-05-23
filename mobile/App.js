@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity, Platform } from 'react-native';
-import { StackNavigator, TabNavigator, TabBarBottom } from 'react-navigation';
+import { Text, TouchableOpacity } from 'react-native';
+import { createStackNavigator, createTabNavigator, TabBarBottom } from 'react-navigation';
 import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ApolloProvider } from 'react-apollo';
@@ -42,7 +42,7 @@ const TempView = ({ navigation }) => (
 
 const ProductWithMappedProps = withMappedNavigationProps(Product);
 
-const BrowseNavigator = StackNavigator(
+const BrowseNavigator = createStackNavigator(
   {
     Browse: { screen: Browse },
     Search: { screen: Search },
@@ -66,13 +66,13 @@ const BasketNavigator = StackModalNavigator(
   },
 );
 
-const MainView = TabNavigator(
+const MainView = createTabNavigator(
   {
     WelcomeTab: {
       screen: HomeContainer,
       navigationOptions: {
         tabBarLabel: ' ',
-        tabBarIcon: ({ tintColor }) => (
+        tabBarIcon: ({ tintColor }) => (console.log(tintColor) ||
           <Ionicons name="ios-home-outline" size={22} style={{ color: tintColor }} />
         ),
       },
@@ -121,7 +121,7 @@ const MainView = TabNavigator(
   },
 );
 
-const Application = StackNavigator(
+const Application = createStackNavigator(
   {
     Login: { screen: Login },
     SignIn: { screen: SignIn },
@@ -134,7 +134,7 @@ const Application = StackNavigator(
 );
 
 // Change screen: with the view you wanna render the app
-const DebugView = StackNavigator(
+const DebugView = createStackNavigator(
   {
     Temp: {
       screen: Login,

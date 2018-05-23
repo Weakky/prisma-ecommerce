@@ -29,7 +29,7 @@ const SubTotal = props => (
     <Text
       style={{
         fontFamily: 'Avenir Next',
-        fontWeight: '700',
+        fontWeight: '600',
         fontSize: 11,
         marginLeft: 10,
       }}

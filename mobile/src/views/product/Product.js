@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import EntypoIcons from 'react-native-vector-icons/Entypo';
 import Picker from 'react-native-picker';
 
-import Container from '../../components/layout/Container';
 import Title from '../../components/title/Title';
+import FullLoading from '../../components/loading/FullLoading';
 
 import queries from './queries.gql';
 
@@ -105,11 +105,15 @@ const ProductSheet = ({
       configPicker={configPicker}
     />
 
-    <Title font={font} weight="700" size={18} style={{ marginBottom: 10, marginTop: 20 }}>
+    <Title font={font} weight="600" size={18} style={{ marginBottom: 10, marginTop: 20 }}>
       {product.displayPrice}&nbsp;€
     </Title>
 
-    <Title size={12} font={font} style={StyleSheet.flatten(styles.productSheetDescription)}>
+    <Title
+      size={12}
+      font={font}
+      style={StyleSheet.flatten(styles.productSheetDescription)}
+    >
       {product.description || 'Default description'}
     </Title>
   </View>
@@ -236,15 +240,17 @@ class Product extends React.PureComponent {
 
   render() {
     if (!this.state.product) {
-      return (
-        <View>
-          <Text>Loading...</Text>
-        </View>
-      );
+      return <FullLoading />;
     }
 
     return (
-      <Container navigation={this.props.navigation}>
+      <View style={styles.container}>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.goBack()}
+          style={styles.close}
+        >
+          <Icon name="ios-arrow-back-outline" size={21} color={colors.text} />
+        </TouchableOpacity>
         <ProductSheet
           product={this.state.product}
           selectedOptions={this.state.selectedOptions}
@@ -260,7 +266,7 @@ class Product extends React.PureComponent {
         >
           <Icon name="ios-cart" color={colors.white} size={35} />
         </TouchableOpacity>
-      </Container>
+      </View>
     );
   }
 }

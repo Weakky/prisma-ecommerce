@@ -12,7 +12,7 @@ export default StyleSheet.create({
   },
   text: {
     fontFamily: font,
-    fontWeight: 'bold',
+    fontWeight: '600',
     paddingLeft: 16,
     paddingRight: 16,
   },

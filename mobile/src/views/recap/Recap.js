@@ -60,7 +60,7 @@ const Recap = props => (
         font={font}
         color={Colors.text}
         size={16}
-        weight="700"
+        weight="600"
       >
         {translate('when_take_order')}
       </Title>
