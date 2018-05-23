@@ -174,3 +174,9 @@ Carthage/Build
 # After new code Injection tools there's a generated folder /iOSInjectionProject
 # https://github.com/johnno1962/injectionforxcode
 
+dist
+package-lock.json
+*/node_modules
+.idea
+.vscode
+.env*
