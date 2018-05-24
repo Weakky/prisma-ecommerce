@@ -48,10 +48,10 @@ SimpleProductList.propTypes = {
 
 const RecapRow = props => (
   <View style={styles.recapRowContainer}>
-    <Title font={font} size={12} weight={props.bold && '700'} color={Colors.text}>
+    <Title font={font} size={12} weight={props.bold && '600'} color={Colors.text}>
       {props.title}
     </Title>
-    <Title font={font} size={12} weight={props.bold && '700'} color={Colors.text}>
+    <Title font={font} size={12} weight={props.bold && '600'} color={Colors.text}>
       {props.value}
     </Title>
   </View>
@@ -74,11 +74,11 @@ const Ticket = props => (
       <RecapRow
         key={lineItem.id}
         title={`${lineItem.quantity} x ${lineItem.variant.product.name}`}
-        value={`${lineItem.variant.price * lineItem.quantity}€`}
+        value={`${lineItem.variant.price * lineItem.quantity} €`}
       />
     ))}
     <Separator />
-    <RecapRow bold title={translate('total_price')} value={props.order.totalPrice} />
+    <RecapRow bold title={translate('total_price')} value={`${props.order.totalPrice} €`} />
   </View>
 );
 
