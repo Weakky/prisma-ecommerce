@@ -137,6 +137,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-onesignal')
     compile project(':tipsi-stripe')
     compile project(':react-native-picker')
     compile project(':react-native-linear-gradient')

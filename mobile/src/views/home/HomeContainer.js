@@ -24,4 +24,12 @@ export default compose(
         }),
     }),
   }),
+  graphql(queries.updateOneSignalUserId, {
+    props: ({ mutate }) => ({
+      updateOneSignalUserId: ({ oneSignalUserId }) =>
+        mutate({
+          variables: { oneSignalUserId },
+        }),
+    }),
+  }),
 )(Home);

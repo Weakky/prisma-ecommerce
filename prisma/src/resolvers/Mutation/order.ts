@@ -1,6 +1,7 @@
 import { Context, getUserId } from "../../utils";
 import * as _ from "lodash";
 import { Order, Prisma, OrderStatus } from "../../generated/prisma";
+import { sendNotificationToOne } from "../../third-party/oneSignal";
 
 interface CreateOrderInput {
   userId: string
@@ -87,4 +88,49 @@ export async function emptyCartForUser(userId, db: Prisma): Promise<{}> {
       cart: { disconnect: lineItemsIds }
     }
   });
+}
+
+export const order = {
+  async setOrderAsPrepared(parent, args, ctx: Context, info) {
+    const currentOrder = await ctx.db.query.order({ where: { id: args.orderId } }, `
+      {
+        id
+        orderStatus
+        owner {
+          id
+          oneSignalUserId
+        }
+      }
+    `);
+
+    if (currentOrder.orderStatus === 'SUBMITTED' || currentOrder.orderStatus === 'FAILED') {
+      throw new Error('You can set an order to prepared, only once it has been paid.');
+    }
+
+    if (currentOrder.orderStatus === 'PREPARED') {
+      throw new Error('You can set an order to prepared only once');
+    }
+
+    const updatedOrder = await ctx.db.mutation.updateOrder({
+      where: { id: args.orderId },
+      data: { orderStatus: 'PREPARED' }
+    }, info);
+
+    if (updatedOrder) {
+      // Send notification to owner of order when set to prepared
+      if (updatedOrder.owner.oneSignalUserId) {
+        try {
+          await sendNotificationToOne(
+            updatedOrder.owner.oneSignalUserId,
+            "Votre commande est prête !",
+            "Rendez-vous dans votre magasin pour récupérer votre commande."
+          );
+        } catch (e) {
+          console.log(e);
+        }
+      }
+    }
+
+    return updatedOrder;
+  }
 }

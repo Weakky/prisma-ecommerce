@@ -6,6 +6,7 @@ export default {
       me {
         id
         email
+        oneSignalUserId
         firstName
         orders {
           id

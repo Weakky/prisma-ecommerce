@@ -4,4 +4,6 @@
 target 'Aromaclop' do
   pod 'Stripe', '~> 11.2.0'
   inherit! :search_paths
+  pod 'react-native-onesignal', :path => '../node_modules/react-native-onesignal'
+
 end

@@ -6182,6 +6182,12 @@ react-native-linear-gradient@^2.3.0:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-onesignal@^3.2.4:
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/react-native-onesignal/-/react-native-onesignal-3.2.4.tgz#8c5bb9743f415499cd5eb36e56e6e604f201d12d"
+  dependencies:
+    invariant "^2.2.2"
+
 react-native-picker@^4.3.4:
   version "4.3.4"
   resolved "https://registry.yarnpkg.com/react-native-picker/-/react-native-picker-4.3.4.tgz#8a5ebcd7c31d315a3d54538157be7ff2dfa276eb"

@@ -4014,6 +4014,7 @@ type User implements Node {
   cart(where: OrderLineItemWhereInput, orderBy: OrderLineItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderLineItem!]
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order!]
   stripeCustomerId: String
+  oneSignalUserId: String
 }
 
 """
@@ -4038,6 +4039,7 @@ input UserCreateInput {
   lastName: String
   role: Role
   stripeCustomerId: String
+  oneSignalUserId: String
   cart: OrderLineItemCreateManyWithoutOwnerInput
   orders: OrderCreateManyWithoutOwnerInput
 }
@@ -4059,6 +4061,7 @@ input UserCreateWithoutCartInput {
   lastName: String
   role: Role
   stripeCustomerId: String
+  oneSignalUserId: String
   orders: OrderCreateManyWithoutOwnerInput
 }
 
@@ -4069,6 +4072,7 @@ input UserCreateWithoutOrdersInput {
   lastName: String
   role: Role
   stripeCustomerId: String
+  oneSignalUserId: String
   cart: OrderLineItemCreateManyWithoutOwnerInput
 }
 
@@ -4101,6 +4105,8 @@ enum UserOrderByInput {
   role_DESC
   stripeCustomerId_ASC
   stripeCustomerId_DESC
+  oneSignalUserId_ASC
+  oneSignalUserId_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -4115,6 +4121,7 @@ type UserPreviousValues {
   lastName: String
   role: Role!
   stripeCustomerId: String
+  oneSignalUserId: String
 }
 
 type UserSubscriptionPayload {
@@ -4163,6 +4170,7 @@ input UserUpdateInput {
   lastName: String
   role: Role
   stripeCustomerId: String
+  oneSignalUserId: String
   cart: OrderLineItemUpdateManyWithoutOwnerInput
   orders: OrderUpdateManyWithoutOwnerInput
 }
@@ -4191,6 +4199,7 @@ input UserUpdateWithoutCartDataInput {
   lastName: String
   role: Role
   stripeCustomerId: String
+  oneSignalUserId: String
   orders: OrderUpdateManyWithoutOwnerInput
 }
 
@@ -4201,6 +4210,7 @@ input UserUpdateWithoutOrdersDataInput {
   lastName: String
   role: Role
   stripeCustomerId: String
+  oneSignalUserId: String
   cart: OrderLineItemUpdateManyWithoutOwnerInput
 }
 
@@ -4558,6 +4568,59 @@ input UserWhereInput {
   All values not ending with the given string.
   """
   stripeCustomerId_not_ends_with: String
+  oneSignalUserId: String
+  """
+  All values that are not equal to given value.
+  """
+  oneSignalUserId_not: String
+  """
+  All values that are contained in given list.
+  """
+  oneSignalUserId_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  oneSignalUserId_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  oneSignalUserId_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  oneSignalUserId_lte: String
+  """
+  All values greater than the given value.
+  """
+  oneSignalUserId_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  oneSignalUserId_gte: String
+  """
+  All values containing the given string.
+  """
+  oneSignalUserId_contains: String
+  """
+  All values not containing the given string.
+  """
+  oneSignalUserId_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  oneSignalUserId_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  oneSignalUserId_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  oneSignalUserId_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  oneSignalUserId_not_ends_with: String
   cart_every: OrderLineItemWhereInput
   cart_some: OrderLineItemWhereInput
   cart_none: OrderLineItemWhereInput
@@ -5223,6 +5286,8 @@ export type UserOrderByInput =
   'role_DESC' |
   'stripeCustomerId_ASC' |
   'stripeCustomerId_DESC' |
+  'oneSignalUserId_ASC' |
+  'oneSignalUserId_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
   'createdAt_ASC' |
@@ -5483,6 +5548,20 @@ export interface UserWhereInput {
   stripeCustomerId_not_starts_with?: String
   stripeCustomerId_ends_with?: String
   stripeCustomerId_not_ends_with?: String
+  oneSignalUserId?: String
+  oneSignalUserId_not?: String
+  oneSignalUserId_in?: String[] | String
+  oneSignalUserId_not_in?: String[] | String
+  oneSignalUserId_lt?: String
+  oneSignalUserId_lte?: String
+  oneSignalUserId_gt?: String
+  oneSignalUserId_gte?: String
+  oneSignalUserId_contains?: String
+  oneSignalUserId_not_contains?: String
+  oneSignalUserId_starts_with?: String
+  oneSignalUserId_not_starts_with?: String
+  oneSignalUserId_ends_with?: String
+  oneSignalUserId_not_ends_with?: String
   cart_every?: OrderLineItemWhereInput
   cart_some?: OrderLineItemWhereInput
   cart_none?: OrderLineItemWhereInput
@@ -5809,6 +5888,7 @@ export interface UserCreateInput {
   lastName?: String
   role?: Role
   stripeCustomerId?: String
+  oneSignalUserId?: String
   cart?: OrderLineItemCreateManyWithoutOwnerInput
   orders?: OrderCreateManyWithoutOwnerInput
 }
@@ -5915,6 +5995,7 @@ export interface UserCreateWithoutCartInput {
   lastName?: String
   role?: Role
   stripeCustomerId?: String
+  oneSignalUserId?: String
   orders?: OrderCreateManyWithoutOwnerInput
 }
 
@@ -5974,6 +6055,7 @@ export interface UserCreateWithoutOrdersInput {
   lastName?: String
   role?: Role
   stripeCustomerId?: String
+  oneSignalUserId?: String
   cart?: OrderLineItemCreateManyWithoutOwnerInput
 }
 
@@ -5996,6 +6078,7 @@ export interface UserUpdateWithoutCartDataInput {
   lastName?: String
   role?: Role
   stripeCustomerId?: String
+  oneSignalUserId?: String
   orders?: OrderUpdateManyWithoutOwnerInput
 }
 
@@ -6543,6 +6626,7 @@ export interface UserUpdateWithoutOrdersDataInput {
   lastName?: String
   role?: Role
   stripeCustomerId?: String
+  oneSignalUserId?: String
   cart?: OrderLineItemUpdateManyWithoutOwnerInput
 }
 
@@ -6896,6 +6980,7 @@ export interface UserUpdateInput {
   lastName?: String
   role?: Role
   stripeCustomerId?: String
+  oneSignalUserId?: String
   cart?: OrderLineItemUpdateManyWithoutOwnerInput
   orders?: OrderUpdateManyWithoutOwnerInput
 }
@@ -7444,6 +7529,7 @@ export interface User extends Node {
   cart?: OrderLineItem[]
   orders?: Order[]
   stripeCustomerId?: String
+  oneSignalUserId?: String
 }
 
 export interface AggregateCategory {
@@ -7651,6 +7737,7 @@ export interface UserPreviousValues {
   lastName?: String
   role: Role
   stripeCustomerId?: String
+  oneSignalUserId?: String
 }
 
 /*

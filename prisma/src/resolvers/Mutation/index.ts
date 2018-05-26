@@ -7,6 +7,8 @@ import { option } from './option';
 import { product } from './product';
 import { shopMetadata  } from './shopMetadata';
 import { payment } from './stripe';
+import { user } from './user';
+import { order } from './order';
 
 export default {
   ...auth,
@@ -18,4 +20,6 @@ export default {
   ...option,
   ...product,
   ...payment,
+  ...user,
+  ...order,
 };

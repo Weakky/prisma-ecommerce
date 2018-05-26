@@ -70,6 +70,7 @@ type User {
   cart: [OrderLineItem!]! @relation(name: "UserCart" onDelete: CASCADE)
   orders: [Order!]! @relation(name: "UserOrders")
   stripeCustomerId: String
+  oneSignalUserId: String
 }
 
 type File {

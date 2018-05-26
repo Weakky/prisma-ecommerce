@@ -1,4 +1,4 @@
-# import User, Product, ProductConnection, Brand, Category, Variant, Option, Attribute, SelectedOption, Cart, OrderLineItem, PageInfo, AggregateProduct, ProductConnection, ProductSubscriptionPayload, OrderSubscriptionPayload; Order, ShopMetadata from "./generated/prisma.graphql"
+# import User, Product, ProductConnection, Brand, Category, Variant, Option, Attribute, SelectedOption, Cart, OrderLineItem, PageInfo, AggregateProduct, ProductConnection, ProductSubscriptionPayload, OrderSubscriptionPayload; Order, ShopMetadata, OrderStatus from "./generated/prisma.graphql"
 # import ProductCreateInput, BrandCreateInput, CategoryCreateInput from "./generated/prisma.graphql"
 # import ProductWhereInput, ProductOrderByInput from "./generated/prisma.graphql"
 
@@ -69,8 +69,14 @@ type Mutation {
   removeItemFromCart(lineItemId: ID!): OrderLineItem!
   updateItemFromCart(lineItemId: ID!, variantId: ID!, quantity: Int!): OrderLineItem!
 
+  #Order mutations
+  setOrderAsPrepared(orderId: ID!): Order #Can be updated only by admins (eg: to set order as prepared)
+
   #Stripe mutations
   pay(stripeTokenId: String!): PayPayload
+
+  #User mutations
+  updateUser(firstName: String, lastName: String, oneSignalUserId: String): User
 }
 
 type Subscription {

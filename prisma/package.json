@@ -16,6 +16,7 @@
     "graphql-yoga": "1.9.2",
     "jsonwebtoken": "8.2.1",
     "lodash": "^4.17.10",
+    "onesignal-node": "^1.1.2",
     "prisma-binding": "1.5.17",
     "stripe": "^6.0.0"
   },

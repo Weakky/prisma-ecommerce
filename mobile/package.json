@@ -23,6 +23,7 @@
     "react-native-credit-card-input": "^0.4.1",
     "react-native-keyboard-aware-scroll-view": "^0.4.1",
     "react-native-linear-gradient": "^2.3.0",
+    "react-native-onesignal": "^3.2.4",
     "react-native-picker": "^4.3.4",
     "react-native-tab-view": "^0.0.73",
     "react-native-vector-icons": "^4.4.2",

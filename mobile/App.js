@@ -72,7 +72,7 @@ const MainView = createTabNavigator(
       screen: HomeContainer,
       navigationOptions: {
         tabBarLabel: ' ',
-        tabBarIcon: ({ tintColor }) => (console.log(tintColor) ||
+        tabBarIcon: ({ tintColor }) => (
           <Ionicons name="ios-home-outline" size={22} style={{ color: tintColor }} />
         ),
       },

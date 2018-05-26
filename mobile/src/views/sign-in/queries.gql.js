@@ -7,6 +7,7 @@ export default {
         user {
           id
           email
+          oneSignalUserId
           firstName
           lastName
           cart {

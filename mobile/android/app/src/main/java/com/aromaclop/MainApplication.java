@@ -3,6 +3,7 @@ package com.aromaclop;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
 import com.gettipsi.stripe.StripeReactPackage;
 import com.beefe.picker.PickerViewPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -27,6 +28,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactNativeOneSignalPackage(),
             new StripeReactPackage(),
             new PickerViewPackage(),
             new LinearGradientPackage(),

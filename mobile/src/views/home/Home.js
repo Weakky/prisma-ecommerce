@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import OneSignal from 'react-native-onesignal';
 import PropTypes from 'prop-types';
 
 import capitalize from 'lodash/capitalize';
@@ -130,9 +131,53 @@ class Home extends Component {
       askToReplaceOrMergeOrder: false,
     };
 
+    this.oneSignalUserId = null;
     this.onPressAddToCart = this.onPressAddToCart.bind(this);
     this.addOrderToCart = this.addOrderToCart.bind(this);
+    this.onIds = this.onIds.bind(this);
   }
+
+  componentWillMount() {
+    OneSignal.init("22fcdd38-fb1c-43ce-8619-947d613c84d4", { kOSSettingsKeyAutoPrompt: true });
+    OneSignal.configure();
+
+    OneSignal.addEventListener('ids', this.onIds);
+  }
+
+  componentWillUnmount() {
+    OneSignal.removeEventListener('ids', this.onIds);
+  }
+
+  onIds(device) {
+    if (device.userId) {
+      console.log('userId', device.userId);
+      this.oneSignalUserId = device.userId;
+    }
+  }
+
+  shouldUpdateOneSignalUserId(currentUserId, newUserId) {
+    if (!currentUserId && !newUserId) {
+      return false;
+    }
+
+    if (currentUserId && !newUserId) {
+      return false;
+    }
+
+    // Update only if oneSignalUserId has changed
+    if (currentUserId && newUserId && currentUserId === newUserId) {
+      return false;
+    }
+
+    return true;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.data.loading && this.shouldUpdateOneSignalUserId(nextProps.data.me.oneSignalUserId, this.oneSignalUserId)) {
+      return this.props.updateOneSignalUserId({ oneSignalUserId: this.oneSignalUserId });
+    }
+  }
+
 
   onPressAddToCart({ orderId, replace }) {
     if (this.props.data.me.cart.length > 0) {

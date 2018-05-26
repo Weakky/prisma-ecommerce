@@ -5,7 +5,8 @@ const homeInformation = gql`
     me {
       id
       firstName
-      cart {
+      oneSignalUserId
+      cart(first: 1) {
         id
       }
       orders(first: 1, orderBy: createdAt_DESC) {
@@ -100,10 +101,20 @@ const addOrderToCart = gql`
         }
       }
     }
+  },
+`;
+
+const updateOneSignalUserId = gql`
+  mutation updateOneSignalUserId($oneSignalUserId: String!) {
+    updateUser(oneSignalUserId: $oneSignalUserId) {
+      id
+      oneSignalUserId
+    }
   }
 `;
 
 export default {
   homeInformation,
   addOrderToCart,
+  updateOneSignalUserId,
 };
