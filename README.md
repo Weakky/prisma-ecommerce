@@ -24,7 +24,9 @@ Homepage view             |  Browsing product view          | Cart view         
 
 💫 **Real-time updates for product availabilities**
 
-💸 **Ready-to-sell stripe integration (PCI compliant, including 3D Secure)**
+💸 **Ready-to-sell Stripe integration (PCI compliant, including 3D Secure)**
+
+🔔 **Push notification system to keep users updated when their orders are prepared**
 
 ❤️ **Made with love for the open-source community**
 
