@@ -46,6 +46,7 @@ type Attribute {
 
 type Product {
   id: ID! @unique
+  deletedAt: DateTime
   name: String!
   description: String
   brand: Brand!
@@ -58,6 +59,7 @@ type Product {
   displayPrice: Float!
   available: Boolean!
   imageUrl: String
+  orderables: [OrderableProduct!]! @relation(name: "OrderableProducts", onDelete: CASCADE)
 }
 
 type User {
@@ -110,7 +112,7 @@ type ShopMetadata {
 
 type OrderableProduct {
   id: ID! @unique
-  product: Product!
+  product: Product! @relation(name: "OrderableProducts")
   position: Int!
   metadataBestSale: ShopMetadata @relation(name: "BestSalesProducts")
   metadataNewProduct: ShopMetadata @relation(name: "NewProducts")

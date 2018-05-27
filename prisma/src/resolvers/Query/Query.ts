@@ -9,7 +9,9 @@ export const Query = {
     return ctx.db.query.product({ where: { id: args.id } }, info);
   },
   allProducts(parent, args, ctx: Context, info) {
-    return ctx.db.query.products({...args}, info);
+    return ctx.db.query.products({
+      where: { deletedAt: null }
+    }, info);
   },
   searchProducts(parent, args, ctx: Context, info) {
     const where = {
@@ -18,6 +20,7 @@ export const Query = {
       ...(args.optionsValuesIds && args.optionsValuesIds.length > 0 && { options_some: { values_some: { id_in: args.optionsValuesIds } } }),
       ...(!!args.productName && { name_contains: args.productName }),
       ...(!!args.categoryId && { category: { id: args.categoryId } }),
+      deletedAt: null
     };
 
     return ctx.db.query.productsConnection({

@@ -1,5 +1,5 @@
 # source: http://localhost:4466/aromaclop/dev
-# timestamp: Sat May 26 2018 13:00:51 GMT+0200 (CEST)
+# timestamp: Sun May 27 2018 17:35:50 GMT+0200 (CEST)
 
 type AggregateAttribute {
   count: Int!
@@ -1729,7 +1729,7 @@ type OrderableProductConnection {
 
 input OrderableProductCreateInput {
   position: Int!
-  product: ProductCreateOneInput!
+  product: ProductCreateOneWithoutOrderablesInput!
   metadataBestSale: ShopMetadataCreateOneWithoutBestSalesProductsInput
   metadataNewProduct: ShopMetadataCreateOneWithoutNewProductsInput
 }
@@ -1744,16 +1744,27 @@ input OrderableProductCreateManyWithoutMetadataNewProductInput {
   connect: [OrderableProductWhereUniqueInput!]
 }
 
+input OrderableProductCreateManyWithoutProductInput {
+  create: [OrderableProductCreateWithoutProductInput!]
+  connect: [OrderableProductWhereUniqueInput!]
+}
+
 input OrderableProductCreateWithoutMetadataBestSaleInput {
   position: Int!
-  product: ProductCreateOneInput!
+  product: ProductCreateOneWithoutOrderablesInput!
   metadataNewProduct: ShopMetadataCreateOneWithoutNewProductsInput
 }
 
 input OrderableProductCreateWithoutMetadataNewProductInput {
   position: Int!
-  product: ProductCreateOneInput!
+  product: ProductCreateOneWithoutOrderablesInput!
   metadataBestSale: ShopMetadataCreateOneWithoutBestSalesProductsInput
+}
+
+input OrderableProductCreateWithoutProductInput {
+  position: Int!
+  metadataBestSale: ShopMetadataCreateOneWithoutBestSalesProductsInput
+  metadataNewProduct: ShopMetadataCreateOneWithoutNewProductsInput
 }
 
 """An edge in a connection."""
@@ -1822,7 +1833,7 @@ input OrderableProductSubscriptionWhereInput {
 
 input OrderableProductUpdateInput {
   position: Int
-  product: ProductUpdateOneInput
+  product: ProductUpdateOneWithoutOrderablesInput
   metadataBestSale: ShopMetadataUpdateOneWithoutBestSalesProductsInput
   metadataNewProduct: ShopMetadataUpdateOneWithoutNewProductsInput
 }
@@ -1845,16 +1856,31 @@ input OrderableProductUpdateManyWithoutMetadataNewProductInput {
   upsert: [OrderableProductUpsertWithWhereUniqueWithoutMetadataNewProductInput!]
 }
 
+input OrderableProductUpdateManyWithoutProductInput {
+  create: [OrderableProductCreateWithoutProductInput!]
+  connect: [OrderableProductWhereUniqueInput!]
+  disconnect: [OrderableProductWhereUniqueInput!]
+  delete: [OrderableProductWhereUniqueInput!]
+  update: [OrderableProductUpdateWithWhereUniqueWithoutProductInput!]
+  upsert: [OrderableProductUpsertWithWhereUniqueWithoutProductInput!]
+}
+
 input OrderableProductUpdateWithoutMetadataBestSaleDataInput {
   position: Int
-  product: ProductUpdateOneInput
+  product: ProductUpdateOneWithoutOrderablesInput
   metadataNewProduct: ShopMetadataUpdateOneWithoutNewProductsInput
 }
 
 input OrderableProductUpdateWithoutMetadataNewProductDataInput {
   position: Int
-  product: ProductUpdateOneInput
+  product: ProductUpdateOneWithoutOrderablesInput
   metadataBestSale: ShopMetadataUpdateOneWithoutBestSalesProductsInput
+}
+
+input OrderableProductUpdateWithoutProductDataInput {
+  position: Int
+  metadataBestSale: ShopMetadataUpdateOneWithoutBestSalesProductsInput
+  metadataNewProduct: ShopMetadataUpdateOneWithoutNewProductsInput
 }
 
 input OrderableProductUpdateWithWhereUniqueWithoutMetadataBestSaleInput {
@@ -1867,6 +1893,11 @@ input OrderableProductUpdateWithWhereUniqueWithoutMetadataNewProductInput {
   data: OrderableProductUpdateWithoutMetadataNewProductDataInput!
 }
 
+input OrderableProductUpdateWithWhereUniqueWithoutProductInput {
+  where: OrderableProductWhereUniqueInput!
+  data: OrderableProductUpdateWithoutProductDataInput!
+}
+
 input OrderableProductUpsertWithWhereUniqueWithoutMetadataBestSaleInput {
   where: OrderableProductWhereUniqueInput!
   update: OrderableProductUpdateWithoutMetadataBestSaleDataInput!
@@ -1877,6 +1908,12 @@ input OrderableProductUpsertWithWhereUniqueWithoutMetadataNewProductInput {
   where: OrderableProductWhereUniqueInput!
   update: OrderableProductUpdateWithoutMetadataNewProductDataInput!
   create: OrderableProductCreateWithoutMetadataNewProductInput!
+}
+
+input OrderableProductUpsertWithWhereUniqueWithoutProductInput {
+  where: OrderableProductWhereUniqueInput!
+  update: OrderableProductUpdateWithoutProductDataInput!
+  create: OrderableProductCreateWithoutProductInput!
 }
 
 input OrderableProductWhereInput {
@@ -2544,6 +2581,7 @@ type PageInfo {
 
 type Product implements Node {
   id: ID!
+  deletedAt: DateTime
   name: String!
   description: String
   brand(where: BrandWhereInput): Brand!
@@ -2556,6 +2594,7 @@ type Product implements Node {
   displayPrice: Float!
   available: Boolean!
   imageUrl: String
+  orderables(where: OrderableProductWhereInput, orderBy: OrderableProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderableProduct!]
 }
 
 """A connection to a list of items."""
@@ -2569,6 +2608,7 @@ type ProductConnection {
 }
 
 input ProductCreateInput {
+  deletedAt: DateTime
   name: String!
   description: String
   SKU: String
@@ -2581,6 +2621,7 @@ input ProductCreateInput {
   unavailableOptionsValues: OptionValueCreateManyInput
   variants: VariantCreateManyWithoutProductInput
   attributes: AttributeCreateManyWithoutProductsInput
+  orderables: OrderableProductCreateManyWithoutProductInput
 }
 
 input ProductCreateManyWithoutAttributesInput {
@@ -2588,8 +2629,8 @@ input ProductCreateManyWithoutAttributesInput {
   connect: [ProductWhereUniqueInput!]
 }
 
-input ProductCreateOneInput {
-  create: ProductCreateInput
+input ProductCreateOneWithoutOrderablesInput {
+  create: ProductCreateWithoutOrderablesInput
   connect: ProductWhereUniqueInput
 }
 
@@ -2599,6 +2640,7 @@ input ProductCreateOneWithoutVariantsInput {
 }
 
 input ProductCreateWithoutAttributesInput {
+  deletedAt: DateTime
   name: String!
   description: String
   SKU: String
@@ -2610,9 +2652,27 @@ input ProductCreateWithoutAttributesInput {
   options: OptionCreateManyInput
   unavailableOptionsValues: OptionValueCreateManyInput
   variants: VariantCreateManyWithoutProductInput
+  orderables: OrderableProductCreateManyWithoutProductInput
+}
+
+input ProductCreateWithoutOrderablesInput {
+  deletedAt: DateTime
+  name: String!
+  description: String
+  SKU: String
+  displayPrice: Float!
+  available: Boolean!
+  imageUrl: String
+  brand: BrandCreateOneInput!
+  category: CategoryCreateOneInput!
+  options: OptionCreateManyInput
+  unavailableOptionsValues: OptionValueCreateManyInput
+  variants: VariantCreateManyWithoutProductInput
+  attributes: AttributeCreateManyWithoutProductsInput
 }
 
 input ProductCreateWithoutVariantsInput {
+  deletedAt: DateTime
   name: String!
   description: String
   SKU: String
@@ -2624,6 +2684,7 @@ input ProductCreateWithoutVariantsInput {
   options: OptionCreateManyInput
   unavailableOptionsValues: OptionValueCreateManyInput
   attributes: AttributeCreateManyWithoutProductsInput
+  orderables: OrderableProductCreateManyWithoutProductInput
 }
 
 """An edge in a connection."""
@@ -2638,6 +2699,8 @@ type ProductEdge {
 enum ProductOrderByInput {
   id_ASC
   id_DESC
+  deletedAt_ASC
+  deletedAt_DESC
   name_ASC
   name_DESC
   description_ASC
@@ -2658,6 +2721,7 @@ enum ProductOrderByInput {
 
 type ProductPreviousValues {
   id: ID!
+  deletedAt: DateTime
   name: String!
   description: String
   SKU: String
@@ -2705,22 +2769,8 @@ input ProductSubscriptionWhereInput {
   node: ProductWhereInput
 }
 
-input ProductUpdateDataInput {
-  name: String
-  description: String
-  SKU: String
-  displayPrice: Float
-  available: Boolean
-  imageUrl: String
-  brand: BrandUpdateOneInput
-  category: CategoryUpdateOneInput
-  options: OptionUpdateManyInput
-  unavailableOptionsValues: OptionValueUpdateManyInput
-  variants: VariantUpdateManyWithoutProductInput
-  attributes: AttributeUpdateManyWithoutProductsInput
-}
-
 input ProductUpdateInput {
+  deletedAt: DateTime
   name: String
   description: String
   SKU: String
@@ -2733,6 +2783,7 @@ input ProductUpdateInput {
   unavailableOptionsValues: OptionValueUpdateManyInput
   variants: VariantUpdateManyWithoutProductInput
   attributes: AttributeUpdateManyWithoutProductsInput
+  orderables: OrderableProductUpdateManyWithoutProductInput
 }
 
 input ProductUpdateManyWithoutAttributesInput {
@@ -2744,12 +2795,12 @@ input ProductUpdateManyWithoutAttributesInput {
   upsert: [ProductUpsertWithWhereUniqueWithoutAttributesInput!]
 }
 
-input ProductUpdateOneInput {
-  create: ProductCreateInput
+input ProductUpdateOneWithoutOrderablesInput {
+  create: ProductCreateWithoutOrderablesInput
   connect: ProductWhereUniqueInput
   delete: Boolean
-  update: ProductUpdateDataInput
-  upsert: ProductUpsertNestedInput
+  update: ProductUpdateWithoutOrderablesDataInput
+  upsert: ProductUpsertWithoutOrderablesInput
 }
 
 input ProductUpdateOneWithoutVariantsInput {
@@ -2761,6 +2812,7 @@ input ProductUpdateOneWithoutVariantsInput {
 }
 
 input ProductUpdateWithoutAttributesDataInput {
+  deletedAt: DateTime
   name: String
   description: String
   SKU: String
@@ -2772,9 +2824,27 @@ input ProductUpdateWithoutAttributesDataInput {
   options: OptionUpdateManyInput
   unavailableOptionsValues: OptionValueUpdateManyInput
   variants: VariantUpdateManyWithoutProductInput
+  orderables: OrderableProductUpdateManyWithoutProductInput
+}
+
+input ProductUpdateWithoutOrderablesDataInput {
+  deletedAt: DateTime
+  name: String
+  description: String
+  SKU: String
+  displayPrice: Float
+  available: Boolean
+  imageUrl: String
+  brand: BrandUpdateOneInput
+  category: CategoryUpdateOneInput
+  options: OptionUpdateManyInput
+  unavailableOptionsValues: OptionValueUpdateManyInput
+  variants: VariantUpdateManyWithoutProductInput
+  attributes: AttributeUpdateManyWithoutProductsInput
 }
 
 input ProductUpdateWithoutVariantsDataInput {
+  deletedAt: DateTime
   name: String
   description: String
   SKU: String
@@ -2786,6 +2856,7 @@ input ProductUpdateWithoutVariantsDataInput {
   options: OptionUpdateManyInput
   unavailableOptionsValues: OptionValueUpdateManyInput
   attributes: AttributeUpdateManyWithoutProductsInput
+  orderables: OrderableProductUpdateManyWithoutProductInput
 }
 
 input ProductUpdateWithWhereUniqueWithoutAttributesInput {
@@ -2793,9 +2864,9 @@ input ProductUpdateWithWhereUniqueWithoutAttributesInput {
   data: ProductUpdateWithoutAttributesDataInput!
 }
 
-input ProductUpsertNestedInput {
-  update: ProductUpdateDataInput!
-  create: ProductCreateInput!
+input ProductUpsertWithoutOrderablesInput {
+  update: ProductUpdateWithoutOrderablesDataInput!
+  create: ProductCreateWithoutOrderablesInput!
 }
 
 input ProductUpsertWithoutVariantsInput {
@@ -2858,6 +2929,28 @@ input ProductWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  deletedAt: DateTime
+
+  """All values that are not equal to given value."""
+  deletedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  deletedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  deletedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  deletedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  deletedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  deletedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  deletedAt_gte: DateTime
   name: String
 
   """All values that are not equal to given value."""
@@ -3058,6 +3151,9 @@ input ProductWhereInput {
   attributes_every: AttributeWhereInput
   attributes_some: AttributeWhereInput
   attributes_none: AttributeWhereInput
+  orderables_every: OrderableProductWhereInput
+  orderables_some: OrderableProductWhereInput
+  orderables_none: OrderableProductWhereInput
 }
 
 input ProductWhereUniqueInput {

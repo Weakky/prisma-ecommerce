@@ -123,7 +123,23 @@ export const product = {
     }, info);
   },
 
-  deleteProduct(parent, args, ctx: Context, info) {
+  async deleteProduct(parent, args, ctx: Context, info) {
+    // If product is in some orders, then soft-delete the product
+    if (await ctx.db.exists.Order({
+      lineItems_some: {
+        variant: {
+          product: { id: args.productId }
+        }
+      }
+    })) {
+      //Still delete the new/best-sellers products.
+      await ctx.db.mutation.deleteManyOrderableProducts({ where: { product: { id: args.productId } } });
+
+      return ctx.db.mutation.updateProduct({
+        where: { id: args.productId },
+        data: { deletedAt: new Date().toISOString()}
+      });
+    }
     return ctx.db.mutation.deleteProduct({ where: { id: args.productId } });
   },
 }
