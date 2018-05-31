@@ -36,22 +36,30 @@ function getCombinations(arrays, combine = [], finalList = []) {
 
 export const findUnavailableOptionsValues = (variants, options) => {
   const isOptionValueInSelectedOptions = (selectedOptions, optionValue) => {
-    return !!selectedOptions.find(selectedOption => selectedOption.valueId === optionValue.id);
+    return !!selectedOptions.find(
+      selectedOption => selectedOption.valueId === optionValue.id,
+    );
   };
 
   const isInAllUnavailableVariants = (variants, optionValue) => {
-    return variants
-    // Get all variants in which the option value is
-      .filter(variant => isOptionValueInSelectedOptions(variant.selectedOptions, optionValue))
-      // Make sure those variants are all unavailable
-      .every(variant => !variant.available);
+    return (
+      variants
+        // Get all variants in which the option value is present
+        .filter(variant =>
+          isOptionValueInSelectedOptions(variant.selectedOptions, optionValue),
+        )
+        // Make sure those variants are all unavailable
+        .every(variant => !variant.available)
+    );
   };
 
   return _(options)
     .flatMap(option => option.values)
-    .filter((optionValue) => isInAllUnavailableVariants(variants, optionValue))
+    .filter(optionValue => isInAllUnavailableVariants(variants, optionValue))
     .value();
 };
+
+const flattenOValues = (option) => _.flatMap(option, 'values');
 
 class CreateProduct extends Component {
   constructor(props) {
@@ -66,6 +74,7 @@ class CreateProduct extends Component {
       packages: [],
       initialPackages: [],
       selectedOptions: [],
+      selectedOptionsValues: [],
       attributes: [],
       variants: [],
       file: null,
@@ -101,6 +110,7 @@ class CreateProduct extends Component {
       categoryId,
       variants,
       imageUrl,
+      selectedOptionsValues: this.computeSelectedOptionsValues(selectedOptions, variants),
     });
   }
 
@@ -131,27 +141,109 @@ class CreateProduct extends Component {
     return url;
   }
 
-  computeVariants(selectedOptionsChanged) {
+  computeVariants(selectedOptionsChanged, selectedOValues) {
     if (selectedOptionsChanged.length === 0) {
       return [];
     }
 
     const optionValuesWithOptionName = selectedOptionsChanged.map(selectedOption => {
-      return selectedOption.values.map(optionValue => ({
-        option: selectedOption,
-        name: selectedOption.name,
-        value: optionValue,
-      }));
+      return selectedOption.values
+        .filter(
+          optionValue =>
+            selectedOValues.find(selectedOValue => selectedOValue.id === optionValue.id)
+              .selected,
+        )
+        .map(optionValue => ({
+          option: selectedOption,
+          value: optionValue,
+        }));
     });
 
     const combinations = getCombinations(optionValuesWithOptionName);
+    
+    const hasSameSelectedOptions = (first, second) => {
+      let found = false;
+
+      first.forEach(selectedOption => {
+        const optionId = selectedOption.option.id;
+        const valueId = selectedOption.value.id;
+
+        second.forEach(otherSelectedOption => {
+          if (otherSelectedOption.option.id === optionId && otherSelectedOption.value.id === valueId) {
+            found = true;
+          }
+        });
+      });
+
+      return found;
+    };
 
     return combinations.map(combination => {
+      const existingVariant = this.state.variants.find((variant) => hasSameSelectedOptions(variant.selectedOptions, combination));
+
+      if (!!existingVariant) {
+        return existingVariant;
+      }
+
       return {
         available: true,
         price: '',
         selectedOptions: combination,
       };
+    });
+  }
+
+  computeSelectedOptionsValues(selectedOptions, variants = null) {
+    const { allOptions } = this.props.data;
+    const { selectedOptionsValues } = this.state;
+
+    const isOValueSelected = oValue => {
+      if (!variants) {
+        const selectedOValue = selectedOptionsValues.find(({ id }) => id === oValue.id);
+        // If option value already in state, keep it's current selected value.
+        if (!!selectedOValue) {
+          return selectedOValue.selected;
+        }
+      }
+
+      // Try to find from variants (used when editing a product, to compute selected option values from variants)
+      if (variants) {
+        return !!variants.find(variant => !!variant.selectedOptions.find(selectedOption => selectedOption.value.id === oValue.id))
+      }
+
+      return !!flattenOValues(allOptions).find(
+        propsOValue => propsOValue.id === oValue.id,
+      );
+    };
+
+    return _(selectedOptions)
+      .flatMap(option => option.values.map(value => ({ ...value, optionId: option.id })))
+      .map(oValue => ({
+        id: oValue.id,
+        optionId: oValue.optionId,
+        name: oValue.name,
+        selected: isOValueSelected(oValue),
+      }))
+      .value();
+  }
+
+  onOptionValueChanged(optionValue) {
+    const selectedOptionsValues = this.state.selectedOptionsValues.map(
+      selectedOptionValue => {
+        if (selectedOptionValue.id !== optionValue.id) {
+          return selectedOptionValue;
+        }
+
+        return {
+          ...selectedOptionValue,
+          selected: !optionValue.selected,
+        };
+      },
+    );
+
+    this.setState({
+      selectedOptionsValues,
+      variants: this.computeVariants(this.state.selectedOptions, selectedOptionsValues),
     });
   }
 
@@ -162,10 +254,14 @@ class CreateProduct extends Component {
       label: option.label,
       values: option.values,
     }));
+    const selectedOptionsValues = this.computeSelectedOptionsValues(
+      remappedSelectedOptions,
+    );
 
     this.setState({
       selectedOptions: remappedSelectedOptions,
-      variants: this.computeVariants(remappedSelectedOptions),
+      variants: this.computeVariants(remappedSelectedOptions, selectedOptionsValues),
+      selectedOptionsValues,
     });
   }
 
@@ -257,6 +353,71 @@ class CreateProduct extends Component {
         defaultPageSize={this.state.variants.length}
       />
     );
+  }
+
+  async upsertProduct() {
+    const {
+      name,
+      displayPrice,
+      brandId,
+      categoryId,
+      selectedOptions,
+      variants,
+      attributes,
+      productId,
+      imageUrl,
+      file,
+    } = this.state;
+
+    let uploadedImageUrl = null;
+
+    if (file) {
+      uploadedImageUrl = await this.uploadImageAndGetLink();
+    }
+
+    const optionIds = selectedOptions.map(option => option.id);
+    const attributesIds = attributes.map(attribute => attribute.id);
+    const remappedVariants = variants.map(variant => ({
+      id: variant.id,
+      available: variant.available,
+      price: variant.price,
+      selectedOptions: variant.selectedOptions.map(selectedOption => ({
+        optionId: selectedOption.option.id,
+        valueId: selectedOption.value.id,
+      })),
+    }));
+    const unavailableOptionsValuesIds = findUnavailableOptionsValues(
+      remappedVariants,
+      selectedOptions,
+    ).map(optionValue => optionValue.id);
+
+    try {
+      await this.props.upsertProduct({
+        productId,
+        name,
+        brandId,
+        categoryId,
+        attributesIds,
+        available: true,
+        optionIds,
+        variants: remappedVariants,
+        displayPrice,
+        unavailableOptionsValuesIds,
+        imageUrl: uploadedImageUrl || imageUrl,
+      });
+    } catch (e) {
+      //TODO: Handle error (could not add product)
+      console.error('Failed creating product', e);
+    }
+  }
+
+  async handlePost() {
+    this.props.closeModal();
+
+    await this.upsertProduct();
+
+    this.setState(this.initialState);
+    this.props.history.push('/products');
   }
 
   render() {
@@ -374,6 +535,25 @@ class CreateProduct extends Component {
             onChange={this.onSelectedOptionChanged}
           />
         </label>
+        <label className="Createproduct-label">
+          {this.state.selectedOptions.map(option => (
+            <div key={option.id}>
+              <span className="Createproduct-vignette-title">{option.label}</span>
+              {this.state.selectedOptionsValues
+                .filter(oValue => oValue.optionId === option.id)
+                .map(oValue => (
+                  <span
+                    key={`${option.id}-${oValue.id}`}
+                    onClick={() => this.onOptionValueChanged(oValue)}
+                    className="Reactable-vignette"
+                    style={{ backgroundColor: oValue.selected ? '#1abc9c' : '#cc6155' }}
+                  >
+                    {oValue.name}
+                  </span>
+                ))}
+            </div>
+          ))}
+        </label>
         {this.state.selectedOptions.length > 0 && (
           <label className="Createproduct-label">
             <FormattedMessage id="variants" />
@@ -391,77 +571,15 @@ class CreateProduct extends Component {
         </label>
         {this.state.name && (
           <button className="Createproduct-button" onClick={this.handlePost}>
-            {!this.props.editMode
-              ? <FormattedMessage id="add" />
-              : <FormattedMessage id="edit" />
-            }
+            {!this.props.editMode ? (
+              <FormattedMessage id="add" />
+            ) : (
+              <FormattedMessage id="edit" />
+            )}
           </button>
         )}
       </div>
     );
-  }
-
-  async upsertProduct() {
-    const {
-      name,
-      displayPrice,
-      brandId,
-      categoryId,
-      selectedOptions,
-      variants,
-      attributes,
-      productId,
-      imageUrl,
-      file,
-    } = this.state;
-
-    let uploadedImageUrl = null;
-
-    if (file) {
-      uploadedImageUrl = await this.uploadImageAndGetLink();
-    }
-
-    const optionIds = selectedOptions.map(option => option.id);
-    const attributesIds = attributes.map(attribute => attribute.id);
-    const remappedVariants = variants.map(variant => ({
-      id: variant.id,
-      available: variant.available,
-      price: variant.price,
-      selectedOptions: variant.selectedOptions.map(selectedOption => ({
-        optionId: selectedOption.option.id,
-        valueId: selectedOption.value.id,
-      })),
-    }));
-    const unavailableOptionsValuesIds = findUnavailableOptionsValues(remappedVariants, selectedOptions)
-      .map(optionValue => optionValue.id);
-
-    try {
-      await this.props.upsertProduct({
-        productId,
-        name,
-        brandId,
-        categoryId,
-        attributesIds,
-        available: true,
-        optionIds,
-        variants: remappedVariants,
-        displayPrice,
-        unavailableOptionsValuesIds,
-        imageUrl: uploadedImageUrl || imageUrl,
-      });
-    } catch (e) {
-      //TODO: Handle error (could not add product)
-      console.error('Failed creating product', e);
-    }
-  }
-
-  async handlePost() {
-    this.props.closeModal();
-
-    await this.upsertProduct();
-
-    this.setState(this.initialState);
-    this.props.history.push('/products');
   }
 }
 
