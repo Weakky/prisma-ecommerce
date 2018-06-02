@@ -29,7 +29,10 @@ const Filters = props => {
       style={{
         flex: 1,
         backgroundColor: Colors.white,
-        padding: 20,
+        marginTop: 8,
+        paddingLeft: 16,
+        paddingRight: 16,
+        marginBottom: 16
       }}
     >
       {props.asModal && (
@@ -39,7 +42,7 @@ const Filters = props => {
           closeModal={props.closeModal}
         />
       )}
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <ScrollView>
         <CategoryFilters
           filtersEnabled={props.filtersEnabled}
           filtersValues={props.filtersValues}
@@ -60,11 +63,13 @@ const Filters = props => {
         />
       </ScrollView>
       {!props.asModal && (
-        <BigRedButton
-          onPress={props.applyFilters}
-          label={translate('find_your_product')}
-          icon="ios-search"
-        />
+        <View style={{ paddingTop: 8 }}>
+          <BigRedButton
+            onPress={props.applyFilters}
+            label={translate('find_your_product')}
+            icon="ios-search"
+          />
+        </View>
       )}
     </View>
   );

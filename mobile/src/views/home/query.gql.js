@@ -6,9 +6,6 @@ const homeInformation = gql`
       id
       firstName
       oneSignalUserId
-      cart(first: 1) {
-        id
-      }
       orders(first: 1, orderBy: createdAt_DESC) {
         id
         createdAt

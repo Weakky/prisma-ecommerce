@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
+import { Observable } from 'apollo-client-preset';
 import OneSignal from 'react-native-onesignal';
 import PropTypes from 'prop-types';
 
@@ -9,22 +10,24 @@ import Container from '../../components/layout/Container';
 import FullLoading from '../../components/loading/FullLoading';
 import Card from '../../components/card/Card';
 import BigRedButton from '../../components/big-red-button/BigRedButton';
+import Order from '../../components/order/Order';
 
 import Title from '../../components/title/Title';
 import { translate } from '../../i18n';
 
 import Colors from '../../statics/colors';
-import font from '../../assets/fonts';
 import styles from './Home.styles';
+import commonQueries from '../../graphql/queries';
 
 const SimpleProductList = props => (
   <View style={styles.simpleProductListContainer}>
-    <Title style={{ marginBottom: 8 }}size={18} color={Colors.text}>
+    <Title style={{ marginBottom: 8 }} size={18} color={Colors.text}>
       {props.title}
     </Title>
     {props.orderableProducts.map(({ id, product }) => (
       <Card
         key={id}
+        style={{ padding: 5 }}
         onPress={() =>
           props.navigation.navigate('Product', {
             productId: product.id,
@@ -47,88 +50,13 @@ SimpleProductList.propTypes = {
   orderableProducts: PropTypes.array,
 };
 
-const RecapRow = props => (
-  <View style={styles.recapRowContainer}>
-    <Title font={font} size={12} weight={props.bold && '600'} color={Colors.text}>
-      {props.title}
-    </Title>
-    <Title font={font} size={12} weight={props.bold && '600'} color={Colors.text}>
-      {props.value}
-    </Title>
-  </View>
-);
-
-const Separator = () => <View style={styles.separator} />;
-
-const Ticket = props => (
-  <View style={styles.ticketContainer}>
-    <Title
-      style={{ marginBottom: 10 }}
-      font={font}
-      size={10}
-      weight="600"
-      color="rgba(72,72,72,0.4)"
-    >
-      {translate('your_order')}
-    </Title>
-    {props.order.lineItems.map(lineItem => (
-      <RecapRow
-        key={lineItem.id}
-        title={`${lineItem.quantity} x ${lineItem.variant.product.name}`}
-        value={`${lineItem.variant.price * lineItem.quantity} €`}
-      />
-    ))}
-    <Separator />
-    <RecapRow bold title={translate('total_price')} value={`${props.order.totalPrice} €`} />
-  </View>
-);
-
-const SmallRedButton = props => (
-  <TouchableOpacity style={styles.smallRedButton} onPress={props.onPress}>
-    <Title size={12} font={font} weight="400" color={Colors.white}>
-      {props.label}
-    </Title>
-  </TouchableOpacity>
-);
-
-const LastOrder = props => (
-  <View style={{ marginBottom: 20 }}>
-    <Title style={{ marginBottom: 20 }} size={18} color={Colors.text}>
-      {translate('your_last_order')}
-    </Title>
-    <Ticket order={props.order} />
-    {!props.askToReplaceOrMergeOrder && (
-      <BigRedButton
-        loading={props.loading}
-        onPress={() =>
-          props.onPressAddToCart({ orderId: props.order.id, replace: false })
-        }
-        label={translate('add_to_cart')}
-      />
-    )}
-    {props.askToReplaceOrMergeOrder && (
-      <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-        <SmallRedButton
-          label={translate('replace_with_cart')}
-          onPress={() => props.addOrderToCart({ orderId: props.order.id, replace: true })}
-        />
-        <SmallRedButton
-          label={translate('merge_with_cart')}
-          onPress={() =>
-            props.addOrderToCart({ orderId: props.order.id, replace: false })
-          }
-        />
-      </View>
-    )}
-  </View>
-);
-
 class Home extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       askToReplaceOrMergeOrder: false,
+      cartLength: 0
     };
 
     this.oneSignalUserId = null;
@@ -142,6 +70,14 @@ class Home extends Component {
     OneSignal.configure();
 
     OneSignal.addEventListener('ids', this.onIds);
+
+    const query = this.props.client.watchQuery({
+      query: commonQueries.userInformation,
+    });
+
+    Observable.from(query).forEach(({ data: updatedResult }) => {
+      this.setState({ cartLength: updatedResult.me.cart.length });
+    });
   }
 
   componentWillUnmount() {
@@ -150,7 +86,6 @@ class Home extends Component {
 
   onIds(device) {
     if (device.userId) {
-      console.log('userId', device.userId);
       this.oneSignalUserId = device.userId;
     }
   }
@@ -180,7 +115,7 @@ class Home extends Component {
 
 
   onPressAddToCart({ orderId, replace }) {
-    if (this.props.data.me.cart.length > 0) {
+    if (this.state.cartLength > 0) {
       return this.setState({ askToReplaceOrMergeOrder: true });
     }
 
@@ -216,7 +151,7 @@ class Home extends Component {
           />
         )}
         {me.orders.length > 0 && (
-          <LastOrder
+          <Order
             order={me.orders[0]}
             loading={this.state.loading}
             onPressAddToCart={this.onPressAddToCart}

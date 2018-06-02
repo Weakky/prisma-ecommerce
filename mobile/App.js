@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
 import { createStackNavigator, createTabNavigator, TabBarBottom } from 'react-navigation';
 import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -18,6 +17,7 @@ import Recap from './src/views/recap/Recap';
 import HomeContainer from './src/views/home/HomeContainer';
 import PaymentContainer from './src/views/payment/PaymentContainer';
 import Settings from './src/views/settings/Settings';
+import Orders from './src/views/settings/views/orders/OrdersContainer'
 
 import Colors from './src/statics/colors';
 
@@ -25,20 +25,6 @@ import StackModalNavigator from './src/helpers/StackModalNavigator';
 import { setupApolloClient } from './src/graphql/setupApollo';
 
 import OrderIcon from './src/components/order-icon/OrderIcon';
-
-const TempView = ({ navigation }) => (
-  <TouchableOpacity
-    style={{
-      flex: 1,
-      backgroundColor: Colors.white,
-      alignItems: 'center',
-      justifyContent: 'center',
-    }}
-    onPress={() => navigation.goBack()}
-  >
-    <Text>Press me to go back</Text>
-  </TouchableOpacity>
-);
 
 const ProductWithMappedProps = withMappedNavigationProps(Product);
 
@@ -60,6 +46,16 @@ const BasketNavigator = StackModalNavigator(
     Product: { screen: ProductWithMappedProps },
     Recap: { screen: withMappedNavigationProps(Recap) },
     Payment: { screen: withMappedNavigationProps(PaymentContainer) },
+  },
+  {
+    headerMode: 'none',
+  },
+);
+
+const SettingsNavigator = StackModalNavigator(
+  {
+    Settings: { screen: Settings },
+    Orders: { screen: Orders },
   },
   {
     headerMode: 'none',
@@ -94,7 +90,7 @@ const MainView = createTabNavigator(
       },
     },
     ProfileTab: {
-      screen: TempView,
+      screen: SettingsNavigator,
       navigationOptions: {
         tabBarLabel: ' ',
         tabBarIcon: ({ tintColor }) => (

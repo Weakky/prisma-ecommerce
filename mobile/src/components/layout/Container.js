@@ -8,7 +8,10 @@ import NavigationButton from '../navigation-button/NavigationButton';
 
 
 const TopBar = (props) => (
-  <View style={[styles.containerTitle, { paddingLeft: props.asScroll ? 0 : 16 }]}>
+  <View style={[styles.containerTitle, {
+    paddingLeft: props.asScroll ? 0 : 16,
+    paddingTop: props.asScroll ? 0 : 16
+  }]}>
     <View>
       {props.navigation && (
         <NavigationButton onPress={() => props.navigation.goBack()} back dark />
@@ -50,8 +53,8 @@ Container.propTypes = {
   title: PropTypes.string,
   leftButton: PropTypes.node,
   asScroll: PropTypes.bool,
-  innerStyle: PropTypes.object,
-  containerStyle: PropTypes.object,
+  innerStyle: View.propTypes.style,
+  containerStyle: View.propTypes.style,
 };
 
 const styles = StyleSheet.create({

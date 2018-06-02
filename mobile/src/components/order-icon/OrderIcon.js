@@ -36,7 +36,7 @@ class OrderIcon extends React.PureComponent {
 
   render() {
     return (
-      <View style={styles.iconContainer}>
+      <View>
         {this.state.itemsCount > 0 && (
           <View style={styles.badgeContainer}>
             <Text style={styles.badgeText}>{this.state.itemsCount}</Text>

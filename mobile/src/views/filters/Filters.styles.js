@@ -7,9 +7,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  scrollContainer: {
-    flex: 1,
-  },
   findProductContainer: {
     marginBottom: 30,
     alignSelf: 'center',

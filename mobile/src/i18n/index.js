@@ -97,12 +97,21 @@ const translations = {
     status_submitted: 'Redirecting towards your bank service...',
     status_waiting: 'Waiting for your bank confirmation...',
     status_paid: 'Payment done !',
-    status_failed: 'Payment failed. Please retry.'
+    status_failed: 'Payment failed. Please retry.',
+
+    //Settings translations
+    your_settings: 'Your settings',
+    your_account: 'Your account',
+    your_orders: 'Your orders',
+    your_shop: 'Your shop',
+
+    //Orders translations
+    order_of: 'Order of'
 
   },
   fr: {
     login: 'Connexion',
-    logout: 'Se déconnecter',
+    logout: 'Déconnexion',
     forgot_password: 'Vous n\'avez plus accès à votre compte ?',
 
     // Globals
@@ -187,6 +196,15 @@ const translations = {
     status_waiting: 'En attente de confirmation de votre banque...',
     status_paid: 'Paiement effectué !',
     status_failed: 'Paiement échoué. Réssayez.',
+
+    //Settings translations
+    your_settings: 'Vos paramètres',
+    your_account: 'Votre compte',
+    your_orders: 'Vos commandes',
+    your_shop: 'Votre magasin',
+
+    //Orders translations
+    order_of: 'Commande du'
   }
 }[LANGUAGE];
 

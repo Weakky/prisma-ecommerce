@@ -1,4 +1,4 @@
-import { graphql, compose } from 'react-apollo';
+import { graphql, compose, withApollo } from 'react-apollo';
 import Home from './Home';
 import queries from './query.gql';
 import commonQueries from '../../graphql/queries';
@@ -32,4 +32,5 @@ export default compose(
         }),
     }),
   }),
+  withApollo
 )(Home);

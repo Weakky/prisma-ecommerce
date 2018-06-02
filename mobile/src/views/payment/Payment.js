@@ -25,7 +25,7 @@ function redirect3DSecure(url) {
     if (supported) {
       Linking.openURL(url);
     } else {
-      this.setState({ error: 'Cannot open redirect url. Please contact administator.' });
+      this.setState({ error: 'Cannot open redirect url. Please contact administrator.' });
     }
   });
 }

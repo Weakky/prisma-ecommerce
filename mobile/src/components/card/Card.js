@@ -25,6 +25,7 @@ const defaultProps = {
   brand: 'ALFALIQUID',
   price: '5,95 €',
   notAvailableTaxons: ['11 MG', '16 MG'],
+  style: {},
 };
 
 const OptionsValuesNotAvailable = props => (
@@ -50,8 +51,9 @@ const Card = ({
   brand,
   price,
   unavailableOptionsValues,
+  style,
 }) => (
-  <TouchableOpacity onPress={() => onPress()}>
+  <TouchableOpacity style={style} onPress={() => onPress()}>
     <View style={styles.container}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
         <Image style={styles.productImage} source={source} />

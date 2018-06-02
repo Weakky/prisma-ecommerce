@@ -106,28 +106,28 @@ class Products extends PureComponent {
         title={translate('your_results')}
         leftButton={this.renderFilterButton()}
         navigation={this.props.navigation}
+        innerStyle={{ flex: 1 }}
       >
         {this.renderFiltersModal()}
         <FlatList
           data={this.props.data.products.edges}
           keyExtractor={({ node: product }) => product.id}
           renderItem={({ item: { node: product } }) => (
-            <View style={{ padding: 5 }}>
-              <Card
-                onPress={() =>
-                  this.props.navigation.navigate('Product', {
-                    productId: product.id,
-                    unavailableOptionsValues: product.unavailableOptionsValues,
-                  })
-                }
-                loading={false}
-                brand={product.brand.name}
-                name={product.name}
-                source={{ uri: product.imageUrl }}
-                price={product.displayPrice}
-                unavailableOptionsValues={product.unavailableOptionsValues}
-              />
-            </View>
+            <Card
+              style={{ padding: 5 }}
+              onPress={() =>
+                this.props.navigation.navigate('Product', {
+                  productId: product.id,
+                  unavailableOptionsValues: product.unavailableOptionsValues,
+                })
+              }
+              loading={false}
+              brand={product.brand.name}
+              name={product.name}
+              source={{ uri: product.imageUrl }}
+              price={product.displayPrice}
+              unavailableOptionsValues={product.unavailableOptionsValues}
+            />
           )}
           refreshing={this.state.refreshing}
           onEndReachedThreshold={0.5}
