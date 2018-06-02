@@ -19,6 +19,7 @@ export const product = {
       const currentProduct = await ctx.db.query.product(
         { where: { id: args.productId } },
         `{
+          id
           attributes { id }
           options { id }
           variants { id }
@@ -26,24 +27,32 @@ export const product = {
         }`
       );
 
-      // If some variants were deleted
-      if (currentProduct.variants.length < args.variants) {
-        //Delete those variants and their associated selectedOptions (cascading deletes isn't working with deleteMany)
+      let variantsToDisconnect = [];
+      // 1. If some variants were removed (eg: an option value were unselected from the product)
+      // 2. Soft-delete them and their associated selectedOptions
+      // 3. Disconnect them from the product (so we don't have to filter them after)
+      // 3. Remark: Ideally, we should only soft-delete the variants that are in orders, and hard-delete the others, but we make it easier this way
+      if (currentProduct.variants.length > args.variants.length) {
+        // Find the variants to delete
         const variantsToDelete = _.differenceBy(currentProduct.variants, args.variants, 'id');
         const variantsIdsToDelete = variantsToDelete.map(variant => variant.id);
-        
-        await ctx.db.mutation.deleteManySelectedOptions({
+        variantsToDisconnect = variantsIdsToDelete.map(variantId => ({ id: variantId }));
+      
+        await ctx.db.mutation.updateManySelectedOptions({
           where: {
             variant: {
               id_in: variantsIdsToDelete,
               product: { id: args.productId } }
-          }
+          },
+          data: { deletedAt: new Date().toISOString() }
         }, info);
-        await ctx.db.mutation.deleteManyVariants({
+
+        await ctx.db.mutation.updateManyVariants({
           where: {
             id_in: variantsIdsToDelete,
             product: { id: args.productId }
-          }
+          },
+          data: { deletedAt: new Date().toISOString() }
         }, info);
       }
 
@@ -57,12 +66,17 @@ export const product = {
         .map(optionId => ({ id: optionId }))
         .value();
 
-      // Disconnect/Reconnect all unavailableOptionsValues everytime for convenience
-      const unavailableOptionsValuesToDisconnect = currentProduct.unavailableOptionsValues.map(optionValue => ({ id: optionValue.id }));
-      const unavailableOptionsValuesToConnect = args.unavailableOptionsValuesIds.map(optionValueId => ({ id: optionValueId }));
-
+      const currentUnavailableOptionsValuesIds = currentProduct.unavailableOptionsValues.map(optionValue => optionValue.id);
+      const unavailableOptionsValuesToConnect = _(args.unavailableOptionsValuesIds)
+        .differenceBy(currentUnavailableOptionsValuesIds)
+        .map(optionValueId => ({ id: optionValueId }))
+        .value();
+      const unavailableOptionsValuesToDisconnect = _(currentUnavailableOptionsValuesIds)
+        .differenceBy(args.unavailableOptionsValuesIds)
+        .map(optionValueId => ({ id: optionValueId }))
+        .value();
+      
       const variantsToCreate = _.differenceBy(args.variants, currentProduct.variants, 'id');
-
       const variantsToUpdate = args.variants
       .filter((variant /* ProductVariantInput */) =>
         !!currentProduct.variants.find((currentVariant) => currentVariant.id === variant.id)
@@ -90,8 +104,8 @@ export const product = {
             disconnect: optionsToDisconnect
           },
           unavailableOptionsValues: {
-            connect: unavailableOptionsValuesToConnect,
             disconnect: unavailableOptionsValuesToDisconnect,
+            connect: unavailableOptionsValuesToConnect,
           },
           description: "",
           displayPrice: args.displayPrice,
@@ -99,7 +113,8 @@ export const product = {
           SKU: "",
           variants: {
             update: variantsToUpdate,
-            create: createVariantsInput(variantsToCreate)
+            create: createVariantsInput(variantsToCreate),
+            disconnect: variantsToDisconnect
           },
           imageUrl: args.imageUrl
         }

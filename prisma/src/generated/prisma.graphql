@@ -1,5 +1,5 @@
 # source: http://localhost:4466/aromaclop/dev
-# timestamp: Sun May 27 2018 17:35:50 GMT+0200 (CEST)
+# timestamp: Sat Jun 02 2018 16:56:06 GMT+0200 (CEST)
 
 type AggregateAttribute {
   count: Int!
@@ -2806,6 +2806,7 @@ input ProductUpdateOneWithoutOrderablesInput {
 input ProductUpdateOneWithoutVariantsInput {
   create: ProductCreateWithoutVariantsInput
   connect: ProductWhereUniqueInput
+  disconnect: Boolean
   delete: Boolean
   update: ProductUpdateWithoutVariantsDataInput
   upsert: ProductUpsertWithoutVariantsInput
@@ -3218,6 +3219,7 @@ enum Role {
 
 type SelectedOption implements Node {
   id: ID!
+  deletedAt: DateTime
   option(where: OptionWhereInput): Option!
   variant(where: VariantWhereInput): Variant!
   value(where: OptionValueWhereInput): OptionValue!
@@ -3234,6 +3236,7 @@ type SelectedOptionConnection {
 }
 
 input SelectedOptionCreateInput {
+  deletedAt: DateTime
   option: OptionCreateOneInput!
   variant: VariantCreateOneWithoutSelectedOptionsInput!
   value: OptionValueCreateOneInput!
@@ -3245,6 +3248,7 @@ input SelectedOptionCreateManyWithoutVariantInput {
 }
 
 input SelectedOptionCreateWithoutVariantInput {
+  deletedAt: DateTime
   option: OptionCreateOneInput!
   value: OptionValueCreateOneInput!
 }
@@ -3261,6 +3265,8 @@ type SelectedOptionEdge {
 enum SelectedOptionOrderByInput {
   id_ASC
   id_DESC
+  deletedAt_ASC
+  deletedAt_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -3269,6 +3275,7 @@ enum SelectedOptionOrderByInput {
 
 type SelectedOptionPreviousValues {
   id: ID!
+  deletedAt: DateTime
 }
 
 type SelectedOptionSubscriptionPayload {
@@ -3311,6 +3318,7 @@ input SelectedOptionSubscriptionWhereInput {
 }
 
 input SelectedOptionUpdateInput {
+  deletedAt: DateTime
   option: OptionUpdateOneInput
   variant: VariantUpdateOneWithoutSelectedOptionsInput
   value: OptionValueUpdateOneInput
@@ -3326,6 +3334,7 @@ input SelectedOptionUpdateManyWithoutVariantInput {
 }
 
 input SelectedOptionUpdateWithoutVariantDataInput {
+  deletedAt: DateTime
   option: OptionUpdateOneInput
   value: OptionValueUpdateOneInput
 }
@@ -3390,6 +3399,28 @@ input SelectedOptionWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  deletedAt: DateTime
+
+  """All values that are not equal to given value."""
+  deletedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  deletedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  deletedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  deletedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  deletedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  deletedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  deletedAt_gte: DateTime
   option: OptionWhereInput
   variant: VariantWhereInput
   value: OptionValueWhereInput
@@ -4192,10 +4223,11 @@ input UserWhereUniqueInput {
 
 type Variant implements Node {
   id: ID!
+  deletedAt: DateTime
   selectedOptions(where: SelectedOptionWhereInput, orderBy: SelectedOptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SelectedOption!]
   price: Float!
   available: Boolean!
-  product(where: ProductWhereInput): Product!
+  product(where: ProductWhereInput): Product
 }
 
 """A connection to a list of items."""
@@ -4209,10 +4241,11 @@ type VariantConnection {
 }
 
 input VariantCreateInput {
+  deletedAt: DateTime
   price: Float!
   available: Boolean!
   selectedOptions: SelectedOptionCreateManyWithoutVariantInput
-  product: ProductCreateOneWithoutVariantsInput!
+  product: ProductCreateOneWithoutVariantsInput
 }
 
 input VariantCreateManyWithoutProductInput {
@@ -4231,15 +4264,17 @@ input VariantCreateOneWithoutSelectedOptionsInput {
 }
 
 input VariantCreateWithoutProductInput {
+  deletedAt: DateTime
   price: Float!
   available: Boolean!
   selectedOptions: SelectedOptionCreateManyWithoutVariantInput
 }
 
 input VariantCreateWithoutSelectedOptionsInput {
+  deletedAt: DateTime
   price: Float!
   available: Boolean!
-  product: ProductCreateOneWithoutVariantsInput!
+  product: ProductCreateOneWithoutVariantsInput
 }
 
 """An edge in a connection."""
@@ -4254,6 +4289,8 @@ type VariantEdge {
 enum VariantOrderByInput {
   id_ASC
   id_DESC
+  deletedAt_ASC
+  deletedAt_DESC
   price_ASC
   price_DESC
   available_ASC
@@ -4266,6 +4303,7 @@ enum VariantOrderByInput {
 
 type VariantPreviousValues {
   id: ID!
+  deletedAt: DateTime
   price: Float!
   available: Boolean!
 }
@@ -4310,6 +4348,7 @@ input VariantSubscriptionWhereInput {
 }
 
 input VariantUpdateDataInput {
+  deletedAt: DateTime
   price: Float
   available: Boolean
   selectedOptions: SelectedOptionUpdateManyWithoutVariantInput
@@ -4317,6 +4356,7 @@ input VariantUpdateDataInput {
 }
 
 input VariantUpdateInput {
+  deletedAt: DateTime
   price: Float
   available: Boolean
   selectedOptions: SelectedOptionUpdateManyWithoutVariantInput
@@ -4349,12 +4389,14 @@ input VariantUpdateOneWithoutSelectedOptionsInput {
 }
 
 input VariantUpdateWithoutProductDataInput {
+  deletedAt: DateTime
   price: Float
   available: Boolean
   selectedOptions: SelectedOptionUpdateManyWithoutVariantInput
 }
 
 input VariantUpdateWithoutSelectedOptionsDataInput {
+  deletedAt: DateTime
   price: Float
   available: Boolean
   product: ProductUpdateOneWithoutVariantsInput
@@ -4430,6 +4472,28 @@ input VariantWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  deletedAt: DateTime
+
+  """All values that are not equal to given value."""
+  deletedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  deletedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  deletedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  deletedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  deletedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  deletedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  deletedAt_gte: DateTime
   price: Float
 
   """All values that are not equal to given value."""

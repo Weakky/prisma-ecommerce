@@ -24,6 +24,7 @@ type OptionValue {
 
 type SelectedOption {
   id: ID! @unique
+  deletedAt: DateTime # For soft-deletion
   option: Option!
   variant: Variant! @relation(name: "VariantOnSelectedOptions")
   value: OptionValue!
@@ -31,10 +32,11 @@ type SelectedOption {
 
 type Variant {
   id: ID! @unique
+  deletedAt: DateTime # For soft-deletion
   selectedOptions: [SelectedOption!]! @relation(name: "VariantOnSelectedOptions", onDelete: CASCADE)
   price: Float!
   available: Boolean!
-  product: Product! @relation(name: "ProductVariants")
+  product: Product @relation(name: "ProductVariants") # Variants can be disconnected from product when soft-deleted
 }
 
 type Attribute {
@@ -46,7 +48,7 @@ type Attribute {
 
 type Product {
   id: ID! @unique
-  deletedAt: DateTime
+  deletedAt: DateTime # For soft-deletion
   name: String!
   description: String
   brand: Brand!

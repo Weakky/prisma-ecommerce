@@ -34,7 +34,11 @@ function getCombinations(arrays, combine = [], finalList = []) {
   return finalList;
 }
 
-export const findUnavailableOptionsValues = (variants, options) => {
+export const findUnavailableOptionsValues = (
+  variants,
+  options,
+  selectedOptionsValues,
+) => {
   const isOptionValueInSelectedOptions = (selectedOptions, optionValue) => {
     return !!selectedOptions.find(
       selectedOption => selectedOption.valueId === optionValue.id,
@@ -55,11 +59,18 @@ export const findUnavailableOptionsValues = (variants, options) => {
 
   return _(options)
     .flatMap(option => option.values)
+    .filter(optionValue => {
+      const found = selectedOptionsValues.find(
+        selectedOValues => selectedOValues.id === optionValue.id,
+      );
+
+      return found && found.selected;
+    })
     .filter(optionValue => isInAllUnavailableVariants(variants, optionValue))
     .value();
 };
 
-const flattenOValues = (option) => _.flatMap(option, 'values');
+const flattenOValues = option => _.flatMap(option, 'values');
 
 class CreateProduct extends Component {
   constructor(props) {
@@ -160,29 +171,29 @@ class CreateProduct extends Component {
     });
 
     const combinations = getCombinations(optionValuesWithOptionName);
-    
-    const hasSameSelectedOptions = (first, second) => {
-      let found = false;
 
-      first.forEach(selectedOption => {
+    const hasSameSelectedOptions = (first, second) => {
+      return first.every((selectedOption, i) => {
         const optionId = selectedOption.option.id;
         const valueId = selectedOption.value.id;
 
-        second.forEach(otherSelectedOption => {
-          if (otherSelectedOption.option.id === optionId && otherSelectedOption.value.id === valueId) {
-            found = true;
-          }
-        });
-      });
+        if (!second[i]) {
+          return false;
+        }
 
-      return found;
+        return second[i].option.id === optionId && second[i].value.id === valueId;
+      });
     };
 
     return combinations.map(combination => {
-      const existingVariant = this.state.variants.find((variant) => hasSameSelectedOptions(variant.selectedOptions, combination));
+      if (this.state.variants) {
+        const existingVariant = this.state.variants.find(variant =>
+          hasSameSelectedOptions(variant.selectedOptions, combination),
+        );
 
-      if (!!existingVariant) {
-        return existingVariant;
+        if (!!existingVariant) {
+          return existingVariant;
+        }
       }
 
       return {
@@ -208,10 +219,15 @@ class CreateProduct extends Component {
 
       // Try to find from variants (used when editing a product, to compute selected option values from variants)
       if (variants) {
-        return !!variants.find(variant => !!variant.selectedOptions.find(selectedOption => selectedOption.value.id === oValue.id))
+        return !!variants.find(
+          variant =>
+            !!variant.selectedOptions.find(
+              selectedOption => selectedOption.value.id === oValue.id,
+            ),
+        );
       }
 
-      return !!flattenOValues(allOptions).find(
+      return !flattenOValues(allOptions).find(
         propsOValue => propsOValue.id === oValue.id,
       );
     };
@@ -362,6 +378,7 @@ class CreateProduct extends Component {
       brandId,
       categoryId,
       selectedOptions,
+      selectedOptionsValues,
       variants,
       attributes,
       productId,
@@ -389,6 +406,7 @@ class CreateProduct extends Component {
     const unavailableOptionsValuesIds = findUnavailableOptionsValues(
       remappedVariants,
       selectedOptions,
+      selectedOptionsValues,
     ).map(optionValue => optionValue.id);
 
     try {

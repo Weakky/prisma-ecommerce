@@ -74,6 +74,7 @@ const Selectors = props => (
 
 const ProductSheet = ({
   product,
+  price,
   selectedOptions,
   unavailableOptionsValues,
   quantity,
@@ -106,7 +107,7 @@ const ProductSheet = ({
     />
 
     <Title font={font} weight="600" size={18} style={{ marginBottom: 10, marginTop: 20 }}>
-      {product.displayPrice}&nbsp;€
+      {price}&nbsp;€
     </Title>
 
     <Title
@@ -119,6 +120,29 @@ const ProductSheet = ({
   </View>
 );
 
+function computeAvailableOptionsValues(option, unavailableOptionsValues, variants) {
+  return (
+    option &&
+    option.values
+      // Remove unavailable options values
+      .filter(
+        value =>
+          !unavailableOptionsValues.find(optionValue => optionValue.id === value.id),
+      )
+      // Remove unselected options values
+      .filter(
+        value =>
+          !!variants.find(
+            variant =>
+              !!variant.selectedOptions.find(
+                selectedOption => selectedOption.value.id === value.id,
+              ),
+          ),
+      )
+      .map(value => value.name)
+  );
+}
+
 class Product extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -126,6 +150,7 @@ class Product extends React.PureComponent {
     this.state = {
       product: null,
       selectedOptions: {},
+      selectedVariant: null,
       quantity: 1,
       addingItemToCart: false,
     };
@@ -158,16 +183,12 @@ class Product extends React.PureComponent {
   }
 
   configPicker(option, forQuantity = false) {
-    const optionsValues =
-      option &&
-      option.values
-        .filter(
-          value =>
-            !this.props.unavailableOptionsValues.find(
-              optionValue => optionValue.id === value.id,
-            ),
-        )
-        .map(value => value.name);
+    const optionsValues = computeAvailableOptionsValues(
+      option,
+      this.props.unavailableOptionsValues,
+      this.state.product.variants,
+    );
+
     const quantities = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
 
     Picker.init({
@@ -182,12 +203,15 @@ class Product extends React.PureComponent {
           return this.setState({ quantity: selectedOption });
         }
 
+        const selectedOptions = {
+          ...this.state.selectedOptions,
+          [option.id]: selectedOption,
+        };
+
         this.setState({
-          selectedOptions: {
-            ...this.state.selectedOptions,
-            [option.id]: selectedOption,
-          },
-        });
+          selectedOptions,
+          selectedVariant: this.findVariantFromSelectedOptions(selectedOptions),
+        })
       },
       pickerTitleText: '',
       pickerConfirmBtnColor: [204, 97, 85, 1],
@@ -199,16 +223,16 @@ class Product extends React.PureComponent {
     Picker.show();
   }
 
-  findVariantFromSelectedOptions() {
-    if (this.state.selectedOptions.length < this.state.product.options.length) {
+  findVariantFromSelectedOptions(selectedOptions) {
+    if (selectedOptions < this.state.product.options.length) {
       return null;
     }
 
     const variant = this.state.product.variants.find(variant => {
       return variant.selectedOptions.every(selectedOption => {
         return (
-          this.state.selectedOptions[selectedOption.option.id] &&
-          this.state.selectedOptions[selectedOption.option.id] ===
+          selectedOptions[selectedOption.option.id] &&
+          selectedOptions[selectedOption.option.id] ===
             selectedOption.value.name
         );
       });
@@ -220,22 +244,22 @@ class Product extends React.PureComponent {
 
     return {
       variantId: variant.id,
-      quantity: parseInt(this.state.quantity),
+      price: variant.price,
     };
   }
 
   async addItemToCart() {
-    const variant = this.findVariantFromSelectedOptions();
+    const { selectedVariant } = this.state;
 
-    if (variant) {
+    if (selectedVariant) {
       this.setState({ addingItemToCart: true });
-      await this.props.addItemToCart(variant);
+      await this.props.addItemToCart({ variantId: selectedVariant.variantId, quantity: this.state.quantity });
       this.setState({ addingItemToCart: false });
     }
   }
 
   shouldButtonBeEnabled() {
-    return !!this.findVariantFromSelectedOptions() && !this.state.addingItemToCart;
+    return this.state.selectedVariant !== null && !this.state.addingItemToCart;
   }
 
   render() {
@@ -253,6 +277,7 @@ class Product extends React.PureComponent {
         </TouchableOpacity>
         <ProductSheet
           product={this.state.product}
+          price={(this.state.selectedVariant && this.state.selectedVariant.price) || this.state.product.displayPrice}
           selectedOptions={this.state.selectedOptions}
           unavailableOptionsValues={this.props.unavailableOptionsValues}
           quantity={this.state.quantity}
