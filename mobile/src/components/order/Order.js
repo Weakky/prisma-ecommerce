@@ -61,7 +61,7 @@ const SmallRedButton = props => (
 const Order = props => (
   <View style={{ marginBottom: 20 }}>
     {props.title && (
-      <Title style={{ marginBottom: 20 }} size={18} color={Colors.text}>
+      <Title style={{ marginBottom: 8 }} size={16} color={Colors.text}>
         {props.title}
       </Title>
     )}

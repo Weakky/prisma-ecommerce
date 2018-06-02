@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Image, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
 import EntypoIcons from 'react-native-vector-icons/Entypo';
@@ -253,7 +253,19 @@ class Product extends React.PureComponent {
 
     if (selectedVariant) {
       this.setState({ addingItemToCart: true });
-      await this.props.addItemToCart({ variantId: selectedVariant.variantId, quantity: this.state.quantity });
+
+      try {
+        await this.props.addItemToCart({ variantId: selectedVariant.variantId, quantity: this.state.quantity });
+      } catch (e) {
+        const error = e.graphQLErrors[0];
+
+        if (error && error.data.code === 101) {
+          Alert.alert(error.message);
+          // Get user back to browse view so that he fetches all the products again
+          this.props.navigation.navigate('Browse');
+        }
+      }
+
       this.setState({ addingItemToCart: false });
     }
   }

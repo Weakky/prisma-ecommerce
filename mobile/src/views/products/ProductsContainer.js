@@ -29,6 +29,7 @@ export default graphql(query, {
       skip: 0,
       first: PRODUCTS_PER_PAGE,
     },
+    fetchPolicy: 'cache-and-network',
   }),
   props: ({ data }) => ({
     data,
@@ -65,7 +66,7 @@ export default graphql(query, {
       data.subscribeToMore({
         document: subscription,
         updateQuery: (prevState, { subscriptionData }) => {
-          if (!subscriptionData.data) {
+          if (!subscriptionData.data || !subscriptionData.data.node) {
             return prevState;
           }
 

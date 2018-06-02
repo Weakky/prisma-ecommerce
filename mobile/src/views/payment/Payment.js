@@ -138,7 +138,7 @@ export default class Payment extends React.PureComponent {
 
     const newOrder = _.last(orderStatuses.me.orders);
 
-    return newOrder.id === this.state.orderId ? newOrder : null;
+    return newOrder && newOrder.id === this.state.orderId ? newOrder : null;
   }
 
   onCreditCardInputChange(form) {

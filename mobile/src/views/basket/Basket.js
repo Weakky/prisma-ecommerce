@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, Platform, StatusBar, View, StyleSheet } from 'react-native';
+import { FlatList, Platform, StatusBar, View, StyleSheet, Alert } from 'react-native';
 
 import sumBy from 'lodash/sumBy';
 import { withApollo } from 'react-apollo';
@@ -39,7 +39,22 @@ class Basket extends Component {
   }
 
   async removeItemFromBasket(lineItemId) {
-    await this.props.removeItemFromBasket({ lineItemId });
+   try {
+     await this.props.removeItemFromBasket({ lineItemId });
+   } catch (e) {
+     const error = e.graphQLErrors[0];
+
+     console.log(error);
+
+     if (error && error.data.code === 100) {
+       Alert.alert(error.message);
+       // Refetch basket
+       await this.props.client.query({
+         query: commonQueries.userInformation,
+         fetchPolicy: 'network-only'
+       });
+     }
+   }
   }
 
   totalTTC() {

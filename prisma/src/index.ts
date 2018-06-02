@@ -1,8 +1,13 @@
-import { GraphQLServer } from 'graphql-yoga'
+import { GraphQLServer, Options } from 'graphql-yoga'
 import { Prisma } from './generated/prisma'
 import resolvers from './resolvers';
 import { createChargeWithOrder, createChargeAndUpdateOrder, updateOrder } from './resolvers/Mutation/stripe';
 import * as Stripe from 'stripe';
+import { formatError } from "apollo-errors";
+
+const options: Options = {
+  formatError
+};
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -21,7 +26,7 @@ export const server = new GraphQLServer({
   }),
 });
 
-server.start(() => console.log(`Server is running on http://localhost:4000`));
+server.start(options, () => console.log(`Server is running on http://localhost:4000`));
 
 const rawBodyParser = require('body-parser').raw({ type: '*/*' });
 

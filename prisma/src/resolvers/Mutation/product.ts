@@ -139,6 +139,31 @@ export const product = {
   },
 
   async deleteProduct(parent, args, ctx: Context, info) {
+    // If product is in some user's cart
+    // Disconnect it from the carts
+    const usersWithProductInCart = await ctx.db.query.users({
+      where: {
+        cart_some: {
+          variant: {
+            product: { id: args.productId }
+          }
+        }
+      }
+    }, `{ id }`);
+    
+    if (usersWithProductInCart.length > 0) {
+      const usersToDisconnectIds = usersWithProductInCart.map((user) => user.id);
+
+      await ctx.db.mutation.deleteManyOrderLineItems({
+        where: {
+          owner: { id_in: usersToDisconnectIds },
+          variant: {
+            product: { id: args.productId }
+          }
+        },
+      });
+  }
+
     // If product is in some orders, then soft-delete the product
     if (await ctx.db.exists.Order({
       lineItems_some: {
@@ -155,6 +180,7 @@ export const product = {
         data: { deletedAt: new Date().toISOString()}
       });
     }
+    
     return ctx.db.mutation.deleteProduct({ where: { id: args.productId } });
   },
 }

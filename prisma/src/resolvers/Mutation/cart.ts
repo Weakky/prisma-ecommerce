@@ -1,6 +1,10 @@
 import { Context, getUserId } from "../../utils";
 import * as _ from 'lodash';
 import { OrderLineItem } from "../../generated/prisma";
+import {
+  OrderLineItemNotFoundException,
+  ProductNotFoundException
+} from '../../exceptions';
 
 interface OrderLineItemInput {
   variantId: string,
@@ -11,6 +15,10 @@ export const cart = {
   //args: VariantId: ID!, quantity: Int!
   async addItemToCart(parent, args, ctx: Context, info) {
     const userId = getUserId(ctx);
+
+    if (!(await ctx.db.exists.Variant({ id: args.variantId }))) {
+      throw new ProductNotFoundException();
+    }
 
     // Find if there's any existing lineItem. If so, update the quantity
     const orderLineItems = await ctx.db.query.orderLineItems({
@@ -103,8 +111,12 @@ export const cart = {
   async removeItemFromCart(parent, args, ctx: Context, info): Promise<OrderLineItem> {
     const userId = getUserId(ctx);
 
-    if (!ctx.db.exists.User({ id: userId, cart_some: { id: args.lineItemId } })) {
+    if (!(await ctx.db.exists.User({ id: userId, cart_some: { id: args.lineItemId } }))) {
       throw new Error('You\'re not owner of this cart.');
+    }
+
+    if (!(await ctx.db.exists.OrderLineItem({ id: args.lineItemId }))) {
+      throw new OrderLineItemNotFoundException();
     }
 
     return ctx.db.mutation.deleteOrderLineItem({
@@ -115,8 +127,12 @@ export const cart = {
   async updateItemFromCart(parent, args, ctx: Context, info): Promise<OrderLineItem> {
     const userId = getUserId(ctx);
 
-    if (!ctx.db.exists.User({ id: userId, cart_some: { id: args.lineItemId } })) {
+    if (!(await ctx.db.exists.User({ id: userId, cart_some: { id: args.lineItemId } }))) {
       throw new Error('You\'re not owner of this cart.');
+    }
+
+    if (await !ctx.db.exists.OrderLineItem({ id: args.lineItemId })) {
+      throw new Error('This line item doesn\'t exist anymore');
     }
 
     return ctx.db.mutation.updateOrderLineItem({

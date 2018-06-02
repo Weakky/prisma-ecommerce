@@ -153,6 +153,7 @@ class Home extends Component {
         )}
         {me.orders.length > 0 && (
           <Order
+            title={translate('your_last_order')}
             order={me.orders[0]}
             loading={this.state.loading}
             onPressAddToCart={this.onPressAddToCart}
