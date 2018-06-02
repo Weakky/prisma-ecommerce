@@ -12,6 +12,7 @@ const BigRedButton = props => (
   <TouchableOpacity
     style={[
       styles.bigRedButton,
+      props.style,
       { backgroundColor: props.disabled ? 'rgba(204,97,85,0.6)' : Colors.red },
     ]}
     onPress={props.onPress}
@@ -38,6 +39,7 @@ BigRedButton.propTypes = {
   icon: PropTypes.string,
   loading: PropTypes.bool,
   disabled: PropTypes.bool,
+  style: View.propTypes.style,
 };
 
 export default BigRedButton;

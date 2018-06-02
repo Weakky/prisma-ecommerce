@@ -37,7 +37,7 @@ export default StyleSheet.create({
     marginLeft: 3,
   },
   optionValueContainer: {
-    padding: 7,
+    padding: 4,
     backgroundColor: '#F2E3E3',
     borderLeftWidth: StyleSheet.hairlineWidth,
     borderRightWidth: StyleSheet.hairlineWidth,

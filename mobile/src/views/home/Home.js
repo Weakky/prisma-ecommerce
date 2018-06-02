@@ -145,6 +145,7 @@ class Home extends Component {
         </View>
         {me.orders.length === 0 && (
           <BigRedButton
+            style={{ marginBottom: 16 }}
             onPress={() => this.props.navigation.navigate('Browse')}
             label={translate('find_your_product')}
             icon="ios-search"
@@ -159,16 +160,20 @@ class Home extends Component {
             addOrderToCart={this.addOrderToCart}
           />
         )}
-        <SimpleProductList
-          title={translate('best_sales')}
-          orderableProducts={shopMetadata.bestSalesProducts}
-          navigation={this.props.navigation}
-        />
-        <SimpleProductList
-          title={translate('new_products')}
-          orderableProducts={shopMetadata.newProducts}
-          navigation={this.props.navigation}
-        />
+        {shopMetadata.bestSalesProducts.length > 0 && (
+          <SimpleProductList
+            title={translate('best_sales')}
+            orderableProducts={shopMetadata.bestSalesProducts}
+            navigation={this.props.navigation}
+          />
+        )}
+        {shopMetadata.newProducts.length > 0 && (
+          <SimpleProductList
+            title={translate('new_products')}
+            orderableProducts={shopMetadata.newProducts}
+            navigation={this.props.navigation}
+          />
+        )}
       </Container>
     );
   }
