@@ -114,6 +114,7 @@ const MainView = createTabNavigator(
       },
       showLabel: false,
     },
+    lazy: true,
   },
 );
 
