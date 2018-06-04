@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { createStackNavigator, createTabNavigator, TabBarBottom } from 'react-navigation';
+import { ActivityIndicator, AsyncStorage } from 'react-native';
+import { createStackNavigator, createBottomTabNavigator, createSwitchNavigator } from 'react-navigation';
 import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ApolloProvider } from 'react-apollo';
@@ -19,12 +20,13 @@ import PaymentContainer from './src/views/payment/PaymentContainer';
 import Settings from './src/views/settings/Settings';
 import Orders from './src/views/settings/views/orders/OrdersContainer'
 
+import OrderIcon from './src/components/order-icon/OrderIcon';
+import FullLoading from './src/components/loading/FullLoading';
+
+import StorageKeys from './src/statics/storage-keys'
 import Colors from './src/statics/colors';
 
-import StackModalNavigator from './src/helpers/StackModalNavigator';
 import { setupApolloClient } from './src/graphql/setupApollo';
-
-import OrderIcon from './src/components/order-icon/OrderIcon';
 
 const ProductWithMappedProps = withMappedNavigationProps(Product);
 
@@ -40,7 +42,7 @@ const BrowseNavigator = createStackNavigator(
   },
 );
 
-const BasketNavigator = StackModalNavigator(
+const BasketNavigator = createStackNavigator(
   {
     Basket: { screen: Basket },
     Product: { screen: ProductWithMappedProps },
@@ -52,7 +54,7 @@ const BasketNavigator = StackModalNavigator(
   },
 );
 
-const SettingsNavigator = StackModalNavigator(
+const SettingsNavigator = createStackNavigator(
   {
     Settings: { screen: Settings },
     Orders: { screen: Orders },
@@ -62,7 +64,7 @@ const SettingsNavigator = StackModalNavigator(
   },
 );
 
-const MainView = createTabNavigator(
+const MainView = createBottomTabNavigator(
   {
     WelcomeTab: {
       screen: HomeContainer,
@@ -100,8 +102,6 @@ const MainView = createTabNavigator(
     },
   },
   {
-    tabBarComponent: TabBarBottom,
-    tabBarPosition: 'bottom',
     tabBarOptions: {
       activeTintColor: Colors.red,
       inactiveTintColor: Colors.text,
@@ -114,20 +114,51 @@ const MainView = createTabNavigator(
       },
       showLabel: false,
     },
-    lazy: true,
   },
 );
 
-const Application = createStackNavigator(
+const AuthStack = createStackNavigator(
   {
     Login: { screen: Login },
     SignIn: { screen: SignIn },
     SignUp: { screen: SignUp },
-    MainView: { screen: MainView },
   },
   {
-    headerMode: 'none',
-  },
+    headerMode: 'none'
+  }
+);
+
+class AuthLoadingScreen extends React.PureComponent {
+  constructor() {
+    super();
+
+    this._bootstrapAsync();
+  }
+
+  // Fetch the token from storage then navigate to our appropriate place
+  _bootstrapAsync = async () => {
+    const userToken = await AsyncStorage.getItem(StorageKeys.GC_TOKEN);
+
+    // This will switch to the App screen or Auth screen and this loading
+    // screen will be unmounted and thrown away.
+    this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+  };
+
+  // Render any loading content that you like here
+  render() {
+    return (
+      <FullLoading />
+    );
+  }
+}
+
+
+const SwitchStack = createSwitchNavigator(
+  {
+    AuthLoadingScreen: AuthLoadingScreen,
+    Auth: AuthStack,
+    App: MainView
+  }
 );
 
 // Change screen: with the view you wanna render the app
@@ -148,7 +179,7 @@ export default class App extends Component {
   render() {
     return (
       <ApolloProvider client={apolloClient}>
-        <Application />
+        <SwitchStack />
       </ApolloProvider>
     );
   }

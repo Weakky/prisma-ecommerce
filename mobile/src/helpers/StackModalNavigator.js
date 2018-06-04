@@ -1,7 +1,7 @@
-import { StackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 
 const StackModalNavigator = (routeConfigs, navigatorConfig) => {
-  const CardStackNavigator = StackNavigator(routeConfigs, navigatorConfig);
+  const CardStackNavigator = createStackNavigator(routeConfigs, navigatorConfig);
   const modalRouteConfig = {};
   const routeNames = Object.keys(routeConfigs);
 
@@ -9,7 +9,7 @@ const StackModalNavigator = (routeConfigs, navigatorConfig) => {
     modalRouteConfig[`${routeNames[i]}Modal`] = routeConfigs[routeNames[i]];
   }
 
-  return StackNavigator(
+  return createStackNavigator(
     {
       CardStackNavigator: { screen: CardStackNavigator },
       ...modalRouteConfig,

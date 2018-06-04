@@ -48,8 +48,6 @@ class SignIn extends PureComponent {
   async authenticateUser() {
     const { email, password } = this.state;
 
-    //await AsyncStorage.clear();
-
     this.setState({ error: '', loading: true });
 
     if (!this.validateFields()) {
@@ -68,7 +66,7 @@ class SignIn extends PureComponent {
       await AsyncStorage.setItem(StorageKeys.GC_TOKEN, data.login.token);
 
       this.setState({ loading: false }, () => {
-        this.props.navigation.navigate('MainView');
+        this.props.navigation.navigate('App');
       });
     } catch (e) {
       console.log(e);
