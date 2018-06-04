@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, AsyncStorage } from 'react-native';
 import SettingsList from 'react-native-settings-list';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Container from '../../components/layout/Container';
@@ -59,7 +59,10 @@ export default class Settings extends PureComponent {
                 <Ionicons name="ios-power-outline" size={32} color={Colors.red} />
               </View>
             }
-            onPress={() => null}
+            onPress={async () => {
+              await AsyncStorage.clear();
+              this.props.navigation.navigate('Auth');
+            }}
           />
         </SettingsList>
       </Container>
