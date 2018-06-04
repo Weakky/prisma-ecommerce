@@ -3,6 +3,7 @@ import * as _ from 'lodash';
 import { OrderLineItem } from "../../generated/prisma";
 import {
   OrderLineItemNotFoundException,
+  OrderNotFoundException,
   ProductNotFoundException
 } from '../../exceptions';
 
@@ -63,19 +64,28 @@ export const cart = {
         quantity
         variant {
           id
+          product {
+            id
+          }
         }
       }
     }`);
 
-    const currentCart = await ctx.db.query.user({ where: { id: userId } }, `{ cart { id quantity variant { id } } }`).then(user => user.cart);
-
     if (!order) {
-      throw new Error('Order not found');
+      throw new OrderNotFoundException();
     }
+
+    // Add to the cart only the lineItems that have a product that still exists
+    const existingProducts = await Promise.all(
+      order.lineItems.map(lineItem => ctx.db.exists.Product({ id: lineItem.variant.product.id, deletedAt: null }))
+    );
+    const lineItemsWithExistingProduct = order.lineItems.filter((_, i) => existingProducts[i]);
+
+    const currentCart = await ctx.db.query.user({ where: { id: userId } }, `{ cart { id quantity variant { id } } }`).then(user => user.cart);
 
     // Delete all items from cart that are not in the order
     if (args.replace) {
-      const cartLineItemsToDelete = _.differenceBy(currentCart, order.lineItems, (lineItem) => lineItem.variant.id);
+      const cartLineItemsToDelete = _.differenceBy(currentCart, lineItemsWithExistingProduct, (lineItem) => lineItem.variant.id);
 
       await Promise.all(
         cartLineItemsToDelete.map(lineItem => ctx.db.mutation.deleteOrderLineItem({ where: { id: lineItem.id } }))
@@ -83,7 +93,7 @@ export const cart = {
     }
 
     return await Promise.all(
-      order.lineItems.map(orderLineItem => {
+      lineItemsWithExistingProduct.map(orderLineItem => {
         const cartOrderLineItem = currentCart.find(cartLineItem => cartLineItem.variant.id === orderLineItem.variant.id);
 
         if (cartOrderLineItem) {
