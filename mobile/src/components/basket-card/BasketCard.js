@@ -32,19 +32,6 @@ const defaultProps = {
   price: 5.95,
 };
 
-const ItemDeletedOverlay = (props) => (
-  <TouchableOpacity
-    onPress={props.removeItemFromCart}
-    style={{ position: 'absolute', width: props.width, height: props.height, backgroundColor: 'rgba(0, 0, 0, 0.4)', zIndex: 100, justifyContent: 'center', alignItems: 'center', padding: 15 }}
-  />
-);
-
-ItemDeletedOverlay.propTypes = {
-  width: PropTypes.number,
-  height: PropTypes.number,
-  removeItemFromCart: PropTypes.func
-};
-
 const ItemDeletedSubBanner = (props) => (
   <View
     style={{
