@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Linking, Platform, StatusBar } from 'react-native';
+import { StackActions, NavigationActions } from 'react-navigation';
 
 import _ from 'lodash';
 import { CreditCardInput } from 'react-native-credit-card-input';
@@ -102,6 +103,16 @@ export default class Payment extends React.PureComponent {
           loading: false,
           status: PAYMENT_STATUSES.PAID,
           orderId: payPayload.order.id,
+        }, () => {
+          // Temporary, there should be a last view before returning to the home
+          setTimeout(() => {
+            const resetAction = StackActions.reset({
+              index: 0,
+              actions: [NavigationActions.navigate({ routeName: 'Basket' })],
+            });
+            this.props.navigation.dispatch(resetAction);
+            this.props.navigation.navigate('WelcomeTab');
+          }, 1000);
         });
       }
 
