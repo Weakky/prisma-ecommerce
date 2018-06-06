@@ -13,6 +13,7 @@ export default {
         }
         cart {
           id
+          deletedAt
           quantity
           variant {
             id

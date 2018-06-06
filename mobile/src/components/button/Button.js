@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text, TouchableOpacity, Dimensions } from 'react-native';
+import { Text, TouchableOpacity, Dimensions, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import color from '../../statics/colors/index';
@@ -18,6 +18,7 @@ const propTypes = {
   width: PropTypes.number,
   borderColor: PropTypes.string,
   fontSize: PropTypes.number,
+  loading: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -43,6 +44,7 @@ const Button = props => {
     width,
     borderColor,
     fontSize,
+    loading,
   } = props;
   return (
     <TouchableOpacity
@@ -59,17 +61,22 @@ const Button = props => {
       ]}
     >
       {icon && <Icon size={24} name={icon} color={iconColor} />}
-      <Text
-        style={[
-          styles.text,
-          {
-            color: labelColor,
-            fontSize: fontSize,
-          },
-        ]}
-      >
-        {label}
-      </Text>
+      {!loading && (
+        <Text
+          style={[
+            styles.text,
+            {
+              color: labelColor,
+              fontSize: fontSize,
+            },
+          ]}
+        >
+          {label}
+        </Text>
+      )}
+      {loading && (
+        <ActivityIndicator color="white"/>
+      )}
     </TouchableOpacity>
   );
 };

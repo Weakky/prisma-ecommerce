@@ -100,8 +100,9 @@ type Order {
 
 type OrderLineItem {
   id: ID! @unique
+  deletedAt: DateTime
   quantity: Int!
-  variant: Variant!
+  variant: Variant
   owner: User @relation(name: "UserCart", onDelete: SET_NULL)
 }
 

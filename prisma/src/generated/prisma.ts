@@ -2289,8 +2289,9 @@ type OrderEdge {
 
 type OrderLineItem implements Node {
   id: ID!
+  deletedAt: DateTime
   quantity: Int!
-  variant(where: VariantWhereInput): Variant!
+  variant(where: VariantWhereInput): Variant
   owner(where: UserWhereInput): User
 }
 
@@ -2310,8 +2311,9 @@ type OrderLineItemConnection {
 }
 
 input OrderLineItemCreateInput {
+  deletedAt: DateTime
   quantity: Int!
-  variant: VariantCreateOneInput!
+  variant: VariantCreateOneInput
   owner: UserCreateOneWithoutCartInput
 }
 
@@ -2326,8 +2328,9 @@ input OrderLineItemCreateManyWithoutOwnerInput {
 }
 
 input OrderLineItemCreateWithoutOwnerInput {
+  deletedAt: DateTime
   quantity: Int!
-  variant: VariantCreateOneInput!
+  variant: VariantCreateOneInput
 }
 
 """
@@ -2347,6 +2350,8 @@ type OrderLineItemEdge {
 enum OrderLineItemOrderByInput {
   id_ASC
   id_DESC
+  deletedAt_ASC
+  deletedAt_DESC
   quantity_ASC
   quantity_DESC
   updatedAt_ASC
@@ -2357,6 +2362,7 @@ enum OrderLineItemOrderByInput {
 
 type OrderLineItemPreviousValues {
   id: ID!
+  deletedAt: DateTime
   quantity: Int!
 }
 
@@ -2400,12 +2406,14 @@ input OrderLineItemSubscriptionWhereInput {
 }
 
 input OrderLineItemUpdateDataInput {
+  deletedAt: DateTime
   quantity: Int
   variant: VariantUpdateOneInput
   owner: UserUpdateOneWithoutCartInput
 }
 
 input OrderLineItemUpdateInput {
+  deletedAt: DateTime
   quantity: Int
   variant: VariantUpdateOneInput
   owner: UserUpdateOneWithoutCartInput
@@ -2430,6 +2438,7 @@ input OrderLineItemUpdateManyWithoutOwnerInput {
 }
 
 input OrderLineItemUpdateWithoutOwnerDataInput {
+  deletedAt: DateTime
   quantity: Int
   variant: VariantUpdateOneInput
 }
@@ -2522,6 +2531,35 @@ input OrderLineItemWhereInput {
   All values not ending with the given string.
   """
   id_not_ends_with: ID
+  deletedAt: DateTime
+  """
+  All values that are not equal to given value.
+  """
+  deletedAt_not: DateTime
+  """
+  All values that are contained in given list.
+  """
+  deletedAt_in: [DateTime!]
+  """
+  All values that are not contained in given list.
+  """
+  deletedAt_not_in: [DateTime!]
+  """
+  All values less than the given value.
+  """
+  deletedAt_lt: DateTime
+  """
+  All values less than or equal the given value.
+  """
+  deletedAt_lte: DateTime
+  """
+  All values greater than the given value.
+  """
+  deletedAt_gt: DateTime
+  """
+  All values greater than or equal the given value.
+  """
+  deletedAt_gte: DateTime
   quantity: Int
   """
   All values that are not equal to given value.
@@ -4939,6 +4977,7 @@ input VariantUpdateManyWithoutProductInput {
 input VariantUpdateOneInput {
   create: VariantCreateInput
   connect: VariantWhereUniqueInput
+  disconnect: Boolean
   delete: Boolean
   update: VariantUpdateDataInput
   upsert: VariantUpsertNestedInput
@@ -5356,6 +5395,8 @@ export type OptionValueOrderByInput =
 export type OrderLineItemOrderByInput = 
   'id_ASC' |
   'id_DESC' |
+  'deletedAt_ASC' |
+  'deletedAt_DESC' |
   'quantity_ASC' |
   'quantity_DESC' |
   'updatedAt_ASC' |
@@ -5481,8 +5522,9 @@ export type OrderStatus =
   'FAILED'
 
 export interface OrderLineItemCreateInput {
+  deletedAt?: DateTime
   quantity: Int
-  variant: VariantCreateOneInput
+  variant?: VariantCreateOneInput
   owner?: UserCreateOneWithoutCartInput
 }
 
@@ -5886,6 +5928,14 @@ export interface OrderLineItemWhereInput {
   id_not_starts_with?: ID_Input
   id_ends_with?: ID_Input
   id_not_ends_with?: ID_Input
+  deletedAt?: DateTime
+  deletedAt_not?: DateTime
+  deletedAt_in?: DateTime[] | DateTime
+  deletedAt_not_in?: DateTime[] | DateTime
+  deletedAt_lt?: DateTime
+  deletedAt_lte?: DateTime
+  deletedAt_gt?: DateTime
+  deletedAt_gte?: DateTime
   quantity?: Int
   quantity_not?: Int
   quantity_in?: Int[] | Int
@@ -6204,6 +6254,7 @@ export interface ProductCreateInput {
 }
 
 export interface OrderLineItemUpdateDataInput {
+  deletedAt?: DateTime
   quantity?: Int
   variant?: VariantUpdateOneInput
   owner?: UserUpdateOneWithoutCartInput
@@ -6241,8 +6292,9 @@ export interface OrderUpdateWithWhereUniqueWithoutOwnerInput {
 }
 
 export interface OrderLineItemCreateWithoutOwnerInput {
+  deletedAt?: DateTime
   quantity: Int
-  variant: VariantCreateOneInput
+  variant?: VariantCreateOneInput
 }
 
 export interface OrderLineItemUpsertWithWhereUniqueWithoutOwnerInput {
@@ -6270,6 +6322,7 @@ export interface OrderCreateManyWithoutOwnerInput {
 }
 
 export interface OrderLineItemUpdateWithoutOwnerDataInput {
+  deletedAt?: DateTime
   quantity?: Int
   variant?: VariantUpdateOneInput
 }
@@ -7133,6 +7186,7 @@ export interface OrderableProductUpdateManyWithoutProductInput {
 }
 
 export interface OrderLineItemUpdateInput {
+  deletedAt?: DateTime
   quantity?: Int
   variant?: VariantUpdateOneInput
   owner?: UserUpdateOneWithoutCartInput
@@ -7400,6 +7454,7 @@ export interface VariantUpdateWithWhereUniqueWithoutProductInput {
 export interface VariantUpdateOneInput {
   create?: VariantCreateInput
   connect?: VariantWhereUniqueInput
+  disconnect?: Boolean
   delete?: Boolean
   update?: VariantUpdateDataInput
   upsert?: VariantUpsertNestedInput
@@ -7551,6 +7606,7 @@ export interface PageInfo {
 
 export interface OrderLineItemPreviousValues {
   id: ID_Output
+  deletedAt?: DateTime
   quantity: Int
 }
 
@@ -7638,8 +7694,9 @@ export interface OrderLineItemEdge {
 
 export interface OrderLineItem extends Node {
   id: ID_Output
+  deletedAt?: DateTime
   quantity: Int
-  variant: Variant
+  variant?: Variant
   owner?: User
 }
 

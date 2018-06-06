@@ -296,6 +296,6 @@ class ListProduct extends Component {
 }
 
 export default compose(
-  graphql(ListAllProductsQuery),
+  graphql(ListAllProductsQuery, { options: { variables: { nullValue: null } } }),
   graphql(DeleteProductQuery, DeleteProductQueryOptions),
 )(ListProduct);

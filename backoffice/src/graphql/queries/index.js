@@ -18,7 +18,7 @@ export const ListAllOptionsQuery = gql`
 `;
 
 export const ListAllProductsQuery = gql`
-  query allProducts {
+  query allProducts($nullValue: DateTime) {
     allProducts {
       id
       name
@@ -40,7 +40,7 @@ export const ListAllProductsQuery = gql`
           name
         }
       }
-      variants {
+      variants(where: { deletedAt: $nullValue }) {
         id
         price
         available

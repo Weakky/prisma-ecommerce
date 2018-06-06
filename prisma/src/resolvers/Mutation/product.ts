@@ -27,16 +27,16 @@ export const product = {
         }`
       );
 
-      let variantsToDisconnect = [];
       // 1. If some variants were removed (eg: an option value were unselected from the product)
-      // 2. Soft-delete them and their associated selectedOptions
-      // 3. Disconnect them from the product (so we don't have to filter them after)
-      // 3. Remark: Ideally, we should only soft-delete the variants that are in orders, and hard-delete the others, but we make it easier this way
-      if (currentProduct.variants.length > args.variants.length) {
-        // Find the variants to delete
-        const variantsToDelete = _.differenceBy(currentProduct.variants, args.variants, 'id');
+      // 2. Soft-delete the variants, their associated selectedOptions, and the orderLineItems that had those variants
+      // Remark: Ideally, we should only soft-delete the variants that are in orders, and hard-delete the others, but we make it easier this way
+      // Remark: We don't disconnect the variants from the product so that users can still see the items that were deleted from their cart.
+      // Remark: Because of that, we need to filter the soft_deleted variants everywhere else. :(
+      const variantsToDelete = _.differenceBy(currentProduct.variants, args.variants, 'id');
+
+      if (variantsToDelete.length > 0) {
         const variantsIdsToDelete = variantsToDelete.map(variant => variant.id);
-        variantsToDisconnect = variantsIdsToDelete.map(variantId => ({ id: variantId }));
+        const deletedAt = new Date().toISOString();
       
         await ctx.db.mutation.updateManySelectedOptions({
           where: {
@@ -44,16 +44,23 @@ export const product = {
               id_in: variantsIdsToDelete,
               product: { id: args.productId } }
           },
-          data: { deletedAt: new Date().toISOString() }
-        }, info);
+          data: { deletedAt }
+        });
 
         await ctx.db.mutation.updateManyVariants({
           where: {
             id_in: variantsIdsToDelete,
             product: { id: args.productId }
           },
-          data: { deletedAt: new Date().toISOString() }
-        }, info);
+          data: { deletedAt }
+        });
+
+        await ctx.db.mutation.updateManyOrderLineItems({
+          where: {
+            variant: { id_in: variantsIdsToDelete }
+          },
+          data: { deletedAt }
+        });
       }
 
       const attributesToDisconnect = _(currentProduct.attributes.map(({ id }) => id ))
@@ -114,7 +121,6 @@ export const product = {
           variants: {
             update: variantsToUpdate,
             create: createVariantsInput(variantsToCreate),
-            disconnect: variantsToDisconnect
           },
           imageUrl: args.imageUrl
         }
@@ -150,37 +156,38 @@ export const product = {
         }
       }
     }, `{ id }`);
-    
+
     if (usersWithProductInCart.length > 0) {
       const usersToDisconnectIds = usersWithProductInCart.map((user) => user.id);
 
-      await ctx.db.mutation.deleteManyOrderLineItems({
+      await ctx.db.mutation.updateManyOrderLineItems({
         where: {
           owner: { id_in: usersToDisconnectIds },
           variant: {
             product: { id: args.productId }
           }
         },
+        data: { deletedAt: new Date().toISOString() },
       });
-  }
+    }
 
-    // If product is in some orders, then soft-delete the product
-    if (await ctx.db.exists.Order({
-      lineItems_some: {
-        variant: {
-          product: { id: args.productId }
-        }
+    const productIsInOrderOrCart = await ctx.db.exists.OrderLineItem({
+      variant: {
+        product: { id: args.productId }
       }
-    })) {
+    });
+
+    // If product is in some orders or user's cart, then soft-delete the product
+    if (productIsInOrderOrCart) {
       //Still delete the new/best-sellers products.
       await ctx.db.mutation.deleteManyOrderableProducts({ where: { product: { id: args.productId } } });
 
       return ctx.db.mutation.updateProduct({
         where: { id: args.productId },
-        data: { deletedAt: new Date().toISOString()}
+        data: { deletedAt: new Date().toISOString() }
       });
     }
-    
+
     return ctx.db.mutation.deleteProduct({ where: { id: args.productId } });
   },
 }

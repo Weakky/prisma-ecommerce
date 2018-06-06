@@ -65,6 +65,11 @@ const translations = {
     remove_product: 'Remove the product',
     sub_total: 'Sub total',
     total_price: 'Total price',
+    product_deleted: 'Product deleted. Please remove it from your cart.',
+    product_not_available: 'Product not available. Please remove it from your cart.',
+    invalid_cart_title: 'Invalid cart',
+    invalid_cart_deleted: 'Your cart contains deleted products. Please remove them before continuing.',
+    invalid_cart_not_available: 'Your cart contains unavailable products. Please remove them before continuing.',
 
     // Filters translations
     our_brands: 'Our brands',
@@ -162,6 +167,11 @@ const translations = {
     remove_product: 'Retirer le produit',
     sub_total: 'Sous-total',
     total_price: 'Montant total',
+    product_deleted: 'Produit supprimé. Veuillez le retirer de votre panier.',
+    product_not_available: 'Produit plus disponible. Veuillez le retirer de votre panier.',
+    invalid_cart_title: 'Panier invalide',
+    invalid_cart_deleted: 'Votre panier contient des produits qui ont été retiré de la vente par votre boutique.\n Veuillez les enlever de votre panier avant de continuer.',
+    invalid_cart_not_available: 'Votre panier contient des produits qui ne sont plus disponible dans leurs configurations.\n Veuillez les enlever de votre panier avant de continuer.',
 
     // Filters translations
     our_brands: 'Nos marques',

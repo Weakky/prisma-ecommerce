@@ -162,7 +162,7 @@ class Product extends React.PureComponent {
   async componentWillMount() {
     const { data } = await this.props.client.query({
       query: queries.queryProductInfo,
-      variables: { productId: this.props.productId },
+      variables: { productId: this.props.productId, nullValue: null },
     });
 
     // TODO: Later, allow to edit a variant of a cart's lineItem ?

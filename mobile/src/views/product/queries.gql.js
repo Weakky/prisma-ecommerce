@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 export default {
   queryProductInfo: gql`
-    query product($productId: ID!) {
+    query product($productId: ID!, $nullValue: DateTime) {
       product(id: $productId) {
         id
         name
@@ -21,7 +21,7 @@ export default {
             name
           }
         }
-        variants {
+        variants(where: { deletedAt: $nullValue }) {
           id
           available
           price

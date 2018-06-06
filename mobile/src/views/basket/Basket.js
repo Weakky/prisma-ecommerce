@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, Platform, StatusBar, View, StyleSheet, Alert } from 'react-native';
+import { FlatList, Platform, StatusBar, View, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 
 import sumBy from 'lodash/sumBy';
 import { withApollo } from 'react-apollo';
@@ -23,9 +23,11 @@ class Basket extends Component {
 
     this.state = {
       cart: [],
+      loading: false,
     };
 
     this.removeItemFromBasket = this.removeItemFromBasket.bind(this);
+    this.continueIfValidCart = this.continueIfValidCart.bind(this);
   }
 
   async componentWillMount() {
@@ -43,8 +45,6 @@ class Basket extends Component {
      await this.props.removeItemFromBasket({ lineItemId });
    } catch (e) {
      const error = e.graphQLErrors[0];
-
-     console.log(error);
 
      if (error && error.data.code === 100) {
        Alert.alert(error.message);
@@ -72,6 +72,48 @@ class Basket extends Component {
     return (this.totalTTC() - this.totalHT()).toFixed(2);
   }
 
+  async continueIfValidCart() {
+    try {
+      this.setState({ loading: true });
+
+      const { data } = await this.props.client.query({
+        query: commonQueries.userInformation,
+        fetchPolicy: 'network-only',
+      });
+
+      this.setState({ loading: false });
+
+      // Check if any lineItem was deleted
+      if (data.me.cart.some(lineItem => lineItem.deletedAt !== null)) {
+        return Alert.alert(translate('invalid_cart_title'), translate('invalid_cart_deleted'))
+      }
+
+      // Check if some variants aren't available anymore
+      if (data.me.cart.some(lineItem => this.isLineItemUnavailable(lineItem))) {
+        return Alert.alert(translate('invalid_cart_title'), translate('invalid_cart_not_available'))
+      }
+
+      this.props.navigation.navigate('Recap', {
+        totalTTC: this.totalTTC(),
+        totalHT: this.totalHT(),
+        totalVAT: this.totalVAT(),
+      })
+
+    } catch (e) {
+      const error = e.graphQLErrors[0];
+
+      Alert.alert('', error.message);
+    }
+  }
+
+  isLineItemUnavailable(lineItem) {
+    const lineItemsValues = lineItem.variant.selectedOptions.map((option) => option.value.id);
+
+    return lineItem.variant.product.unavailableOptionsValues.some(optionValue => (
+      lineItemsValues.includes(optionValue.id)
+    ));
+  }
+
   renderContinueButton() {
     if (this.state.cart.length === 0) {
       return null;
@@ -80,13 +122,8 @@ class Basket extends Component {
     return (
       <Button
         label={translate('continue')}
-        onPress={() =>
-          this.props.navigation.navigate('Recap', {
-            totalTTC: this.totalTTC(),
-            totalHT: this.totalHT(),
-            totalVAT: this.totalVAT(),
-          })
-        }
+        onPress={this.continueIfValidCart}
+        loading={this.state.loading}
         backgroundColor={Colors.red}
         labelColor={Colors.white}
         fontSize={16}
@@ -127,6 +164,8 @@ class Basket extends Component {
                       lineItem.variant.product.unavailableOptionsValues,
                   });
                 }}
+                isDeleted={lineItem.deletedAt !== null}
+                isUnavailable={this.isLineItemUnavailable(lineItem)}
                 onPressDeleteProduct={() => this.removeItemFromBasket(lineItem.id)}
               />
             </View>

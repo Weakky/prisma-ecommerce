@@ -183,7 +183,8 @@ export const CreateProductMutation = gql`
     $attributesIds: [ID!]!
     $unavailableOptionsValuesIds: [ID!]!
     $displayPrice: Float!
-    $imageUrl: String
+    $imageUrl: String,
+    $nullValue: DateTime
   ) {
     upsertProduct(
       name: $name
@@ -218,7 +219,7 @@ export const CreateProductMutation = gql`
           name
         }
       }
-      variants {
+      variants(where: { deletedAt: $nullValue }) {
         id
         price
         available
@@ -250,9 +251,12 @@ export const CreateProductMutationOptions = {
   props: ({ mutate }) => ({
     upsertProduct: ({ name, brandId, categoryId, available, optionIds, variants, productId, attributesIds, displayPrice, imageUrl, unavailableOptionsValuesIds }) =>
       mutate({
-        variables: { name, brandId, categoryId, available, optionIds, variants, productId, attributesIds, displayPrice, imageUrl, unavailableOptionsValuesIds },
+        variables: { name, brandId, categoryId, available, optionIds, variants, productId, attributesIds, displayPrice, imageUrl, unavailableOptionsValuesIds, nullValue: null },
         update: (store, { data: { upsertProduct } }) => {
-          const data = store.readQuery({ query: ListAllProductsQuery });
+          const data = store.readQuery({
+            query: ListAllProductsQuery,
+            variables: { nullValue: null }
+          });
 
           const existingProductIndex = data.allProducts.findIndex((product) => product.id === upsertProduct.id);
 

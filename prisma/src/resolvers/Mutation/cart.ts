@@ -4,8 +4,10 @@ import { OrderLineItem } from "../../generated/prisma";
 import {
   OrderLineItemNotFoundException,
   OrderNotFoundException,
-  ProductNotFoundException
+  ProductNotFoundException,
+  ProductOrVariantNotFoundException,
 } from '../../exceptions';
+import { createError } from "apollo-errors";
 
 interface OrderLineItemInput {
   variantId: string,
@@ -154,5 +156,5 @@ export const cart = {
         quantity: args.quantity
       }
     }, info);
-  }
+  },
 };

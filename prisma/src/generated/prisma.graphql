@@ -1,5 +1,5 @@
 # source: http://localhost:4466/aromaclop/dev
-# timestamp: Sat Jun 02 2018 16:56:06 GMT+0200 (CEST)
+# timestamp: Mon Jun 04 2018 21:44:21 GMT+0200 (CEST)
 
 type AggregateAttribute {
   count: Int!
@@ -2039,8 +2039,9 @@ type OrderEdge {
 
 type OrderLineItem implements Node {
   id: ID!
+  deletedAt: DateTime
   quantity: Int!
-  variant(where: VariantWhereInput): Variant!
+  variant(where: VariantWhereInput): Variant
   owner(where: UserWhereInput): User
 }
 
@@ -2055,8 +2056,9 @@ type OrderLineItemConnection {
 }
 
 input OrderLineItemCreateInput {
+  deletedAt: DateTime
   quantity: Int!
-  variant: VariantCreateOneInput!
+  variant: VariantCreateOneInput
   owner: UserCreateOneWithoutCartInput
 }
 
@@ -2071,8 +2073,9 @@ input OrderLineItemCreateManyWithoutOwnerInput {
 }
 
 input OrderLineItemCreateWithoutOwnerInput {
+  deletedAt: DateTime
   quantity: Int!
-  variant: VariantCreateOneInput!
+  variant: VariantCreateOneInput
 }
 
 """An edge in a connection."""
@@ -2087,6 +2090,8 @@ type OrderLineItemEdge {
 enum OrderLineItemOrderByInput {
   id_ASC
   id_DESC
+  deletedAt_ASC
+  deletedAt_DESC
   quantity_ASC
   quantity_DESC
   updatedAt_ASC
@@ -2097,6 +2102,7 @@ enum OrderLineItemOrderByInput {
 
 type OrderLineItemPreviousValues {
   id: ID!
+  deletedAt: DateTime
   quantity: Int!
 }
 
@@ -2140,12 +2146,14 @@ input OrderLineItemSubscriptionWhereInput {
 }
 
 input OrderLineItemUpdateDataInput {
+  deletedAt: DateTime
   quantity: Int
   variant: VariantUpdateOneInput
   owner: UserUpdateOneWithoutCartInput
 }
 
 input OrderLineItemUpdateInput {
+  deletedAt: DateTime
   quantity: Int
   variant: VariantUpdateOneInput
   owner: UserUpdateOneWithoutCartInput
@@ -2170,6 +2178,7 @@ input OrderLineItemUpdateManyWithoutOwnerInput {
 }
 
 input OrderLineItemUpdateWithoutOwnerDataInput {
+  deletedAt: DateTime
   quantity: Int
   variant: VariantUpdateOneInput
 }
@@ -2245,6 +2254,28 @@ input OrderLineItemWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  deletedAt: DateTime
+
+  """All values that are not equal to given value."""
+  deletedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  deletedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  deletedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  deletedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  deletedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  deletedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  deletedAt_gte: DateTime
   quantity: Int
 
   """All values that are not equal to given value."""
@@ -4375,6 +4406,7 @@ input VariantUpdateManyWithoutProductInput {
 input VariantUpdateOneInput {
   create: VariantCreateInput
   connect: VariantWhereUniqueInput
+  disconnect: Boolean
   delete: Boolean
   update: VariantUpdateDataInput
   upsert: VariantUpsertNestedInput
