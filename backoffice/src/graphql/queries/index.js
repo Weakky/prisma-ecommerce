@@ -191,15 +191,17 @@ export const ListAllAttributes = gql`
 
 export const ListAllBestSalesProducts = gql`
   query allBestSalesProducts {
-    shopMetadata {
-      id
-      bestSalesProducts(orderBy: position_ASC) {
+    me {
+      shop {
         id
-        position
-        product {
+        bestSellerProducts(orderBy: position_ASC) {
           id
-          name
-          imageUrl
+          position
+          product {
+            id
+            name
+            imageUrl
+          }
         }
       }
     }
@@ -213,15 +215,17 @@ export const ListAllBestSalesProducts = gql`
 
 export const ListAllNewProductsQuery = gql`
   query allNewProducts {
-    shopMetadata {
-      id
-      newProducts(orderBy: position_ASC) {
+    me {
+      shop {
         id
-        position
-        product {
+        newProducts(orderBy: position_ASC) {
           id
-          name
-          imageUrl
+          position
+          product {
+            id
+            name
+            imageUrl
+          }
         }
       }
     }

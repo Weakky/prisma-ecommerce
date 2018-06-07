@@ -1,4 +1,4 @@
-import { Context } from '../../utils';
+import { Context, getShopId } from '../../utils';
 import * as _ from 'lodash';
 
 export const product = {
@@ -14,6 +14,7 @@ export const product = {
       available: variant.available,
       selectedOptions: { create: selectedOptionsForVariantInput(variant) }
     }));
+    const shopId = await getShopId(ctx);
 
     if (args.productId) {
       const currentProduct = await ctx.db.query.product(
@@ -130,6 +131,7 @@ export const product = {
     return ctx.db.mutation.createProduct({
       data: {
         name: args.name,
+        shop: { connect: { id: shopId } },
         category: { connect: { id: args.categoryId } },
         brand: { connect: { id: args.brandId } },
         options: { connect: optionsToConnect },
@@ -145,10 +147,12 @@ export const product = {
   },
 
   async deleteProduct(parent, args, ctx: Context, info) {
+    const shopId = await getShopId(ctx);
     // If product is in some user's cart
     // Disconnect it from the carts
     const usersWithProductInCart = await ctx.db.query.users({
       where: {
+        shop: { id: shopId },
         cart_some: {
           variant: {
             product: { id: args.productId }
@@ -162,7 +166,10 @@ export const product = {
 
       await ctx.db.mutation.updateManyOrderLineItems({
         where: {
-          owner: { id_in: usersToDisconnectIds },
+          owner: {
+            id_in: usersToDisconnectIds,
+            shop: { id: shopId },
+          },
           variant: {
             product: { id: args.productId }
           }

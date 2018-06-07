@@ -1,7 +1,9 @@
-import { Context } from '../../utils';
+import { Context, getShopId } from '../../utils';
 
 export const category = {
-  upsertCategory(parent, args, ctx: Context, info) {
+  async upsertCategory(parent, args, ctx: Context, info) {
+    const shopId = await getShopId(ctx);
+
     if (args.categoryId) {
       return ctx.db.mutation.updateCategory({
         where: { id: args.categoryId },
@@ -10,7 +12,10 @@ export const category = {
     }
 
     return ctx.db.mutation.createCategory({
-      data: { name: args.name },
+      data: {
+        name: args.name,
+        shop: { connect: { id: shopId } }
+      },
     }, info);
   },
 

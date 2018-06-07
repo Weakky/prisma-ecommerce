@@ -9,6 +9,7 @@ export const auth = {
       data: {
         ...args,
         role: "USER",
+        shop: { connect: { id: args.shopId} },
         password
       },
     })

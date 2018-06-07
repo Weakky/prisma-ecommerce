@@ -2,12 +2,22 @@ type Brand {
   id: ID! @unique
   name: String!
   category: Category!
+  shop: Shop!
 }
 
 type Category {
   id: ID! @unique
   name: String!
   options: [Option!]!
+  shop: Shop!
+}
+
+type Attribute {
+  id: ID! @unique
+  value: String!
+  category: Category!
+  shop: Shop!
+  products: [Product!]!
 }
 
 type Option {
@@ -15,6 +25,7 @@ type Option {
   name: String!
   values: [OptionValue!]! @relation(name: "OptionOptionValues", onDelete: CASCADE)
   category: Category!
+  shop: Shop!
 }
 
 type OptionValue {
@@ -39,16 +50,10 @@ type Variant {
   product: Product @relation(name: "ProductVariants") # Variants can be disconnected from product when soft-deleted
 }
 
-type Attribute {
-  id: ID! @unique
-  value: String!
-  category: Category!
-  products: [Product!]!
-}
-
 type Product {
   id: ID! @unique
   deletedAt: DateTime # For soft-deletion
+  shop: Shop!
   name: String!
   description: String
   brand: Brand!
@@ -70,6 +75,7 @@ type User {
   password: String!
   firstName: String
   lastName: String
+  shop: Shop!
   role: Role! @default(value: USER)
   cart: [OrderLineItem!]! @relation(name: "UserCart" onDelete: CASCADE)
   orders: [Order!]! @relation(name: "UserOrders")
@@ -91,6 +97,7 @@ type Order {
   createdAt: DateTime!
   updatedAt: DateTime!
   owner: User! @relation(name: "UserOrders")
+  receiver: Shop!
   lineItems: [OrderLineItem!]! @relation(name: "OrderLineItems" onDelete: CASCADE)
   totalPrice: Float!
   totalRefunded: Float!
@@ -106,19 +113,25 @@ type OrderLineItem {
   owner: User @relation(name: "UserCart", onDelete: SET_NULL)
 }
 
-type ShopMetadata {
+type Shop {
   id: ID! @unique
-  bestSalesProducts: [OrderableProduct!]! @relation(name: "BestSalesProducts")
-  newProducts: [OrderableProduct!]! @relation(name: "NewProducts")
+  name: String!
   MOTD: String
+  products: [Product!]!
+  newProducts: [OrderableProduct!]! @relation(name: "NewProducts")
+  bestSellerProducts: [OrderableProduct!]! @relation(name: "BestSellerProducts")
+  options: [Option!]!
+  categories: [Category!]!
+  attributes: [Attribute!]!
+  orders: [Order!]!
 }
 
 type OrderableProduct {
   id: ID! @unique
   product: Product! @relation(name: "OrderableProducts")
   position: Int!
-  metadataBestSale: ShopMetadata @relation(name: "BestSalesProducts")
-  metadataNewProduct: ShopMetadata @relation(name: "NewProducts")
+  shopBestSeller: Shop @relation(name: "BestSellerProducts")
+  shopNewProduct: Shop @relation(name: "NewProducts")
 }
 
 # SUBMITTED = Order created but not yet paid

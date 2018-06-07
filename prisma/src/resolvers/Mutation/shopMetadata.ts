@@ -1,4 +1,4 @@
-import { Context } from '../../utils';
+import { Context, getShopId } from '../../utils';
 import * as _ from 'lodash';
 
 interface OrderableProductInput {
@@ -8,57 +8,65 @@ interface OrderableProductInput {
 }
 
 export const shopMetadata = {
-  async upsertBestSalesProducts(parent, args, ctx: Context, info) {
+  async upsertBestSellerProducts(parent, args, ctx: Context, info) {
+    const shopId = await getShopId(ctx);
+
     const buildCreateInput = (products) =>
-      products.map((bestSaleProduct: OrderableProductInput) => ({
-        product: { connect: { id: bestSaleProduct.productId } },
-        position: bestSaleProduct.position
+      products.map((bestSellerProduct: OrderableProductInput) => ({
+        product: { connect: { id: bestSellerProduct.productId } },
+        position: bestSellerProduct.position
       }));
 
-    if (args.shopMetadataId) {
-      const currentShop = await ctx.db.query.shopMetadata({ where: { id: args.shopMetadataId } }, `{ bestSalesProducts { id product { id } } }`);
-
-      const productsToDelete = _(currentShop.bestSalesProducts)
-        .differenceBy(args.bestSalesProducts, 'id')
-        .map(orderableProduct => ({ id: orderableProduct.id }))
-        .value();
-      const productsToConnect = _.differenceBy(args.bestSalesProducts, currentShop.bestSalesProducts, 'id')
-      const productsToUpdate = args.bestSalesProducts
-        .filter((orderableProduct: OrderableProductInput) =>
-          !!currentShop.bestSalesProducts.find((currentProduct) => currentProduct.id === orderableProduct.id)
-        )
-        .map((orderableProduct: OrderableProductInput) => ({
-          where: { id: orderableProduct.id },
-          data: { position: orderableProduct.position }
-        }));
-
-      return ctx.db.mutation.updateShopMetadata({
-        where: { id: args.shopMetadataId },
-        data: { bestSalesProducts: {
-          delete: productsToDelete,
-          create: buildCreateInput(productsToConnect),
-          update: productsToUpdate
-        }}
-      });
-    }
-    return ctx.db.mutation.createShopMetadata({
-      data: {
-        bestSalesProducts: {
-          create: buildCreateInput(args.bestSalesProducts)
+    const currentShop = await ctx.db.query.shop({ where: { id: shopId } }, `
+      {
+        bestSellerProducts {
+          id
+          product { id }
         }
-      }
-    });
+      }`);
+
+    const productsToDelete = _(currentShop.bestSellerProducts)
+      .differenceBy(args.bestSellerProducts, 'id')
+      .map(orderableProduct => ({ id: orderableProduct.id }))
+      .value();
+    const productsToConnect = _.differenceBy(args.bestSellerProducts, currentShop.bestSellerProducts, 'id')
+    const productsToUpdate = args.bestSellerProducts
+      .filter((orderableProduct: OrderableProductInput) =>
+        !!currentShop.bestSellerProducts.find((currentProduct) => currentProduct.id === orderableProduct.id)
+      )
+      .map((orderableProduct: OrderableProductInput) => ({
+        where: { id: orderableProduct.id },
+        data: { position: orderableProduct.position }
+      }));
+
+    return ctx.db.mutation.updateShop({
+      where: { id: shopId },
+      data: {
+        bestSellerProducts: {
+          create: buildCreateInput(productsToConnect),
+          delete: productsToDelete,
+          update: productsToUpdate,
+        }
+      },
+    }, info);
   },
   
   async upsertNewProducts(parent, args, ctx: Context, info) {
-    const buildCreateInput = (products) =>
-    products.map((newProduct: OrderableProductInput) => ({
-      product: { connect: { id: newProduct.productId } },
-      position: newProduct.position
-    }));
+    const shopId = await getShopId(ctx);
 
-  if (args.shopMetadataId) {
-    const currentShop = await ctx.db.query.shopMetadata({ where: { id: args.shopMetadataId } }, `{ newProducts { id product { id } } }`);
+    const buildCreateInput = (products) =>
+      products.map((newProduct: OrderableProductInput) => ({
+        product: { connect: { id: newProduct.productId } },
+        position: newProduct.position
+      }));
+
+    const currentShop = await ctx.db.query.shop({ where: { id: shopId } }, `
+      {
+        newProducts {
+          id
+          product { id }
+        }
+      }`);
 
     const productsToDelete = _(currentShop.newProducts)
       .differenceBy(args.newProducts, 'id')
@@ -74,35 +82,28 @@ export const shopMetadata = {
         data: { position: orderableProduct.position }
       }));
 
-    return ctx.db.mutation.updateShopMetadata({
-      where: { id: args.shopMetadataId },
-      data: { newProducts: {
-        delete: productsToDelete,
-        create: buildCreateInput(productsToConnect),
-        update: productsToUpdate
-      }}
-    });
-  }
-
-  return ctx.db.mutation.createShopMetadata({
-    data: {
-      bestSalesProducts: {
-        create: buildCreateInput(args.bestSalesProducts)
-      }
-    }
-  });
-},
-
-  async upsertMOTD(parent, args, ctx: Context, info) {
-    if (!ctx.db.exists.ShopMetadata({})) {
-      return ctx.db.mutation.createShopMetadata({
-        data: { MOTD: args.MOTD }
-      });
-    }
-
-    return ctx.db.mutation.updateShopMetadata({
-      where: { id: args.shopMetadataId },
-      data: { MOTD: args.MOTD }
-    });
+    return ctx.db.mutation.updateShop({
+      where: { id: shopId },
+      data: {
+        newProducts: {
+          create: buildCreateInput(productsToConnect),
+          delete: productsToDelete,
+          update: productsToUpdate,
+        }
+      },
+    }, info);
   },
+
+//   async upsertMOTD(parent, args, ctx: Context, info) {
+//     if (!ctx.db.exists.ShopMetadata({})) {
+//       return ctx.db.mutation.createShopMetadata({
+//         data: { MOTD: args.MOTD }
+//       });
+//     }
+
+//     return ctx.db.mutation.updateShopMetadata({
+//       where: { id: args.shopMetadataId },
+//       data: { MOTD: args.MOTD }
+//     });
+//   },
 }

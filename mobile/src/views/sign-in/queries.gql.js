@@ -6,6 +6,7 @@ export default {
       login(email: $email, password: $password) {
         user {
           id
+          shop { id }
           email
           oneSignalUserId
           firstName

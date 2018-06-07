@@ -1,4 +1,4 @@
-import { Context, getUserId } from "../../utils";
+import { Context, getUserId, getShopId } from "../../utils";
 import * as _ from 'lodash';
 import { OrderLineItem } from "../../generated/prisma";
 import {
@@ -6,6 +6,7 @@ import {
   OrderNotFoundException,
   ProductNotFoundException,
   ProductOrVariantNotFoundException,
+  OrderNotSentToCurrentShopException,
 } from '../../exceptions';
 import { createError } from "apollo-errors";
 
@@ -58,9 +59,11 @@ export const cart = {
   // args orderId: ID!, replace: Boolean!
   async addOrderToCart(parent, args, ctx: Context, info): Promise<OrderLineItem[]> {
     const userId = getUserId(ctx);
+    const shopId = await getShopId(ctx);
 
     const order = await ctx.db.query.order({ where: { id: args.orderId } }, `{
       id
+      receiver { id }
       lineItems {
         id
         quantity
@@ -72,6 +75,11 @@ export const cart = {
         }
       }
     }`);
+
+
+    if (order.receiver.id !== shopId) {
+      throw new OrderNotSentToCurrentShopException();
+    }
 
     if (!order) {
       throw new OrderNotFoundException();

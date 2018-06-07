@@ -1,5 +1,5 @@
-# source: http://localhost:4466/aromaclop/dev
-# timestamp: Mon Jun 04 2018 21:44:21 GMT+0200 (CEST)
+# source: http://localhost:4466/aromaclop/dev1
+# timestamp: Thu Jun 07 2018 21:19:27 GMT+0200 (CEST)
 
 type AggregateAttribute {
   count: Int!
@@ -45,7 +45,7 @@ type AggregateSelectedOption {
   count: Int!
 }
 
-type AggregateShopMetadata {
+type AggregateShop {
   count: Int!
 }
 
@@ -61,6 +61,7 @@ type Attribute implements Node {
   id: ID!
   value: String!
   category(where: CategoryWhereInput): Category!
+  shop(where: ShopWhereInput): Shop!
   products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product!]
 }
 
@@ -77,6 +78,7 @@ type AttributeConnection {
 input AttributeCreateInput {
   value: String!
   category: CategoryCreateOneInput!
+  shop: ShopCreateOneWithoutAttributesInput!
   products: ProductCreateManyWithoutAttributesInput
 }
 
@@ -85,9 +87,21 @@ input AttributeCreateManyWithoutProductsInput {
   connect: [AttributeWhereUniqueInput!]
 }
 
+input AttributeCreateManyWithoutShopInput {
+  create: [AttributeCreateWithoutShopInput!]
+  connect: [AttributeWhereUniqueInput!]
+}
+
 input AttributeCreateWithoutProductsInput {
   value: String!
   category: CategoryCreateOneInput!
+  shop: ShopCreateOneWithoutAttributesInput!
+}
+
+input AttributeCreateWithoutShopInput {
+  value: String!
+  category: CategoryCreateOneInput!
+  products: ProductCreateManyWithoutAttributesInput
 }
 
 """An edge in a connection."""
@@ -157,6 +171,7 @@ input AttributeSubscriptionWhereInput {
 input AttributeUpdateInput {
   value: String
   category: CategoryUpdateOneInput
+  shop: ShopUpdateOneWithoutAttributesInput
   products: ProductUpdateManyWithoutAttributesInput
 }
 
@@ -169,9 +184,25 @@ input AttributeUpdateManyWithoutProductsInput {
   upsert: [AttributeUpsertWithWhereUniqueWithoutProductsInput!]
 }
 
+input AttributeUpdateManyWithoutShopInput {
+  create: [AttributeCreateWithoutShopInput!]
+  connect: [AttributeWhereUniqueInput!]
+  disconnect: [AttributeWhereUniqueInput!]
+  delete: [AttributeWhereUniqueInput!]
+  update: [AttributeUpdateWithWhereUniqueWithoutShopInput!]
+  upsert: [AttributeUpsertWithWhereUniqueWithoutShopInput!]
+}
+
 input AttributeUpdateWithoutProductsDataInput {
   value: String
   category: CategoryUpdateOneInput
+  shop: ShopUpdateOneWithoutAttributesInput
+}
+
+input AttributeUpdateWithoutShopDataInput {
+  value: String
+  category: CategoryUpdateOneInput
+  products: ProductUpdateManyWithoutAttributesInput
 }
 
 input AttributeUpdateWithWhereUniqueWithoutProductsInput {
@@ -179,10 +210,21 @@ input AttributeUpdateWithWhereUniqueWithoutProductsInput {
   data: AttributeUpdateWithoutProductsDataInput!
 }
 
+input AttributeUpdateWithWhereUniqueWithoutShopInput {
+  where: AttributeWhereUniqueInput!
+  data: AttributeUpdateWithoutShopDataInput!
+}
+
 input AttributeUpsertWithWhereUniqueWithoutProductsInput {
   where: AttributeWhereUniqueInput!
   update: AttributeUpdateWithoutProductsDataInput!
   create: AttributeCreateWithoutProductsInput!
+}
+
+input AttributeUpsertWithWhereUniqueWithoutShopInput {
+  where: AttributeWhereUniqueInput!
+  update: AttributeUpdateWithoutShopDataInput!
+  create: AttributeCreateWithoutShopInput!
 }
 
 input AttributeWhereInput {
@@ -275,6 +317,7 @@ input AttributeWhereInput {
   """All values not ending with the given string."""
   value_not_ends_with: String
   category: CategoryWhereInput
+  shop: ShopWhereInput
   products_every: ProductWhereInput
   products_some: ProductWhereInput
   products_none: ProductWhereInput
@@ -293,6 +336,7 @@ type Brand implements Node {
   id: ID!
   name: String!
   category(where: CategoryWhereInput): Category!
+  shop(where: ShopWhereInput): Shop!
 }
 
 """A connection to a list of items."""
@@ -308,6 +352,7 @@ type BrandConnection {
 input BrandCreateInput {
   name: String!
   category: CategoryCreateOneInput!
+  shop: ShopCreateOneInput!
 }
 
 input BrandCreateOneInput {
@@ -382,11 +427,13 @@ input BrandSubscriptionWhereInput {
 input BrandUpdateDataInput {
   name: String
   category: CategoryUpdateOneInput
+  shop: ShopUpdateOneInput
 }
 
 input BrandUpdateInput {
   name: String
   category: CategoryUpdateOneInput
+  shop: ShopUpdateOneInput
 }
 
 input BrandUpdateOneInput {
@@ -492,6 +539,7 @@ input BrandWhereInput {
   """All values not ending with the given string."""
   name_not_ends_with: String
   category: CategoryWhereInput
+  shop: ShopWhereInput
 }
 
 input BrandWhereUniqueInput {
@@ -502,6 +550,7 @@ type Category implements Node {
   id: ID!
   name: String!
   options(where: OptionWhereInput, orderBy: OptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Option!]
+  shop(where: ShopWhereInput): Shop!
 }
 
 """A connection to a list of items."""
@@ -517,6 +566,12 @@ type CategoryConnection {
 input CategoryCreateInput {
   name: String!
   options: OptionCreateManyWithoutCategoryInput
+  shop: ShopCreateOneWithoutCategoriesInput!
+}
+
+input CategoryCreateManyWithoutShopInput {
+  create: [CategoryCreateWithoutShopInput!]
+  connect: [CategoryWhereUniqueInput!]
 }
 
 input CategoryCreateOneInput {
@@ -531,6 +586,12 @@ input CategoryCreateOneWithoutOptionsInput {
 
 input CategoryCreateWithoutOptionsInput {
   name: String!
+  shop: ShopCreateOneWithoutCategoriesInput!
+}
+
+input CategoryCreateWithoutShopInput {
+  name: String!
+  options: OptionCreateManyWithoutCategoryInput
 }
 
 """An edge in a connection."""
@@ -600,11 +661,22 @@ input CategorySubscriptionWhereInput {
 input CategoryUpdateDataInput {
   name: String
   options: OptionUpdateManyWithoutCategoryInput
+  shop: ShopUpdateOneWithoutCategoriesInput
 }
 
 input CategoryUpdateInput {
   name: String
   options: OptionUpdateManyWithoutCategoryInput
+  shop: ShopUpdateOneWithoutCategoriesInput
+}
+
+input CategoryUpdateManyWithoutShopInput {
+  create: [CategoryCreateWithoutShopInput!]
+  connect: [CategoryWhereUniqueInput!]
+  disconnect: [CategoryWhereUniqueInput!]
+  delete: [CategoryWhereUniqueInput!]
+  update: [CategoryUpdateWithWhereUniqueWithoutShopInput!]
+  upsert: [CategoryUpsertWithWhereUniqueWithoutShopInput!]
 }
 
 input CategoryUpdateOneInput {
@@ -625,6 +697,17 @@ input CategoryUpdateOneWithoutOptionsInput {
 
 input CategoryUpdateWithoutOptionsDataInput {
   name: String
+  shop: ShopUpdateOneWithoutCategoriesInput
+}
+
+input CategoryUpdateWithoutShopDataInput {
+  name: String
+  options: OptionUpdateManyWithoutCategoryInput
+}
+
+input CategoryUpdateWithWhereUniqueWithoutShopInput {
+  where: CategoryWhereUniqueInput!
+  data: CategoryUpdateWithoutShopDataInput!
 }
 
 input CategoryUpsertNestedInput {
@@ -635,6 +718,12 @@ input CategoryUpsertNestedInput {
 input CategoryUpsertWithoutOptionsInput {
   update: CategoryUpdateWithoutOptionsDataInput!
   create: CategoryCreateWithoutOptionsInput!
+}
+
+input CategoryUpsertWithWhereUniqueWithoutShopInput {
+  where: CategoryWhereUniqueInput!
+  update: CategoryUpdateWithoutShopDataInput!
+  create: CategoryCreateWithoutShopInput!
 }
 
 input CategoryWhereInput {
@@ -729,6 +818,7 @@ input CategoryWhereInput {
   options_every: OptionWhereInput
   options_some: OptionWhereInput
   options_none: OptionWhereInput
+  shop: ShopWhereInput
 }
 
 input CategoryWhereUniqueInput {
@@ -1096,87 +1186,87 @@ scalar Long
 type Mutation {
   createBrand(data: BrandCreateInput!): Brand!
   createCategory(data: CategoryCreateInput!): Category!
+  createAttribute(data: AttributeCreateInput!): Attribute!
   createOption(data: OptionCreateInput!): Option!
   createOptionValue(data: OptionValueCreateInput!): OptionValue!
   createSelectedOption(data: SelectedOptionCreateInput!): SelectedOption!
   createVariant(data: VariantCreateInput!): Variant!
-  createAttribute(data: AttributeCreateInput!): Attribute!
   createProduct(data: ProductCreateInput!): Product!
   createUser(data: UserCreateInput!): User!
   createFile(data: FileCreateInput!): File!
   createOrder(data: OrderCreateInput!): Order!
   createOrderLineItem(data: OrderLineItemCreateInput!): OrderLineItem!
-  createShopMetadata(data: ShopMetadataCreateInput!): ShopMetadata!
+  createShop(data: ShopCreateInput!): Shop!
   createOrderableProduct(data: OrderableProductCreateInput!): OrderableProduct!
   updateBrand(data: BrandUpdateInput!, where: BrandWhereUniqueInput!): Brand
   updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
+  updateAttribute(data: AttributeUpdateInput!, where: AttributeWhereUniqueInput!): Attribute
   updateOption(data: OptionUpdateInput!, where: OptionWhereUniqueInput!): Option
   updateOptionValue(data: OptionValueUpdateInput!, where: OptionValueWhereUniqueInput!): OptionValue
   updateSelectedOption(data: SelectedOptionUpdateInput!, where: SelectedOptionWhereUniqueInput!): SelectedOption
   updateVariant(data: VariantUpdateInput!, where: VariantWhereUniqueInput!): Variant
-  updateAttribute(data: AttributeUpdateInput!, where: AttributeWhereUniqueInput!): Attribute
   updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateFile(data: FileUpdateInput!, where: FileWhereUniqueInput!): File
   updateOrder(data: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order
   updateOrderLineItem(data: OrderLineItemUpdateInput!, where: OrderLineItemWhereUniqueInput!): OrderLineItem
-  updateShopMetadata(data: ShopMetadataUpdateInput!, where: ShopMetadataWhereUniqueInput!): ShopMetadata
+  updateShop(data: ShopUpdateInput!, where: ShopWhereUniqueInput!): Shop
   updateOrderableProduct(data: OrderableProductUpdateInput!, where: OrderableProductWhereUniqueInput!): OrderableProduct
   deleteBrand(where: BrandWhereUniqueInput!): Brand
   deleteCategory(where: CategoryWhereUniqueInput!): Category
+  deleteAttribute(where: AttributeWhereUniqueInput!): Attribute
   deleteOption(where: OptionWhereUniqueInput!): Option
   deleteOptionValue(where: OptionValueWhereUniqueInput!): OptionValue
   deleteSelectedOption(where: SelectedOptionWhereUniqueInput!): SelectedOption
   deleteVariant(where: VariantWhereUniqueInput!): Variant
-  deleteAttribute(where: AttributeWhereUniqueInput!): Attribute
   deleteProduct(where: ProductWhereUniqueInput!): Product
   deleteUser(where: UserWhereUniqueInput!): User
   deleteFile(where: FileWhereUniqueInput!): File
   deleteOrder(where: OrderWhereUniqueInput!): Order
   deleteOrderLineItem(where: OrderLineItemWhereUniqueInput!): OrderLineItem
-  deleteShopMetadata(where: ShopMetadataWhereUniqueInput!): ShopMetadata
+  deleteShop(where: ShopWhereUniqueInput!): Shop
   deleteOrderableProduct(where: OrderableProductWhereUniqueInput!): OrderableProduct
   upsertBrand(where: BrandWhereUniqueInput!, create: BrandCreateInput!, update: BrandUpdateInput!): Brand!
   upsertCategory(where: CategoryWhereUniqueInput!, create: CategoryCreateInput!, update: CategoryUpdateInput!): Category!
+  upsertAttribute(where: AttributeWhereUniqueInput!, create: AttributeCreateInput!, update: AttributeUpdateInput!): Attribute!
   upsertOption(where: OptionWhereUniqueInput!, create: OptionCreateInput!, update: OptionUpdateInput!): Option!
   upsertOptionValue(where: OptionValueWhereUniqueInput!, create: OptionValueCreateInput!, update: OptionValueUpdateInput!): OptionValue!
   upsertSelectedOption(where: SelectedOptionWhereUniqueInput!, create: SelectedOptionCreateInput!, update: SelectedOptionUpdateInput!): SelectedOption!
   upsertVariant(where: VariantWhereUniqueInput!, create: VariantCreateInput!, update: VariantUpdateInput!): Variant!
-  upsertAttribute(where: AttributeWhereUniqueInput!, create: AttributeCreateInput!, update: AttributeUpdateInput!): Attribute!
   upsertProduct(where: ProductWhereUniqueInput!, create: ProductCreateInput!, update: ProductUpdateInput!): Product!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertFile(where: FileWhereUniqueInput!, create: FileCreateInput!, update: FileUpdateInput!): File!
   upsertOrder(where: OrderWhereUniqueInput!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
   upsertOrderLineItem(where: OrderLineItemWhereUniqueInput!, create: OrderLineItemCreateInput!, update: OrderLineItemUpdateInput!): OrderLineItem!
-  upsertShopMetadata(where: ShopMetadataWhereUniqueInput!, create: ShopMetadataCreateInput!, update: ShopMetadataUpdateInput!): ShopMetadata!
+  upsertShop(where: ShopWhereUniqueInput!, create: ShopCreateInput!, update: ShopUpdateInput!): Shop!
   upsertOrderableProduct(where: OrderableProductWhereUniqueInput!, create: OrderableProductCreateInput!, update: OrderableProductUpdateInput!): OrderableProduct!
   updateManyBrands(data: BrandUpdateInput!, where: BrandWhereInput): BatchPayload!
   updateManyCategories(data: CategoryUpdateInput!, where: CategoryWhereInput): BatchPayload!
+  updateManyAttributes(data: AttributeUpdateInput!, where: AttributeWhereInput): BatchPayload!
   updateManyOptions(data: OptionUpdateInput!, where: OptionWhereInput): BatchPayload!
   updateManyOptionValues(data: OptionValueUpdateInput!, where: OptionValueWhereInput): BatchPayload!
   updateManySelectedOptions(data: SelectedOptionUpdateInput!, where: SelectedOptionWhereInput): BatchPayload!
   updateManyVariants(data: VariantUpdateInput!, where: VariantWhereInput): BatchPayload!
-  updateManyAttributes(data: AttributeUpdateInput!, where: AttributeWhereInput): BatchPayload!
   updateManyProducts(data: ProductUpdateInput!, where: ProductWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyFiles(data: FileUpdateInput!, where: FileWhereInput): BatchPayload!
   updateManyOrders(data: OrderUpdateInput!, where: OrderWhereInput): BatchPayload!
   updateManyOrderLineItems(data: OrderLineItemUpdateInput!, where: OrderLineItemWhereInput): BatchPayload!
-  updateManyShopMetadatas(data: ShopMetadataUpdateInput!, where: ShopMetadataWhereInput): BatchPayload!
+  updateManyShops(data: ShopUpdateInput!, where: ShopWhereInput): BatchPayload!
   updateManyOrderableProducts(data: OrderableProductUpdateInput!, where: OrderableProductWhereInput): BatchPayload!
   deleteManyBrands(where: BrandWhereInput): BatchPayload!
   deleteManyCategories(where: CategoryWhereInput): BatchPayload!
+  deleteManyAttributes(where: AttributeWhereInput): BatchPayload!
   deleteManyOptions(where: OptionWhereInput): BatchPayload!
   deleteManyOptionValues(where: OptionValueWhereInput): BatchPayload!
   deleteManySelectedOptions(where: SelectedOptionWhereInput): BatchPayload!
   deleteManyVariants(where: VariantWhereInput): BatchPayload!
-  deleteManyAttributes(where: AttributeWhereInput): BatchPayload!
   deleteManyProducts(where: ProductWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyFiles(where: FileWhereInput): BatchPayload!
   deleteManyOrders(where: OrderWhereInput): BatchPayload!
   deleteManyOrderLineItems(where: OrderLineItemWhereInput): BatchPayload!
-  deleteManyShopMetadatas(where: ShopMetadataWhereInput): BatchPayload!
+  deleteManyShops(where: ShopWhereInput): BatchPayload!
   deleteManyOrderableProducts(where: OrderableProductWhereInput): BatchPayload!
 }
 
@@ -1197,6 +1287,7 @@ type Option implements Node {
   name: String!
   values(where: OptionValueWhereInput, orderBy: OptionValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OptionValue!]
   category(where: CategoryWhereInput): Category!
+  shop(where: ShopWhereInput): Shop!
 }
 
 """A connection to a list of items."""
@@ -1213,6 +1304,7 @@ input OptionCreateInput {
   name: String!
   values: OptionValueCreateManyInput
   category: CategoryCreateOneWithoutOptionsInput!
+  shop: ShopCreateOneWithoutOptionsInput!
 }
 
 input OptionCreateManyInput {
@@ -1225,6 +1317,11 @@ input OptionCreateManyWithoutCategoryInput {
   connect: [OptionWhereUniqueInput!]
 }
 
+input OptionCreateManyWithoutShopInput {
+  create: [OptionCreateWithoutShopInput!]
+  connect: [OptionWhereUniqueInput!]
+}
+
 input OptionCreateOneInput {
   create: OptionCreateInput
   connect: OptionWhereUniqueInput
@@ -1233,6 +1330,13 @@ input OptionCreateOneInput {
 input OptionCreateWithoutCategoryInput {
   name: String!
   values: OptionValueCreateManyInput
+  shop: ShopCreateOneWithoutOptionsInput!
+}
+
+input OptionCreateWithoutShopInput {
+  name: String!
+  values: OptionValueCreateManyInput
+  category: CategoryCreateOneWithoutOptionsInput!
 }
 
 """An edge in a connection."""
@@ -1303,12 +1407,14 @@ input OptionUpdateDataInput {
   name: String
   values: OptionValueUpdateManyInput
   category: CategoryUpdateOneWithoutOptionsInput
+  shop: ShopUpdateOneWithoutOptionsInput
 }
 
 input OptionUpdateInput {
   name: String
   values: OptionValueUpdateManyInput
   category: CategoryUpdateOneWithoutOptionsInput
+  shop: ShopUpdateOneWithoutOptionsInput
 }
 
 input OptionUpdateManyInput {
@@ -1329,6 +1435,15 @@ input OptionUpdateManyWithoutCategoryInput {
   upsert: [OptionUpsertWithWhereUniqueWithoutCategoryInput!]
 }
 
+input OptionUpdateManyWithoutShopInput {
+  create: [OptionCreateWithoutShopInput!]
+  connect: [OptionWhereUniqueInput!]
+  disconnect: [OptionWhereUniqueInput!]
+  delete: [OptionWhereUniqueInput!]
+  update: [OptionUpdateWithWhereUniqueWithoutShopInput!]
+  upsert: [OptionUpsertWithWhereUniqueWithoutShopInput!]
+}
+
 input OptionUpdateOneInput {
   create: OptionCreateInput
   connect: OptionWhereUniqueInput
@@ -1340,6 +1455,13 @@ input OptionUpdateOneInput {
 input OptionUpdateWithoutCategoryDataInput {
   name: String
   values: OptionValueUpdateManyInput
+  shop: ShopUpdateOneWithoutOptionsInput
+}
+
+input OptionUpdateWithoutShopDataInput {
+  name: String
+  values: OptionValueUpdateManyInput
+  category: CategoryUpdateOneWithoutOptionsInput
 }
 
 input OptionUpdateWithWhereUniqueNestedInput {
@@ -1350,6 +1472,11 @@ input OptionUpdateWithWhereUniqueNestedInput {
 input OptionUpdateWithWhereUniqueWithoutCategoryInput {
   where: OptionWhereUniqueInput!
   data: OptionUpdateWithoutCategoryDataInput!
+}
+
+input OptionUpdateWithWhereUniqueWithoutShopInput {
+  where: OptionWhereUniqueInput!
+  data: OptionUpdateWithoutShopDataInput!
 }
 
 input OptionUpsertNestedInput {
@@ -1367,6 +1494,12 @@ input OptionUpsertWithWhereUniqueWithoutCategoryInput {
   where: OptionWhereUniqueInput!
   update: OptionUpdateWithoutCategoryDataInput!
   create: OptionCreateWithoutCategoryInput!
+}
+
+input OptionUpsertWithWhereUniqueWithoutShopInput {
+  where: OptionWhereUniqueInput!
+  update: OptionUpdateWithoutShopDataInput!
+  create: OptionCreateWithoutShopInput!
 }
 
 type OptionValue implements Node {
@@ -1691,6 +1824,7 @@ input OptionWhereInput {
   values_some: OptionValueWhereInput
   values_none: OptionValueWhereInput
   category: CategoryWhereInput
+  shop: ShopWhereInput
 }
 
 input OptionWhereUniqueInput {
@@ -1702,6 +1836,7 @@ type Order implements Node {
   createdAt: DateTime!
   updatedAt: DateTime!
   owner(where: UserWhereInput): User!
+  receiver(where: ShopWhereInput): Shop!
   lineItems(where: OrderLineItemWhereInput, orderBy: OrderLineItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderLineItem!]
   totalPrice: Float!
   totalRefunded: Float!
@@ -1713,8 +1848,8 @@ type OrderableProduct implements Node {
   id: ID!
   product(where: ProductWhereInput): Product!
   position: Int!
-  metadataBestSale(where: ShopMetadataWhereInput): ShopMetadata
-  metadataNewProduct(where: ShopMetadataWhereInput): ShopMetadata
+  shopBestSeller(where: ShopWhereInput): Shop
+  shopNewProduct(where: ShopWhereInput): Shop
 }
 
 """A connection to a list of items."""
@@ -1730,18 +1865,8 @@ type OrderableProductConnection {
 input OrderableProductCreateInput {
   position: Int!
   product: ProductCreateOneWithoutOrderablesInput!
-  metadataBestSale: ShopMetadataCreateOneWithoutBestSalesProductsInput
-  metadataNewProduct: ShopMetadataCreateOneWithoutNewProductsInput
-}
-
-input OrderableProductCreateManyWithoutMetadataBestSaleInput {
-  create: [OrderableProductCreateWithoutMetadataBestSaleInput!]
-  connect: [OrderableProductWhereUniqueInput!]
-}
-
-input OrderableProductCreateManyWithoutMetadataNewProductInput {
-  create: [OrderableProductCreateWithoutMetadataNewProductInput!]
-  connect: [OrderableProductWhereUniqueInput!]
+  shopBestSeller: ShopCreateOneWithoutBestSellerProductsInput
+  shopNewProduct: ShopCreateOneWithoutNewProductsInput
 }
 
 input OrderableProductCreateManyWithoutProductInput {
@@ -1749,22 +1874,32 @@ input OrderableProductCreateManyWithoutProductInput {
   connect: [OrderableProductWhereUniqueInput!]
 }
 
-input OrderableProductCreateWithoutMetadataBestSaleInput {
-  position: Int!
-  product: ProductCreateOneWithoutOrderablesInput!
-  metadataNewProduct: ShopMetadataCreateOneWithoutNewProductsInput
+input OrderableProductCreateManyWithoutShopBestSellerInput {
+  create: [OrderableProductCreateWithoutShopBestSellerInput!]
+  connect: [OrderableProductWhereUniqueInput!]
 }
 
-input OrderableProductCreateWithoutMetadataNewProductInput {
-  position: Int!
-  product: ProductCreateOneWithoutOrderablesInput!
-  metadataBestSale: ShopMetadataCreateOneWithoutBestSalesProductsInput
+input OrderableProductCreateManyWithoutShopNewProductInput {
+  create: [OrderableProductCreateWithoutShopNewProductInput!]
+  connect: [OrderableProductWhereUniqueInput!]
 }
 
 input OrderableProductCreateWithoutProductInput {
   position: Int!
-  metadataBestSale: ShopMetadataCreateOneWithoutBestSalesProductsInput
-  metadataNewProduct: ShopMetadataCreateOneWithoutNewProductsInput
+  shopBestSeller: ShopCreateOneWithoutBestSellerProductsInput
+  shopNewProduct: ShopCreateOneWithoutNewProductsInput
+}
+
+input OrderableProductCreateWithoutShopBestSellerInput {
+  position: Int!
+  product: ProductCreateOneWithoutOrderablesInput!
+  shopNewProduct: ShopCreateOneWithoutNewProductsInput
+}
+
+input OrderableProductCreateWithoutShopNewProductInput {
+  position: Int!
+  product: ProductCreateOneWithoutOrderablesInput!
+  shopBestSeller: ShopCreateOneWithoutBestSellerProductsInput
 }
 
 """An edge in a connection."""
@@ -1834,26 +1969,8 @@ input OrderableProductSubscriptionWhereInput {
 input OrderableProductUpdateInput {
   position: Int
   product: ProductUpdateOneWithoutOrderablesInput
-  metadataBestSale: ShopMetadataUpdateOneWithoutBestSalesProductsInput
-  metadataNewProduct: ShopMetadataUpdateOneWithoutNewProductsInput
-}
-
-input OrderableProductUpdateManyWithoutMetadataBestSaleInput {
-  create: [OrderableProductCreateWithoutMetadataBestSaleInput!]
-  connect: [OrderableProductWhereUniqueInput!]
-  disconnect: [OrderableProductWhereUniqueInput!]
-  delete: [OrderableProductWhereUniqueInput!]
-  update: [OrderableProductUpdateWithWhereUniqueWithoutMetadataBestSaleInput!]
-  upsert: [OrderableProductUpsertWithWhereUniqueWithoutMetadataBestSaleInput!]
-}
-
-input OrderableProductUpdateManyWithoutMetadataNewProductInput {
-  create: [OrderableProductCreateWithoutMetadataNewProductInput!]
-  connect: [OrderableProductWhereUniqueInput!]
-  disconnect: [OrderableProductWhereUniqueInput!]
-  delete: [OrderableProductWhereUniqueInput!]
-  update: [OrderableProductUpdateWithWhereUniqueWithoutMetadataNewProductInput!]
-  upsert: [OrderableProductUpsertWithWhereUniqueWithoutMetadataNewProductInput!]
+  shopBestSeller: ShopUpdateOneWithoutBestSellerProductsInput
+  shopNewProduct: ShopUpdateOneWithoutNewProductsInput
 }
 
 input OrderableProductUpdateManyWithoutProductInput {
@@ -1865,32 +1982,40 @@ input OrderableProductUpdateManyWithoutProductInput {
   upsert: [OrderableProductUpsertWithWhereUniqueWithoutProductInput!]
 }
 
-input OrderableProductUpdateWithoutMetadataBestSaleDataInput {
-  position: Int
-  product: ProductUpdateOneWithoutOrderablesInput
-  metadataNewProduct: ShopMetadataUpdateOneWithoutNewProductsInput
+input OrderableProductUpdateManyWithoutShopBestSellerInput {
+  create: [OrderableProductCreateWithoutShopBestSellerInput!]
+  connect: [OrderableProductWhereUniqueInput!]
+  disconnect: [OrderableProductWhereUniqueInput!]
+  delete: [OrderableProductWhereUniqueInput!]
+  update: [OrderableProductUpdateWithWhereUniqueWithoutShopBestSellerInput!]
+  upsert: [OrderableProductUpsertWithWhereUniqueWithoutShopBestSellerInput!]
 }
 
-input OrderableProductUpdateWithoutMetadataNewProductDataInput {
-  position: Int
-  product: ProductUpdateOneWithoutOrderablesInput
-  metadataBestSale: ShopMetadataUpdateOneWithoutBestSalesProductsInput
+input OrderableProductUpdateManyWithoutShopNewProductInput {
+  create: [OrderableProductCreateWithoutShopNewProductInput!]
+  connect: [OrderableProductWhereUniqueInput!]
+  disconnect: [OrderableProductWhereUniqueInput!]
+  delete: [OrderableProductWhereUniqueInput!]
+  update: [OrderableProductUpdateWithWhereUniqueWithoutShopNewProductInput!]
+  upsert: [OrderableProductUpsertWithWhereUniqueWithoutShopNewProductInput!]
 }
 
 input OrderableProductUpdateWithoutProductDataInput {
   position: Int
-  metadataBestSale: ShopMetadataUpdateOneWithoutBestSalesProductsInput
-  metadataNewProduct: ShopMetadataUpdateOneWithoutNewProductsInput
+  shopBestSeller: ShopUpdateOneWithoutBestSellerProductsInput
+  shopNewProduct: ShopUpdateOneWithoutNewProductsInput
 }
 
-input OrderableProductUpdateWithWhereUniqueWithoutMetadataBestSaleInput {
-  where: OrderableProductWhereUniqueInput!
-  data: OrderableProductUpdateWithoutMetadataBestSaleDataInput!
+input OrderableProductUpdateWithoutShopBestSellerDataInput {
+  position: Int
+  product: ProductUpdateOneWithoutOrderablesInput
+  shopNewProduct: ShopUpdateOneWithoutNewProductsInput
 }
 
-input OrderableProductUpdateWithWhereUniqueWithoutMetadataNewProductInput {
-  where: OrderableProductWhereUniqueInput!
-  data: OrderableProductUpdateWithoutMetadataNewProductDataInput!
+input OrderableProductUpdateWithoutShopNewProductDataInput {
+  position: Int
+  product: ProductUpdateOneWithoutOrderablesInput
+  shopBestSeller: ShopUpdateOneWithoutBestSellerProductsInput
 }
 
 input OrderableProductUpdateWithWhereUniqueWithoutProductInput {
@@ -1898,22 +2023,32 @@ input OrderableProductUpdateWithWhereUniqueWithoutProductInput {
   data: OrderableProductUpdateWithoutProductDataInput!
 }
 
-input OrderableProductUpsertWithWhereUniqueWithoutMetadataBestSaleInput {
+input OrderableProductUpdateWithWhereUniqueWithoutShopBestSellerInput {
   where: OrderableProductWhereUniqueInput!
-  update: OrderableProductUpdateWithoutMetadataBestSaleDataInput!
-  create: OrderableProductCreateWithoutMetadataBestSaleInput!
+  data: OrderableProductUpdateWithoutShopBestSellerDataInput!
 }
 
-input OrderableProductUpsertWithWhereUniqueWithoutMetadataNewProductInput {
+input OrderableProductUpdateWithWhereUniqueWithoutShopNewProductInput {
   where: OrderableProductWhereUniqueInput!
-  update: OrderableProductUpdateWithoutMetadataNewProductDataInput!
-  create: OrderableProductCreateWithoutMetadataNewProductInput!
+  data: OrderableProductUpdateWithoutShopNewProductDataInput!
 }
 
 input OrderableProductUpsertWithWhereUniqueWithoutProductInput {
   where: OrderableProductWhereUniqueInput!
   update: OrderableProductUpdateWithoutProductDataInput!
   create: OrderableProductCreateWithoutProductInput!
+}
+
+input OrderableProductUpsertWithWhereUniqueWithoutShopBestSellerInput {
+  where: OrderableProductWhereUniqueInput!
+  update: OrderableProductUpdateWithoutShopBestSellerDataInput!
+  create: OrderableProductCreateWithoutShopBestSellerInput!
+}
+
+input OrderableProductUpsertWithWhereUniqueWithoutShopNewProductInput {
+  where: OrderableProductWhereUniqueInput!
+  update: OrderableProductUpdateWithoutShopNewProductDataInput!
+  create: OrderableProductCreateWithoutShopNewProductInput!
 }
 
 input OrderableProductWhereInput {
@@ -1988,8 +2123,8 @@ input OrderableProductWhereInput {
   """All values greater than or equal the given value."""
   position_gte: Int
   product: ProductWhereInput
-  metadataBestSale: ShopMetadataWhereInput
-  metadataNewProduct: ShopMetadataWhereInput
+  shopBestSeller: ShopWhereInput
+  shopNewProduct: ShopWhereInput
 }
 
 input OrderableProductWhereUniqueInput {
@@ -2012,6 +2147,7 @@ input OrderCreateInput {
   totalTax: Float!
   orderStatus: OrderStatus!
   owner: UserCreateOneWithoutOrdersInput!
+  receiver: ShopCreateOneWithoutOrdersInput!
   lineItems: OrderLineItemCreateManyInput
 }
 
@@ -2020,11 +2156,26 @@ input OrderCreateManyWithoutOwnerInput {
   connect: [OrderWhereUniqueInput!]
 }
 
+input OrderCreateManyWithoutReceiverInput {
+  create: [OrderCreateWithoutReceiverInput!]
+  connect: [OrderWhereUniqueInput!]
+}
+
 input OrderCreateWithoutOwnerInput {
   totalPrice: Float!
   totalRefunded: Float!
   totalTax: Float!
   orderStatus: OrderStatus!
+  receiver: ShopCreateOneWithoutOrdersInput!
+  lineItems: OrderLineItemCreateManyInput
+}
+
+input OrderCreateWithoutReceiverInput {
+  totalPrice: Float!
+  totalRefunded: Float!
+  totalTax: Float!
+  orderStatus: OrderStatus!
+  owner: UserCreateOneWithoutOrdersInput!
   lineItems: OrderLineItemCreateManyInput
 }
 
@@ -2385,6 +2536,7 @@ input OrderUpdateInput {
   totalTax: Float
   orderStatus: OrderStatus
   owner: UserUpdateOneWithoutOrdersInput
+  receiver: ShopUpdateOneWithoutOrdersInput
   lineItems: OrderLineItemUpdateManyInput
 }
 
@@ -2397,11 +2549,30 @@ input OrderUpdateManyWithoutOwnerInput {
   upsert: [OrderUpsertWithWhereUniqueWithoutOwnerInput!]
 }
 
+input OrderUpdateManyWithoutReceiverInput {
+  create: [OrderCreateWithoutReceiverInput!]
+  connect: [OrderWhereUniqueInput!]
+  disconnect: [OrderWhereUniqueInput!]
+  delete: [OrderWhereUniqueInput!]
+  update: [OrderUpdateWithWhereUniqueWithoutReceiverInput!]
+  upsert: [OrderUpsertWithWhereUniqueWithoutReceiverInput!]
+}
+
 input OrderUpdateWithoutOwnerDataInput {
   totalPrice: Float
   totalRefunded: Float
   totalTax: Float
   orderStatus: OrderStatus
+  receiver: ShopUpdateOneWithoutOrdersInput
+  lineItems: OrderLineItemUpdateManyInput
+}
+
+input OrderUpdateWithoutReceiverDataInput {
+  totalPrice: Float
+  totalRefunded: Float
+  totalTax: Float
+  orderStatus: OrderStatus
+  owner: UserUpdateOneWithoutOrdersInput
   lineItems: OrderLineItemUpdateManyInput
 }
 
@@ -2410,10 +2581,21 @@ input OrderUpdateWithWhereUniqueWithoutOwnerInput {
   data: OrderUpdateWithoutOwnerDataInput!
 }
 
+input OrderUpdateWithWhereUniqueWithoutReceiverInput {
+  where: OrderWhereUniqueInput!
+  data: OrderUpdateWithoutReceiverDataInput!
+}
+
 input OrderUpsertWithWhereUniqueWithoutOwnerInput {
   where: OrderWhereUniqueInput!
   update: OrderUpdateWithoutOwnerDataInput!
   create: OrderCreateWithoutOwnerInput!
+}
+
+input OrderUpsertWithWhereUniqueWithoutReceiverInput {
+  where: OrderWhereUniqueInput!
+  update: OrderUpdateWithoutReceiverDataInput!
+  create: OrderCreateWithoutReceiverInput!
 }
 
 input OrderWhereInput {
@@ -2586,6 +2768,7 @@ input OrderWhereInput {
   """All values that are not contained in given list."""
   orderStatus_not_in: [OrderStatus!]
   owner: UserWhereInput
+  receiver: ShopWhereInput
   lineItems_every: OrderLineItemWhereInput
   lineItems_some: OrderLineItemWhereInput
   lineItems_none: OrderLineItemWhereInput
@@ -2613,6 +2796,7 @@ type PageInfo {
 type Product implements Node {
   id: ID!
   deletedAt: DateTime
+  shop(where: ShopWhereInput): Shop!
   name: String!
   description: String
   brand(where: BrandWhereInput): Brand!
@@ -2646,6 +2830,7 @@ input ProductCreateInput {
   displayPrice: Float!
   available: Boolean!
   imageUrl: String
+  shop: ShopCreateOneWithoutProductsInput!
   brand: BrandCreateOneInput!
   category: CategoryCreateOneInput!
   options: OptionCreateManyInput
@@ -2657,6 +2842,11 @@ input ProductCreateInput {
 
 input ProductCreateManyWithoutAttributesInput {
   create: [ProductCreateWithoutAttributesInput!]
+  connect: [ProductWhereUniqueInput!]
+}
+
+input ProductCreateManyWithoutShopInput {
+  create: [ProductCreateWithoutShopInput!]
   connect: [ProductWhereUniqueInput!]
 }
 
@@ -2678,6 +2868,7 @@ input ProductCreateWithoutAttributesInput {
   displayPrice: Float!
   available: Boolean!
   imageUrl: String
+  shop: ShopCreateOneWithoutProductsInput!
   brand: BrandCreateOneInput!
   category: CategoryCreateOneInput!
   options: OptionCreateManyInput
@@ -2694,12 +2885,30 @@ input ProductCreateWithoutOrderablesInput {
   displayPrice: Float!
   available: Boolean!
   imageUrl: String
+  shop: ShopCreateOneWithoutProductsInput!
   brand: BrandCreateOneInput!
   category: CategoryCreateOneInput!
   options: OptionCreateManyInput
   unavailableOptionsValues: OptionValueCreateManyInput
   variants: VariantCreateManyWithoutProductInput
   attributes: AttributeCreateManyWithoutProductsInput
+}
+
+input ProductCreateWithoutShopInput {
+  deletedAt: DateTime
+  name: String!
+  description: String
+  SKU: String
+  displayPrice: Float!
+  available: Boolean!
+  imageUrl: String
+  brand: BrandCreateOneInput!
+  category: CategoryCreateOneInput!
+  options: OptionCreateManyInput
+  unavailableOptionsValues: OptionValueCreateManyInput
+  variants: VariantCreateManyWithoutProductInput
+  attributes: AttributeCreateManyWithoutProductsInput
+  orderables: OrderableProductCreateManyWithoutProductInput
 }
 
 input ProductCreateWithoutVariantsInput {
@@ -2710,6 +2919,7 @@ input ProductCreateWithoutVariantsInput {
   displayPrice: Float!
   available: Boolean!
   imageUrl: String
+  shop: ShopCreateOneWithoutProductsInput!
   brand: BrandCreateOneInput!
   category: CategoryCreateOneInput!
   options: OptionCreateManyInput
@@ -2808,6 +3018,7 @@ input ProductUpdateInput {
   displayPrice: Float
   available: Boolean
   imageUrl: String
+  shop: ShopUpdateOneWithoutProductsInput
   brand: BrandUpdateOneInput
   category: CategoryUpdateOneInput
   options: OptionUpdateManyInput
@@ -2824,6 +3035,15 @@ input ProductUpdateManyWithoutAttributesInput {
   delete: [ProductWhereUniqueInput!]
   update: [ProductUpdateWithWhereUniqueWithoutAttributesInput!]
   upsert: [ProductUpsertWithWhereUniqueWithoutAttributesInput!]
+}
+
+input ProductUpdateManyWithoutShopInput {
+  create: [ProductCreateWithoutShopInput!]
+  connect: [ProductWhereUniqueInput!]
+  disconnect: [ProductWhereUniqueInput!]
+  delete: [ProductWhereUniqueInput!]
+  update: [ProductUpdateWithWhereUniqueWithoutShopInput!]
+  upsert: [ProductUpsertWithWhereUniqueWithoutShopInput!]
 }
 
 input ProductUpdateOneWithoutOrderablesInput {
@@ -2851,6 +3071,7 @@ input ProductUpdateWithoutAttributesDataInput {
   displayPrice: Float
   available: Boolean
   imageUrl: String
+  shop: ShopUpdateOneWithoutProductsInput
   brand: BrandUpdateOneInput
   category: CategoryUpdateOneInput
   options: OptionUpdateManyInput
@@ -2867,6 +3088,7 @@ input ProductUpdateWithoutOrderablesDataInput {
   displayPrice: Float
   available: Boolean
   imageUrl: String
+  shop: ShopUpdateOneWithoutProductsInput
   brand: BrandUpdateOneInput
   category: CategoryUpdateOneInput
   options: OptionUpdateManyInput
@@ -2875,7 +3097,7 @@ input ProductUpdateWithoutOrderablesDataInput {
   attributes: AttributeUpdateManyWithoutProductsInput
 }
 
-input ProductUpdateWithoutVariantsDataInput {
+input ProductUpdateWithoutShopDataInput {
   deletedAt: DateTime
   name: String
   description: String
@@ -2887,6 +3109,24 @@ input ProductUpdateWithoutVariantsDataInput {
   category: CategoryUpdateOneInput
   options: OptionUpdateManyInput
   unavailableOptionsValues: OptionValueUpdateManyInput
+  variants: VariantUpdateManyWithoutProductInput
+  attributes: AttributeUpdateManyWithoutProductsInput
+  orderables: OrderableProductUpdateManyWithoutProductInput
+}
+
+input ProductUpdateWithoutVariantsDataInput {
+  deletedAt: DateTime
+  name: String
+  description: String
+  SKU: String
+  displayPrice: Float
+  available: Boolean
+  imageUrl: String
+  shop: ShopUpdateOneWithoutProductsInput
+  brand: BrandUpdateOneInput
+  category: CategoryUpdateOneInput
+  options: OptionUpdateManyInput
+  unavailableOptionsValues: OptionValueUpdateManyInput
   attributes: AttributeUpdateManyWithoutProductsInput
   orderables: OrderableProductUpdateManyWithoutProductInput
 }
@@ -2894,6 +3134,11 @@ input ProductUpdateWithoutVariantsDataInput {
 input ProductUpdateWithWhereUniqueWithoutAttributesInput {
   where: ProductWhereUniqueInput!
   data: ProductUpdateWithoutAttributesDataInput!
+}
+
+input ProductUpdateWithWhereUniqueWithoutShopInput {
+  where: ProductWhereUniqueInput!
+  data: ProductUpdateWithoutShopDataInput!
 }
 
 input ProductUpsertWithoutOrderablesInput {
@@ -2910,6 +3155,12 @@ input ProductUpsertWithWhereUniqueWithoutAttributesInput {
   where: ProductWhereUniqueInput!
   update: ProductUpdateWithoutAttributesDataInput!
   create: ProductCreateWithoutAttributesInput!
+}
+
+input ProductUpsertWithWhereUniqueWithoutShopInput {
+  where: ProductWhereUniqueInput!
+  update: ProductUpdateWithoutShopDataInput!
+  create: ProductCreateWithoutShopInput!
 }
 
 input ProductWhereInput {
@@ -3169,6 +3420,7 @@ input ProductWhereInput {
 
   """All values not ending with the given string."""
   imageUrl_not_ends_with: String
+  shop: ShopWhereInput
   brand: BrandWhereInput
   category: CategoryWhereInput
   options_every: OptionWhereInput
@@ -3195,45 +3447,45 @@ input ProductWhereUniqueInput {
 type Query {
   brands(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Brand]!
   categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
+  attributes(where: AttributeWhereInput, orderBy: AttributeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attribute]!
   options(where: OptionWhereInput, orderBy: OptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Option]!
   optionValues(where: OptionValueWhereInput, orderBy: OptionValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OptionValue]!
   selectedOptions(where: SelectedOptionWhereInput, orderBy: SelectedOptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SelectedOption]!
   variants(where: VariantWhereInput, orderBy: VariantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Variant]!
-  attributes(where: AttributeWhereInput, orderBy: AttributeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attribute]!
   products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   files(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [File]!
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
   orderLineItems(where: OrderLineItemWhereInput, orderBy: OrderLineItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderLineItem]!
-  shopMetadatas(where: ShopMetadataWhereInput, orderBy: ShopMetadataOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ShopMetadata]!
+  shops(where: ShopWhereInput, orderBy: ShopOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Shop]!
   orderableProducts(where: OrderableProductWhereInput, orderBy: OrderableProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderableProduct]!
   brand(where: BrandWhereUniqueInput!): Brand
   category(where: CategoryWhereUniqueInput!): Category
+  attribute(where: AttributeWhereUniqueInput!): Attribute
   option(where: OptionWhereUniqueInput!): Option
   optionValue(where: OptionValueWhereUniqueInput!): OptionValue
   selectedOption(where: SelectedOptionWhereUniqueInput!): SelectedOption
   variant(where: VariantWhereUniqueInput!): Variant
-  attribute(where: AttributeWhereUniqueInput!): Attribute
   product(where: ProductWhereUniqueInput!): Product
   user(where: UserWhereUniqueInput!): User
   file(where: FileWhereUniqueInput!): File
   order(where: OrderWhereUniqueInput!): Order
   orderLineItem(where: OrderLineItemWhereUniqueInput!): OrderLineItem
-  shopMetadata(where: ShopMetadataWhereUniqueInput!): ShopMetadata
+  shop(where: ShopWhereUniqueInput!): Shop
   orderableProduct(where: OrderableProductWhereUniqueInput!): OrderableProduct
   brandsConnection(where: BrandWhereInput, orderBy: BrandOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BrandConnection!
   categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
+  attributesConnection(where: AttributeWhereInput, orderBy: AttributeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AttributeConnection!
   optionsConnection(where: OptionWhereInput, orderBy: OptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OptionConnection!
   optionValuesConnection(where: OptionValueWhereInput, orderBy: OptionValueOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OptionValueConnection!
   selectedOptionsConnection(where: SelectedOptionWhereInput, orderBy: SelectedOptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SelectedOptionConnection!
   variantsConnection(where: VariantWhereInput, orderBy: VariantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VariantConnection!
-  attributesConnection(where: AttributeWhereInput, orderBy: AttributeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AttributeConnection!
   productsConnection(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   filesConnection(where: FileWhereInput, orderBy: FileOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): FileConnection!
   ordersConnection(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection!
   orderLineItemsConnection(where: OrderLineItemWhereInput, orderBy: OrderLineItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderLineItemConnection!
-  shopMetadatasConnection(where: ShopMetadataWhereInput, orderBy: ShopMetadataOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ShopMetadataConnection!
+  shopsConnection(where: ShopWhereInput, orderBy: ShopOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ShopConnection!
   orderableProductsConnection(where: OrderableProductWhereInput, orderBy: OrderableProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderableProductConnection!
 
   """Fetches an object given its ID"""
@@ -3461,61 +3713,172 @@ input SelectedOptionWhereUniqueInput {
   id: ID
 }
 
-type ShopMetadata implements Node {
+type Shop implements Node {
   id: ID!
-  bestSalesProducts(where: OrderableProductWhereInput, orderBy: OrderableProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderableProduct!]
-  newProducts(where: OrderableProductWhereInput, orderBy: OrderableProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderableProduct!]
+  name: String!
   MOTD: String
+  products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product!]
+  newProducts(where: OrderableProductWhereInput, orderBy: OrderableProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderableProduct!]
+  bestSellerProducts(where: OrderableProductWhereInput, orderBy: OrderableProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderableProduct!]
+  options(where: OptionWhereInput, orderBy: OptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Option!]
+  categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category!]
+  attributes(where: AttributeWhereInput, orderBy: AttributeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attribute!]
+  orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order!]
 }
 
 """A connection to a list of items."""
-type ShopMetadataConnection {
+type ShopConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [ShopMetadataEdge]!
-  aggregate: AggregateShopMetadata!
+  edges: [ShopEdge]!
+  aggregate: AggregateShop!
 }
 
-input ShopMetadataCreateInput {
+input ShopCreateInput {
+  name: String!
   MOTD: String
-  bestSalesProducts: OrderableProductCreateManyWithoutMetadataBestSaleInput
-  newProducts: OrderableProductCreateManyWithoutMetadataNewProductInput
+  products: ProductCreateManyWithoutShopInput
+  newProducts: OrderableProductCreateManyWithoutShopNewProductInput
+  bestSellerProducts: OrderableProductCreateManyWithoutShopBestSellerInput
+  options: OptionCreateManyWithoutShopInput
+  categories: CategoryCreateManyWithoutShopInput
+  attributes: AttributeCreateManyWithoutShopInput
+  orders: OrderCreateManyWithoutReceiverInput
 }
 
-input ShopMetadataCreateOneWithoutBestSalesProductsInput {
-  create: ShopMetadataCreateWithoutBestSalesProductsInput
-  connect: ShopMetadataWhereUniqueInput
+input ShopCreateOneInput {
+  create: ShopCreateInput
+  connect: ShopWhereUniqueInput
 }
 
-input ShopMetadataCreateOneWithoutNewProductsInput {
-  create: ShopMetadataCreateWithoutNewProductsInput
-  connect: ShopMetadataWhereUniqueInput
+input ShopCreateOneWithoutAttributesInput {
+  create: ShopCreateWithoutAttributesInput
+  connect: ShopWhereUniqueInput
 }
 
-input ShopMetadataCreateWithoutBestSalesProductsInput {
+input ShopCreateOneWithoutBestSellerProductsInput {
+  create: ShopCreateWithoutBestSellerProductsInput
+  connect: ShopWhereUniqueInput
+}
+
+input ShopCreateOneWithoutCategoriesInput {
+  create: ShopCreateWithoutCategoriesInput
+  connect: ShopWhereUniqueInput
+}
+
+input ShopCreateOneWithoutNewProductsInput {
+  create: ShopCreateWithoutNewProductsInput
+  connect: ShopWhereUniqueInput
+}
+
+input ShopCreateOneWithoutOptionsInput {
+  create: ShopCreateWithoutOptionsInput
+  connect: ShopWhereUniqueInput
+}
+
+input ShopCreateOneWithoutOrdersInput {
+  create: ShopCreateWithoutOrdersInput
+  connect: ShopWhereUniqueInput
+}
+
+input ShopCreateOneWithoutProductsInput {
+  create: ShopCreateWithoutProductsInput
+  connect: ShopWhereUniqueInput
+}
+
+input ShopCreateWithoutAttributesInput {
+  name: String!
   MOTD: String
-  newProducts: OrderableProductCreateManyWithoutMetadataNewProductInput
+  products: ProductCreateManyWithoutShopInput
+  newProducts: OrderableProductCreateManyWithoutShopNewProductInput
+  bestSellerProducts: OrderableProductCreateManyWithoutShopBestSellerInput
+  options: OptionCreateManyWithoutShopInput
+  categories: CategoryCreateManyWithoutShopInput
+  orders: OrderCreateManyWithoutReceiverInput
 }
 
-input ShopMetadataCreateWithoutNewProductsInput {
+input ShopCreateWithoutBestSellerProductsInput {
+  name: String!
   MOTD: String
-  bestSalesProducts: OrderableProductCreateManyWithoutMetadataBestSaleInput
+  products: ProductCreateManyWithoutShopInput
+  newProducts: OrderableProductCreateManyWithoutShopNewProductInput
+  options: OptionCreateManyWithoutShopInput
+  categories: CategoryCreateManyWithoutShopInput
+  attributes: AttributeCreateManyWithoutShopInput
+  orders: OrderCreateManyWithoutReceiverInput
+}
+
+input ShopCreateWithoutCategoriesInput {
+  name: String!
+  MOTD: String
+  products: ProductCreateManyWithoutShopInput
+  newProducts: OrderableProductCreateManyWithoutShopNewProductInput
+  bestSellerProducts: OrderableProductCreateManyWithoutShopBestSellerInput
+  options: OptionCreateManyWithoutShopInput
+  attributes: AttributeCreateManyWithoutShopInput
+  orders: OrderCreateManyWithoutReceiverInput
+}
+
+input ShopCreateWithoutNewProductsInput {
+  name: String!
+  MOTD: String
+  products: ProductCreateManyWithoutShopInput
+  bestSellerProducts: OrderableProductCreateManyWithoutShopBestSellerInput
+  options: OptionCreateManyWithoutShopInput
+  categories: CategoryCreateManyWithoutShopInput
+  attributes: AttributeCreateManyWithoutShopInput
+  orders: OrderCreateManyWithoutReceiverInput
+}
+
+input ShopCreateWithoutOptionsInput {
+  name: String!
+  MOTD: String
+  products: ProductCreateManyWithoutShopInput
+  newProducts: OrderableProductCreateManyWithoutShopNewProductInput
+  bestSellerProducts: OrderableProductCreateManyWithoutShopBestSellerInput
+  categories: CategoryCreateManyWithoutShopInput
+  attributes: AttributeCreateManyWithoutShopInput
+  orders: OrderCreateManyWithoutReceiverInput
+}
+
+input ShopCreateWithoutOrdersInput {
+  name: String!
+  MOTD: String
+  products: ProductCreateManyWithoutShopInput
+  newProducts: OrderableProductCreateManyWithoutShopNewProductInput
+  bestSellerProducts: OrderableProductCreateManyWithoutShopBestSellerInput
+  options: OptionCreateManyWithoutShopInput
+  categories: CategoryCreateManyWithoutShopInput
+  attributes: AttributeCreateManyWithoutShopInput
+}
+
+input ShopCreateWithoutProductsInput {
+  name: String!
+  MOTD: String
+  newProducts: OrderableProductCreateManyWithoutShopNewProductInput
+  bestSellerProducts: OrderableProductCreateManyWithoutShopBestSellerInput
+  options: OptionCreateManyWithoutShopInput
+  categories: CategoryCreateManyWithoutShopInput
+  attributes: AttributeCreateManyWithoutShopInput
+  orders: OrderCreateManyWithoutReceiverInput
 }
 
 """An edge in a connection."""
-type ShopMetadataEdge {
+type ShopEdge {
   """The item at the end of the edge."""
-  node: ShopMetadata!
+  node: Shop!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum ShopMetadataOrderByInput {
+enum ShopOrderByInput {
   id_ASC
   id_DESC
+  name_ASC
+  name_DESC
   MOTD_ASC
   MOTD_DESC
   updatedAt_ASC
@@ -3524,27 +3887,28 @@ enum ShopMetadataOrderByInput {
   createdAt_DESC
 }
 
-type ShopMetadataPreviousValues {
+type ShopPreviousValues {
   id: ID!
+  name: String!
   MOTD: String
 }
 
-type ShopMetadataSubscriptionPayload {
+type ShopSubscriptionPayload {
   mutation: MutationType!
-  node: ShopMetadata
+  node: Shop
   updatedFields: [String!]
-  previousValues: ShopMetadataPreviousValues
+  previousValues: ShopPreviousValues
 }
 
-input ShopMetadataSubscriptionWhereInput {
+input ShopSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [ShopMetadataSubscriptionWhereInput!]
+  AND: [ShopSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [ShopMetadataSubscriptionWhereInput!]
+  OR: [ShopSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [ShopMetadataSubscriptionWhereInput!]
+  NOT: [ShopSubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -3565,62 +3929,225 @@ input ShopMetadataSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: ShopMetadataWhereInput
+  node: ShopWhereInput
 }
 
-input ShopMetadataUpdateInput {
+input ShopUpdateDataInput {
+  name: String
   MOTD: String
-  bestSalesProducts: OrderableProductUpdateManyWithoutMetadataBestSaleInput
-  newProducts: OrderableProductUpdateManyWithoutMetadataNewProductInput
+  products: ProductUpdateManyWithoutShopInput
+  newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
+  bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
+  options: OptionUpdateManyWithoutShopInput
+  categories: CategoryUpdateManyWithoutShopInput
+  attributes: AttributeUpdateManyWithoutShopInput
+  orders: OrderUpdateManyWithoutReceiverInput
 }
 
-input ShopMetadataUpdateOneWithoutBestSalesProductsInput {
-  create: ShopMetadataCreateWithoutBestSalesProductsInput
-  connect: ShopMetadataWhereUniqueInput
+input ShopUpdateInput {
+  name: String
+  MOTD: String
+  products: ProductUpdateManyWithoutShopInput
+  newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
+  bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
+  options: OptionUpdateManyWithoutShopInput
+  categories: CategoryUpdateManyWithoutShopInput
+  attributes: AttributeUpdateManyWithoutShopInput
+  orders: OrderUpdateManyWithoutReceiverInput
+}
+
+input ShopUpdateOneInput {
+  create: ShopCreateInput
+  connect: ShopWhereUniqueInput
+  delete: Boolean
+  update: ShopUpdateDataInput
+  upsert: ShopUpsertNestedInput
+}
+
+input ShopUpdateOneWithoutAttributesInput {
+  create: ShopCreateWithoutAttributesInput
+  connect: ShopWhereUniqueInput
+  delete: Boolean
+  update: ShopUpdateWithoutAttributesDataInput
+  upsert: ShopUpsertWithoutAttributesInput
+}
+
+input ShopUpdateOneWithoutBestSellerProductsInput {
+  create: ShopCreateWithoutBestSellerProductsInput
+  connect: ShopWhereUniqueInput
   disconnect: Boolean
   delete: Boolean
-  update: ShopMetadataUpdateWithoutBestSalesProductsDataInput
-  upsert: ShopMetadataUpsertWithoutBestSalesProductsInput
+  update: ShopUpdateWithoutBestSellerProductsDataInput
+  upsert: ShopUpsertWithoutBestSellerProductsInput
 }
 
-input ShopMetadataUpdateOneWithoutNewProductsInput {
-  create: ShopMetadataCreateWithoutNewProductsInput
-  connect: ShopMetadataWhereUniqueInput
+input ShopUpdateOneWithoutCategoriesInput {
+  create: ShopCreateWithoutCategoriesInput
+  connect: ShopWhereUniqueInput
+  delete: Boolean
+  update: ShopUpdateWithoutCategoriesDataInput
+  upsert: ShopUpsertWithoutCategoriesInput
+}
+
+input ShopUpdateOneWithoutNewProductsInput {
+  create: ShopCreateWithoutNewProductsInput
+  connect: ShopWhereUniqueInput
   disconnect: Boolean
   delete: Boolean
-  update: ShopMetadataUpdateWithoutNewProductsDataInput
-  upsert: ShopMetadataUpsertWithoutNewProductsInput
+  update: ShopUpdateWithoutNewProductsDataInput
+  upsert: ShopUpsertWithoutNewProductsInput
 }
 
-input ShopMetadataUpdateWithoutBestSalesProductsDataInput {
+input ShopUpdateOneWithoutOptionsInput {
+  create: ShopCreateWithoutOptionsInput
+  connect: ShopWhereUniqueInput
+  delete: Boolean
+  update: ShopUpdateWithoutOptionsDataInput
+  upsert: ShopUpsertWithoutOptionsInput
+}
+
+input ShopUpdateOneWithoutOrdersInput {
+  create: ShopCreateWithoutOrdersInput
+  connect: ShopWhereUniqueInput
+  delete: Boolean
+  update: ShopUpdateWithoutOrdersDataInput
+  upsert: ShopUpsertWithoutOrdersInput
+}
+
+input ShopUpdateOneWithoutProductsInput {
+  create: ShopCreateWithoutProductsInput
+  connect: ShopWhereUniqueInput
+  delete: Boolean
+  update: ShopUpdateWithoutProductsDataInput
+  upsert: ShopUpsertWithoutProductsInput
+}
+
+input ShopUpdateWithoutAttributesDataInput {
+  name: String
   MOTD: String
-  newProducts: OrderableProductUpdateManyWithoutMetadataNewProductInput
+  products: ProductUpdateManyWithoutShopInput
+  newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
+  bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
+  options: OptionUpdateManyWithoutShopInput
+  categories: CategoryUpdateManyWithoutShopInput
+  orders: OrderUpdateManyWithoutReceiverInput
 }
 
-input ShopMetadataUpdateWithoutNewProductsDataInput {
+input ShopUpdateWithoutBestSellerProductsDataInput {
+  name: String
   MOTD: String
-  bestSalesProducts: OrderableProductUpdateManyWithoutMetadataBestSaleInput
+  products: ProductUpdateManyWithoutShopInput
+  newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
+  options: OptionUpdateManyWithoutShopInput
+  categories: CategoryUpdateManyWithoutShopInput
+  attributes: AttributeUpdateManyWithoutShopInput
+  orders: OrderUpdateManyWithoutReceiverInput
 }
 
-input ShopMetadataUpsertWithoutBestSalesProductsInput {
-  update: ShopMetadataUpdateWithoutBestSalesProductsDataInput!
-  create: ShopMetadataCreateWithoutBestSalesProductsInput!
+input ShopUpdateWithoutCategoriesDataInput {
+  name: String
+  MOTD: String
+  products: ProductUpdateManyWithoutShopInput
+  newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
+  bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
+  options: OptionUpdateManyWithoutShopInput
+  attributes: AttributeUpdateManyWithoutShopInput
+  orders: OrderUpdateManyWithoutReceiverInput
 }
 
-input ShopMetadataUpsertWithoutNewProductsInput {
-  update: ShopMetadataUpdateWithoutNewProductsDataInput!
-  create: ShopMetadataCreateWithoutNewProductsInput!
+input ShopUpdateWithoutNewProductsDataInput {
+  name: String
+  MOTD: String
+  products: ProductUpdateManyWithoutShopInput
+  bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
+  options: OptionUpdateManyWithoutShopInput
+  categories: CategoryUpdateManyWithoutShopInput
+  attributes: AttributeUpdateManyWithoutShopInput
+  orders: OrderUpdateManyWithoutReceiverInput
 }
 
-input ShopMetadataWhereInput {
+input ShopUpdateWithoutOptionsDataInput {
+  name: String
+  MOTD: String
+  products: ProductUpdateManyWithoutShopInput
+  newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
+  bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
+  categories: CategoryUpdateManyWithoutShopInput
+  attributes: AttributeUpdateManyWithoutShopInput
+  orders: OrderUpdateManyWithoutReceiverInput
+}
+
+input ShopUpdateWithoutOrdersDataInput {
+  name: String
+  MOTD: String
+  products: ProductUpdateManyWithoutShopInput
+  newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
+  bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
+  options: OptionUpdateManyWithoutShopInput
+  categories: CategoryUpdateManyWithoutShopInput
+  attributes: AttributeUpdateManyWithoutShopInput
+}
+
+input ShopUpdateWithoutProductsDataInput {
+  name: String
+  MOTD: String
+  newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
+  bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
+  options: OptionUpdateManyWithoutShopInput
+  categories: CategoryUpdateManyWithoutShopInput
+  attributes: AttributeUpdateManyWithoutShopInput
+  orders: OrderUpdateManyWithoutReceiverInput
+}
+
+input ShopUpsertNestedInput {
+  update: ShopUpdateDataInput!
+  create: ShopCreateInput!
+}
+
+input ShopUpsertWithoutAttributesInput {
+  update: ShopUpdateWithoutAttributesDataInput!
+  create: ShopCreateWithoutAttributesInput!
+}
+
+input ShopUpsertWithoutBestSellerProductsInput {
+  update: ShopUpdateWithoutBestSellerProductsDataInput!
+  create: ShopCreateWithoutBestSellerProductsInput!
+}
+
+input ShopUpsertWithoutCategoriesInput {
+  update: ShopUpdateWithoutCategoriesDataInput!
+  create: ShopCreateWithoutCategoriesInput!
+}
+
+input ShopUpsertWithoutNewProductsInput {
+  update: ShopUpdateWithoutNewProductsDataInput!
+  create: ShopCreateWithoutNewProductsInput!
+}
+
+input ShopUpsertWithoutOptionsInput {
+  update: ShopUpdateWithoutOptionsDataInput!
+  create: ShopCreateWithoutOptionsInput!
+}
+
+input ShopUpsertWithoutOrdersInput {
+  update: ShopUpdateWithoutOrdersDataInput!
+  create: ShopCreateWithoutOrdersInput!
+}
+
+input ShopUpsertWithoutProductsInput {
+  update: ShopUpdateWithoutProductsDataInput!
+  create: ShopCreateWithoutProductsInput!
+}
+
+input ShopWhereInput {
   """Logical AND on all given filters."""
-  AND: [ShopMetadataWhereInput!]
+  AND: [ShopWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [ShopMetadataWhereInput!]
+  OR: [ShopWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [ShopMetadataWhereInput!]
+  NOT: [ShopWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -3661,6 +4188,46 @@ input ShopMetadataWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
   MOTD: String
 
   """All values that are not equal to given value."""
@@ -3701,32 +4268,47 @@ input ShopMetadataWhereInput {
 
   """All values not ending with the given string."""
   MOTD_not_ends_with: String
-  bestSalesProducts_every: OrderableProductWhereInput
-  bestSalesProducts_some: OrderableProductWhereInput
-  bestSalesProducts_none: OrderableProductWhereInput
+  products_every: ProductWhereInput
+  products_some: ProductWhereInput
+  products_none: ProductWhereInput
   newProducts_every: OrderableProductWhereInput
   newProducts_some: OrderableProductWhereInput
   newProducts_none: OrderableProductWhereInput
+  bestSellerProducts_every: OrderableProductWhereInput
+  bestSellerProducts_some: OrderableProductWhereInput
+  bestSellerProducts_none: OrderableProductWhereInput
+  options_every: OptionWhereInput
+  options_some: OptionWhereInput
+  options_none: OptionWhereInput
+  categories_every: CategoryWhereInput
+  categories_some: CategoryWhereInput
+  categories_none: CategoryWhereInput
+  attributes_every: AttributeWhereInput
+  attributes_some: AttributeWhereInput
+  attributes_none: AttributeWhereInput
+  orders_every: OrderWhereInput
+  orders_some: OrderWhereInput
+  orders_none: OrderWhereInput
 }
 
-input ShopMetadataWhereUniqueInput {
+input ShopWhereUniqueInput {
   id: ID
 }
 
 type Subscription {
   brand(where: BrandSubscriptionWhereInput): BrandSubscriptionPayload
   category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
+  attribute(where: AttributeSubscriptionWhereInput): AttributeSubscriptionPayload
   option(where: OptionSubscriptionWhereInput): OptionSubscriptionPayload
   optionValue(where: OptionValueSubscriptionWhereInput): OptionValueSubscriptionPayload
   selectedOption(where: SelectedOptionSubscriptionWhereInput): SelectedOptionSubscriptionPayload
   variant(where: VariantSubscriptionWhereInput): VariantSubscriptionPayload
-  attribute(where: AttributeSubscriptionWhereInput): AttributeSubscriptionPayload
   product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   file(where: FileSubscriptionWhereInput): FileSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
   orderLineItem(where: OrderLineItemSubscriptionWhereInput): OrderLineItemSubscriptionPayload
-  shopMetadata(where: ShopMetadataSubscriptionWhereInput): ShopMetadataSubscriptionPayload
+  shop(where: ShopSubscriptionWhereInput): ShopSubscriptionPayload
   orderableProduct(where: OrderableProductSubscriptionWhereInput): OrderableProductSubscriptionPayload
 }
 
@@ -3736,6 +4318,7 @@ type User implements Node {
   password: String!
   firstName: String
   lastName: String
+  shop(where: ShopWhereInput): Shop!
   role: Role!
   cart(where: OrderLineItemWhereInput, orderBy: OrderLineItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderLineItem!]
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order!]
@@ -3761,6 +4344,7 @@ input UserCreateInput {
   role: Role
   stripeCustomerId: String
   oneSignalUserId: String
+  shop: ShopCreateOneInput!
   cart: OrderLineItemCreateManyWithoutOwnerInput
   orders: OrderCreateManyWithoutOwnerInput
 }
@@ -3783,6 +4367,7 @@ input UserCreateWithoutCartInput {
   role: Role
   stripeCustomerId: String
   oneSignalUserId: String
+  shop: ShopCreateOneInput!
   orders: OrderCreateManyWithoutOwnerInput
 }
 
@@ -3794,6 +4379,7 @@ input UserCreateWithoutOrdersInput {
   role: Role
   stripeCustomerId: String
   oneSignalUserId: String
+  shop: ShopCreateOneInput!
   cart: OrderLineItemCreateManyWithoutOwnerInput
 }
 
@@ -3887,6 +4473,7 @@ input UserUpdateInput {
   role: Role
   stripeCustomerId: String
   oneSignalUserId: String
+  shop: ShopUpdateOneInput
   cart: OrderLineItemUpdateManyWithoutOwnerInput
   orders: OrderUpdateManyWithoutOwnerInput
 }
@@ -3916,6 +4503,7 @@ input UserUpdateWithoutCartDataInput {
   role: Role
   stripeCustomerId: String
   oneSignalUserId: String
+  shop: ShopUpdateOneInput
   orders: OrderUpdateManyWithoutOwnerInput
 }
 
@@ -3927,6 +4515,7 @@ input UserUpdateWithoutOrdersDataInput {
   role: Role
   stripeCustomerId: String
   oneSignalUserId: String
+  shop: ShopUpdateOneInput
   cart: OrderLineItemUpdateManyWithoutOwnerInput
 }
 
@@ -4239,6 +4828,7 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   oneSignalUserId_not_ends_with: String
+  shop: ShopWhereInput
   cart_every: OrderLineItemWhereInput
   cart_some: OrderLineItemWhereInput
   cart_none: OrderLineItemWhereInput

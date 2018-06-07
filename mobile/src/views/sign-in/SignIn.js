@@ -63,7 +63,10 @@ class SignIn extends PureComponent {
         password,
       });
 
-      await AsyncStorage.setItem(StorageKeys.GC_TOKEN, data.login.token);
+      await AsyncStorage.multiSet([
+        [StorageKeys.GC_TOKEN, data.login.token],
+        [StorageKeys.SHOP_ID, data.login.user.shop.id]
+      ]);
 
       this.setState({ loading: false }, () => {
         this.props.navigation.navigate('App');

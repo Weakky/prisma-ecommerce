@@ -1,4 +1,6 @@
-import { getUserId, Context } from '../../utils'
+import { getUserId, getShopId, Context } from '../../utils'
+
+
 
 export const Query = {
   me(parent, args, ctx: Context, info) {
@@ -8,19 +10,24 @@ export const Query = {
   product(parent, args, ctx: Context, info) {
     return ctx.db.query.product({ where: { id: args.id } }, info);
   },
-  allProducts(parent, args, ctx: Context, info) {
+  async allProducts(parent, args, ctx: Context, info) {
+    const shopId = await getShopId(ctx);
+
     return ctx.db.query.products({
-      where: { deletedAt: null }
+      where: { deletedAt: null, shop: { id: shopId } }
     }, info);
   },
-  searchProducts(parent, args, ctx: Context, info) {
+  async searchProducts(parent, args, ctx: Context, info) {
+    const shopId = await getShopId(ctx);
+
     const where = {
       ...(args.brandsIds && args.brandsIds.length > 0 && { brand: { id_in: args.brandsIds } }),
       ...(args.attributesIds && args.attributesIds.length > 0 && { attributes_some: { id_in: args.attributesIds } }),
       ...(args.optionsValuesIds && args.optionsValuesIds.length > 0 && { options_some: { values_some: { id_in: args.optionsValuesIds } } }),
       ...(!!args.productName && { name_contains: args.productName }),
       ...(!!args.categoryId && { category: { id: args.categoryId } }),
-      deletedAt: null
+      shop: { id: shopId },
+      deletedAt: null,
     };
 
     return ctx.db.query.productsConnection({
@@ -29,40 +36,47 @@ export const Query = {
       skip: args.skip
     }, info);
   },
-  allBrands(parent, args, ctx: Context, info) {
+  async allBrands(parent, args, ctx: Context, info) {
+    const shopId = await getShopId(ctx);
+
     if (args.categoryId) {
-      return ctx.db.query.brands({ where: { category: { id: args.categoryId } } }, info);
+      return ctx.db.query.brands({ where: { category: { id: args.categoryId }, shop: { id: shopId } } }, info);
     }
 
-    return ctx.db.query.brands({...args}, info);
+    return ctx.db.query.brands({ where: { shop: { id: shopId } } }, info);
   },
-  allCategories(parent, args, ctx: Context, info) {
-    return ctx.db.query.categories({...args}, info);
+  async allCategories(parent, args, ctx: Context, info) {
+    const shopId = await getShopId(ctx);
+
+    return ctx.db.query.categories({ where: { shop: { id: shopId } } }, info);
   },
-  allOptions(parent, args, ctx: Context, info) {
+  async allOptions(parent, args, ctx: Context, info) {
+    const shopId = await getShopId(ctx);
+
     if (args.categoryId) {
-      return ctx.db.query.options({ where: { category: { id: args.categoryId } } }, info);
+      return ctx.db.query.options({ where: { category: { id: args.categoryId }, shop: { id: shopId } } }, info);
     }
-    return ctx.db.query.options({...args}, info);
+
+    return ctx.db.query.options({ where: { shop: { id: shopId } } }, info);
   },
-  allAttributes(parent, args, ctx: Context, info) {
+  async allAttributes(parent, args, ctx: Context, info) {
+    const shopId = await getShopId(ctx);
+
     if (args.categoryId) {
-      return ctx.db.query.attributes({ where: { category: { id: args.categoryId } } }, info);
+      return ctx.db.query.attributes({ where: { category: { id: args.categoryId }, shop: { id: shopId } } }, info);      
     }
-    return ctx.db.query.attributes({...args}, info);
+
+    return ctx.db.query.attributes({ where: { shop: { id: shopId } } }, info);
   },
-  allOrders(parent, args, ctx: Context, info) {
-    return ctx.db.query.orders({}, info);
+  async allOrders(parent, args, ctx: Context, info) {
+    const shopId = await getShopId(ctx);
+
+    return ctx.db.query.orders({ where: { receiver: { id: shopId } } }, info);
   },
   allCustomers(parent, args, ctx: Context, info) {
     return ctx.db.query.users({}, info);
   },
-  async shopMetadata(parent, args, ctx: Context, info) {
-    const metadatas = await ctx.db.query.shopMetadatas({ first: 1 }, info);
-
-    if (metadatas.length === 0) {
-      return null;
-    }
-    return metadatas[0];
+  async allShops(parent, args, ctx: Context, info) {
+    return ctx.db.query.shops({}, info);
   }
 };

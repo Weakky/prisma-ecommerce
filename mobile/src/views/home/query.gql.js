@@ -23,39 +23,39 @@ const homeInformation = gql`
         }
         totalPrice
       }
-    }
-    shopMetadata {
-      bestSalesProducts(orderBy: position_ASC, first: 5) {
-        id
-        product {
+      shop {
+        bestSellerProducts(orderBy: position_ASC, first: 5) {
           id
-          name
-          displayPrice
-          imageUrl
-          brand {
+          product {
             id
             name
-          }
-          unavailableOptionsValues {
-            id
-            name
+            displayPrice
+            imageUrl
+            brand {
+              id
+              name
+            }
+            unavailableOptionsValues {
+              id
+              name
+            }
           }
         }
-      }
-      newProducts(orderBy: position_ASC, first: 5) {
-        id
-        product {
+        newProducts(orderBy: position_ASC, first: 5) {
           id
-          name
-          displayPrice
-          imageUrl
-          brand {
+          product {
             id
             name
-          }
-          unavailableOptionsValues {
-            id
-            name
+            displayPrice
+            imageUrl
+            brand {
+              id
+              name
+            }
+            unavailableOptionsValues {
+              id
+              name
+            }
           }
         }
       }

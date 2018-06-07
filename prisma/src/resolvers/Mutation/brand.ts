@@ -1,7 +1,7 @@
-import { Context } from "../../utils";
+import { Context, getShopId } from "../../utils";
 
 export const brand = {
-  upsertBrand(parent, args, ctx: Context, info) {
+  async upsertBrand(parent, args, ctx: Context, info) {
     if (args.brandId) {
       return ctx.db.mutation.updateBrand({
         where: { id: args.brandId },
@@ -9,8 +9,14 @@ export const brand = {
       }, info);
     }
 
+    const shopId = await getShopId(ctx);
+
     return ctx.db.mutation.createBrand({
-      data: { name: args.name, category: { connect: { id: args.categoryId } } },
+      data: {
+        name: args.name,
+        shop: { connect: { id: shopId } },
+        category: { connect: { id: args.categoryId } },
+      },
     }, info);
   },
 

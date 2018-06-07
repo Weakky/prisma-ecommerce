@@ -11,8 +11,8 @@ class Login extends Component {
     super(props);
 
     this.state = {
-      email: '',
-      password: '',
+      email: 'toto@toto.fr',
+      password: 'toto',
       error: '',
     };
   }
@@ -61,11 +61,11 @@ class Login extends Component {
       },
     });
     const token = result.data.login.token;
-    //const role = result.data.login.user.role;
+    const role = result.data.login.user.role;
 
-    /*if (role !== 'ADMIN') {
+    if (role !== 'ADMIN') {
       return this.setState({ error: 'Only admins can login here.' });
-    }*/
+    }
 
     if (token) {
       this._saveUserData(token);

@@ -24,7 +24,7 @@ export default class Orders extends PureComponent {
     this.addOrderToCart = this.addOrderToCart.bind(this);
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     const query = this.props.client.watchQuery({
       query: commonQueries.userInformation,
     });

@@ -284,9 +284,10 @@ export const AuthenticateUser = gql`
 `;
 
 export const UpsertBestSalesMutation = gql`
-  mutation upsertBestSales($bestSalesProducts: [OrderableProductInput!]!, $shopMetadataId: ID) {
-    upsertBestSalesProducts(bestSalesProducts: $bestSalesProducts, shopMetadataId: $shopMetadataId) {
-      bestSalesProducts {
+  mutation upsertBestSellers($bestSellerProducts: [OrderableProductInput!]!) {
+    upsertBestSellerProducts(bestSellerProducts: $bestSellerProducts) {
+      id
+      bestSellerProducts(orderBy: position_ASC) {
         id
         position
         product {
@@ -301,18 +302,19 @@ export const UpsertBestSalesMutation = gql`
 
 export const UpsertBestSalesMutationOptions = {
   props: ({ mutate }) => ({
-    upsertBestSales: ({ bestSalesProducts, shopMetadataId }) => (
+    upsertBestSellerProducts: ({ bestSellerProducts }) => (
       mutate({
-        variables: { bestSalesProducts, shopMetadataId },
+        variables: { bestSellerProducts },
       })
     )
   })
 };
 
 export const UpsertNewProductsMutation = gql`
-  mutation upsertNewProducts($newProducts: [OrderableProductInput!]!, $shopMetadataId: ID) {
-    upsertNewProducts(newProducts: $newProducts, shopMetadataId: $shopMetadataId) {
-      newProducts {
+  mutation upsertNewProducts($newProducts: [OrderableProductInput!]!) {
+    upsertNewProducts(newProducts: $newProducts) {
+      id
+      newProducts(orderBy: position_ASC) {
         id
         position
         product {

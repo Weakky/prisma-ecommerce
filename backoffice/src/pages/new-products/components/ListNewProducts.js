@@ -40,7 +40,6 @@ class ListNewProducts extends Component {
 
     this.state = {
       loading: false,
-      shopMetadataId: '',
       products: [],
     };
 
@@ -48,15 +47,9 @@ class ListNewProducts extends Component {
   }
 
   componentWillReceiveProps({ data }) {
-    console.log(data);
     if (!data.loading) {
-      if (!data.shopMetadata || !data.shopMetadata.newProducts) {
-        return;
-      }
-
       this.setState({
-        shopMetadataId: data.shopMetadata.id,
-        products: data.shopMetadata.newProducts.map((orderableProduct) => ({
+        products: data.me.shop.newProducts.map((orderableProduct) => ({
           newProductId: orderableProduct.id,
           label: orderableProduct.product.name,
           value: orderableProduct.product.id,
@@ -80,10 +73,7 @@ class ListNewProducts extends Component {
     }));
 
     this.setState({ loading: true });
-    await this.props.upsertNewProducts({
-      shopMetadataId: this.state.shopMetadataId,
-      newProducts: remappedBestSales
-    });
+    await this.props.upsertNewProducts({ newProducts: remappedBestSales });
     this.setState({ loading: false });
   }
 

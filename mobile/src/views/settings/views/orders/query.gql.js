@@ -9,6 +9,7 @@ const userOrders = gql`
       }
       orders(orderBy: createdAt_DESC) {
         id
+        receiver { id }
         createdAt
         lineItems {
           id

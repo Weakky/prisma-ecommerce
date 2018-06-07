@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View, Image, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import truncate from 'lodash/truncate';
 
 import SubTotal from './sub-total/SubTotal';
 
@@ -91,7 +92,7 @@ class BasketCard extends React.PureComponent {
             <View style={styles.basketCardSubContainer}>
               <View style={styles.topContainer}>
                 <Title font={font} size={12} weight="500">
-                  {this.props.name.toUpperCase()}
+                  {truncate(this.props.name.toUpperCase(), { length: 19 })}
                   <Title font={font} size={8} weight="600" color="rgba(72, 72, 72, 0.4)">
                     &nbsp;/&nbsp;{this.props.brand.toUpperCase()}
                   </Title>

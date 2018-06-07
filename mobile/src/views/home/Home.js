@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Alert, } from 'react-native';
 import { Observable } from 'apollo-client-preset';
 import OneSignal from 'react-native-onesignal';
 import PropTypes from 'prop-types';
@@ -124,7 +124,15 @@ class Home extends Component {
 
   async addOrderToCart({ orderId, replace }) {
     this.setState({ loading: true });
-    await this.props.addOrderToCart({ orderId, replace });
+
+    try {
+      await this.props.addOrderToCart({ orderId, replace });
+    } catch (e) {
+      const error = e.graphQLErrors[0];
+
+      Alert.alert(error.message);
+    }
+
     this.setState({
       loading: false,
       askToReplaceOrMergeOrder: false,
@@ -136,7 +144,7 @@ class Home extends Component {
       return <FullLoading />;
     }
 
-    const { me, shopMetadata } = this.props.data;
+    const { me } = this.props.data;
 
     return (
       <Container asScroll title={`${translate('hello')}, ${capitalize(me.firstName)} !`}>
@@ -161,17 +169,17 @@ class Home extends Component {
             addOrderToCart={this.addOrderToCart}
           />
         )}
-        {shopMetadata.bestSalesProducts.length > 0 && (
+        {me.shop.bestSellerProducts.length > 0 && (
           <SimpleProductList
             title={translate('best_sales')}
-            orderableProducts={shopMetadata.bestSalesProducts}
+            orderableProducts={me.shop.bestSellerProducts}
             navigation={this.props.navigation}
           />
         )}
-        {shopMetadata.newProducts.length > 0 && (
+        {me.shop.newProducts.length > 0 && (
           <SimpleProductList
             title={translate('new_products')}
-            orderableProducts={shopMetadata.newProducts}
+            orderableProducts={me.shop.newProducts}
             navigation={this.props.navigation}
           />
         )}

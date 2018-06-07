@@ -1,4 +1,4 @@
-# import User, Product, ProductConnection, Brand, Category, Variant, Option, Attribute, SelectedOption, Cart, OrderLineItem, PageInfo, AggregateProduct, ProductConnection, ProductSubscriptionPayload, OrderSubscriptionPayload; Order, ShopMetadata, OrderStatus from "./generated/prisma.graphql"
+# import User, Product, ProductConnection, Brand, Category, Variant, Option, Attribute, SelectedOption, Cart, OrderLineItem, PageInfo, AggregateProduct, ProductConnection, ProductSubscriptionPayload, OrderSubscriptionPayload; Order, OrderStatus, Shop from "./generated/prisma.graphql"
 # import ProductCreateInput, BrandCreateInput, CategoryCreateInput from "./generated/prisma.graphql"
 # import ProductWhereInput, ProductOrderByInput from "./generated/prisma.graphql"
 
@@ -12,10 +12,9 @@ type Query {
   allCategories: [Category!]
   allOrders: [Order!]!
   allCustomers: [User!]!
+  allShops: [Shop!]!
   
   product(id: ID!): Product
-
-  shopMetadata: ShopMetadata
 
   searchProducts(
     productName: String
@@ -29,7 +28,7 @@ type Query {
 }
 
 type Mutation {
-  signup(email: String!, password: String!, firstName: String!, lastName: String!): AuthPayload!
+  signup(email: String!, password: String!, firstName: String!, lastName: String!, shopId: ID!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
 
   # Upsert mutations
@@ -52,9 +51,9 @@ type Mutation {
   ): Product
 
   #Upsert Shop metadata
-  upsertBestSalesProducts(shopMetadataId: ID, bestSalesProducts: [OrderableProductInput!]!): ShopMetadata!
-  upsertNewProducts(shopMetadataId: ID, newProducts: [OrderableProductInput!]!): ShopMetadata!
-  upsertMOTD(shopMetadataId: ID, MOTD: String!): ShopMetadata!
+  upsertBestSellerProducts(bestSellerProducts: [OrderableProductInput!]!): Shop!
+  upsertNewProducts(shopMetadataId: ID, newProducts: [OrderableProductInput!]!): Shop!
+  #upsertMOTD(shopMetadataId: ID, MOTD: String!): Shop!
 
   # Delete mutations
   deleteProduct(productId: ID!): Product

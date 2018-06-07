@@ -1,4 +1,4 @@
-import { Context } from '../../utils';
+import { Context, getShopId } from '../../utils';
 import * as _ from 'lodash';
 
 export const option = {
@@ -69,11 +69,13 @@ export const option = {
       }, info);
     }
 
+    const shopId = await getShopId(ctx);
     const createValuesInput = args.values.map(optionValue => ({ name: optionValue.value }));
 
     return ctx.db.mutation.createOption({
       data: {
         name: args.name,
+        shop: { connect: { id: shopId } },
         values: { create: createValuesInput },
         category: { connect: { id: args.categoryId } }
       }

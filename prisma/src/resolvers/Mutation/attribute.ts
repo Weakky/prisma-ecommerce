@@ -1,7 +1,7 @@
-import { Context } from '../../utils';
+import { Context, getShopId } from '../../utils';
 
 export const attribute = {
-  upsertAttribute(parent, args, ctx: Context, info) {
+  async upsertAttribute(parent, args, ctx: Context, info) {
     if (args.attributeId) {
       return ctx.db.mutation.updateAttribute({
         where: { id: args.attributeId },
@@ -9,8 +9,14 @@ export const attribute = {
       }, info);
     }
 
+    const shopId = await getShopId(ctx);
+
     return ctx.db.mutation.createAttribute({
-      data: { value: args.value, category: { connect: { id: args.categoryId } } },
+      data: {
+        value: args.value,
+        shop: { connect: { id: shopId } },
+        category: { connect: { id: args.categoryId } }
+      },
     }, info);
   },
 

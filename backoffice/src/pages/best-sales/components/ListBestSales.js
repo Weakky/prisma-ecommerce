@@ -37,7 +37,6 @@ class ListBestSales extends Component {
 
     this.state = {
       loading: false,
-      shopMetadataId: '',
       products: [],
     };
 
@@ -46,13 +45,8 @@ class ListBestSales extends Component {
 
   componentWillReceiveProps({ data }) {
     if (!data.loading) {
-      if (!data.shopMetadata || !data.shopMetadata.bestSalesProducts) {
-        return;
-      }
-
       this.setState({
-        shopMetadataId: data.shopMetadata.id,
-        products: data.shopMetadata.bestSalesProducts.map((orderableProduct) => ({
+        products: data.me.shop.bestSellerProducts.map((orderableProduct) => ({
           orderableProductId: orderableProduct.id,
           label: orderableProduct.product.name,
           value: orderableProduct.product.id,
@@ -69,16 +63,15 @@ class ListBestSales extends Component {
   };
 
   async upsertBestSales() {
-    const remappedBestSales = this.state.products.map((product, i) => ({
+    const remappedBestSellers = this.state.products.map((product, i) => ({
       id: product.orderableProductId,
       productId: product.value,
       position: i,
     }));
 
     this.setState({ loading: true });
-    await this.props.upsertBestSales({
-      shopMetadataId: this.state.shopMetadataId,
-      bestSalesProducts: remappedBestSales
+    await this.props.upsertBestSellerProducts({
+      bestSellerProducts: remappedBestSellers
     });
     this.setState({ loading: false });
   }

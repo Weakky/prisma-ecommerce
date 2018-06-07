@@ -17,6 +17,12 @@ export function getUserId(ctx: Context) {
   throw new AuthError()
 }
 
+export function getShopId(ctx: Context) {
+  const userId = getUserId(ctx);
+
+  return ctx.db.query.user({ where: { id: userId } }, '{ shop { id } }').then(user => user.shop.id);
+}
+
 export class AuthError extends Error {
   constructor() {
     super('Not authorized')

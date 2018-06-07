@@ -16,6 +16,10 @@ const exceptions = {
   productOrVariantNotFound: {
     message: 'A product or a variant of your cart doesn\'t exist anymore',
     code: 103
+  },
+  orderNotSentToCurrentShop: {
+    message: 'The order wasn\'t sent to your configured shop',
+    code: 104,
   }
 }
 
@@ -42,4 +46,9 @@ export const ProductOrVariantNotFoundException = (deletedVariants, deletedProduc
      deletedProducts
    }
 });
+
+export const OrderNotSentToCurrentShopException = createError('OrderNotSentToCurrentShop', {
+  message: exceptions.orderNotSentToCurrentShop.message,
+  data: { code:exceptions.orderNotSentToCurrentShop.code },
+})
 
