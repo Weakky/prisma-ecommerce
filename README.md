@@ -18,6 +18,8 @@ Homepage view             |  Browsing product view          | Cart view         
 
 💨 **GraphQL backend powered by [Prisma.io](https://www.prisma.io/)**
 
+🏦 **Support several shops behind the same application**
+
 💥 **Handcrafted backoffice to manage your e-commerce shop**
 
 🔏 **Fully customizable products (variant system)**
