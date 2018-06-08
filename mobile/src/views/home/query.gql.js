@@ -23,7 +23,7 @@ const homeInformation = gql`
         }
         totalPrice
       }
-      shop {
+      selectedShop {
         bestSellerProducts(orderBy: position_ASC, first: 5) {
           id
           product {

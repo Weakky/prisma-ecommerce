@@ -17,10 +17,14 @@ export function getUserId(ctx: Context) {
   throw new AuthError()
 }
 
+export function getShopIdFromUserId(userId, ctx) {
+  return ctx.db.query.user({ where: { id: userId } }, '{ selectedShop { id } }').then(user => user.selectedShop.id);
+}
+
 export function getShopId(ctx: Context) {
   const userId = getUserId(ctx);
 
-  return ctx.db.query.user({ where: { id: userId } }, '{ shop { id } }').then(user => user.shop.id);
+  return getShopIdFromUserId(userId, ctx);
 }
 
 export class AuthError extends Error {

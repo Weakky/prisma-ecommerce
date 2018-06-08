@@ -75,7 +75,7 @@ type User {
   password: String!
   firstName: String
   lastName: String
-  shop: Shop!
+  selectedShop: Shop!
   role: Role! @default(value: USER)
   cart: [OrderLineItem!]! @relation(name: "UserCart" onDelete: CASCADE)
   orders: [Order!]! @relation(name: "UserOrders")
@@ -120,10 +120,6 @@ type Shop {
   products: [Product!]!
   newProducts: [OrderableProduct!]! @relation(name: "NewProducts")
   bestSellerProducts: [OrderableProduct!]! @relation(name: "BestSellerProducts")
-  options: [Option!]!
-  categories: [Category!]!
-  attributes: [Attribute!]!
-  orders: [Order!]!
 }
 
 type OrderableProduct {

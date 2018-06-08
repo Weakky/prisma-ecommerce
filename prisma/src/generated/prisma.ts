@@ -84,7 +84,7 @@ type AttributeConnection {
 input AttributeCreateInput {
   value: String!
   category: CategoryCreateOneInput!
-  shop: ShopCreateOneWithoutAttributesInput!
+  shop: ShopCreateOneInput!
   products: ProductCreateManyWithoutAttributesInput
 }
 
@@ -93,21 +93,10 @@ input AttributeCreateManyWithoutProductsInput {
   connect: [AttributeWhereUniqueInput!]
 }
 
-input AttributeCreateManyWithoutShopInput {
-  create: [AttributeCreateWithoutShopInput!]
-  connect: [AttributeWhereUniqueInput!]
-}
-
 input AttributeCreateWithoutProductsInput {
   value: String!
   category: CategoryCreateOneInput!
-  shop: ShopCreateOneWithoutAttributesInput!
-}
-
-input AttributeCreateWithoutShopInput {
-  value: String!
-  category: CategoryCreateOneInput!
-  products: ProductCreateManyWithoutAttributesInput
+  shop: ShopCreateOneInput!
 }
 
 """
@@ -182,7 +171,7 @@ input AttributeSubscriptionWhereInput {
 input AttributeUpdateInput {
   value: String
   category: CategoryUpdateOneInput
-  shop: ShopUpdateOneWithoutAttributesInput
+  shop: ShopUpdateOneInput
   products: ProductUpdateManyWithoutAttributesInput
 }
 
@@ -195,25 +184,10 @@ input AttributeUpdateManyWithoutProductsInput {
   upsert: [AttributeUpsertWithWhereUniqueWithoutProductsInput!]
 }
 
-input AttributeUpdateManyWithoutShopInput {
-  create: [AttributeCreateWithoutShopInput!]
-  connect: [AttributeWhereUniqueInput!]
-  disconnect: [AttributeWhereUniqueInput!]
-  delete: [AttributeWhereUniqueInput!]
-  update: [AttributeUpdateWithWhereUniqueWithoutShopInput!]
-  upsert: [AttributeUpsertWithWhereUniqueWithoutShopInput!]
-}
-
 input AttributeUpdateWithoutProductsDataInput {
   value: String
   category: CategoryUpdateOneInput
-  shop: ShopUpdateOneWithoutAttributesInput
-}
-
-input AttributeUpdateWithoutShopDataInput {
-  value: String
-  category: CategoryUpdateOneInput
-  products: ProductUpdateManyWithoutAttributesInput
+  shop: ShopUpdateOneInput
 }
 
 input AttributeUpdateWithWhereUniqueWithoutProductsInput {
@@ -221,21 +195,10 @@ input AttributeUpdateWithWhereUniqueWithoutProductsInput {
   data: AttributeUpdateWithoutProductsDataInput!
 }
 
-input AttributeUpdateWithWhereUniqueWithoutShopInput {
-  where: AttributeWhereUniqueInput!
-  data: AttributeUpdateWithoutShopDataInput!
-}
-
 input AttributeUpsertWithWhereUniqueWithoutProductsInput {
   where: AttributeWhereUniqueInput!
   update: AttributeUpdateWithoutProductsDataInput!
   create: AttributeCreateWithoutProductsInput!
-}
-
-input AttributeUpsertWithWhereUniqueWithoutShopInput {
-  where: AttributeWhereUniqueInput!
-  update: AttributeUpdateWithoutShopDataInput!
-  create: AttributeCreateWithoutShopInput!
 }
 
 input AttributeWhereInput {
@@ -654,12 +617,7 @@ type CategoryConnection {
 input CategoryCreateInput {
   name: String!
   options: OptionCreateManyWithoutCategoryInput
-  shop: ShopCreateOneWithoutCategoriesInput!
-}
-
-input CategoryCreateManyWithoutShopInput {
-  create: [CategoryCreateWithoutShopInput!]
-  connect: [CategoryWhereUniqueInput!]
+  shop: ShopCreateOneInput!
 }
 
 input CategoryCreateOneInput {
@@ -674,12 +632,7 @@ input CategoryCreateOneWithoutOptionsInput {
 
 input CategoryCreateWithoutOptionsInput {
   name: String!
-  shop: ShopCreateOneWithoutCategoriesInput!
-}
-
-input CategoryCreateWithoutShopInput {
-  name: String!
-  options: OptionCreateManyWithoutCategoryInput
+  shop: ShopCreateOneInput!
 }
 
 """
@@ -754,22 +707,13 @@ input CategorySubscriptionWhereInput {
 input CategoryUpdateDataInput {
   name: String
   options: OptionUpdateManyWithoutCategoryInput
-  shop: ShopUpdateOneWithoutCategoriesInput
+  shop: ShopUpdateOneInput
 }
 
 input CategoryUpdateInput {
   name: String
   options: OptionUpdateManyWithoutCategoryInput
-  shop: ShopUpdateOneWithoutCategoriesInput
-}
-
-input CategoryUpdateManyWithoutShopInput {
-  create: [CategoryCreateWithoutShopInput!]
-  connect: [CategoryWhereUniqueInput!]
-  disconnect: [CategoryWhereUniqueInput!]
-  delete: [CategoryWhereUniqueInput!]
-  update: [CategoryUpdateWithWhereUniqueWithoutShopInput!]
-  upsert: [CategoryUpsertWithWhereUniqueWithoutShopInput!]
+  shop: ShopUpdateOneInput
 }
 
 input CategoryUpdateOneInput {
@@ -790,17 +734,7 @@ input CategoryUpdateOneWithoutOptionsInput {
 
 input CategoryUpdateWithoutOptionsDataInput {
   name: String
-  shop: ShopUpdateOneWithoutCategoriesInput
-}
-
-input CategoryUpdateWithoutShopDataInput {
-  name: String
-  options: OptionUpdateManyWithoutCategoryInput
-}
-
-input CategoryUpdateWithWhereUniqueWithoutShopInput {
-  where: CategoryWhereUniqueInput!
-  data: CategoryUpdateWithoutShopDataInput!
+  shop: ShopUpdateOneInput
 }
 
 input CategoryUpsertNestedInput {
@@ -811,12 +745,6 @@ input CategoryUpsertNestedInput {
 input CategoryUpsertWithoutOptionsInput {
   update: CategoryUpdateWithoutOptionsDataInput!
   create: CategoryCreateWithoutOptionsInput!
-}
-
-input CategoryUpsertWithWhereUniqueWithoutShopInput {
-  where: CategoryWhereUniqueInput!
-  update: CategoryUpdateWithoutShopDataInput!
-  create: CategoryCreateWithoutShopInput!
 }
 
 input CategoryWhereInput {
@@ -1435,7 +1363,7 @@ input OptionCreateInput {
   name: String!
   values: OptionValueCreateManyInput
   category: CategoryCreateOneWithoutOptionsInput!
-  shop: ShopCreateOneWithoutOptionsInput!
+  shop: ShopCreateOneInput!
 }
 
 input OptionCreateManyInput {
@@ -1448,11 +1376,6 @@ input OptionCreateManyWithoutCategoryInput {
   connect: [OptionWhereUniqueInput!]
 }
 
-input OptionCreateManyWithoutShopInput {
-  create: [OptionCreateWithoutShopInput!]
-  connect: [OptionWhereUniqueInput!]
-}
-
 input OptionCreateOneInput {
   create: OptionCreateInput
   connect: OptionWhereUniqueInput
@@ -1461,13 +1384,7 @@ input OptionCreateOneInput {
 input OptionCreateWithoutCategoryInput {
   name: String!
   values: OptionValueCreateManyInput
-  shop: ShopCreateOneWithoutOptionsInput!
-}
-
-input OptionCreateWithoutShopInput {
-  name: String!
-  values: OptionValueCreateManyInput
-  category: CategoryCreateOneWithoutOptionsInput!
+  shop: ShopCreateOneInput!
 }
 
 """
@@ -1543,14 +1460,14 @@ input OptionUpdateDataInput {
   name: String
   values: OptionValueUpdateManyInput
   category: CategoryUpdateOneWithoutOptionsInput
-  shop: ShopUpdateOneWithoutOptionsInput
+  shop: ShopUpdateOneInput
 }
 
 input OptionUpdateInput {
   name: String
   values: OptionValueUpdateManyInput
   category: CategoryUpdateOneWithoutOptionsInput
-  shop: ShopUpdateOneWithoutOptionsInput
+  shop: ShopUpdateOneInput
 }
 
 input OptionUpdateManyInput {
@@ -1571,15 +1488,6 @@ input OptionUpdateManyWithoutCategoryInput {
   upsert: [OptionUpsertWithWhereUniqueWithoutCategoryInput!]
 }
 
-input OptionUpdateManyWithoutShopInput {
-  create: [OptionCreateWithoutShopInput!]
-  connect: [OptionWhereUniqueInput!]
-  disconnect: [OptionWhereUniqueInput!]
-  delete: [OptionWhereUniqueInput!]
-  update: [OptionUpdateWithWhereUniqueWithoutShopInput!]
-  upsert: [OptionUpsertWithWhereUniqueWithoutShopInput!]
-}
-
 input OptionUpdateOneInput {
   create: OptionCreateInput
   connect: OptionWhereUniqueInput
@@ -1591,13 +1499,7 @@ input OptionUpdateOneInput {
 input OptionUpdateWithoutCategoryDataInput {
   name: String
   values: OptionValueUpdateManyInput
-  shop: ShopUpdateOneWithoutOptionsInput
-}
-
-input OptionUpdateWithoutShopDataInput {
-  name: String
-  values: OptionValueUpdateManyInput
-  category: CategoryUpdateOneWithoutOptionsInput
+  shop: ShopUpdateOneInput
 }
 
 input OptionUpdateWithWhereUniqueNestedInput {
@@ -1608,11 +1510,6 @@ input OptionUpdateWithWhereUniqueNestedInput {
 input OptionUpdateWithWhereUniqueWithoutCategoryInput {
   where: OptionWhereUniqueInput!
   data: OptionUpdateWithoutCategoryDataInput!
-}
-
-input OptionUpdateWithWhereUniqueWithoutShopInput {
-  where: OptionWhereUniqueInput!
-  data: OptionUpdateWithoutShopDataInput!
 }
 
 input OptionUpsertNestedInput {
@@ -1630,12 +1527,6 @@ input OptionUpsertWithWhereUniqueWithoutCategoryInput {
   where: OptionWhereUniqueInput!
   update: OptionUpdateWithoutCategoryDataInput!
   create: OptionCreateWithoutCategoryInput!
-}
-
-input OptionUpsertWithWhereUniqueWithoutShopInput {
-  where: OptionWhereUniqueInput!
-  update: OptionUpdateWithoutShopDataInput!
-  create: OptionCreateWithoutShopInput!
 }
 
 type OptionValue implements Node {
@@ -2392,7 +2283,7 @@ input OrderCreateInput {
   totalTax: Float!
   orderStatus: OrderStatus!
   owner: UserCreateOneWithoutOrdersInput!
-  receiver: ShopCreateOneWithoutOrdersInput!
+  receiver: ShopCreateOneInput!
   lineItems: OrderLineItemCreateManyInput
 }
 
@@ -2401,26 +2292,12 @@ input OrderCreateManyWithoutOwnerInput {
   connect: [OrderWhereUniqueInput!]
 }
 
-input OrderCreateManyWithoutReceiverInput {
-  create: [OrderCreateWithoutReceiverInput!]
-  connect: [OrderWhereUniqueInput!]
-}
-
 input OrderCreateWithoutOwnerInput {
   totalPrice: Float!
   totalRefunded: Float!
   totalTax: Float!
   orderStatus: OrderStatus!
-  receiver: ShopCreateOneWithoutOrdersInput!
-  lineItems: OrderLineItemCreateManyInput
-}
-
-input OrderCreateWithoutReceiverInput {
-  totalPrice: Float!
-  totalRefunded: Float!
-  totalTax: Float!
-  orderStatus: OrderStatus!
-  owner: UserCreateOneWithoutOrdersInput!
+  receiver: ShopCreateOneInput!
   lineItems: OrderLineItemCreateManyInput
 }
 
@@ -2827,7 +2704,7 @@ input OrderUpdateInput {
   totalTax: Float
   orderStatus: OrderStatus
   owner: UserUpdateOneWithoutOrdersInput
-  receiver: ShopUpdateOneWithoutOrdersInput
+  receiver: ShopUpdateOneInput
   lineItems: OrderLineItemUpdateManyInput
 }
 
@@ -2840,30 +2717,12 @@ input OrderUpdateManyWithoutOwnerInput {
   upsert: [OrderUpsertWithWhereUniqueWithoutOwnerInput!]
 }
 
-input OrderUpdateManyWithoutReceiverInput {
-  create: [OrderCreateWithoutReceiverInput!]
-  connect: [OrderWhereUniqueInput!]
-  disconnect: [OrderWhereUniqueInput!]
-  delete: [OrderWhereUniqueInput!]
-  update: [OrderUpdateWithWhereUniqueWithoutReceiverInput!]
-  upsert: [OrderUpsertWithWhereUniqueWithoutReceiverInput!]
-}
-
 input OrderUpdateWithoutOwnerDataInput {
   totalPrice: Float
   totalRefunded: Float
   totalTax: Float
   orderStatus: OrderStatus
-  receiver: ShopUpdateOneWithoutOrdersInput
-  lineItems: OrderLineItemUpdateManyInput
-}
-
-input OrderUpdateWithoutReceiverDataInput {
-  totalPrice: Float
-  totalRefunded: Float
-  totalTax: Float
-  orderStatus: OrderStatus
-  owner: UserUpdateOneWithoutOrdersInput
+  receiver: ShopUpdateOneInput
   lineItems: OrderLineItemUpdateManyInput
 }
 
@@ -2872,21 +2731,10 @@ input OrderUpdateWithWhereUniqueWithoutOwnerInput {
   data: OrderUpdateWithoutOwnerDataInput!
 }
 
-input OrderUpdateWithWhereUniqueWithoutReceiverInput {
-  where: OrderWhereUniqueInput!
-  data: OrderUpdateWithoutReceiverDataInput!
-}
-
 input OrderUpsertWithWhereUniqueWithoutOwnerInput {
   where: OrderWhereUniqueInput!
   update: OrderUpdateWithoutOwnerDataInput!
   create: OrderCreateWithoutOwnerInput!
-}
-
-input OrderUpsertWithWhereUniqueWithoutReceiverInput {
-  where: OrderWhereUniqueInput!
-  update: OrderUpdateWithoutReceiverDataInput!
-  create: OrderCreateWithoutReceiverInput!
 }
 
 input OrderWhereInput {
@@ -4150,10 +3998,6 @@ type Shop implements Node {
   products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product!]
   newProducts(where: OrderableProductWhereInput, orderBy: OrderableProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderableProduct!]
   bestSellerProducts(where: OrderableProductWhereInput, orderBy: OrderableProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderableProduct!]
-  options(where: OptionWhereInput, orderBy: OptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Option!]
-  categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category!]
-  attributes(where: AttributeWhereInput, orderBy: AttributeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Attribute!]
-  orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order!]
 }
 
 """
@@ -4177,19 +4021,10 @@ input ShopCreateInput {
   products: ProductCreateManyWithoutShopInput
   newProducts: OrderableProductCreateManyWithoutShopNewProductInput
   bestSellerProducts: OrderableProductCreateManyWithoutShopBestSellerInput
-  options: OptionCreateManyWithoutShopInput
-  categories: CategoryCreateManyWithoutShopInput
-  attributes: AttributeCreateManyWithoutShopInput
-  orders: OrderCreateManyWithoutReceiverInput
 }
 
 input ShopCreateOneInput {
   create: ShopCreateInput
-  connect: ShopWhereUniqueInput
-}
-
-input ShopCreateOneWithoutAttributesInput {
-  create: ShopCreateWithoutAttributesInput
   connect: ShopWhereUniqueInput
 }
 
@@ -4198,23 +4033,8 @@ input ShopCreateOneWithoutBestSellerProductsInput {
   connect: ShopWhereUniqueInput
 }
 
-input ShopCreateOneWithoutCategoriesInput {
-  create: ShopCreateWithoutCategoriesInput
-  connect: ShopWhereUniqueInput
-}
-
 input ShopCreateOneWithoutNewProductsInput {
   create: ShopCreateWithoutNewProductsInput
-  connect: ShopWhereUniqueInput
-}
-
-input ShopCreateOneWithoutOptionsInput {
-  create: ShopCreateWithoutOptionsInput
-  connect: ShopWhereUniqueInput
-}
-
-input ShopCreateOneWithoutOrdersInput {
-  create: ShopCreateWithoutOrdersInput
   connect: ShopWhereUniqueInput
 }
 
@@ -4223,37 +4043,11 @@ input ShopCreateOneWithoutProductsInput {
   connect: ShopWhereUniqueInput
 }
 
-input ShopCreateWithoutAttributesInput {
-  name: String!
-  MOTD: String
-  products: ProductCreateManyWithoutShopInput
-  newProducts: OrderableProductCreateManyWithoutShopNewProductInput
-  bestSellerProducts: OrderableProductCreateManyWithoutShopBestSellerInput
-  options: OptionCreateManyWithoutShopInput
-  categories: CategoryCreateManyWithoutShopInput
-  orders: OrderCreateManyWithoutReceiverInput
-}
-
 input ShopCreateWithoutBestSellerProductsInput {
   name: String!
   MOTD: String
   products: ProductCreateManyWithoutShopInput
   newProducts: OrderableProductCreateManyWithoutShopNewProductInput
-  options: OptionCreateManyWithoutShopInput
-  categories: CategoryCreateManyWithoutShopInput
-  attributes: AttributeCreateManyWithoutShopInput
-  orders: OrderCreateManyWithoutReceiverInput
-}
-
-input ShopCreateWithoutCategoriesInput {
-  name: String!
-  MOTD: String
-  products: ProductCreateManyWithoutShopInput
-  newProducts: OrderableProductCreateManyWithoutShopNewProductInput
-  bestSellerProducts: OrderableProductCreateManyWithoutShopBestSellerInput
-  options: OptionCreateManyWithoutShopInput
-  attributes: AttributeCreateManyWithoutShopInput
-  orders: OrderCreateManyWithoutReceiverInput
 }
 
 input ShopCreateWithoutNewProductsInput {
@@ -4261,32 +4055,6 @@ input ShopCreateWithoutNewProductsInput {
   MOTD: String
   products: ProductCreateManyWithoutShopInput
   bestSellerProducts: OrderableProductCreateManyWithoutShopBestSellerInput
-  options: OptionCreateManyWithoutShopInput
-  categories: CategoryCreateManyWithoutShopInput
-  attributes: AttributeCreateManyWithoutShopInput
-  orders: OrderCreateManyWithoutReceiverInput
-}
-
-input ShopCreateWithoutOptionsInput {
-  name: String!
-  MOTD: String
-  products: ProductCreateManyWithoutShopInput
-  newProducts: OrderableProductCreateManyWithoutShopNewProductInput
-  bestSellerProducts: OrderableProductCreateManyWithoutShopBestSellerInput
-  categories: CategoryCreateManyWithoutShopInput
-  attributes: AttributeCreateManyWithoutShopInput
-  orders: OrderCreateManyWithoutReceiverInput
-}
-
-input ShopCreateWithoutOrdersInput {
-  name: String!
-  MOTD: String
-  products: ProductCreateManyWithoutShopInput
-  newProducts: OrderableProductCreateManyWithoutShopNewProductInput
-  bestSellerProducts: OrderableProductCreateManyWithoutShopBestSellerInput
-  options: OptionCreateManyWithoutShopInput
-  categories: CategoryCreateManyWithoutShopInput
-  attributes: AttributeCreateManyWithoutShopInput
 }
 
 input ShopCreateWithoutProductsInput {
@@ -4294,10 +4062,6 @@ input ShopCreateWithoutProductsInput {
   MOTD: String
   newProducts: OrderableProductCreateManyWithoutShopNewProductInput
   bestSellerProducts: OrderableProductCreateManyWithoutShopBestSellerInput
-  options: OptionCreateManyWithoutShopInput
-  categories: CategoryCreateManyWithoutShopInput
-  attributes: AttributeCreateManyWithoutShopInput
-  orders: OrderCreateManyWithoutReceiverInput
 }
 
 """
@@ -4378,10 +4142,6 @@ input ShopUpdateDataInput {
   products: ProductUpdateManyWithoutShopInput
   newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
   bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
-  options: OptionUpdateManyWithoutShopInput
-  categories: CategoryUpdateManyWithoutShopInput
-  attributes: AttributeUpdateManyWithoutShopInput
-  orders: OrderUpdateManyWithoutReceiverInput
 }
 
 input ShopUpdateInput {
@@ -4390,10 +4150,6 @@ input ShopUpdateInput {
   products: ProductUpdateManyWithoutShopInput
   newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
   bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
-  options: OptionUpdateManyWithoutShopInput
-  categories: CategoryUpdateManyWithoutShopInput
-  attributes: AttributeUpdateManyWithoutShopInput
-  orders: OrderUpdateManyWithoutReceiverInput
 }
 
 input ShopUpdateOneInput {
@@ -4402,14 +4158,6 @@ input ShopUpdateOneInput {
   delete: Boolean
   update: ShopUpdateDataInput
   upsert: ShopUpsertNestedInput
-}
-
-input ShopUpdateOneWithoutAttributesInput {
-  create: ShopCreateWithoutAttributesInput
-  connect: ShopWhereUniqueInput
-  delete: Boolean
-  update: ShopUpdateWithoutAttributesDataInput
-  upsert: ShopUpsertWithoutAttributesInput
 }
 
 input ShopUpdateOneWithoutBestSellerProductsInput {
@@ -4421,14 +4169,6 @@ input ShopUpdateOneWithoutBestSellerProductsInput {
   upsert: ShopUpsertWithoutBestSellerProductsInput
 }
 
-input ShopUpdateOneWithoutCategoriesInput {
-  create: ShopCreateWithoutCategoriesInput
-  connect: ShopWhereUniqueInput
-  delete: Boolean
-  update: ShopUpdateWithoutCategoriesDataInput
-  upsert: ShopUpsertWithoutCategoriesInput
-}
-
 input ShopUpdateOneWithoutNewProductsInput {
   create: ShopCreateWithoutNewProductsInput
   connect: ShopWhereUniqueInput
@@ -4436,22 +4176,6 @@ input ShopUpdateOneWithoutNewProductsInput {
   delete: Boolean
   update: ShopUpdateWithoutNewProductsDataInput
   upsert: ShopUpsertWithoutNewProductsInput
-}
-
-input ShopUpdateOneWithoutOptionsInput {
-  create: ShopCreateWithoutOptionsInput
-  connect: ShopWhereUniqueInput
-  delete: Boolean
-  update: ShopUpdateWithoutOptionsDataInput
-  upsert: ShopUpsertWithoutOptionsInput
-}
-
-input ShopUpdateOneWithoutOrdersInput {
-  create: ShopCreateWithoutOrdersInput
-  connect: ShopWhereUniqueInput
-  delete: Boolean
-  update: ShopUpdateWithoutOrdersDataInput
-  upsert: ShopUpsertWithoutOrdersInput
 }
 
 input ShopUpdateOneWithoutProductsInput {
@@ -4462,37 +4186,11 @@ input ShopUpdateOneWithoutProductsInput {
   upsert: ShopUpsertWithoutProductsInput
 }
 
-input ShopUpdateWithoutAttributesDataInput {
-  name: String
-  MOTD: String
-  products: ProductUpdateManyWithoutShopInput
-  newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
-  bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
-  options: OptionUpdateManyWithoutShopInput
-  categories: CategoryUpdateManyWithoutShopInput
-  orders: OrderUpdateManyWithoutReceiverInput
-}
-
 input ShopUpdateWithoutBestSellerProductsDataInput {
   name: String
   MOTD: String
   products: ProductUpdateManyWithoutShopInput
   newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
-  options: OptionUpdateManyWithoutShopInput
-  categories: CategoryUpdateManyWithoutShopInput
-  attributes: AttributeUpdateManyWithoutShopInput
-  orders: OrderUpdateManyWithoutReceiverInput
-}
-
-input ShopUpdateWithoutCategoriesDataInput {
-  name: String
-  MOTD: String
-  products: ProductUpdateManyWithoutShopInput
-  newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
-  bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
-  options: OptionUpdateManyWithoutShopInput
-  attributes: AttributeUpdateManyWithoutShopInput
-  orders: OrderUpdateManyWithoutReceiverInput
 }
 
 input ShopUpdateWithoutNewProductsDataInput {
@@ -4500,32 +4198,6 @@ input ShopUpdateWithoutNewProductsDataInput {
   MOTD: String
   products: ProductUpdateManyWithoutShopInput
   bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
-  options: OptionUpdateManyWithoutShopInput
-  categories: CategoryUpdateManyWithoutShopInput
-  attributes: AttributeUpdateManyWithoutShopInput
-  orders: OrderUpdateManyWithoutReceiverInput
-}
-
-input ShopUpdateWithoutOptionsDataInput {
-  name: String
-  MOTD: String
-  products: ProductUpdateManyWithoutShopInput
-  newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
-  bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
-  categories: CategoryUpdateManyWithoutShopInput
-  attributes: AttributeUpdateManyWithoutShopInput
-  orders: OrderUpdateManyWithoutReceiverInput
-}
-
-input ShopUpdateWithoutOrdersDataInput {
-  name: String
-  MOTD: String
-  products: ProductUpdateManyWithoutShopInput
-  newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
-  bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
-  options: OptionUpdateManyWithoutShopInput
-  categories: CategoryUpdateManyWithoutShopInput
-  attributes: AttributeUpdateManyWithoutShopInput
 }
 
 input ShopUpdateWithoutProductsDataInput {
@@ -4533,10 +4205,6 @@ input ShopUpdateWithoutProductsDataInput {
   MOTD: String
   newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
   bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
-  options: OptionUpdateManyWithoutShopInput
-  categories: CategoryUpdateManyWithoutShopInput
-  attributes: AttributeUpdateManyWithoutShopInput
-  orders: OrderUpdateManyWithoutReceiverInput
 }
 
 input ShopUpsertNestedInput {
@@ -4544,34 +4212,14 @@ input ShopUpsertNestedInput {
   create: ShopCreateInput!
 }
 
-input ShopUpsertWithoutAttributesInput {
-  update: ShopUpdateWithoutAttributesDataInput!
-  create: ShopCreateWithoutAttributesInput!
-}
-
 input ShopUpsertWithoutBestSellerProductsInput {
   update: ShopUpdateWithoutBestSellerProductsDataInput!
   create: ShopCreateWithoutBestSellerProductsInput!
 }
 
-input ShopUpsertWithoutCategoriesInput {
-  update: ShopUpdateWithoutCategoriesDataInput!
-  create: ShopCreateWithoutCategoriesInput!
-}
-
 input ShopUpsertWithoutNewProductsInput {
   update: ShopUpdateWithoutNewProductsDataInput!
   create: ShopCreateWithoutNewProductsInput!
-}
-
-input ShopUpsertWithoutOptionsInput {
-  update: ShopUpdateWithoutOptionsDataInput!
-  create: ShopCreateWithoutOptionsInput!
-}
-
-input ShopUpsertWithoutOrdersInput {
-  update: ShopUpdateWithoutOrdersDataInput!
-  create: ShopCreateWithoutOrdersInput!
 }
 
 input ShopUpsertWithoutProductsInput {
@@ -4760,18 +4408,6 @@ input ShopWhereInput {
   bestSellerProducts_every: OrderableProductWhereInput
   bestSellerProducts_some: OrderableProductWhereInput
   bestSellerProducts_none: OrderableProductWhereInput
-  options_every: OptionWhereInput
-  options_some: OptionWhereInput
-  options_none: OptionWhereInput
-  categories_every: CategoryWhereInput
-  categories_some: CategoryWhereInput
-  categories_none: CategoryWhereInput
-  attributes_every: AttributeWhereInput
-  attributes_some: AttributeWhereInput
-  attributes_none: AttributeWhereInput
-  orders_every: OrderWhereInput
-  orders_some: OrderWhereInput
-  orders_none: OrderWhereInput
 }
 
 input ShopWhereUniqueInput {
@@ -4784,7 +4420,7 @@ type User implements Node {
   password: String!
   firstName: String
   lastName: String
-  shop(where: ShopWhereInput): Shop!
+  selectedShop(where: ShopWhereInput): Shop!
   role: Role!
   cart(where: OrderLineItemWhereInput, orderBy: OrderLineItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderLineItem!]
   orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order!]
@@ -4815,7 +4451,7 @@ input UserCreateInput {
   role: Role
   stripeCustomerId: String
   oneSignalUserId: String
-  shop: ShopCreateOneInput!
+  selectedShop: ShopCreateOneInput!
   cart: OrderLineItemCreateManyWithoutOwnerInput
   orders: OrderCreateManyWithoutOwnerInput
 }
@@ -4838,7 +4474,7 @@ input UserCreateWithoutCartInput {
   role: Role
   stripeCustomerId: String
   oneSignalUserId: String
-  shop: ShopCreateOneInput!
+  selectedShop: ShopCreateOneInput!
   orders: OrderCreateManyWithoutOwnerInput
 }
 
@@ -4850,7 +4486,7 @@ input UserCreateWithoutOrdersInput {
   role: Role
   stripeCustomerId: String
   oneSignalUserId: String
-  shop: ShopCreateOneInput!
+  selectedShop: ShopCreateOneInput!
   cart: OrderLineItemCreateManyWithoutOwnerInput
 }
 
@@ -4949,7 +4585,7 @@ input UserUpdateInput {
   role: Role
   stripeCustomerId: String
   oneSignalUserId: String
-  shop: ShopUpdateOneInput
+  selectedShop: ShopUpdateOneInput
   cart: OrderLineItemUpdateManyWithoutOwnerInput
   orders: OrderUpdateManyWithoutOwnerInput
 }
@@ -4979,7 +4615,7 @@ input UserUpdateWithoutCartDataInput {
   role: Role
   stripeCustomerId: String
   oneSignalUserId: String
-  shop: ShopUpdateOneInput
+  selectedShop: ShopUpdateOneInput
   orders: OrderUpdateManyWithoutOwnerInput
 }
 
@@ -4991,7 +4627,7 @@ input UserUpdateWithoutOrdersDataInput {
   role: Role
   stripeCustomerId: String
   oneSignalUserId: String
-  shop: ShopUpdateOneInput
+  selectedShop: ShopUpdateOneInput
   cart: OrderLineItemUpdateManyWithoutOwnerInput
 }
 
@@ -5402,7 +5038,7 @@ input UserWhereInput {
   All values not ending with the given string.
   """
   oneSignalUserId_not_ends_with: String
-  shop: ShopWhereInput
+  selectedShop: ShopWhereInput
   cart_every: OrderLineItemWhereInput
   cart_some: OrderLineItemWhereInput
   cart_none: OrderLineItemWhereInput
@@ -5925,25 +5561,31 @@ type Subscription {
 }
 `
 
-export type AttributeOrderByInput = 
+export type CategoryOrderByInput = 
   'id_ASC' |
   'id_DESC' |
-  'value_ASC' |
-  'value_DESC' |
+  'name_ASC' |
+  'name_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
   'createdAt_ASC' |
   'createdAt_DESC'
 
-export type Role = 
-  'USER' |
-  'ADMIN'
-
-export type SelectedOptionOrderByInput = 
+export type OptionOrderByInput = 
   'id_ASC' |
   'id_DESC' |
-  'deletedAt_ASC' |
-  'deletedAt_DESC' |
+  'name_ASC' |
+  'name_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
+export type OrderableProductOrderByInput = 
+  'id_ASC' |
+  'id_DESC' |
+  'position_ASC' |
+  'position_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
   'createdAt_ASC' |
@@ -5961,15 +5603,37 @@ export type ShopOrderByInput =
   'createdAt_ASC' |
   'createdAt_DESC'
 
-export type VariantOrderByInput = 
+export type AttributeOrderByInput = 
+  'id_ASC' |
+  'id_DESC' |
+  'value_ASC' |
+  'value_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
+export type OrderOrderByInput = 
+  'id_ASC' |
+  'id_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'totalPrice_ASC' |
+  'totalPrice_DESC' |
+  'totalRefunded_ASC' |
+  'totalRefunded_DESC' |
+  'totalTax_ASC' |
+  'totalTax_DESC' |
+  'orderStatus_ASC' |
+  'orderStatus_DESC'
+
+export type SelectedOptionOrderByInput = 
   'id_ASC' |
   'id_DESC' |
   'deletedAt_ASC' |
   'deletedAt_DESC' |
-  'price_ASC' |
-  'price_DESC' |
-  'available_ASC' |
-  'available_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
   'createdAt_ASC' |
@@ -5997,6 +5661,26 @@ export type UserOrderByInput =
   'createdAt_ASC' |
   'createdAt_DESC'
 
+export type OptionValueOrderByInput = 
+  'id_ASC' |
+  'id_DESC' |
+  'name_ASC' |
+  'name_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
+export type BrandOrderByInput = 
+  'id_ASC' |
+  'id_DESC' |
+  'name_ASC' |
+  'name_DESC' |
+  'updatedAt_ASC' |
+  'updatedAt_DESC' |
+  'createdAt_ASC' |
+  'createdAt_DESC'
+
 export type ProductOrderByInput = 
   'id_ASC' |
   'id_DESC' |
@@ -6019,67 +5703,25 @@ export type ProductOrderByInput =
   'createdAt_ASC' |
   'createdAt_DESC'
 
-export type OrderOrderByInput = 
+export type VariantOrderByInput = 
   'id_ASC' |
   'id_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC' |
+  'deletedAt_ASC' |
+  'deletedAt_DESC' |
+  'price_ASC' |
+  'price_DESC' |
+  'available_ASC' |
+  'available_DESC' |
   'updatedAt_ASC' |
   'updatedAt_DESC' |
-  'totalPrice_ASC' |
-  'totalPrice_DESC' |
-  'totalRefunded_ASC' |
-  'totalRefunded_DESC' |
-  'totalTax_ASC' |
-  'totalTax_DESC' |
-  'orderStatus_ASC' |
-  'orderStatus_DESC'
+  'createdAt_ASC' |
+  'createdAt_DESC'
 
 export type OrderStatus = 
   'SUBMITTED' |
   'PAID' |
   'PREPARED' |
   'FAILED'
-
-export type BrandOrderByInput = 
-  'id_ASC' |
-  'id_DESC' |
-  'name_ASC' |
-  'name_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC'
-
-export type OptionOrderByInput = 
-  'id_ASC' |
-  'id_DESC' |
-  'name_ASC' |
-  'name_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC'
-
-export type OptionValueOrderByInput = 
-  'id_ASC' |
-  'id_DESC' |
-  'name_ASC' |
-  'name_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC'
-
-export type CategoryOrderByInput = 
-  'id_ASC' |
-  'id_DESC' |
-  'name_ASC' |
-  'name_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC'
 
 export type OrderLineItemOrderByInput = 
   'id_ASC' |
@@ -6116,21 +5758,13 @@ export type MutationType =
   'UPDATED' |
   'DELETED'
 
-export type OrderableProductOrderByInput = 
-  'id_ASC' |
-  'id_DESC' |
-  'position_ASC' |
-  'position_DESC' |
-  'updatedAt_ASC' |
-  'updatedAt_DESC' |
-  'createdAt_ASC' |
-  'createdAt_DESC'
+export type Role = 
+  'USER' |
+  'ADMIN'
 
-export interface OrderableProductCreateInput {
-  position: Int
-  product: ProductCreateOneWithoutOrderablesInput
-  shopBestSeller?: ShopCreateOneWithoutBestSellerProductsInput
-  shopNewProduct?: ShopCreateOneWithoutNewProductsInput
+export interface UserCreateOneWithoutCartInput {
+  create?: UserCreateWithoutCartInput
+  connect?: UserWhereUniqueInput
 }
 
 export interface BrandWhereInput {
@@ -6169,10 +5803,151 @@ export interface BrandWhereInput {
   shop?: ShopWhereInput
 }
 
-export interface OptionValueUpsertWithWhereUniqueNestedInput {
-  where: OptionValueWhereUniqueInput
-  update: OptionValueUpdateDataInput
-  create: OptionValueCreateInput
+export interface OptionCreateOneInput {
+  create?: OptionCreateInput
+  connect?: OptionWhereUniqueInput
+}
+
+export interface ProductUpsertWithWhereUniqueWithoutShopInput {
+  where: ProductWhereUniqueInput
+  update: ProductUpdateWithoutShopDataInput
+  create: ProductCreateWithoutShopInput
+}
+
+export interface OptionValueCreateOneInput {
+  create?: OptionValueCreateInput
+  connect?: OptionValueWhereUniqueInput
+}
+
+export interface OptionUpdateManyWithoutCategoryInput {
+  create?: OptionCreateWithoutCategoryInput[] | OptionCreateWithoutCategoryInput
+  connect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
+  disconnect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
+  delete?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
+  update?: OptionUpdateWithWhereUniqueWithoutCategoryInput[] | OptionUpdateWithWhereUniqueWithoutCategoryInput
+  upsert?: OptionUpsertWithWhereUniqueWithoutCategoryInput[] | OptionUpsertWithWhereUniqueWithoutCategoryInput
+}
+
+export interface AttributeCreateManyWithoutProductsInput {
+  create?: AttributeCreateWithoutProductsInput[] | AttributeCreateWithoutProductsInput
+  connect?: AttributeWhereUniqueInput[] | AttributeWhereUniqueInput
+}
+
+export interface ShopSubscriptionWhereInput {
+  AND?: ShopSubscriptionWhereInput[] | ShopSubscriptionWhereInput
+  OR?: ShopSubscriptionWhereInput[] | ShopSubscriptionWhereInput
+  NOT?: ShopSubscriptionWhereInput[] | ShopSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: ShopWhereInput
+}
+
+export interface AttributeCreateWithoutProductsInput {
+  value: String
+  category: CategoryCreateOneInput
+  shop: ShopCreateOneInput
+}
+
+export interface OrderSubscriptionWhereInput {
+  AND?: OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput
+  OR?: OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput
+  NOT?: OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: OrderWhereInput
+}
+
+export interface OrderableProductCreateManyWithoutProductInput {
+  create?: OrderableProductCreateWithoutProductInput[] | OrderableProductCreateWithoutProductInput
+  connect?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
+}
+
+export interface UserSubscriptionWhereInput {
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: UserWhereInput
+}
+
+export interface OrderableProductCreateWithoutProductInput {
+  position: Int
+  shopBestSeller?: ShopCreateOneWithoutBestSellerProductsInput
+  shopNewProduct?: ShopCreateOneWithoutNewProductsInput
+}
+
+export interface ProductSubscriptionWhereInput {
+  AND?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput
+  OR?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput
+  NOT?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: ProductWhereInput
+}
+
+export interface ShopCreateOneWithoutBestSellerProductsInput {
+  create?: ShopCreateWithoutBestSellerProductsInput
+  connect?: ShopWhereUniqueInput
+}
+
+export interface VariantSubscriptionWhereInput {
+  AND?: VariantSubscriptionWhereInput[] | VariantSubscriptionWhereInput
+  OR?: VariantSubscriptionWhereInput[] | VariantSubscriptionWhereInput
+  NOT?: VariantSubscriptionWhereInput[] | VariantSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: VariantWhereInput
+}
+
+export interface ShopCreateWithoutBestSellerProductsInput {
+  name: String
+  MOTD?: String
+  products?: ProductCreateManyWithoutShopInput
+  newProducts?: OrderableProductCreateManyWithoutShopNewProductInput
+}
+
+export interface SelectedOptionSubscriptionWhereInput {
+  AND?: SelectedOptionSubscriptionWhereInput[] | SelectedOptionSubscriptionWhereInput
+  OR?: SelectedOptionSubscriptionWhereInput[] | SelectedOptionSubscriptionWhereInput
+  NOT?: SelectedOptionSubscriptionWhereInput[] | SelectedOptionSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: SelectedOptionWhereInput
+}
+
+export interface OrderableProductCreateManyWithoutShopNewProductInput {
+  create?: OrderableProductCreateWithoutShopNewProductInput[] | OrderableProductCreateWithoutShopNewProductInput
+  connect?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
+}
+
+export interface OptionValueSubscriptionWhereInput {
+  AND?: OptionValueSubscriptionWhereInput[] | OptionValueSubscriptionWhereInput
+  OR?: OptionValueSubscriptionWhereInput[] | OptionValueSubscriptionWhereInput
+  NOT?: OptionValueSubscriptionWhereInput[] | OptionValueSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: OptionValueWhereInput
+}
+
+export interface OrderableProductCreateWithoutShopNewProductInput {
+  position: Int
+  product: ProductCreateOneWithoutOrderablesInput
+  shopBestSeller?: ShopCreateOneWithoutBestSellerProductsInput
 }
 
 export interface UserWhereInput {
@@ -6281,7 +6056,7 @@ export interface UserWhereInput {
   oneSignalUserId_not_starts_with?: String
   oneSignalUserId_ends_with?: String
   oneSignalUserId_not_ends_with?: String
-  shop?: ShopWhereInput
+  selectedShop?: ShopWhereInput
   cart_every?: OrderLineItemWhereInput
   cart_some?: OrderLineItemWhereInput
   cart_none?: OrderLineItemWhereInput
@@ -6290,18 +6065,15 @@ export interface UserWhereInput {
   orders_none?: OrderWhereInput
 }
 
-export interface ShopUpdateOneWithoutOptionsInput {
-  create?: ShopCreateWithoutOptionsInput
-  connect?: ShopWhereUniqueInput
-  delete?: Boolean
-  update?: ShopUpdateWithoutOptionsDataInput
-  upsert?: ShopUpsertWithoutOptionsInput
+export interface ProductCreateOneWithoutOrderablesInput {
+  create?: ProductCreateWithoutOrderablesInput
+  connect?: ProductWhereUniqueInput
 }
 
-export interface OrderWhereInput {
-  AND?: OrderWhereInput[] | OrderWhereInput
-  OR?: OrderWhereInput[] | OrderWhereInput
-  NOT?: OrderWhereInput[] | OrderWhereInput
+export interface OrderLineItemWhereInput {
+  AND?: OrderLineItemWhereInput[] | OrderLineItemWhereInput
+  OR?: OrderLineItemWhereInput[] | OrderLineItemWhereInput
+  NOT?: OrderLineItemWhereInput[] | OrderLineItemWhereInput
   id?: ID_Input
   id_not?: ID_Input
   id_in?: ID_Input[] | ID_Input
@@ -6316,132 +6088,758 @@ export interface OrderWhereInput {
   id_not_starts_with?: ID_Input
   id_ends_with?: ID_Input
   id_not_ends_with?: ID_Input
-  createdAt?: DateTime
-  createdAt_not?: DateTime
-  createdAt_in?: DateTime[] | DateTime
-  createdAt_not_in?: DateTime[] | DateTime
-  createdAt_lt?: DateTime
-  createdAt_lte?: DateTime
-  createdAt_gt?: DateTime
-  createdAt_gte?: DateTime
-  updatedAt?: DateTime
-  updatedAt_not?: DateTime
-  updatedAt_in?: DateTime[] | DateTime
-  updatedAt_not_in?: DateTime[] | DateTime
-  updatedAt_lt?: DateTime
-  updatedAt_lte?: DateTime
-  updatedAt_gt?: DateTime
-  updatedAt_gte?: DateTime
-  totalPrice?: Float
-  totalPrice_not?: Float
-  totalPrice_in?: Float[] | Float
-  totalPrice_not_in?: Float[] | Float
-  totalPrice_lt?: Float
-  totalPrice_lte?: Float
-  totalPrice_gt?: Float
-  totalPrice_gte?: Float
-  totalRefunded?: Float
-  totalRefunded_not?: Float
-  totalRefunded_in?: Float[] | Float
-  totalRefunded_not_in?: Float[] | Float
-  totalRefunded_lt?: Float
-  totalRefunded_lte?: Float
-  totalRefunded_gt?: Float
-  totalRefunded_gte?: Float
-  totalTax?: Float
-  totalTax_not?: Float
-  totalTax_in?: Float[] | Float
-  totalTax_not_in?: Float[] | Float
-  totalTax_lt?: Float
-  totalTax_lte?: Float
-  totalTax_gt?: Float
-  totalTax_gte?: Float
-  orderStatus?: OrderStatus
-  orderStatus_not?: OrderStatus
-  orderStatus_in?: OrderStatus[] | OrderStatus
-  orderStatus_not_in?: OrderStatus[] | OrderStatus
+  deletedAt?: DateTime
+  deletedAt_not?: DateTime
+  deletedAt_in?: DateTime[] | DateTime
+  deletedAt_not_in?: DateTime[] | DateTime
+  deletedAt_lt?: DateTime
+  deletedAt_lte?: DateTime
+  deletedAt_gt?: DateTime
+  deletedAt_gte?: DateTime
+  quantity?: Int
+  quantity_not?: Int
+  quantity_in?: Int[] | Int
+  quantity_not_in?: Int[] | Int
+  quantity_lt?: Int
+  quantity_lte?: Int
+  quantity_gt?: Int
+  quantity_gte?: Int
+  variant?: VariantWhereInput
   owner?: UserWhereInput
-  receiver?: ShopWhereInput
-  lineItems_every?: OrderLineItemWhereInput
-  lineItems_some?: OrderLineItemWhereInput
-  lineItems_none?: OrderLineItemWhereInput
 }
 
-export interface ShopCreateOneWithoutBestSellerProductsInput {
-  create?: ShopCreateWithoutBestSellerProductsInput
+export interface ProductCreateWithoutOrderablesInput {
+  deletedAt?: DateTime
+  name: String
+  description?: String
+  SKU?: String
+  displayPrice: Float
+  available: Boolean
+  imageUrl?: String
+  shop: ShopCreateOneWithoutProductsInput
+  brand: BrandCreateOneInput
+  category: CategoryCreateOneInput
+  options?: OptionCreateManyInput
+  unavailableOptionsValues?: OptionValueCreateManyInput
+  variants?: VariantCreateManyWithoutProductInput
+  attributes?: AttributeCreateManyWithoutProductsInput
+}
+
+export interface CategorySubscriptionWhereInput {
+  AND?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput
+  OR?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput
+  NOT?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: CategoryWhereInput
+}
+
+export interface ShopCreateOneWithoutProductsInput {
+  create?: ShopCreateWithoutProductsInput
   connect?: ShopWhereUniqueInput
 }
 
-export interface OrderLineItemUpdateManyInput {
-  create?: OrderLineItemCreateInput[] | OrderLineItemCreateInput
-  connect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
-  disconnect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
-  delete?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
-  update?: OrderLineItemUpdateWithWhereUniqueNestedInput[] | OrderLineItemUpdateWithWhereUniqueNestedInput
-  upsert?: OrderLineItemUpsertWithWhereUniqueNestedInput[] | OrderLineItemUpsertWithWhereUniqueNestedInput
+export interface BrandSubscriptionWhereInput {
+  AND?: BrandSubscriptionWhereInput[] | BrandSubscriptionWhereInput
+  OR?: BrandSubscriptionWhereInput[] | BrandSubscriptionWhereInput
+  NOT?: BrandSubscriptionWhereInput[] | BrandSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: BrandWhereInput
 }
 
-export interface ShopCreateWithoutBestSellerProductsInput {
+export interface ShopCreateWithoutProductsInput {
   name: String
   MOTD?: String
-  products?: ProductCreateManyWithoutShopInput
   newProducts?: OrderableProductCreateManyWithoutShopNewProductInput
-  options?: OptionCreateManyWithoutShopInput
-  categories?: CategoryCreateManyWithoutShopInput
-  attributes?: AttributeCreateManyWithoutShopInput
-  orders?: OrderCreateManyWithoutReceiverInput
+  bestSellerProducts?: OrderableProductCreateManyWithoutShopBestSellerInput
 }
 
-export interface ShopUpdateWithoutOptionsDataInput {
+export interface OrderableProductUpdateInput {
+  position?: Int
+  product?: ProductUpdateOneWithoutOrderablesInput
+  shopBestSeller?: ShopUpdateOneWithoutBestSellerProductsInput
+  shopNewProduct?: ShopUpdateOneWithoutNewProductsInput
+}
+
+export interface OrderableProductCreateManyWithoutShopBestSellerInput {
+  create?: OrderableProductCreateWithoutShopBestSellerInput[] | OrderableProductCreateWithoutShopBestSellerInput
+  connect?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
+}
+
+export interface ShopUpdateInput {
   name?: String
   MOTD?: String
   products?: ProductUpdateManyWithoutShopInput
   newProducts?: OrderableProductUpdateManyWithoutShopNewProductInput
   bestSellerProducts?: OrderableProductUpdateManyWithoutShopBestSellerInput
-  categories?: CategoryUpdateManyWithoutShopInput
-  attributes?: AttributeUpdateManyWithoutShopInput
-  orders?: OrderUpdateManyWithoutReceiverInput
 }
 
-export interface OrderCreateManyWithoutReceiverInput {
-  create?: OrderCreateWithoutReceiverInput[] | OrderCreateWithoutReceiverInput
+export interface OrderableProductCreateWithoutShopBestSellerInput {
+  position: Int
+  product: ProductCreateOneWithoutOrderablesInput
+  shopNewProduct?: ShopCreateOneWithoutNewProductsInput
+}
+
+export interface OptionWhereInput {
+  AND?: OptionWhereInput[] | OptionWhereInput
+  OR?: OptionWhereInput[] | OptionWhereInput
+  NOT?: OptionWhereInput[] | OptionWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  values_every?: OptionValueWhereInput
+  values_some?: OptionValueWhereInput
+  values_none?: OptionValueWhereInput
+  category?: CategoryWhereInput
+  shop?: ShopWhereInput
+}
+
+export interface ShopCreateOneWithoutNewProductsInput {
+  create?: ShopCreateWithoutNewProductsInput
+  connect?: ShopWhereUniqueInput
+}
+
+export interface CategoryWhereInput {
+  AND?: CategoryWhereInput[] | CategoryWhereInput
+  OR?: CategoryWhereInput[] | CategoryWhereInput
+  NOT?: CategoryWhereInput[] | CategoryWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
+  options_every?: OptionWhereInput
+  options_some?: OptionWhereInput
+  options_none?: OptionWhereInput
+  shop?: ShopWhereInput
+}
+
+export interface ShopCreateWithoutNewProductsInput {
+  name: String
+  MOTD?: String
+  products?: ProductCreateManyWithoutShopInput
+  bestSellerProducts?: OrderableProductCreateManyWithoutShopBestSellerInput
+}
+
+export interface CategoryWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface AttributeCreateInput {
+  value: String
+  category: CategoryCreateOneInput
+  shop: ShopCreateOneInput
+  products?: ProductCreateManyWithoutAttributesInput
+}
+
+export interface OptionWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface ProductCreateManyWithoutAttributesInput {
+  create?: ProductCreateWithoutAttributesInput[] | ProductCreateWithoutAttributesInput
+  connect?: ProductWhereUniqueInput[] | ProductWhereUniqueInput
+}
+
+export interface SelectedOptionWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface ProductCreateWithoutAttributesInput {
+  deletedAt?: DateTime
+  name: String
+  description?: String
+  SKU?: String
+  displayPrice: Float
+  available: Boolean
+  imageUrl?: String
+  shop: ShopCreateOneWithoutProductsInput
+  brand: BrandCreateOneInput
+  category: CategoryCreateOneInput
+  options?: OptionCreateManyInput
+  unavailableOptionsValues?: OptionValueCreateManyInput
+  variants?: VariantCreateManyWithoutProductInput
+  orderables?: OrderableProductCreateManyWithoutProductInput
+}
+
+export interface ProductWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface SelectedOptionCreateInput {
+  deletedAt?: DateTime
+  option: OptionCreateOneInput
+  variant: VariantCreateOneWithoutSelectedOptionsInput
+  value: OptionValueCreateOneInput
+}
+
+export interface FileWhereUniqueInput {
+  id?: ID_Input
+  url?: String
+  secret?: String
+}
+
+export interface VariantCreateOneWithoutSelectedOptionsInput {
+  create?: VariantCreateWithoutSelectedOptionsInput
+  connect?: VariantWhereUniqueInput
+}
+
+export interface OrderLineItemWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface VariantCreateWithoutSelectedOptionsInput {
+  deletedAt?: DateTime
+  price: Float
+  available: Boolean
+  product?: ProductCreateOneWithoutVariantsInput
+}
+
+export interface OrderableProductWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface ProductCreateOneWithoutVariantsInput {
+  create?: ProductCreateWithoutVariantsInput
+  connect?: ProductWhereUniqueInput
+}
+
+export interface UserUpdateWithoutOrdersDataInput {
+  email?: String
+  password?: String
+  firstName?: String
+  lastName?: String
+  role?: Role
+  stripeCustomerId?: String
+  oneSignalUserId?: String
+  selectedShop?: ShopUpdateOneInput
+  cart?: OrderLineItemUpdateManyWithoutOwnerInput
+}
+
+export interface ProductCreateWithoutVariantsInput {
+  deletedAt?: DateTime
+  name: String
+  description?: String
+  SKU?: String
+  displayPrice: Float
+  available: Boolean
+  imageUrl?: String
+  shop: ShopCreateOneWithoutProductsInput
+  brand: BrandCreateOneInput
+  category: CategoryCreateOneInput
+  options?: OptionCreateManyInput
+  unavailableOptionsValues?: OptionValueCreateManyInput
+  attributes?: AttributeCreateManyWithoutProductsInput
+  orderables?: OrderableProductCreateManyWithoutProductInput
+}
+
+export interface OrderUpdateInput {
+  totalPrice?: Float
+  totalRefunded?: Float
+  totalTax?: Float
+  orderStatus?: OrderStatus
+  owner?: UserUpdateOneWithoutOrdersInput
+  receiver?: ShopUpdateOneInput
+  lineItems?: OrderLineItemUpdateManyInput
+}
+
+export interface VariantCreateInput {
+  deletedAt?: DateTime
+  price: Float
+  available: Boolean
+  selectedOptions?: SelectedOptionCreateManyWithoutVariantInput
+  product?: ProductCreateOneWithoutVariantsInput
+}
+
+export interface OrderUpsertWithWhereUniqueWithoutOwnerInput {
+  where: OrderWhereUniqueInput
+  update: OrderUpdateWithoutOwnerDataInput
+  create: OrderCreateWithoutOwnerInput
+}
+
+export interface ProductCreateInput {
+  deletedAt?: DateTime
+  name: String
+  description?: String
+  SKU?: String
+  displayPrice: Float
+  available: Boolean
+  imageUrl?: String
+  shop: ShopCreateOneWithoutProductsInput
+  brand: BrandCreateOneInput
+  category: CategoryCreateOneInput
+  options?: OptionCreateManyInput
+  unavailableOptionsValues?: OptionValueCreateManyInput
+  variants?: VariantCreateManyWithoutProductInput
+  attributes?: AttributeCreateManyWithoutProductsInput
+  orderables?: OrderableProductCreateManyWithoutProductInput
+}
+
+export interface UserUpsertWithoutCartInput {
+  update: UserUpdateWithoutCartDataInput
+  create: UserCreateWithoutCartInput
+}
+
+export interface UserCreateInput {
+  email: String
+  password: String
+  firstName?: String
+  lastName?: String
+  role?: Role
+  stripeCustomerId?: String
+  oneSignalUserId?: String
+  selectedShop: ShopCreateOneInput
+  cart?: OrderLineItemCreateManyWithoutOwnerInput
+  orders?: OrderCreateManyWithoutOwnerInput
+}
+
+export interface UserUpdateOneWithoutCartInput {
+  create?: UserCreateWithoutCartInput
+  connect?: UserWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: UserUpdateWithoutCartDataInput
+  upsert?: UserUpsertWithoutCartInput
+}
+
+export interface OrderLineItemCreateManyWithoutOwnerInput {
+  create?: OrderLineItemCreateWithoutOwnerInput[] | OrderLineItemCreateWithoutOwnerInput
+  connect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
+}
+
+export interface OrderLineItemUpdateWithWhereUniqueNestedInput {
+  where: OrderLineItemWhereUniqueInput
+  data: OrderLineItemUpdateDataInput
+}
+
+export interface OrderLineItemCreateWithoutOwnerInput {
+  deletedAt?: DateTime
+  quantity: Int
+  variant?: VariantCreateOneInput
+}
+
+export interface OrderUpdateWithoutOwnerDataInput {
+  totalPrice?: Float
+  totalRefunded?: Float
+  totalTax?: Float
+  orderStatus?: OrderStatus
+  receiver?: ShopUpdateOneInput
+  lineItems?: OrderLineItemUpdateManyInput
+}
+
+export interface VariantCreateOneInput {
+  create?: VariantCreateInput
+  connect?: VariantWhereUniqueInput
+}
+
+export interface OrderUpdateManyWithoutOwnerInput {
+  create?: OrderCreateWithoutOwnerInput[] | OrderCreateWithoutOwnerInput
+  connect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput
+  disconnect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput
+  delete?: OrderWhereUniqueInput[] | OrderWhereUniqueInput
+  update?: OrderUpdateWithWhereUniqueWithoutOwnerInput[] | OrderUpdateWithWhereUniqueWithoutOwnerInput
+  upsert?: OrderUpsertWithWhereUniqueWithoutOwnerInput[] | OrderUpsertWithWhereUniqueWithoutOwnerInput
+}
+
+export interface OrderCreateManyWithoutOwnerInput {
+  create?: OrderCreateWithoutOwnerInput[] | OrderCreateWithoutOwnerInput
   connect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput
 }
 
-export interface ShopSubscriptionWhereInput {
-  AND?: ShopSubscriptionWhereInput[] | ShopSubscriptionWhereInput
-  OR?: ShopSubscriptionWhereInput[] | ShopSubscriptionWhereInput
-  NOT?: ShopSubscriptionWhereInput[] | ShopSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: ShopWhereInput
+export interface VariantUpsertNestedInput {
+  update: VariantUpdateDataInput
+  create: VariantCreateInput
 }
 
-export interface OrderCreateWithoutReceiverInput {
+export interface OrderCreateWithoutOwnerInput {
+  totalPrice: Float
+  totalRefunded: Float
+  totalTax: Float
+  orderStatus: OrderStatus
+  receiver: ShopCreateOneInput
+  lineItems?: OrderLineItemCreateManyInput
+}
+
+export interface VariantUpdateOneInput {
+  create?: VariantCreateInput
+  connect?: VariantWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: VariantUpdateDataInput
+  upsert?: VariantUpsertNestedInput
+}
+
+export interface OrderLineItemCreateManyInput {
+  create?: OrderLineItemCreateInput[] | OrderLineItemCreateInput
+  connect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
+}
+
+export interface OrderLineItemUpdateWithWhereUniqueWithoutOwnerInput {
+  where: OrderLineItemWhereUniqueInput
+  data: OrderLineItemUpdateWithoutOwnerDataInput
+}
+
+export interface OrderLineItemCreateInput {
+  deletedAt?: DateTime
+  quantity: Int
+  variant?: VariantCreateOneInput
+  owner?: UserCreateOneWithoutCartInput
+}
+
+export interface UserUpdateInput {
+  email?: String
+  password?: String
+  firstName?: String
+  lastName?: String
+  role?: Role
+  stripeCustomerId?: String
+  oneSignalUserId?: String
+  selectedShop?: ShopUpdateOneInput
+  cart?: OrderLineItemUpdateManyWithoutOwnerInput
+  orders?: OrderUpdateManyWithoutOwnerInput
+}
+
+export interface ShopUpsertNestedInput {
+  update: ShopUpdateDataInput
+  create: ShopCreateInput
+}
+
+export interface VariantUpdateInput {
+  deletedAt?: DateTime
+  price?: Float
+  available?: Boolean
+  selectedOptions?: SelectedOptionUpdateManyWithoutVariantInput
+  product?: ProductUpdateOneWithoutVariantsInput
+}
+
+export interface UserCreateWithoutCartInput {
+  email: String
+  password: String
+  firstName?: String
+  lastName?: String
+  role?: Role
+  stripeCustomerId?: String
+  oneSignalUserId?: String
+  selectedShop: ShopCreateOneInput
+  orders?: OrderCreateManyWithoutOwnerInput
+}
+
+export interface ProductUpsertWithoutVariantsInput {
+  update: ProductUpdateWithoutVariantsDataInput
+  create: ProductCreateWithoutVariantsInput
+}
+
+export interface FileCreateInput {
+  name: String
+  url: String
+  contentType: String
+  secret: String
+  size: Int
+}
+
+export interface ProductUpdateOneWithoutVariantsInput {
+  create?: ProductCreateWithoutVariantsInput
+  connect?: ProductWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: ProductUpdateWithoutVariantsDataInput
+  upsert?: ProductUpsertWithoutVariantsInput
+}
+
+export interface OrderCreateInput {
   totalPrice: Float
   totalRefunded: Float
   totalTax: Float
   orderStatus: OrderStatus
   owner: UserCreateOneWithoutOrdersInput
+  receiver: ShopCreateOneInput
   lineItems?: OrderLineItemCreateManyInput
 }
 
-export interface OrderLineItemSubscriptionWhereInput {
-  AND?: OrderLineItemSubscriptionWhereInput[] | OrderLineItemSubscriptionWhereInput
-  OR?: OrderLineItemSubscriptionWhereInput[] | OrderLineItemSubscriptionWhereInput
-  NOT?: OrderLineItemSubscriptionWhereInput[] | OrderLineItemSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: OrderLineItemWhereInput
+export interface VariantUpdateOneWithoutSelectedOptionsInput {
+  create?: VariantCreateWithoutSelectedOptionsInput
+  connect?: VariantWhereUniqueInput
+  delete?: Boolean
+  update?: VariantUpdateWithoutSelectedOptionsDataInput
+  upsert?: VariantUpsertWithoutSelectedOptionsInput
 }
 
 export interface UserCreateOneWithoutOrdersInput {
   create?: UserCreateWithoutOrdersInput
   connect?: UserWhereUniqueInput
+}
+
+export interface OptionValueUpdateInput {
+  name?: String
+}
+
+export interface UserCreateWithoutOrdersInput {
+  email: String
+  password: String
+  firstName?: String
+  lastName?: String
+  role?: Role
+  stripeCustomerId?: String
+  oneSignalUserId?: String
+  selectedShop: ShopCreateOneInput
+  cart?: OrderLineItemCreateManyWithoutOwnerInput
+}
+
+export interface ProductUpsertWithWhereUniqueWithoutAttributesInput {
+  where: ProductWhereUniqueInput
+  update: ProductUpdateWithoutAttributesDataInput
+  create: ProductCreateWithoutAttributesInput
+}
+
+export interface OrderableProductCreateInput {
+  position: Int
+  product: ProductCreateOneWithoutOrderablesInput
+  shopBestSeller?: ShopCreateOneWithoutBestSellerProductsInput
+  shopNewProduct?: ShopCreateOneWithoutNewProductsInput
+}
+
+export interface ProductUpdateWithWhereUniqueWithoutAttributesInput {
+  where: ProductWhereUniqueInput
+  data: ProductUpdateWithoutAttributesDataInput
+}
+
+export interface BrandUpdateInput {
+  name?: String
+  category?: CategoryUpdateOneInput
+  shop?: ShopUpdateOneInput
+}
+
+export interface AttributeUpdateInput {
+  value?: String
+  category?: CategoryUpdateOneInput
+  shop?: ShopUpdateOneInput
+  products?: ProductUpdateManyWithoutAttributesInput
+}
+
+export interface CategoryUpdateOneInput {
+  create?: CategoryCreateInput
+  connect?: CategoryWhereUniqueInput
+  delete?: Boolean
+  update?: CategoryUpdateDataInput
+  upsert?: CategoryUpsertNestedInput
+}
+
+export interface CategoryUpsertNestedInput {
+  update: CategoryUpdateDataInput
+  create: CategoryCreateInput
+}
+
+export interface CategoryUpdateDataInput {
+  name?: String
+  options?: OptionUpdateManyWithoutCategoryInput
+  shop?: ShopUpdateOneInput
+}
+
+export interface BrandCreateInput {
+  name: String
+  category: CategoryCreateOneInput
+  shop: ShopCreateOneInput
+}
+
+export interface CategoryCreateInput {
+  name: String
+  options?: OptionCreateManyWithoutCategoryInput
+  shop: ShopCreateOneInput
+}
+
+export interface OptionCreateWithoutCategoryInput {
+  name: String
+  values?: OptionValueCreateManyInput
+  shop: ShopCreateOneInput
+}
+
+export interface OptionUpdateWithWhereUniqueWithoutCategoryInput {
+  where: OptionWhereUniqueInput
+  data: OptionUpdateWithoutCategoryDataInput
+}
+
+export interface OptionValueCreateInput {
+  name: String
+}
+
+export interface OptionUpdateWithoutCategoryDataInput {
+  name?: String
+  values?: OptionValueUpdateManyInput
+  shop?: ShopUpdateOneInput
+}
+
+export interface ShopCreateInput {
+  name: String
+  MOTD?: String
+  products?: ProductCreateManyWithoutShopInput
+  newProducts?: OrderableProductCreateManyWithoutShopNewProductInput
+  bestSellerProducts?: OrderableProductCreateManyWithoutShopBestSellerInput
+}
+
+export interface OptionValueUpdateManyInput {
+  create?: OptionValueCreateInput[] | OptionValueCreateInput
+  connect?: OptionValueWhereUniqueInput[] | OptionValueWhereUniqueInput
+  disconnect?: OptionValueWhereUniqueInput[] | OptionValueWhereUniqueInput
+  delete?: OptionValueWhereUniqueInput[] | OptionValueWhereUniqueInput
+  update?: OptionValueUpdateWithWhereUniqueNestedInput[] | OptionValueUpdateWithWhereUniqueNestedInput
+  upsert?: OptionValueUpsertWithWhereUniqueNestedInput[] | OptionValueUpsertWithWhereUniqueNestedInput
+}
+
+export interface ProductCreateWithoutShopInput {
+  deletedAt?: DateTime
+  name: String
+  description?: String
+  SKU?: String
+  displayPrice: Float
+  available: Boolean
+  imageUrl?: String
+  brand: BrandCreateOneInput
+  category: CategoryCreateOneInput
+  options?: OptionCreateManyInput
+  unavailableOptionsValues?: OptionValueCreateManyInput
+  variants?: VariantCreateManyWithoutProductInput
+  attributes?: AttributeCreateManyWithoutProductsInput
+  orderables?: OrderableProductCreateManyWithoutProductInput
+}
+
+export interface OptionValueUpdateWithWhereUniqueNestedInput {
+  where: OptionValueWhereUniqueInput
+  data: OptionValueUpdateDataInput
+}
+
+export interface OptionCreateManyInput {
+  create?: OptionCreateInput[] | OptionCreateInput
+  connect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
+}
+
+export interface OptionValueUpdateDataInput {
+  name?: String
+}
+
+export interface CategoryCreateOneWithoutOptionsInput {
+  create?: CategoryCreateWithoutOptionsInput
+  connect?: CategoryWhereUniqueInput
+}
+
+export interface OptionValueUpsertWithWhereUniqueNestedInput {
+  where: OptionValueWhereUniqueInput
+  update: OptionValueUpdateDataInput
+  create: OptionValueCreateInput
+}
+
+export interface VariantCreateManyWithoutProductInput {
+  create?: VariantCreateWithoutProductInput[] | VariantCreateWithoutProductInput
+  connect?: VariantWhereUniqueInput[] | VariantWhereUniqueInput
+}
+
+export interface ShopUpdateOneInput {
+  create?: ShopCreateInput
+  connect?: ShopWhereUniqueInput
+  delete?: Boolean
+  update?: ShopUpdateDataInput
+  upsert?: ShopUpsertNestedInput
+}
+
+export interface SelectedOptionCreateManyWithoutVariantInput {
+  create?: SelectedOptionCreateWithoutVariantInput[] | SelectedOptionCreateWithoutVariantInput
+  connect?: SelectedOptionWhereUniqueInput[] | SelectedOptionWhereUniqueInput
+}
+
+export interface ShopUpdateDataInput {
+  name?: String
+  MOTD?: String
+  products?: ProductUpdateManyWithoutShopInput
+  newProducts?: OrderableProductUpdateManyWithoutShopNewProductInput
+  bestSellerProducts?: OrderableProductUpdateManyWithoutShopBestSellerInput
+}
+
+export interface OrderableProductSubscriptionWhereInput {
+  AND?: OrderableProductSubscriptionWhereInput[] | OrderableProductSubscriptionWhereInput
+  OR?: OrderableProductSubscriptionWhereInput[] | OrderableProductSubscriptionWhereInput
+  NOT?: OrderableProductSubscriptionWhereInput[] | OrderableProductSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: OrderableProductWhereInput
+}
+
+export interface ProductUpdateManyWithoutShopInput {
+  create?: ProductCreateWithoutShopInput[] | ProductCreateWithoutShopInput
+  connect?: ProductWhereUniqueInput[] | ProductWhereUniqueInput
+  disconnect?: ProductWhereUniqueInput[] | ProductWhereUniqueInput
+  delete?: ProductWhereUniqueInput[] | ProductWhereUniqueInput
+  update?: ProductUpdateWithWhereUniqueWithoutShopInput[] | ProductUpdateWithWhereUniqueWithoutShopInput
+  upsert?: ProductUpsertWithWhereUniqueWithoutShopInput[] | ProductUpsertWithWhereUniqueWithoutShopInput
+}
+
+export interface FileSubscriptionWhereInput {
+  AND?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput
+  OR?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput
+  NOT?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: FileWhereInput
+}
+
+export interface ProductUpdateWithWhereUniqueWithoutShopInput {
+  where: ProductWhereUniqueInput
+  data: ProductUpdateWithoutShopDataInput
 }
 
 export interface AttributeWhereInput {
@@ -6483,52 +6881,21 @@ export interface AttributeWhereInput {
   products_none?: ProductWhereInput
 }
 
-export interface UserCreateWithoutOrdersInput {
-  email: String
-  password: String
-  firstName?: String
-  lastName?: String
-  role?: Role
-  stripeCustomerId?: String
-  oneSignalUserId?: String
-  shop: ShopCreateOneInput
-  cart?: OrderLineItemCreateManyWithoutOwnerInput
-}
-
-export interface SelectedOptionWhereInput {
-  AND?: SelectedOptionWhereInput[] | SelectedOptionWhereInput
-  OR?: SelectedOptionWhereInput[] | SelectedOptionWhereInput
-  NOT?: SelectedOptionWhereInput[] | SelectedOptionWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
+export interface ProductUpdateWithoutShopDataInput {
   deletedAt?: DateTime
-  deletedAt_not?: DateTime
-  deletedAt_in?: DateTime[] | DateTime
-  deletedAt_not_in?: DateTime[] | DateTime
-  deletedAt_lt?: DateTime
-  deletedAt_lte?: DateTime
-  deletedAt_gt?: DateTime
-  deletedAt_gte?: DateTime
-  option?: OptionWhereInput
-  variant?: VariantWhereInput
-  value?: OptionValueWhereInput
-}
-
-export interface ShopCreateOneInput {
-  create?: ShopCreateInput
-  connect?: ShopWhereUniqueInput
+  name?: String
+  description?: String
+  SKU?: String
+  displayPrice?: Float
+  available?: Boolean
+  imageUrl?: String
+  brand?: BrandUpdateOneInput
+  category?: CategoryUpdateOneInput
+  options?: OptionUpdateManyInput
+  unavailableOptionsValues?: OptionValueUpdateManyInput
+  variants?: VariantUpdateManyWithoutProductInput
+  attributes?: AttributeUpdateManyWithoutProductsInput
+  orderables?: OrderableProductUpdateManyWithoutProductInput
 }
 
 export interface VariantWhereInput {
@@ -6573,49 +6940,12 @@ export interface VariantWhereInput {
   product?: ProductWhereInput
 }
 
-export interface ShopCreateInput {
-  name: String
-  MOTD?: String
-  products?: ProductCreateManyWithoutShopInput
-  newProducts?: OrderableProductCreateManyWithoutShopNewProductInput
-  bestSellerProducts?: OrderableProductCreateManyWithoutShopBestSellerInput
-  options?: OptionCreateManyWithoutShopInput
-  categories?: CategoryCreateManyWithoutShopInput
-  attributes?: AttributeCreateManyWithoutShopInput
-  orders?: OrderCreateManyWithoutReceiverInput
-}
-
-export interface VariantSubscriptionWhereInput {
-  AND?: VariantSubscriptionWhereInput[] | VariantSubscriptionWhereInput
-  OR?: VariantSubscriptionWhereInput[] | VariantSubscriptionWhereInput
-  NOT?: VariantSubscriptionWhereInput[] | VariantSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: VariantWhereInput
-}
-
-export interface OrderLineItemCreateManyWithoutOwnerInput {
-  create?: OrderLineItemCreateWithoutOwnerInput[] | OrderLineItemCreateWithoutOwnerInput
-  connect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
-}
-
-export interface OptionValueSubscriptionWhereInput {
-  AND?: OptionValueSubscriptionWhereInput[] | OptionValueSubscriptionWhereInput
-  OR?: OptionValueSubscriptionWhereInput[] | OptionValueSubscriptionWhereInput
-  NOT?: OptionValueSubscriptionWhereInput[] | OptionValueSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: OptionValueWhereInput
-}
-
-export interface OrderLineItemCreateWithoutOwnerInput {
-  deletedAt?: DateTime
-  quantity: Int
-  variant?: VariantCreateOneInput
+export interface BrandUpdateOneInput {
+  create?: BrandCreateInput
+  connect?: BrandWhereUniqueInput
+  delete?: Boolean
+  update?: BrandUpdateDataInput
+  upsert?: BrandUpsertNestedInput
 }
 
 export interface AttributeSubscriptionWhereInput {
@@ -6629,1058 +6959,10 @@ export interface AttributeSubscriptionWhereInput {
   node?: AttributeWhereInput
 }
 
-export interface VariantCreateOneInput {
-  create?: VariantCreateInput
-  connect?: VariantWhereUniqueInput
-}
-
-export interface CategorySubscriptionWhereInput {
-  AND?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput
-  OR?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput
-  NOT?: CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: CategoryWhereInput
-}
-
-export interface VariantCreateInput {
-  deletedAt?: DateTime
-  price: Float
-  available: Boolean
-  selectedOptions?: SelectedOptionCreateManyWithoutVariantInput
-  product?: ProductCreateOneWithoutVariantsInput
-}
-
-export interface ShopWhereInput {
-  AND?: ShopWhereInput[] | ShopWhereInput
-  OR?: ShopWhereInput[] | ShopWhereInput
-  NOT?: ShopWhereInput[] | ShopWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  name?: String
-  name_not?: String
-  name_in?: String[] | String
-  name_not_in?: String[] | String
-  name_lt?: String
-  name_lte?: String
-  name_gt?: String
-  name_gte?: String
-  name_contains?: String
-  name_not_contains?: String
-  name_starts_with?: String
-  name_not_starts_with?: String
-  name_ends_with?: String
-  name_not_ends_with?: String
-  MOTD?: String
-  MOTD_not?: String
-  MOTD_in?: String[] | String
-  MOTD_not_in?: String[] | String
-  MOTD_lt?: String
-  MOTD_lte?: String
-  MOTD_gt?: String
-  MOTD_gte?: String
-  MOTD_contains?: String
-  MOTD_not_contains?: String
-  MOTD_starts_with?: String
-  MOTD_not_starts_with?: String
-  MOTD_ends_with?: String
-  MOTD_not_ends_with?: String
-  products_every?: ProductWhereInput
-  products_some?: ProductWhereInput
-  products_none?: ProductWhereInput
-  newProducts_every?: OrderableProductWhereInput
-  newProducts_some?: OrderableProductWhereInput
-  newProducts_none?: OrderableProductWhereInput
-  bestSellerProducts_every?: OrderableProductWhereInput
-  bestSellerProducts_some?: OrderableProductWhereInput
-  bestSellerProducts_none?: OrderableProductWhereInput
-  options_every?: OptionWhereInput
-  options_some?: OptionWhereInput
-  options_none?: OptionWhereInput
-  categories_every?: CategoryWhereInput
-  categories_some?: CategoryWhereInput
-  categories_none?: CategoryWhereInput
-  attributes_every?: AttributeWhereInput
-  attributes_some?: AttributeWhereInput
-  attributes_none?: AttributeWhereInput
-  orders_every?: OrderWhereInput
-  orders_some?: OrderWhereInput
-  orders_none?: OrderWhereInput
-}
-
-export interface ProductCreateOneWithoutVariantsInput {
-  create?: ProductCreateWithoutVariantsInput
-  connect?: ProductWhereUniqueInput
-}
-
-export interface OptionValueWhereInput {
-  AND?: OptionValueWhereInput[] | OptionValueWhereInput
-  OR?: OptionValueWhereInput[] | OptionValueWhereInput
-  NOT?: OptionValueWhereInput[] | OptionValueWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  name?: String
-  name_not?: String
-  name_in?: String[] | String
-  name_not_in?: String[] | String
-  name_lt?: String
-  name_lte?: String
-  name_gt?: String
-  name_gte?: String
-  name_contains?: String
-  name_not_contains?: String
-  name_starts_with?: String
-  name_not_starts_with?: String
-  name_ends_with?: String
-  name_not_ends_with?: String
-}
-
-export interface ProductCreateWithoutVariantsInput {
-  deletedAt?: DateTime
-  name: String
-  description?: String
-  SKU?: String
-  displayPrice: Float
-  available: Boolean
-  imageUrl?: String
-  shop: ShopCreateOneWithoutProductsInput
-  brand: BrandCreateOneInput
-  category: CategoryCreateOneInput
-  options?: OptionCreateManyInput
-  unavailableOptionsValues?: OptionValueCreateManyInput
-  attributes?: AttributeCreateManyWithoutProductsInput
-  orderables?: OrderableProductCreateManyWithoutProductInput
-}
-
-export interface OptionWhereInput {
-  AND?: OptionWhereInput[] | OptionWhereInput
-  OR?: OptionWhereInput[] | OptionWhereInput
-  NOT?: OptionWhereInput[] | OptionWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  name?: String
-  name_not?: String
-  name_in?: String[] | String
-  name_not_in?: String[] | String
-  name_lt?: String
-  name_lte?: String
-  name_gt?: String
-  name_gte?: String
-  name_contains?: String
-  name_not_contains?: String
-  name_starts_with?: String
-  name_not_starts_with?: String
-  name_ends_with?: String
-  name_not_ends_with?: String
-  values_every?: OptionValueWhereInput
-  values_some?: OptionValueWhereInput
-  values_none?: OptionValueWhereInput
-  category?: CategoryWhereInput
-  shop?: ShopWhereInput
-}
-
-export interface AttributeCreateManyWithoutProductsInput {
-  create?: AttributeCreateWithoutProductsInput[] | AttributeCreateWithoutProductsInput
-  connect?: AttributeWhereUniqueInput[] | AttributeWhereUniqueInput
-}
-
-export interface CategoryWhereInput {
-  AND?: CategoryWhereInput[] | CategoryWhereInput
-  OR?: CategoryWhereInput[] | CategoryWhereInput
-  NOT?: CategoryWhereInput[] | CategoryWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  name?: String
-  name_not?: String
-  name_in?: String[] | String
-  name_not_in?: String[] | String
-  name_lt?: String
-  name_lte?: String
-  name_gt?: String
-  name_gte?: String
-  name_contains?: String
-  name_not_contains?: String
-  name_starts_with?: String
-  name_not_starts_with?: String
-  name_ends_with?: String
-  name_not_ends_with?: String
-  options_every?: OptionWhereInput
-  options_some?: OptionWhereInput
-  options_none?: OptionWhereInput
-  shop?: ShopWhereInput
-}
-
-export interface AttributeCreateWithoutProductsInput {
-  value: String
-  category: CategoryCreateOneInput
-  shop: ShopCreateOneWithoutAttributesInput
-}
-
-export interface CategoryWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface ShopCreateOneWithoutAttributesInput {
-  create?: ShopCreateWithoutAttributesInput
-  connect?: ShopWhereUniqueInput
-}
-
-export interface OptionWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface ShopCreateWithoutAttributesInput {
-  name: String
-  MOTD?: String
-  products?: ProductCreateManyWithoutShopInput
-  newProducts?: OrderableProductCreateManyWithoutShopNewProductInput
-  bestSellerProducts?: OrderableProductCreateManyWithoutShopBestSellerInput
-  options?: OptionCreateManyWithoutShopInput
-  categories?: CategoryCreateManyWithoutShopInput
-  orders?: OrderCreateManyWithoutReceiverInput
-}
-
-export interface SelectedOptionWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface OrderLineItemCreateManyInput {
-  create?: OrderLineItemCreateInput[] | OrderLineItemCreateInput
-  connect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
-}
-
-export interface ProductWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface OrderLineItemCreateInput {
-  deletedAt?: DateTime
-  quantity: Int
-  variant?: VariantCreateOneInput
-  owner?: UserCreateOneWithoutCartInput
-}
-
-export interface FileWhereUniqueInput {
-  id?: ID_Input
-  url?: String
-  secret?: String
-}
-
-export interface UserCreateOneWithoutCartInput {
-  create?: UserCreateWithoutCartInput
-  connect?: UserWhereUniqueInput
-}
-
-export interface OrderLineItemWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface UserCreateWithoutCartInput {
-  email: String
-  password: String
-  firstName?: String
-  lastName?: String
-  role?: Role
-  stripeCustomerId?: String
-  oneSignalUserId?: String
-  shop: ShopCreateOneInput
-  orders?: OrderCreateManyWithoutOwnerInput
-}
-
-export interface OrderableProductWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface OrderCreateManyWithoutOwnerInput {
-  create?: OrderCreateWithoutOwnerInput[] | OrderCreateWithoutOwnerInput
-  connect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput
-}
-
-export interface OrderUpdateInput {
-  totalPrice?: Float
-  totalRefunded?: Float
-  totalTax?: Float
-  orderStatus?: OrderStatus
-  owner?: UserUpdateOneWithoutOrdersInput
-  receiver?: ShopUpdateOneWithoutOrdersInput
-  lineItems?: OrderLineItemUpdateManyInput
-}
-
-export interface OrderCreateWithoutOwnerInput {
-  totalPrice: Float
-  totalRefunded: Float
-  totalTax: Float
-  orderStatus: OrderStatus
-  receiver: ShopCreateOneWithoutOrdersInput
-  lineItems?: OrderLineItemCreateManyInput
-}
-
-export interface UserUpdateInput {
-  email?: String
-  password?: String
-  firstName?: String
-  lastName?: String
-  role?: Role
-  stripeCustomerId?: String
-  oneSignalUserId?: String
-  shop?: ShopUpdateOneInput
-  cart?: OrderLineItemUpdateManyWithoutOwnerInput
-  orders?: OrderUpdateManyWithoutOwnerInput
-}
-
-export interface ShopCreateOneWithoutOrdersInput {
-  create?: ShopCreateWithoutOrdersInput
-  connect?: ShopWhereUniqueInput
-}
-
-export interface VariantUpdateInput {
-  deletedAt?: DateTime
-  price?: Float
-  available?: Boolean
-  selectedOptions?: SelectedOptionUpdateManyWithoutVariantInput
-  product?: ProductUpdateOneWithoutVariantsInput
-}
-
-export interface ShopCreateWithoutOrdersInput {
-  name: String
-  MOTD?: String
-  products?: ProductCreateManyWithoutShopInput
-  newProducts?: OrderableProductCreateManyWithoutShopNewProductInput
-  bestSellerProducts?: OrderableProductCreateManyWithoutShopBestSellerInput
-  options?: OptionCreateManyWithoutShopInput
-  categories?: CategoryCreateManyWithoutShopInput
-  attributes?: AttributeCreateManyWithoutShopInput
-}
-
-export interface VariantUpdateWithoutSelectedOptionsDataInput {
-  deletedAt?: DateTime
-  price?: Float
-  available?: Boolean
-  product?: ProductUpdateOneWithoutVariantsInput
-}
-
-export interface AttributeCreateInput {
-  value: String
-  category: CategoryCreateOneInput
-  shop: ShopCreateOneWithoutAttributesInput
-  products?: ProductCreateManyWithoutAttributesInput
-}
-
-export interface SelectedOptionUpdateInput {
-  deletedAt?: DateTime
-  option?: OptionUpdateOneInput
-  variant?: VariantUpdateOneWithoutSelectedOptionsInput
-  value?: OptionValueUpdateOneInput
-}
-
-export interface SelectedOptionCreateInput {
-  deletedAt?: DateTime
-  option: OptionCreateOneInput
-  variant: VariantCreateOneWithoutSelectedOptionsInput
-  value: OptionValueCreateOneInput
-}
-
-export interface OptionUpdateInput {
-  name?: String
-  values?: OptionValueUpdateManyInput
-  category?: CategoryUpdateOneWithoutOptionsInput
-  shop?: ShopUpdateOneWithoutOptionsInput
-}
-
-export interface VariantCreateOneWithoutSelectedOptionsInput {
-  create?: VariantCreateWithoutSelectedOptionsInput
-  connect?: VariantWhereUniqueInput
-}
-
-export interface CategoryUpdateInput {
-  name?: String
-  options?: OptionUpdateManyWithoutCategoryInput
-  shop?: ShopUpdateOneWithoutCategoriesInput
-}
-
-export interface VariantCreateWithoutSelectedOptionsInput {
-  deletedAt?: DateTime
-  price: Float
-  available: Boolean
-  product?: ProductCreateOneWithoutVariantsInput
-}
-
-export interface OptionUpsertWithWhereUniqueWithoutCategoryInput {
-  where: OptionWhereUniqueInput
-  update: OptionUpdateWithoutCategoryDataInput
-  create: OptionCreateWithoutCategoryInput
-}
-
-export interface ProductCreateInput {
-  deletedAt?: DateTime
-  name: String
-  description?: String
-  SKU?: String
-  displayPrice: Float
-  available: Boolean
-  imageUrl?: String
-  shop: ShopCreateOneWithoutProductsInput
-  brand: BrandCreateOneInput
-  category: CategoryCreateOneInput
-  options?: OptionCreateManyInput
-  unavailableOptionsValues?: OptionValueCreateManyInput
-  variants?: VariantCreateManyWithoutProductInput
-  attributes?: AttributeCreateManyWithoutProductsInput
-  orderables?: OrderableProductCreateManyWithoutProductInput
-}
-
-export interface ProductUpsertWithWhereUniqueWithoutShopInput {
-  where: ProductWhereUniqueInput
-  update: ProductUpdateWithoutShopDataInput
-  create: ProductCreateWithoutShopInput
-}
-
-export interface UserCreateInput {
-  email: String
-  password: String
-  firstName?: String
-  lastName?: String
-  role?: Role
-  stripeCustomerId?: String
-  oneSignalUserId?: String
-  shop: ShopCreateOneInput
-  cart?: OrderLineItemCreateManyWithoutOwnerInput
-  orders?: OrderCreateManyWithoutOwnerInput
-}
-
-export interface ShopUpsertNestedInput {
-  update: ShopUpdateDataInput
-  create: ShopCreateInput
-}
-
-export interface FileCreateInput {
-  name: String
-  url: String
-  contentType: String
-  secret: String
-  size: Int
-}
-
-export interface ProductUpsertWithoutOrderablesInput {
-  update: ProductUpdateWithoutOrderablesDataInput
-  create: ProductCreateWithoutOrderablesInput
-}
-
-export interface OrderCreateInput {
-  totalPrice: Float
-  totalRefunded: Float
-  totalTax: Float
-  orderStatus: OrderStatus
-  owner: UserCreateOneWithoutOrdersInput
-  receiver: ShopCreateOneWithoutOrdersInput
-  lineItems?: OrderLineItemCreateManyInput
-}
-
-export interface OrderableProductUpsertWithWhereUniqueWithoutShopBestSellerInput {
-  where: OrderableProductWhereUniqueInput
-  update: OrderableProductUpdateWithoutShopBestSellerDataInput
-  create: OrderableProductCreateWithoutShopBestSellerInput
-}
-
-export interface UserUpdateOneWithoutCartInput {
-  create?: UserCreateWithoutCartInput
-  connect?: UserWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: UserUpdateWithoutCartDataInput
-  upsert?: UserUpsertWithoutCartInput
-}
-
-export interface OptionUpsertWithWhereUniqueWithoutShopInput {
-  where: OptionWhereUniqueInput
-  update: OptionUpdateWithoutShopDataInput
-  create: OptionCreateWithoutShopInput
-}
-
-export interface BrandUpdateInput {
-  name?: String
-  category?: CategoryUpdateOneInput
-  shop?: ShopUpdateOneInput
-}
-
-export interface ShopUpsertWithoutCategoriesInput {
-  update: ShopUpdateWithoutCategoriesDataInput
-  create: ShopCreateWithoutCategoriesInput
-}
-
-export interface CategoryUpdateOneInput {
-  create?: CategoryCreateInput
-  connect?: CategoryWhereUniqueInput
-  delete?: Boolean
-  update?: CategoryUpdateDataInput
-  upsert?: CategoryUpsertNestedInput
-}
-
-export interface ProductUpsertWithWhereUniqueWithoutAttributesInput {
-  where: ProductWhereUniqueInput
-  update: ProductUpdateWithoutAttributesDataInput
-  create: ProductCreateWithoutAttributesInput
-}
-
-export interface CategoryUpdateDataInput {
-  name?: String
-  options?: OptionUpdateManyWithoutCategoryInput
-  shop?: ShopUpdateOneWithoutCategoriesInput
-}
-
-export interface ShopUpsertWithoutBestSellerProductsInput {
-  update: ShopUpdateWithoutBestSellerProductsDataInput
-  create: ShopCreateWithoutBestSellerProductsInput
-}
-
-export interface OptionUpdateManyWithoutCategoryInput {
-  create?: OptionCreateWithoutCategoryInput[] | OptionCreateWithoutCategoryInput
-  connect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
-  disconnect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
-  delete?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
-  update?: OptionUpdateWithWhereUniqueWithoutCategoryInput[] | OptionUpdateWithWhereUniqueWithoutCategoryInput
-  upsert?: OptionUpsertWithWhereUniqueWithoutCategoryInput[] | OptionUpsertWithWhereUniqueWithoutCategoryInput
-}
-
-export interface OrderLineItemUpsertWithWhereUniqueNestedInput {
-  where: OrderLineItemWhereUniqueInput
-  update: OrderLineItemUpdateDataInput
-  create: OrderLineItemCreateInput
-}
-
-export interface OptionUpdateWithWhereUniqueWithoutCategoryInput {
-  where: OptionWhereUniqueInput
-  data: OptionUpdateWithoutCategoryDataInput
-}
-
-export interface OrderUpsertWithWhereUniqueWithoutOwnerInput {
-  where: OrderWhereUniqueInput
-  update: OrderUpdateWithoutOwnerDataInput
-  create: OrderCreateWithoutOwnerInput
-}
-
-export interface OptionUpdateWithoutCategoryDataInput {
-  name?: String
-  values?: OptionValueUpdateManyInput
-  shop?: ShopUpdateOneWithoutOptionsInput
-}
-
-export interface ShopUpdateWithoutOrdersDataInput {
-  name?: String
-  MOTD?: String
-  products?: ProductUpdateManyWithoutShopInput
-  newProducts?: OrderableProductUpdateManyWithoutShopNewProductInput
-  bestSellerProducts?: OrderableProductUpdateManyWithoutShopBestSellerInput
-  options?: OptionUpdateManyWithoutShopInput
-  categories?: CategoryUpdateManyWithoutShopInput
-  attributes?: AttributeUpdateManyWithoutShopInput
-}
-
-export interface OptionValueUpdateManyInput {
-  create?: OptionValueCreateInput[] | OptionValueCreateInput
-  connect?: OptionValueWhereUniqueInput[] | OptionValueWhereUniqueInput
-  disconnect?: OptionValueWhereUniqueInput[] | OptionValueWhereUniqueInput
-  delete?: OptionValueWhereUniqueInput[] | OptionValueWhereUniqueInput
-  update?: OptionValueUpdateWithWhereUniqueNestedInput[] | OptionValueUpdateWithWhereUniqueNestedInput
-  upsert?: OptionValueUpsertWithWhereUniqueNestedInput[] | OptionValueUpsertWithWhereUniqueNestedInput
-}
-
-export interface OrderUpdateWithoutOwnerDataInput {
-  totalPrice?: Float
-  totalRefunded?: Float
-  totalTax?: Float
-  orderStatus?: OrderStatus
-  receiver?: ShopUpdateOneWithoutOrdersInput
-  lineItems?: OrderLineItemUpdateManyInput
-}
-
-export interface OptionValueUpdateWithWhereUniqueNestedInput {
-  where: OptionValueWhereUniqueInput
-  data: OptionValueUpdateDataInput
-}
-
-export interface OrderUpdateManyWithoutOwnerInput {
-  create?: OrderCreateWithoutOwnerInput[] | OrderCreateWithoutOwnerInput
-  connect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput
-  disconnect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput
-  delete?: OrderWhereUniqueInput[] | OrderWhereUniqueInput
-  update?: OrderUpdateWithWhereUniqueWithoutOwnerInput[] | OrderUpdateWithWhereUniqueWithoutOwnerInput
-  upsert?: OrderUpsertWithWhereUniqueWithoutOwnerInput[] | OrderUpsertWithWhereUniqueWithoutOwnerInput
-}
-
-export interface OptionValueUpdateDataInput {
-  name?: String
-}
-
-export interface BrandCreateInput {
-  name: String
-  category: CategoryCreateOneInput
-  shop: ShopCreateOneInput
-}
-
-export interface OrderLineItemWhereInput {
-  AND?: OrderLineItemWhereInput[] | OrderLineItemWhereInput
-  OR?: OrderLineItemWhereInput[] | OrderLineItemWhereInput
-  NOT?: OrderLineItemWhereInput[] | OrderLineItemWhereInput
-  id?: ID_Input
-  id_not?: ID_Input
-  id_in?: ID_Input[] | ID_Input
-  id_not_in?: ID_Input[] | ID_Input
-  id_lt?: ID_Input
-  id_lte?: ID_Input
-  id_gt?: ID_Input
-  id_gte?: ID_Input
-  id_contains?: ID_Input
-  id_not_contains?: ID_Input
-  id_starts_with?: ID_Input
-  id_not_starts_with?: ID_Input
-  id_ends_with?: ID_Input
-  id_not_ends_with?: ID_Input
-  deletedAt?: DateTime
-  deletedAt_not?: DateTime
-  deletedAt_in?: DateTime[] | DateTime
-  deletedAt_not_in?: DateTime[] | DateTime
-  deletedAt_lt?: DateTime
-  deletedAt_lte?: DateTime
-  deletedAt_gt?: DateTime
-  deletedAt_gte?: DateTime
-  quantity?: Int
-  quantity_not?: Int
-  quantity_in?: Int[] | Int
-  quantity_not_in?: Int[] | Int
-  quantity_lt?: Int
-  quantity_lte?: Int
-  quantity_gt?: Int
-  quantity_gte?: Int
-  variant?: VariantWhereInput
-  owner?: UserWhereInput
-}
-
-export interface CategoryCreateInput {
-  name: String
-  options?: OptionCreateManyWithoutCategoryInput
-  shop: ShopCreateOneWithoutCategoriesInput
-}
-
-export interface OrderLineItemUpdateDataInput {
-  deletedAt?: DateTime
-  quantity?: Int
-  variant?: VariantUpdateOneInput
-  owner?: UserUpdateOneWithoutCartInput
-}
-
-export interface OptionCreateWithoutCategoryInput {
-  name: String
-  values?: OptionValueCreateManyInput
-  shop: ShopCreateOneWithoutOptionsInput
-}
-
-export interface OrderLineItemUpdateWithWhereUniqueNestedInput {
-  where: OrderLineItemWhereUniqueInput
-  data: OrderLineItemUpdateDataInput
-}
-
-export interface OptionValueCreateInput {
-  name: String
-}
-
-export interface ProductUpdateManyWithoutShopInput {
-  create?: ProductCreateWithoutShopInput[] | ProductCreateWithoutShopInput
-  connect?: ProductWhereUniqueInput[] | ProductWhereUniqueInput
-  disconnect?: ProductWhereUniqueInput[] | ProductWhereUniqueInput
-  delete?: ProductWhereUniqueInput[] | ProductWhereUniqueInput
-  update?: ProductUpdateWithWhereUniqueWithoutShopInput[] | ProductUpdateWithWhereUniqueWithoutShopInput
-  upsert?: ProductUpsertWithWhereUniqueWithoutShopInput[] | ProductUpsertWithWhereUniqueWithoutShopInput
-}
-
-export interface ShopCreateWithoutOptionsInput {
-  name: String
-  MOTD?: String
-  products?: ProductCreateManyWithoutShopInput
-  newProducts?: OrderableProductCreateManyWithoutShopNewProductInput
-  bestSellerProducts?: OrderableProductCreateManyWithoutShopBestSellerInput
-  categories?: CategoryCreateManyWithoutShopInput
-  attributes?: AttributeCreateManyWithoutShopInput
-  orders?: OrderCreateManyWithoutReceiverInput
-}
-
-export interface ProductUpdateWithWhereUniqueWithoutShopInput {
-  where: ProductWhereUniqueInput
-  data: ProductUpdateWithoutShopDataInput
-}
-
-export interface ProductCreateWithoutShopInput {
-  deletedAt?: DateTime
-  name: String
-  description?: String
-  SKU?: String
-  displayPrice: Float
-  available: Boolean
-  imageUrl?: String
-  brand: BrandCreateOneInput
-  category: CategoryCreateOneInput
-  options?: OptionCreateManyInput
-  unavailableOptionsValues?: OptionValueCreateManyInput
-  variants?: VariantCreateManyWithoutProductInput
-  attributes?: AttributeCreateManyWithoutProductsInput
-  orderables?: OrderableProductCreateManyWithoutProductInput
-}
-
-export interface ProductUpdateWithoutShopDataInput {
-  deletedAt?: DateTime
-  name?: String
-  description?: String
-  SKU?: String
-  displayPrice?: Float
-  available?: Boolean
-  imageUrl?: String
-  brand?: BrandUpdateOneInput
-  category?: CategoryUpdateOneInput
-  options?: OptionUpdateManyInput
-  unavailableOptionsValues?: OptionValueUpdateManyInput
-  variants?: VariantUpdateManyWithoutProductInput
-  attributes?: AttributeUpdateManyWithoutProductsInput
-  orderables?: OrderableProductUpdateManyWithoutProductInput
-}
-
-export interface OptionCreateManyInput {
-  create?: OptionCreateInput[] | OptionCreateInput
-  connect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
-}
-
-export interface BrandUpdateOneInput {
-  create?: BrandCreateInput
-  connect?: BrandWhereUniqueInput
-  delete?: Boolean
-  update?: BrandUpdateDataInput
-  upsert?: BrandUpsertNestedInput
-}
-
-export interface CategoryCreateOneWithoutOptionsInput {
-  create?: CategoryCreateWithoutOptionsInput
-  connect?: CategoryWhereUniqueInput
-}
-
 export interface BrandUpdateDataInput {
   name?: String
   category?: CategoryUpdateOneInput
   shop?: ShopUpdateOneInput
-}
-
-export interface ShopCreateOneWithoutCategoriesInput {
-  create?: ShopCreateWithoutCategoriesInput
-  connect?: ShopWhereUniqueInput
-}
-
-export interface ShopUpdateOneInput {
-  create?: ShopCreateInput
-  connect?: ShopWhereUniqueInput
-  delete?: Boolean
-  update?: ShopUpdateDataInput
-  upsert?: ShopUpsertNestedInput
-}
-
-export interface OrderableProductCreateManyWithoutShopNewProductInput {
-  create?: OrderableProductCreateWithoutShopNewProductInput[] | OrderableProductCreateWithoutShopNewProductInput
-  connect?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
-}
-
-export interface ShopUpdateDataInput {
-  name?: String
-  MOTD?: String
-  products?: ProductUpdateManyWithoutShopInput
-  newProducts?: OrderableProductUpdateManyWithoutShopNewProductInput
-  bestSellerProducts?: OrderableProductUpdateManyWithoutShopBestSellerInput
-  options?: OptionUpdateManyWithoutShopInput
-  categories?: CategoryUpdateManyWithoutShopInput
-  attributes?: AttributeUpdateManyWithoutShopInput
-  orders?: OrderUpdateManyWithoutReceiverInput
-}
-
-export interface ProductCreateOneWithoutOrderablesInput {
-  create?: ProductCreateWithoutOrderablesInput
-  connect?: ProductWhereUniqueInput
-}
-
-export interface OrderableProductUpdateManyWithoutShopNewProductInput {
-  create?: OrderableProductCreateWithoutShopNewProductInput[] | OrderableProductCreateWithoutShopNewProductInput
-  connect?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
-  disconnect?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
-  delete?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
-  update?: OrderableProductUpdateWithWhereUniqueWithoutShopNewProductInput[] | OrderableProductUpdateWithWhereUniqueWithoutShopNewProductInput
-  upsert?: OrderableProductUpsertWithWhereUniqueWithoutShopNewProductInput[] | OrderableProductUpsertWithWhereUniqueWithoutShopNewProductInput
-}
-
-export interface ShopCreateOneWithoutProductsInput {
-  create?: ShopCreateWithoutProductsInput
-  connect?: ShopWhereUniqueInput
-}
-
-export interface OrderableProductUpdateWithWhereUniqueWithoutShopNewProductInput {
-  where: OrderableProductWhereUniqueInput
-  data: OrderableProductUpdateWithoutShopNewProductDataInput
-}
-
-export interface OrderableProductCreateManyWithoutShopBestSellerInput {
-  create?: OrderableProductCreateWithoutShopBestSellerInput[] | OrderableProductCreateWithoutShopBestSellerInput
-  connect?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
-}
-
-export interface OrderableProductUpdateWithoutShopNewProductDataInput {
-  position?: Int
-  product?: ProductUpdateOneWithoutOrderablesInput
-  shopBestSeller?: ShopUpdateOneWithoutBestSellerProductsInput
-}
-
-export interface ShopCreateOneWithoutNewProductsInput {
-  create?: ShopCreateWithoutNewProductsInput
-  connect?: ShopWhereUniqueInput
-}
-
-export interface ProductUpdateOneWithoutOrderablesInput {
-  create?: ProductCreateWithoutOrderablesInput
-  connect?: ProductWhereUniqueInput
-  delete?: Boolean
-  update?: ProductUpdateWithoutOrderablesDataInput
-  upsert?: ProductUpsertWithoutOrderablesInput
-}
-
-export interface OptionCreateManyWithoutShopInput {
-  create?: OptionCreateWithoutShopInput[] | OptionCreateWithoutShopInput
-  connect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
-}
-
-export interface ProductUpdateWithoutOrderablesDataInput {
-  deletedAt?: DateTime
-  name?: String
-  description?: String
-  SKU?: String
-  displayPrice?: Float
-  available?: Boolean
-  imageUrl?: String
-  shop?: ShopUpdateOneWithoutProductsInput
-  brand?: BrandUpdateOneInput
-  category?: CategoryUpdateOneInput
-  options?: OptionUpdateManyInput
-  unavailableOptionsValues?: OptionValueUpdateManyInput
-  variants?: VariantUpdateManyWithoutProductInput
-  attributes?: AttributeUpdateManyWithoutProductsInput
-}
-
-export interface CategoryCreateManyWithoutShopInput {
-  create?: CategoryCreateWithoutShopInput[] | CategoryCreateWithoutShopInput
-  connect?: CategoryWhereUniqueInput[] | CategoryWhereUniqueInput
-}
-
-export interface ShopUpdateOneWithoutProductsInput {
-  create?: ShopCreateWithoutProductsInput
-  connect?: ShopWhereUniqueInput
-  delete?: Boolean
-  update?: ShopUpdateWithoutProductsDataInput
-  upsert?: ShopUpsertWithoutProductsInput
-}
-
-export interface AttributeCreateManyWithoutShopInput {
-  create?: AttributeCreateWithoutShopInput[] | AttributeCreateWithoutShopInput
-  connect?: AttributeWhereUniqueInput[] | AttributeWhereUniqueInput
-}
-
-export interface ShopUpdateWithoutProductsDataInput {
-  name?: String
-  MOTD?: String
-  newProducts?: OrderableProductUpdateManyWithoutShopNewProductInput
-  bestSellerProducts?: OrderableProductUpdateManyWithoutShopBestSellerInput
-  options?: OptionUpdateManyWithoutShopInput
-  categories?: CategoryUpdateManyWithoutShopInput
-  attributes?: AttributeUpdateManyWithoutShopInput
-  orders?: OrderUpdateManyWithoutReceiverInput
-}
-
-export interface ProductCreateManyWithoutAttributesInput {
-  create?: ProductCreateWithoutAttributesInput[] | ProductCreateWithoutAttributesInput
-  connect?: ProductWhereUniqueInput[] | ProductWhereUniqueInput
-}
-
-export interface OrderableProductUpdateManyWithoutShopBestSellerInput {
-  create?: OrderableProductCreateWithoutShopBestSellerInput[] | OrderableProductCreateWithoutShopBestSellerInput
-  connect?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
-  disconnect?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
-  delete?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
-  update?: OrderableProductUpdateWithWhereUniqueWithoutShopBestSellerInput[] | OrderableProductUpdateWithWhereUniqueWithoutShopBestSellerInput
-  upsert?: OrderableProductUpsertWithWhereUniqueWithoutShopBestSellerInput[] | OrderableProductUpsertWithWhereUniqueWithoutShopBestSellerInput
-}
-
-export interface VariantCreateManyWithoutProductInput {
-  create?: VariantCreateWithoutProductInput[] | VariantCreateWithoutProductInput
-  connect?: VariantWhereUniqueInput[] | VariantWhereUniqueInput
-}
-
-export interface OrderableProductUpdateWithWhereUniqueWithoutShopBestSellerInput {
-  where: OrderableProductWhereUniqueInput
-  data: OrderableProductUpdateWithoutShopBestSellerDataInput
-}
-
-export interface SelectedOptionCreateManyWithoutVariantInput {
-  create?: SelectedOptionCreateWithoutVariantInput[] | SelectedOptionCreateWithoutVariantInput
-  connect?: SelectedOptionWhereUniqueInput[] | SelectedOptionWhereUniqueInput
-}
-
-export interface OrderableProductUpdateWithoutShopBestSellerDataInput {
-  position?: Int
-  product?: ProductUpdateOneWithoutOrderablesInput
-  shopNewProduct?: ShopUpdateOneWithoutNewProductsInput
-}
-
-export interface OptionCreateOneInput {
-  create?: OptionCreateInput
-  connect?: OptionWhereUniqueInput
-}
-
-export interface ShopUpdateOneWithoutNewProductsInput {
-  create?: ShopCreateWithoutNewProductsInput
-  connect?: ShopWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: ShopUpdateWithoutNewProductsDataInput
-  upsert?: ShopUpsertWithoutNewProductsInput
-}
-
-export interface OrderableProductCreateManyWithoutProductInput {
-  create?: OrderableProductCreateWithoutProductInput[] | OrderableProductCreateWithoutProductInput
-  connect?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
-}
-
-export interface ShopUpdateWithoutNewProductsDataInput {
-  name?: String
-  MOTD?: String
-  products?: ProductUpdateManyWithoutShopInput
-  bestSellerProducts?: OrderableProductUpdateManyWithoutShopBestSellerInput
-  options?: OptionUpdateManyWithoutShopInput
-  categories?: CategoryUpdateManyWithoutShopInput
-  attributes?: AttributeUpdateManyWithoutShopInput
-  orders?: OrderUpdateManyWithoutReceiverInput
-}
-
-export interface OrderableProductSubscriptionWhereInput {
-  AND?: OrderableProductSubscriptionWhereInput[] | OrderableProductSubscriptionWhereInput
-  OR?: OrderableProductSubscriptionWhereInput[] | OrderableProductSubscriptionWhereInput
-  NOT?: OrderableProductSubscriptionWhereInput[] | OrderableProductSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: OrderableProductWhereInput
-}
-
-export interface OptionUpdateManyWithoutShopInput {
-  create?: OptionCreateWithoutShopInput[] | OptionCreateWithoutShopInput
-  connect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
-  disconnect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
-  delete?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
-  update?: OptionUpdateWithWhereUniqueWithoutShopInput[] | OptionUpdateWithWhereUniqueWithoutShopInput
-  upsert?: OptionUpsertWithWhereUniqueWithoutShopInput[] | OptionUpsertWithWhereUniqueWithoutShopInput
-}
-
-export interface OrderSubscriptionWhereInput {
-  AND?: OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput
-  OR?: OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput
-  NOT?: OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: OrderWhereInput
-}
-
-export interface OptionUpdateWithWhereUniqueWithoutShopInput {
-  where: OptionWhereUniqueInput
-  data: OptionUpdateWithoutShopDataInput
-}
-
-export interface UserSubscriptionWhereInput {
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: UserWhereInput
-}
-
-export interface OptionUpdateWithoutShopDataInput {
-  name?: String
-  values?: OptionValueUpdateManyInput
-  category?: CategoryUpdateOneWithoutOptionsInput
-}
-
-export interface SelectedOptionSubscriptionWhereInput {
-  AND?: SelectedOptionSubscriptionWhereInput[] | SelectedOptionSubscriptionWhereInput
-  OR?: SelectedOptionSubscriptionWhereInput[] | SelectedOptionSubscriptionWhereInput
-  NOT?: SelectedOptionSubscriptionWhereInput[] | SelectedOptionSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: SelectedOptionWhereInput
-}
-
-export interface CategoryUpdateOneWithoutOptionsInput {
-  create?: CategoryCreateWithoutOptionsInput
-  connect?: CategoryWhereUniqueInput
-  delete?: Boolean
-  update?: CategoryUpdateWithoutOptionsDataInput
-  upsert?: CategoryUpsertWithoutOptionsInput
 }
 
 export interface ProductWhereInput {
@@ -7795,79 +7077,52 @@ export interface ProductWhereInput {
   orderables_none?: OrderableProductWhereInput
 }
 
-export interface CategoryUpdateWithoutOptionsDataInput {
-  name?: String
-  shop?: ShopUpdateOneWithoutCategoriesInput
+export interface BrandUpsertNestedInput {
+  update: BrandUpdateDataInput
+  create: BrandCreateInput
 }
 
-export interface OrderableProductUpdateInput {
-  position?: Int
-  product?: ProductUpdateOneWithoutOrderablesInput
-  shopBestSeller?: ShopUpdateOneWithoutBestSellerProductsInput
-  shopNewProduct?: ShopUpdateOneWithoutNewProductsInput
-}
-
-export interface ShopUpdateOneWithoutCategoriesInput {
-  create?: ShopCreateWithoutCategoriesInput
-  connect?: ShopWhereUniqueInput
-  delete?: Boolean
-  update?: ShopUpdateWithoutCategoriesDataInput
-  upsert?: ShopUpsertWithoutCategoriesInput
-}
-
-export interface ShopUpdateInput {
-  name?: String
-  MOTD?: String
-  products?: ProductUpdateManyWithoutShopInput
-  newProducts?: OrderableProductUpdateManyWithoutShopNewProductInput
-  bestSellerProducts?: OrderableProductUpdateManyWithoutShopBestSellerInput
-  options?: OptionUpdateManyWithoutShopInput
-  categories?: CategoryUpdateManyWithoutShopInput
-  attributes?: AttributeUpdateManyWithoutShopInput
-  orders?: OrderUpdateManyWithoutReceiverInput
-}
-
-export interface ShopUpdateWithoutCategoriesDataInput {
-  name?: String
-  MOTD?: String
-  products?: ProductUpdateManyWithoutShopInput
-  newProducts?: OrderableProductUpdateManyWithoutShopNewProductInput
-  bestSellerProducts?: OrderableProductUpdateManyWithoutShopBestSellerInput
-  options?: OptionUpdateManyWithoutShopInput
-  attributes?: AttributeUpdateManyWithoutShopInput
-  orders?: OrderUpdateManyWithoutReceiverInput
-}
-
-export interface AttributeWhereUniqueInput {
+export interface OptionValueWhereInput {
+  AND?: OptionValueWhereInput[] | OptionValueWhereInput
+  OR?: OptionValueWhereInput[] | OptionValueWhereInput
+  NOT?: OptionValueWhereInput[] | OptionValueWhereInput
   id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
 }
 
-export interface AttributeUpdateManyWithoutShopInput {
-  create?: AttributeCreateWithoutShopInput[] | AttributeCreateWithoutShopInput
-  connect?: AttributeWhereUniqueInput[] | AttributeWhereUniqueInput
-  disconnect?: AttributeWhereUniqueInput[] | AttributeWhereUniqueInput
-  delete?: AttributeWhereUniqueInput[] | AttributeWhereUniqueInput
-  update?: AttributeUpdateWithWhereUniqueWithoutShopInput[] | AttributeUpdateWithWhereUniqueWithoutShopInput
-  upsert?: AttributeUpsertWithWhereUniqueWithoutShopInput[] | AttributeUpsertWithWhereUniqueWithoutShopInput
-}
-
-export interface VariantWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface AttributeUpdateWithWhereUniqueWithoutShopInput {
-  where: AttributeWhereUniqueInput
-  data: AttributeUpdateWithoutShopDataInput
-}
-
-export interface OrderWhereUniqueInput {
-  id?: ID_Input
-}
-
-export interface AttributeUpdateWithoutShopDataInput {
-  value?: String
-  category?: CategoryUpdateOneInput
-  products?: ProductUpdateManyWithoutAttributesInput
+export interface OptionUpdateManyInput {
+  create?: OptionCreateInput[] | OptionCreateInput
+  connect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
+  disconnect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
+  delete?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
+  update?: OptionUpdateWithWhereUniqueNestedInput[] | OptionUpdateWithWhereUniqueNestedInput
+  upsert?: OptionUpsertWithWhereUniqueNestedInput[] | OptionUpsertWithWhereUniqueNestedInput
 }
 
 export interface OrderLineItemUpdateInput {
@@ -7877,13 +7132,128 @@ export interface OrderLineItemUpdateInput {
   owner?: UserUpdateOneWithoutCartInput
 }
 
-export interface ProductUpdateManyWithoutAttributesInput {
-  create?: ProductCreateWithoutAttributesInput[] | ProductCreateWithoutAttributesInput
-  connect?: ProductWhereUniqueInput[] | ProductWhereUniqueInput
-  disconnect?: ProductWhereUniqueInput[] | ProductWhereUniqueInput
-  delete?: ProductWhereUniqueInput[] | ProductWhereUniqueInput
-  update?: ProductUpdateWithWhereUniqueWithoutAttributesInput[] | ProductUpdateWithWhereUniqueWithoutAttributesInput
-  upsert?: ProductUpsertWithWhereUniqueWithoutAttributesInput[] | ProductUpsertWithWhereUniqueWithoutAttributesInput
+export interface OptionUpdateWithWhereUniqueNestedInput {
+  where: OptionWhereUniqueInput
+  data: OptionUpdateDataInput
+}
+
+export interface AttributeWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface OptionUpdateDataInput {
+  name?: String
+  values?: OptionValueUpdateManyInput
+  category?: CategoryUpdateOneWithoutOptionsInput
+  shop?: ShopUpdateOneInput
+}
+
+export interface VariantWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface CategoryUpdateOneWithoutOptionsInput {
+  create?: CategoryCreateWithoutOptionsInput
+  connect?: CategoryWhereUniqueInput
+  delete?: Boolean
+  update?: CategoryUpdateWithoutOptionsDataInput
+  upsert?: CategoryUpsertWithoutOptionsInput
+}
+
+export interface OrderWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface CategoryUpdateWithoutOptionsDataInput {
+  name?: String
+  shop?: ShopUpdateOneInput
+}
+
+export interface UserUpsertWithoutOrdersInput {
+  update: UserUpdateWithoutOrdersDataInput
+  create: UserCreateWithoutOrdersInput
+}
+
+export interface CategoryUpsertWithoutOptionsInput {
+  update: CategoryUpdateWithoutOptionsDataInput
+  create: CategoryCreateWithoutOptionsInput
+}
+
+export interface FileUpdateInput {
+  name?: String
+  url?: String
+  contentType?: String
+  secret?: String
+  size?: Int
+}
+
+export interface OptionUpsertWithWhereUniqueNestedInput {
+  where: OptionWhereUniqueInput
+  update: OptionUpdateDataInput
+  create: OptionCreateInput
+}
+
+export interface UserUpdateWithoutCartDataInput {
+  email?: String
+  password?: String
+  firstName?: String
+  lastName?: String
+  role?: Role
+  stripeCustomerId?: String
+  oneSignalUserId?: String
+  selectedShop?: ShopUpdateOneInput
+  orders?: OrderUpdateManyWithoutOwnerInput
+}
+
+export interface VariantUpdateManyWithoutProductInput {
+  create?: VariantCreateWithoutProductInput[] | VariantCreateWithoutProductInput
+  connect?: VariantWhereUniqueInput[] | VariantWhereUniqueInput
+  disconnect?: VariantWhereUniqueInput[] | VariantWhereUniqueInput
+  delete?: VariantWhereUniqueInput[] | VariantWhereUniqueInput
+  update?: VariantUpdateWithWhereUniqueWithoutProductInput[] | VariantUpdateWithWhereUniqueWithoutProductInput
+  upsert?: VariantUpsertWithWhereUniqueWithoutProductInput[] | VariantUpsertWithWhereUniqueWithoutProductInput
+}
+
+export interface OrderLineItemUpdateManyInput {
+  create?: OrderLineItemCreateInput[] | OrderLineItemCreateInput
+  connect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
+  disconnect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
+  delete?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
+  update?: OrderLineItemUpdateWithWhereUniqueNestedInput[] | OrderLineItemUpdateWithWhereUniqueNestedInput
+  upsert?: OrderLineItemUpsertWithWhereUniqueNestedInput[] | OrderLineItemUpsertWithWhereUniqueNestedInput
+}
+
+export interface VariantUpdateWithWhereUniqueWithoutProductInput {
+  where: VariantWhereUniqueInput
+  data: VariantUpdateWithoutProductDataInput
+}
+
+export interface OrderLineItemUpsertWithWhereUniqueWithoutOwnerInput {
+  where: OrderLineItemWhereUniqueInput
+  update: OrderLineItemUpdateWithoutOwnerDataInput
+  create: OrderLineItemCreateWithoutOwnerInput
+}
+
+export interface VariantUpdateWithoutProductDataInput {
+  deletedAt?: DateTime
+  price?: Float
+  available?: Boolean
+  selectedOptions?: SelectedOptionUpdateManyWithoutVariantInput
+}
+
+export interface OrderLineItemUpdateWithoutOwnerDataInput {
+  deletedAt?: DateTime
+  quantity?: Int
+  variant?: VariantUpdateOneInput
+}
+
+export interface SelectedOptionUpdateManyWithoutVariantInput {
+  create?: SelectedOptionCreateWithoutVariantInput[] | SelectedOptionCreateWithoutVariantInput
+  connect?: SelectedOptionWhereUniqueInput[] | SelectedOptionWhereUniqueInput
+  disconnect?: SelectedOptionWhereUniqueInput[] | SelectedOptionWhereUniqueInput
+  delete?: SelectedOptionWhereUniqueInput[] | SelectedOptionWhereUniqueInput
+  update?: SelectedOptionUpdateWithWhereUniqueWithoutVariantInput[] | SelectedOptionUpdateWithWhereUniqueWithoutVariantInput
+  upsert?: SelectedOptionUpsertWithWhereUniqueWithoutVariantInput[] | SelectedOptionUpsertWithWhereUniqueWithoutVariantInput
 }
 
 export interface ProductUpdateInput {
@@ -7904,17 +7274,47 @@ export interface ProductUpdateInput {
   orderables?: OrderableProductUpdateManyWithoutProductInput
 }
 
-export interface ProductUpdateWithWhereUniqueWithoutAttributesInput {
-  where: ProductWhereUniqueInput
-  data: ProductUpdateWithoutAttributesDataInput
+export interface SelectedOptionUpdateWithWhereUniqueWithoutVariantInput {
+  where: SelectedOptionWhereUniqueInput
+  data: SelectedOptionUpdateWithoutVariantDataInput
 }
 
-export interface VariantUpdateOneWithoutSelectedOptionsInput {
-  create?: VariantCreateWithoutSelectedOptionsInput
-  connect?: VariantWhereUniqueInput
+export interface ProductUpdateWithoutVariantsDataInput {
+  deletedAt?: DateTime
+  name?: String
+  description?: String
+  SKU?: String
+  displayPrice?: Float
+  available?: Boolean
+  imageUrl?: String
+  shop?: ShopUpdateOneWithoutProductsInput
+  brand?: BrandUpdateOneInput
+  category?: CategoryUpdateOneInput
+  options?: OptionUpdateManyInput
+  unavailableOptionsValues?: OptionValueUpdateManyInput
+  attributes?: AttributeUpdateManyWithoutProductsInput
+  orderables?: OrderableProductUpdateManyWithoutProductInput
+}
+
+export interface SelectedOptionUpdateWithoutVariantDataInput {
+  deletedAt?: DateTime
+  option?: OptionUpdateOneInput
+  value?: OptionValueUpdateOneInput
+}
+
+export interface SelectedOptionUpdateInput {
+  deletedAt?: DateTime
+  option?: OptionUpdateOneInput
+  variant?: VariantUpdateOneWithoutSelectedOptionsInput
+  value?: OptionValueUpdateOneInput
+}
+
+export interface OptionUpdateOneInput {
+  create?: OptionCreateInput
+  connect?: OptionWhereUniqueInput
   delete?: Boolean
-  update?: VariantUpdateWithoutSelectedOptionsDataInput
-  upsert?: VariantUpsertWithoutSelectedOptionsInput
+  update?: OptionUpdateDataInput
+  upsert?: OptionUpsertNestedInput
 }
 
 export interface ProductUpdateWithoutAttributesDataInput {
@@ -7934,163 +7334,15 @@ export interface ProductUpdateWithoutAttributesDataInput {
   orderables?: OrderableProductUpdateManyWithoutProductInput
 }
 
-export interface AttributeUpdateInput {
-  value?: String
-  category?: CategoryUpdateOneInput
-  shop?: ShopUpdateOneWithoutAttributesInput
-  products?: ProductUpdateManyWithoutAttributesInput
-}
-
-export interface OptionUpdateManyInput {
-  create?: OptionCreateInput[] | OptionCreateInput
-  connect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
-  disconnect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
-  delete?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
-  update?: OptionUpdateWithWhereUniqueNestedInput[] | OptionUpdateWithWhereUniqueNestedInput
-  upsert?: OptionUpsertWithWhereUniqueNestedInput[] | OptionUpsertWithWhereUniqueNestedInput
-}
-
-export interface ShopUpsertWithoutOptionsInput {
-  update: ShopUpdateWithoutOptionsDataInput
-  create: ShopCreateWithoutOptionsInput
-}
-
-export interface OptionUpdateWithWhereUniqueNestedInput {
-  where: OptionWhereUniqueInput
-  data: OptionUpdateDataInput
-}
-
-export interface OrderableProductUpsertWithWhereUniqueWithoutShopNewProductInput {
-  where: OrderableProductWhereUniqueInput
-  update: OrderableProductUpdateWithoutShopNewProductDataInput
-  create: OrderableProductCreateWithoutShopNewProductInput
-}
-
-export interface OptionUpdateDataInput {
-  name?: String
-  values?: OptionValueUpdateManyInput
-  category?: CategoryUpdateOneWithoutOptionsInput
-  shop?: ShopUpdateOneWithoutOptionsInput
-}
-
-export interface ShopUpsertWithoutNewProductsInput {
-  update: ShopUpdateWithoutNewProductsDataInput
-  create: ShopCreateWithoutNewProductsInput
-}
-
-export interface OptionUpsertWithWhereUniqueNestedInput {
-  where: OptionWhereUniqueInput
-  update: OptionUpdateDataInput
-  create: OptionCreateInput
-}
-
-export interface AttributeUpsertWithWhereUniqueWithoutShopInput {
-  where: AttributeWhereUniqueInput
-  update: AttributeUpdateWithoutShopDataInput
-  create: AttributeCreateWithoutShopInput
-}
-
-export interface VariantUpdateManyWithoutProductInput {
-  create?: VariantCreateWithoutProductInput[] | VariantCreateWithoutProductInput
-  connect?: VariantWhereUniqueInput[] | VariantWhereUniqueInput
-  disconnect?: VariantWhereUniqueInput[] | VariantWhereUniqueInput
-  delete?: VariantWhereUniqueInput[] | VariantWhereUniqueInput
-  update?: VariantUpdateWithWhereUniqueWithoutProductInput[] | VariantUpdateWithWhereUniqueWithoutProductInput
-  upsert?: VariantUpsertWithWhereUniqueWithoutProductInput[] | VariantUpsertWithWhereUniqueWithoutProductInput
-}
-
-export interface OrderUpsertWithWhereUniqueWithoutReceiverInput {
-  where: OrderWhereUniqueInput
-  update: OrderUpdateWithoutReceiverDataInput
-  create: OrderCreateWithoutReceiverInput
-}
-
-export interface VariantUpdateWithWhereUniqueWithoutProductInput {
-  where: VariantWhereUniqueInput
-  data: VariantUpdateWithoutProductDataInput
-}
-
-export interface ShopUpsertWithoutOrdersInput {
-  update: ShopUpdateWithoutOrdersDataInput
-  create: ShopCreateWithoutOrdersInput
-}
-
-export interface VariantUpdateWithoutProductDataInput {
-  deletedAt?: DateTime
-  price?: Float
-  available?: Boolean
-  selectedOptions?: SelectedOptionUpdateManyWithoutVariantInput
-}
-
-export interface OrderUpdateWithWhereUniqueWithoutOwnerInput {
-  where: OrderWhereUniqueInput
-  data: OrderUpdateWithoutOwnerDataInput
-}
-
-export interface SelectedOptionUpdateManyWithoutVariantInput {
-  create?: SelectedOptionCreateWithoutVariantInput[] | SelectedOptionCreateWithoutVariantInput
-  connect?: SelectedOptionWhereUniqueInput[] | SelectedOptionWhereUniqueInput
-  disconnect?: SelectedOptionWhereUniqueInput[] | SelectedOptionWhereUniqueInput
-  delete?: SelectedOptionWhereUniqueInput[] | SelectedOptionWhereUniqueInput
-  update?: SelectedOptionUpdateWithWhereUniqueWithoutVariantInput[] | SelectedOptionUpdateWithWhereUniqueWithoutVariantInput
-  upsert?: SelectedOptionUpsertWithWhereUniqueWithoutVariantInput[] | SelectedOptionUpsertWithWhereUniqueWithoutVariantInput
-}
-
-export interface CategoryCreateOneInput {
-  create?: CategoryCreateInput
-  connect?: CategoryWhereUniqueInput
-}
-
-export interface SelectedOptionUpdateWithWhereUniqueWithoutVariantInput {
-  where: SelectedOptionWhereUniqueInput
-  data: SelectedOptionUpdateWithoutVariantDataInput
-}
-
-export interface OptionValueCreateManyInput {
-  create?: OptionValueCreateInput[] | OptionValueCreateInput
-  connect?: OptionValueWhereUniqueInput[] | OptionValueWhereUniqueInput
-}
-
-export interface SelectedOptionUpdateWithoutVariantDataInput {
-  deletedAt?: DateTime
-  option?: OptionUpdateOneInput
-  value?: OptionValueUpdateOneInput
-}
-
-export interface ProductCreateManyWithoutShopInput {
-  create?: ProductCreateWithoutShopInput[] | ProductCreateWithoutShopInput
-  connect?: ProductWhereUniqueInput[] | ProductWhereUniqueInput
-}
-
-export interface OptionUpdateOneInput {
-  create?: OptionCreateInput
-  connect?: OptionWhereUniqueInput
-  delete?: Boolean
-  update?: OptionUpdateDataInput
-  upsert?: OptionUpsertNestedInput
-}
-
-export interface OptionCreateInput {
-  name: String
-  values?: OptionValueCreateManyInput
-  category: CategoryCreateOneWithoutOptionsInput
-  shop: ShopCreateOneWithoutOptionsInput
-}
-
 export interface OptionUpsertNestedInput {
   update: OptionUpdateDataInput
   create: OptionCreateInput
 }
 
-export interface ShopCreateWithoutCategoriesInput {
-  name: String
-  MOTD?: String
-  products?: ProductCreateManyWithoutShopInput
-  newProducts?: OrderableProductCreateManyWithoutShopNewProductInput
-  bestSellerProducts?: OrderableProductCreateManyWithoutShopBestSellerInput
-  options?: OptionCreateManyWithoutShopInput
-  attributes?: AttributeCreateManyWithoutShopInput
-  orders?: OrderCreateManyWithoutReceiverInput
+export interface CategoryUpdateInput {
+  name?: String
+  options?: OptionUpdateManyWithoutCategoryInput
+  shop?: ShopUpdateOneInput
 }
 
 export interface OptionValueUpdateOneInput {
@@ -8101,21 +7353,9 @@ export interface OptionValueUpdateOneInput {
   upsert?: OptionValueUpsertNestedInput
 }
 
-export interface ProductCreateWithoutOrderablesInput {
-  deletedAt?: DateTime
-  name: String
-  description?: String
-  SKU?: String
-  displayPrice: Float
-  available: Boolean
-  imageUrl?: String
-  shop: ShopCreateOneWithoutProductsInput
-  brand: BrandCreateOneInput
-  category: CategoryCreateOneInput
-  options?: OptionCreateManyInput
-  unavailableOptionsValues?: OptionValueCreateManyInput
-  variants?: VariantCreateManyWithoutProductInput
-  attributes?: AttributeCreateManyWithoutProductsInput
+export interface CategoryCreateOneInput {
+  create?: CategoryCreateInput
+  connect?: CategoryWhereUniqueInput
 }
 
 export interface OptionValueUpsertNestedInput {
@@ -8123,10 +7363,9 @@ export interface OptionValueUpsertNestedInput {
   create: OptionValueCreateInput
 }
 
-export interface OrderableProductCreateWithoutShopBestSellerInput {
-  position: Int
-  product: ProductCreateOneWithoutOrderablesInput
-  shopNewProduct?: ShopCreateOneWithoutNewProductsInput
+export interface OptionValueCreateManyInput {
+  create?: OptionValueCreateInput[] | OptionValueCreateInput
+  connect?: OptionValueWhereUniqueInput[] | OptionValueWhereUniqueInput
 }
 
 export interface SelectedOptionUpsertWithWhereUniqueWithoutVariantInput {
@@ -8135,10 +7374,9 @@ export interface SelectedOptionUpsertWithWhereUniqueWithoutVariantInput {
   create: SelectedOptionCreateWithoutVariantInput
 }
 
-export interface OptionCreateWithoutShopInput {
-  name: String
-  values?: OptionValueCreateManyInput
-  category: CategoryCreateOneWithoutOptionsInput
+export interface ProductCreateManyWithoutShopInput {
+  create?: ProductCreateWithoutShopInput[] | ProductCreateWithoutShopInput
+  connect?: ProductWhereUniqueInput[] | ProductWhereUniqueInput
 }
 
 export interface VariantUpsertWithWhereUniqueWithoutProductInput {
@@ -8147,19 +7385,20 @@ export interface VariantUpsertWithWhereUniqueWithoutProductInput {
   create: VariantCreateWithoutProductInput
 }
 
-export interface AttributeCreateWithoutShopInput {
-  value: String
-  category: CategoryCreateOneInput
-  products?: ProductCreateManyWithoutAttributesInput
+export interface OptionCreateInput {
+  name: String
+  values?: OptionValueCreateManyInput
+  category: CategoryCreateOneWithoutOptionsInput
+  shop: ShopCreateOneInput
 }
 
-export interface OrderableProductUpdateManyWithoutProductInput {
-  create?: OrderableProductCreateWithoutProductInput[] | OrderableProductCreateWithoutProductInput
-  connect?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
-  disconnect?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
-  delete?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
-  update?: OrderableProductUpdateWithWhereUniqueWithoutProductInput[] | OrderableProductUpdateWithWhereUniqueWithoutProductInput
-  upsert?: OrderableProductUpsertWithWhereUniqueWithoutProductInput[] | OrderableProductUpsertWithWhereUniqueWithoutProductInput
+export interface AttributeUpdateManyWithoutProductsInput {
+  create?: AttributeCreateWithoutProductsInput[] | AttributeCreateWithoutProductsInput
+  connect?: AttributeWhereUniqueInput[] | AttributeWhereUniqueInput
+  disconnect?: AttributeWhereUniqueInput[] | AttributeWhereUniqueInput
+  delete?: AttributeWhereUniqueInput[] | AttributeWhereUniqueInput
+  update?: AttributeUpdateWithWhereUniqueWithoutProductsInput[] | AttributeUpdateWithWhereUniqueWithoutProductsInput
+  upsert?: AttributeUpsertWithWhereUniqueWithoutProductsInput[] | AttributeUpsertWithWhereUniqueWithoutProductsInput
 }
 
 export interface VariantCreateWithoutProductInput {
@@ -8169,26 +7408,32 @@ export interface VariantCreateWithoutProductInput {
   selectedOptions?: SelectedOptionCreateManyWithoutVariantInput
 }
 
-export interface OrderableProductUpdateWithWhereUniqueWithoutProductInput {
-  where: OrderableProductWhereUniqueInput
-  data: OrderableProductUpdateWithoutProductDataInput
+export interface AttributeUpdateWithWhereUniqueWithoutProductsInput {
+  where: AttributeWhereUniqueInput
+  data: AttributeUpdateWithoutProductsDataInput
 }
 
-export interface OptionValueCreateOneInput {
-  create?: OptionValueCreateInput
-  connect?: OptionValueWhereUniqueInput
+export interface OrderLineItemSubscriptionWhereInput {
+  AND?: OrderLineItemSubscriptionWhereInput[] | OrderLineItemSubscriptionWhereInput
+  OR?: OrderLineItemSubscriptionWhereInput[] | OrderLineItemSubscriptionWhereInput
+  NOT?: OrderLineItemSubscriptionWhereInput[] | OrderLineItemSubscriptionWhereInput
+  mutation_in?: MutationType[] | MutationType
+  updatedFields_contains?: String
+  updatedFields_contains_every?: String[] | String
+  updatedFields_contains_some?: String[] | String
+  node?: OrderLineItemWhereInput
 }
 
-export interface OrderableProductUpdateWithoutProductDataInput {
-  position?: Int
-  shopBestSeller?: ShopUpdateOneWithoutBestSellerProductsInput
-  shopNewProduct?: ShopUpdateOneWithoutNewProductsInput
+export interface AttributeUpdateWithoutProductsDataInput {
+  value?: String
+  category?: CategoryUpdateOneInput
+  shop?: ShopUpdateOneInput
 }
 
-export interface OrderableProductWhereInput {
-  AND?: OrderableProductWhereInput[] | OrderableProductWhereInput
-  OR?: OrderableProductWhereInput[] | OrderableProductWhereInput
-  NOT?: OrderableProductWhereInput[] | OrderableProductWhereInput
+export interface SelectedOptionWhereInput {
+  AND?: SelectedOptionWhereInput[] | SelectedOptionWhereInput
+  OR?: SelectedOptionWhereInput[] | SelectedOptionWhereInput
+  NOT?: SelectedOptionWhereInput[] | SelectedOptionWhereInput
   id?: ID_Input
   id_not?: ID_Input
   id_in?: ID_Input[] | ID_Input
@@ -8203,264 +7448,101 @@ export interface OrderableProductWhereInput {
   id_not_starts_with?: ID_Input
   id_ends_with?: ID_Input
   id_not_ends_with?: ID_Input
-  position?: Int
-  position_not?: Int
-  position_in?: Int[] | Int
-  position_not_in?: Int[] | Int
-  position_lt?: Int
-  position_lte?: Int
-  position_gt?: Int
-  position_gte?: Int
-  product?: ProductWhereInput
-  shopBestSeller?: ShopWhereInput
-  shopNewProduct?: ShopWhereInput
+  deletedAt?: DateTime
+  deletedAt_not?: DateTime
+  deletedAt_in?: DateTime[] | DateTime
+  deletedAt_not_in?: DateTime[] | DateTime
+  deletedAt_lt?: DateTime
+  deletedAt_lte?: DateTime
+  deletedAt_gt?: DateTime
+  deletedAt_gte?: DateTime
+  option?: OptionWhereInput
+  variant?: VariantWhereInput
+  value?: OptionValueWhereInput
 }
 
-export interface ShopUpdateOneWithoutBestSellerProductsInput {
-  create?: ShopCreateWithoutBestSellerProductsInput
-  connect?: ShopWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: ShopUpdateWithoutBestSellerProductsDataInput
-  upsert?: ShopUpsertWithoutBestSellerProductsInput
+export interface AttributeUpsertWithWhereUniqueWithoutProductsInput {
+  where: AttributeWhereUniqueInput
+  update: AttributeUpdateWithoutProductsDataInput
+  create: AttributeCreateWithoutProductsInput
 }
 
-export interface ProductSubscriptionWhereInput {
-  AND?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput
-  OR?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput
-  NOT?: ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: ProductWhereInput
-}
-
-export interface ShopUpdateWithoutBestSellerProductsDataInput {
-  name?: String
-  MOTD?: String
-  products?: ProductUpdateManyWithoutShopInput
-  newProducts?: OrderableProductUpdateManyWithoutShopNewProductInput
-  options?: OptionUpdateManyWithoutShopInput
-  categories?: CategoryUpdateManyWithoutShopInput
-  attributes?: AttributeUpdateManyWithoutShopInput
-  orders?: OrderUpdateManyWithoutReceiverInput
-}
-
-export interface BrandSubscriptionWhereInput {
-  AND?: BrandSubscriptionWhereInput[] | BrandSubscriptionWhereInput
-  OR?: BrandSubscriptionWhereInput[] | BrandSubscriptionWhereInput
-  NOT?: BrandSubscriptionWhereInput[] | BrandSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: BrandWhereInput
-}
-
-export interface CategoryUpdateManyWithoutShopInput {
-  create?: CategoryCreateWithoutShopInput[] | CategoryCreateWithoutShopInput
-  connect?: CategoryWhereUniqueInput[] | CategoryWhereUniqueInput
-  disconnect?: CategoryWhereUniqueInput[] | CategoryWhereUniqueInput
-  delete?: CategoryWhereUniqueInput[] | CategoryWhereUniqueInput
-  update?: CategoryUpdateWithWhereUniqueWithoutShopInput[] | CategoryUpdateWithWhereUniqueWithoutShopInput
-  upsert?: CategoryUpsertWithWhereUniqueWithoutShopInput[] | CategoryUpsertWithWhereUniqueWithoutShopInput
-}
-
-export interface BrandWhereUniqueInput {
+export interface OrderWhereInput {
+  AND?: OrderWhereInput[] | OrderWhereInput
+  OR?: OrderWhereInput[] | OrderWhereInput
+  NOT?: OrderWhereInput[] | OrderWhereInput
   id?: ID_Input
-}
-
-export interface CategoryUpdateWithWhereUniqueWithoutShopInput {
-  where: CategoryWhereUniqueInput
-  data: CategoryUpdateWithoutShopDataInput
-}
-
-export interface UserWhereUniqueInput {
-  id?: ID_Input
-  email?: String
-}
-
-export interface CategoryUpdateWithoutShopDataInput {
-  name?: String
-  options?: OptionUpdateManyWithoutCategoryInput
-}
-
-export interface FileUpdateInput {
-  name?: String
-  url?: String
-  contentType?: String
-  secret?: String
-  size?: Int
-}
-
-export interface CategoryUpsertWithWhereUniqueWithoutShopInput {
-  where: CategoryWhereUniqueInput
-  update: CategoryUpdateWithoutShopDataInput
-  create: CategoryCreateWithoutShopInput
-}
-
-export interface OptionValueUpdateInput {
-  name?: String
-}
-
-export interface OrderUpdateManyWithoutReceiverInput {
-  create?: OrderCreateWithoutReceiverInput[] | OrderCreateWithoutReceiverInput
-  connect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput
-  disconnect?: OrderWhereUniqueInput[] | OrderWhereUniqueInput
-  delete?: OrderWhereUniqueInput[] | OrderWhereUniqueInput
-  update?: OrderUpdateWithWhereUniqueWithoutReceiverInput[] | OrderUpdateWithWhereUniqueWithoutReceiverInput
-  upsert?: OrderUpsertWithWhereUniqueWithoutReceiverInput[] | OrderUpsertWithWhereUniqueWithoutReceiverInput
-}
-
-export interface BrandUpsertNestedInput {
-  update: BrandUpdateDataInput
-  create: BrandCreateInput
-}
-
-export interface OrderUpdateWithWhereUniqueWithoutReceiverInput {
-  where: OrderWhereUniqueInput
-  data: OrderUpdateWithoutReceiverDataInput
-}
-
-export interface CategoryUpsertWithoutOptionsInput {
-  update: CategoryUpdateWithoutOptionsDataInput
-  create: CategoryCreateWithoutOptionsInput
-}
-
-export interface OrderUpdateWithoutReceiverDataInput {
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  createdAt?: DateTime
+  createdAt_not?: DateTime
+  createdAt_in?: DateTime[] | DateTime
+  createdAt_not_in?: DateTime[] | DateTime
+  createdAt_lt?: DateTime
+  createdAt_lte?: DateTime
+  createdAt_gt?: DateTime
+  createdAt_gte?: DateTime
+  updatedAt?: DateTime
+  updatedAt_not?: DateTime
+  updatedAt_in?: DateTime[] | DateTime
+  updatedAt_not_in?: DateTime[] | DateTime
+  updatedAt_lt?: DateTime
+  updatedAt_lte?: DateTime
+  updatedAt_gt?: DateTime
+  updatedAt_gte?: DateTime
   totalPrice?: Float
+  totalPrice_not?: Float
+  totalPrice_in?: Float[] | Float
+  totalPrice_not_in?: Float[] | Float
+  totalPrice_lt?: Float
+  totalPrice_lte?: Float
+  totalPrice_gt?: Float
+  totalPrice_gte?: Float
   totalRefunded?: Float
+  totalRefunded_not?: Float
+  totalRefunded_in?: Float[] | Float
+  totalRefunded_not_in?: Float[] | Float
+  totalRefunded_lt?: Float
+  totalRefunded_lte?: Float
+  totalRefunded_gt?: Float
+  totalRefunded_gte?: Float
   totalTax?: Float
+  totalTax_not?: Float
+  totalTax_in?: Float[] | Float
+  totalTax_not_in?: Float[] | Float
+  totalTax_lt?: Float
+  totalTax_lte?: Float
+  totalTax_gt?: Float
+  totalTax_gte?: Float
   orderStatus?: OrderStatus
-  owner?: UserUpdateOneWithoutOrdersInput
-  lineItems?: OrderLineItemUpdateManyInput
+  orderStatus_not?: OrderStatus
+  orderStatus_in?: OrderStatus[] | OrderStatus
+  orderStatus_not_in?: OrderStatus[] | OrderStatus
+  owner?: UserWhereInput
+  receiver?: ShopWhereInput
+  lineItems_every?: OrderLineItemWhereInput
+  lineItems_some?: OrderLineItemWhereInput
+  lineItems_none?: OrderLineItemWhereInput
 }
 
-export interface UserUpsertWithoutCartInput {
-  update: UserUpdateWithoutCartDataInput
-  create: UserCreateWithoutCartInput
-}
-
-export interface UserUpdateOneWithoutOrdersInput {
-  create?: UserCreateWithoutOrdersInput
-  connect?: UserWhereUniqueInput
-  delete?: Boolean
-  update?: UserUpdateWithoutOrdersDataInput
-  upsert?: UserUpsertWithoutOrdersInput
-}
-
-export interface UserUpdateWithoutCartDataInput {
-  email?: String
-  password?: String
-  firstName?: String
-  lastName?: String
-  role?: Role
-  stripeCustomerId?: String
-  oneSignalUserId?: String
-  shop?: ShopUpdateOneInput
-  orders?: OrderUpdateManyWithoutOwnerInput
-}
-
-export interface UserUpdateWithoutOrdersDataInput {
-  email?: String
-  password?: String
-  firstName?: String
-  lastName?: String
-  role?: Role
-  stripeCustomerId?: String
-  oneSignalUserId?: String
-  shop?: ShopUpdateOneInput
-  cart?: OrderLineItemUpdateManyWithoutOwnerInput
-}
-
-export interface ShopCreateOneWithoutOptionsInput {
-  create?: ShopCreateWithoutOptionsInput
-  connect?: ShopWhereUniqueInput
-}
-
-export interface OrderLineItemUpdateManyWithoutOwnerInput {
-  create?: OrderLineItemCreateWithoutOwnerInput[] | OrderLineItemCreateWithoutOwnerInput
-  connect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
-  disconnect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
-  delete?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
-  update?: OrderLineItemUpdateWithWhereUniqueWithoutOwnerInput[] | OrderLineItemUpdateWithWhereUniqueWithoutOwnerInput
-  upsert?: OrderLineItemUpsertWithWhereUniqueWithoutOwnerInput[] | OrderLineItemUpsertWithWhereUniqueWithoutOwnerInput
-}
-
-export interface CategoryCreateWithoutOptionsInput {
-  name: String
-  shop: ShopCreateOneWithoutCategoriesInput
-}
-
-export interface OrderLineItemUpdateWithWhereUniqueWithoutOwnerInput {
-  where: OrderLineItemWhereUniqueInput
-  data: OrderLineItemUpdateWithoutOwnerDataInput
-}
-
-export interface ShopCreateWithoutProductsInput {
-  name: String
-  MOTD?: String
-  newProducts?: OrderableProductCreateManyWithoutShopNewProductInput
-  bestSellerProducts?: OrderableProductCreateManyWithoutShopBestSellerInput
-  options?: OptionCreateManyWithoutShopInput
-  categories?: CategoryCreateManyWithoutShopInput
-  attributes?: AttributeCreateManyWithoutShopInput
-  orders?: OrderCreateManyWithoutReceiverInput
-}
-
-export interface OrderLineItemUpdateWithoutOwnerDataInput {
-  deletedAt?: DateTime
-  quantity?: Int
-  variant?: VariantUpdateOneInput
-}
-
-export interface CategoryCreateWithoutShopInput {
-  name: String
-  options?: OptionCreateManyWithoutCategoryInput
-}
-
-export interface VariantUpdateOneInput {
-  create?: VariantCreateInput
-  connect?: VariantWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: VariantUpdateDataInput
-  upsert?: VariantUpsertNestedInput
-}
-
-export interface SelectedOptionCreateWithoutVariantInput {
-  deletedAt?: DateTime
-  option: OptionCreateOneInput
-  value: OptionValueCreateOneInput
-}
-
-export interface VariantUpdateDataInput {
-  deletedAt?: DateTime
-  price?: Float
-  available?: Boolean
-  selectedOptions?: SelectedOptionUpdateManyWithoutVariantInput
-  product?: ProductUpdateOneWithoutVariantsInput
-}
-
-export interface FileSubscriptionWhereInput {
-  AND?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput
-  OR?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput
-  NOT?: FileSubscriptionWhereInput[] | FileSubscriptionWhereInput
-  mutation_in?: MutationType[] | MutationType
-  updatedFields_contains?: String
-  updatedFields_contains_every?: String[] | String
-  updatedFields_contains_some?: String[] | String
-  node?: FileWhereInput
-}
-
-export interface ProductUpdateOneWithoutVariantsInput {
-  create?: ProductCreateWithoutVariantsInput
-  connect?: ProductWhereUniqueInput
-  disconnect?: Boolean
-  delete?: Boolean
-  update?: ProductUpdateWithoutVariantsDataInput
-  upsert?: ProductUpsertWithoutVariantsInput
+export interface OrderableProductUpdateManyWithoutProductInput {
+  create?: OrderableProductCreateWithoutProductInput[] | OrderableProductCreateWithoutProductInput
+  connect?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
+  disconnect?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
+  delete?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
+  update?: OrderableProductUpdateWithWhereUniqueWithoutProductInput[] | OrderableProductUpdateWithWhereUniqueWithoutProductInput
+  upsert?: OrderableProductUpsertWithWhereUniqueWithoutProductInput[] | OrderableProductUpsertWithWhereUniqueWithoutProductInput
 }
 
 export interface FileWhereInput {
@@ -8547,7 +7629,111 @@ export interface FileWhereInput {
   size_gte?: Int
 }
 
-export interface ProductUpdateWithoutVariantsDataInput {
+export interface OrderableProductUpdateWithWhereUniqueWithoutProductInput {
+  where: OrderableProductWhereUniqueInput
+  data: OrderableProductUpdateWithoutProductDataInput
+}
+
+export interface OptionValueWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface OrderableProductUpdateWithoutProductDataInput {
+  position?: Int
+  shopBestSeller?: ShopUpdateOneWithoutBestSellerProductsInput
+  shopNewProduct?: ShopUpdateOneWithoutNewProductsInput
+}
+
+export interface ShopWhereUniqueInput {
+  id?: ID_Input
+}
+
+export interface ShopUpdateOneWithoutBestSellerProductsInput {
+  create?: ShopCreateWithoutBestSellerProductsInput
+  connect?: ShopWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: ShopUpdateWithoutBestSellerProductsDataInput
+  upsert?: ShopUpsertWithoutBestSellerProductsInput
+}
+
+export interface OrderLineItemUpsertWithWhereUniqueNestedInput {
+  where: OrderLineItemWhereUniqueInput
+  update: OrderLineItemUpdateDataInput
+  create: OrderLineItemCreateInput
+}
+
+export interface ShopUpdateWithoutBestSellerProductsDataInput {
+  name?: String
+  MOTD?: String
+  products?: ProductUpdateManyWithoutShopInput
+  newProducts?: OrderableProductUpdateManyWithoutShopNewProductInput
+}
+
+export interface OrderUpdateWithWhereUniqueWithoutOwnerInput {
+  where: OrderWhereUniqueInput
+  data: OrderUpdateWithoutOwnerDataInput
+}
+
+export interface OrderableProductUpdateManyWithoutShopNewProductInput {
+  create?: OrderableProductCreateWithoutShopNewProductInput[] | OrderableProductCreateWithoutShopNewProductInput
+  connect?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
+  disconnect?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
+  delete?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
+  update?: OrderableProductUpdateWithWhereUniqueWithoutShopNewProductInput[] | OrderableProductUpdateWithWhereUniqueWithoutShopNewProductInput
+  upsert?: OrderableProductUpsertWithWhereUniqueWithoutShopNewProductInput[] | OrderableProductUpsertWithWhereUniqueWithoutShopNewProductInput
+}
+
+export interface OrderLineItemUpdateManyWithoutOwnerInput {
+  create?: OrderLineItemCreateWithoutOwnerInput[] | OrderLineItemCreateWithoutOwnerInput
+  connect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
+  disconnect?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
+  delete?: OrderLineItemWhereUniqueInput[] | OrderLineItemWhereUniqueInput
+  update?: OrderLineItemUpdateWithWhereUniqueWithoutOwnerInput[] | OrderLineItemUpdateWithWhereUniqueWithoutOwnerInput
+  upsert?: OrderLineItemUpsertWithWhereUniqueWithoutOwnerInput[] | OrderLineItemUpsertWithWhereUniqueWithoutOwnerInput
+}
+
+export interface OrderableProductUpdateWithWhereUniqueWithoutShopNewProductInput {
+  where: OrderableProductWhereUniqueInput
+  data: OrderableProductUpdateWithoutShopNewProductDataInput
+}
+
+export interface VariantUpdateWithoutSelectedOptionsDataInput {
+  deletedAt?: DateTime
+  price?: Float
+  available?: Boolean
+  product?: ProductUpdateOneWithoutVariantsInput
+}
+
+export interface OrderableProductUpdateWithoutShopNewProductDataInput {
+  position?: Int
+  product?: ProductUpdateOneWithoutOrderablesInput
+  shopBestSeller?: ShopUpdateOneWithoutBestSellerProductsInput
+}
+
+export interface ProductUpdateManyWithoutAttributesInput {
+  create?: ProductCreateWithoutAttributesInput[] | ProductCreateWithoutAttributesInput
+  connect?: ProductWhereUniqueInput[] | ProductWhereUniqueInput
+  disconnect?: ProductWhereUniqueInput[] | ProductWhereUniqueInput
+  delete?: ProductWhereUniqueInput[] | ProductWhereUniqueInput
+  update?: ProductUpdateWithWhereUniqueWithoutAttributesInput[] | ProductUpdateWithWhereUniqueWithoutAttributesInput
+  upsert?: ProductUpsertWithWhereUniqueWithoutAttributesInput[] | ProductUpsertWithWhereUniqueWithoutAttributesInput
+}
+
+export interface ProductUpdateOneWithoutOrderablesInput {
+  create?: ProductCreateWithoutOrderablesInput
+  connect?: ProductWhereUniqueInput
+  delete?: Boolean
+  update?: ProductUpdateWithoutOrderablesDataInput
+  upsert?: ProductUpsertWithoutOrderablesInput
+}
+
+export interface OptionCreateManyWithoutCategoryInput {
+  create?: OptionCreateWithoutCategoryInput[] | OptionCreateWithoutCategoryInput
+  connect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
+}
+
+export interface ProductUpdateWithoutOrderablesDataInput {
   deletedAt?: DateTime
   name?: String
   description?: String
@@ -8560,95 +7746,34 @@ export interface ProductUpdateWithoutVariantsDataInput {
   category?: CategoryUpdateOneInput
   options?: OptionUpdateManyInput
   unavailableOptionsValues?: OptionValueUpdateManyInput
+  variants?: VariantUpdateManyWithoutProductInput
   attributes?: AttributeUpdateManyWithoutProductsInput
-  orderables?: OrderableProductUpdateManyWithoutProductInput
 }
 
-export interface ShopWhereUniqueInput {
-  id?: ID_Input
+export interface BrandCreateOneInput {
+  create?: BrandCreateInput
+  connect?: BrandWhereUniqueInput
 }
 
-export interface AttributeUpdateManyWithoutProductsInput {
-  create?: AttributeCreateWithoutProductsInput[] | AttributeCreateWithoutProductsInput
-  connect?: AttributeWhereUniqueInput[] | AttributeWhereUniqueInput
-  disconnect?: AttributeWhereUniqueInput[] | AttributeWhereUniqueInput
-  delete?: AttributeWhereUniqueInput[] | AttributeWhereUniqueInput
-  update?: AttributeUpdateWithWhereUniqueWithoutProductsInput[] | AttributeUpdateWithWhereUniqueWithoutProductsInput
-  upsert?: AttributeUpsertWithWhereUniqueWithoutProductsInput[] | AttributeUpsertWithWhereUniqueWithoutProductsInput
-}
-
-export interface CategoryUpsertNestedInput {
-  update: CategoryUpdateDataInput
-  create: CategoryCreateInput
-}
-
-export interface AttributeUpdateWithWhereUniqueWithoutProductsInput {
-  where: AttributeWhereUniqueInput
-  data: AttributeUpdateWithoutProductsDataInput
-}
-
-export interface OrderableProductUpsertWithWhereUniqueWithoutProductInput {
-  where: OrderableProductWhereUniqueInput
-  update: OrderableProductUpdateWithoutProductDataInput
-  create: OrderableProductCreateWithoutProductInput
-}
-
-export interface AttributeUpdateWithoutProductsDataInput {
-  value?: String
-  category?: CategoryUpdateOneInput
-  shop?: ShopUpdateOneWithoutAttributesInput
-}
-
-export interface OptionCreateManyWithoutCategoryInput {
-  create?: OptionCreateWithoutCategoryInput[] | OptionCreateWithoutCategoryInput
-  connect?: OptionWhereUniqueInput[] | OptionWhereUniqueInput
-}
-
-export interface ShopUpdateOneWithoutAttributesInput {
-  create?: ShopCreateWithoutAttributesInput
+export interface ShopUpdateOneWithoutProductsInput {
+  create?: ShopCreateWithoutProductsInput
   connect?: ShopWhereUniqueInput
   delete?: Boolean
-  update?: ShopUpdateWithoutAttributesDataInput
-  upsert?: ShopUpsertWithoutAttributesInput
+  update?: ShopUpdateWithoutProductsDataInput
+  upsert?: ShopUpsertWithoutProductsInput
 }
 
-export interface OrderableProductCreateWithoutShopNewProductInput {
-  position: Int
-  product: ProductCreateOneWithoutOrderablesInput
-  shopBestSeller?: ShopCreateOneWithoutBestSellerProductsInput
+export interface SelectedOptionCreateWithoutVariantInput {
+  deletedAt?: DateTime
+  option: OptionCreateOneInput
+  value: OptionValueCreateOneInput
 }
 
-export interface ShopUpdateWithoutAttributesDataInput {
+export interface ShopUpdateWithoutProductsDataInput {
   name?: String
   MOTD?: String
-  products?: ProductUpdateManyWithoutShopInput
   newProducts?: OrderableProductUpdateManyWithoutShopNewProductInput
   bestSellerProducts?: OrderableProductUpdateManyWithoutShopBestSellerInput
-  options?: OptionUpdateManyWithoutShopInput
-  categories?: CategoryUpdateManyWithoutShopInput
-  orders?: OrderUpdateManyWithoutReceiverInput
-}
-
-export interface ProductCreateWithoutAttributesInput {
-  deletedAt?: DateTime
-  name: String
-  description?: String
-  SKU?: String
-  displayPrice: Float
-  available: Boolean
-  imageUrl?: String
-  shop: ShopCreateOneWithoutProductsInput
-  brand: BrandCreateOneInput
-  category: CategoryCreateOneInput
-  options?: OptionCreateManyInput
-  unavailableOptionsValues?: OptionValueCreateManyInput
-  variants?: VariantCreateManyWithoutProductInput
-  orderables?: OrderableProductCreateManyWithoutProductInput
-}
-
-export interface ShopUpsertWithoutAttributesInput {
-  update: ShopUpdateWithoutAttributesDataInput
-  create: ShopCreateWithoutAttributesInput
 }
 
 export interface OptionSubscriptionWhereInput {
@@ -8662,49 +7787,119 @@ export interface OptionSubscriptionWhereInput {
   node?: OptionWhereInput
 }
 
-export interface AttributeUpsertWithWhereUniqueWithoutProductsInput {
-  where: AttributeWhereUniqueInput
-  update: AttributeUpdateWithoutProductsDataInput
-  create: AttributeCreateWithoutProductsInput
+export interface OrderableProductUpdateManyWithoutShopBestSellerInput {
+  create?: OrderableProductCreateWithoutShopBestSellerInput[] | OrderableProductCreateWithoutShopBestSellerInput
+  connect?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
+  disconnect?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
+  delete?: OrderableProductWhereUniqueInput[] | OrderableProductWhereUniqueInput
+  update?: OrderableProductUpdateWithWhereUniqueWithoutShopBestSellerInput[] | OrderableProductUpdateWithWhereUniqueWithoutShopBestSellerInput
+  upsert?: OrderableProductUpsertWithWhereUniqueWithoutShopBestSellerInput[] | OrderableProductUpsertWithWhereUniqueWithoutShopBestSellerInput
 }
 
-export interface VariantUpsertWithoutSelectedOptionsInput {
-  update: VariantUpdateWithoutSelectedOptionsDataInput
-  create: VariantCreateWithoutSelectedOptionsInput
+export interface BrandWhereUniqueInput {
+  id?: ID_Input
 }
 
-export interface ShopUpdateOneWithoutOrdersInput {
-  create?: ShopCreateWithoutOrdersInput
-  connect?: ShopWhereUniqueInput
+export interface OrderableProductUpdateWithWhereUniqueWithoutShopBestSellerInput {
+  where: OrderableProductWhereUniqueInput
+  data: OrderableProductUpdateWithoutShopBestSellerDataInput
+}
+
+export interface UserUpdateOneWithoutOrdersInput {
+  create?: UserCreateWithoutOrdersInput
+  connect?: UserWhereUniqueInput
   delete?: Boolean
-  update?: ShopUpdateWithoutOrdersDataInput
-  upsert?: ShopUpsertWithoutOrdersInput
+  update?: UserUpdateWithoutOrdersDataInput
+  upsert?: UserUpsertWithoutOrdersInput
 }
 
-export interface UserUpsertWithoutOrdersInput {
-  update: UserUpdateWithoutOrdersDataInput
-  create: UserCreateWithoutOrdersInput
+export interface OrderableProductUpdateWithoutShopBestSellerDataInput {
+  position?: Int
+  product?: ProductUpdateOneWithoutOrderablesInput
+  shopNewProduct?: ShopUpdateOneWithoutNewProductsInput
 }
 
-export interface OrderLineItemUpsertWithWhereUniqueWithoutOwnerInput {
-  where: OrderLineItemWhereUniqueInput
-  update: OrderLineItemUpdateWithoutOwnerDataInput
-  create: OrderLineItemCreateWithoutOwnerInput
+export interface VariantUpdateDataInput {
+  deletedAt?: DateTime
+  price?: Float
+  available?: Boolean
+  selectedOptions?: SelectedOptionUpdateManyWithoutVariantInput
+  product?: ProductUpdateOneWithoutVariantsInput
 }
 
-export interface VariantUpsertNestedInput {
-  update: VariantUpdateDataInput
-  create: VariantCreateInput
+export interface ShopUpdateOneWithoutNewProductsInput {
+  create?: ShopCreateWithoutNewProductsInput
+  connect?: ShopWhereUniqueInput
+  disconnect?: Boolean
+  delete?: Boolean
+  update?: ShopUpdateWithoutNewProductsDataInput
+  upsert?: ShopUpsertWithoutNewProductsInput
 }
 
-export interface ProductUpsertWithoutVariantsInput {
-  update: ProductUpdateWithoutVariantsDataInput
-  create: ProductCreateWithoutVariantsInput
+export interface OptionUpdateInput {
+  name?: String
+  values?: OptionValueUpdateManyInput
+  category?: CategoryUpdateOneWithoutOptionsInput
+  shop?: ShopUpdateOneInput
 }
 
-export interface BrandCreateOneInput {
-  create?: BrandCreateInput
-  connect?: BrandWhereUniqueInput
+export interface ShopUpdateWithoutNewProductsDataInput {
+  name?: String
+  MOTD?: String
+  products?: ProductUpdateManyWithoutShopInput
+  bestSellerProducts?: OrderableProductUpdateManyWithoutShopBestSellerInput
+}
+
+export interface ShopCreateOneInput {
+  create?: ShopCreateInput
+  connect?: ShopWhereUniqueInput
+}
+
+export interface ShopUpsertWithoutNewProductsInput {
+  update: ShopUpdateWithoutNewProductsDataInput
+  create: ShopCreateWithoutNewProductsInput
+}
+
+export interface OrderableProductWhereInput {
+  AND?: OrderableProductWhereInput[] | OrderableProductWhereInput
+  OR?: OrderableProductWhereInput[] | OrderableProductWhereInput
+  NOT?: OrderableProductWhereInput[] | OrderableProductWhereInput
+  id?: ID_Input
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  position?: Int
+  position_not?: Int
+  position_in?: Int[] | Int
+  position_not_in?: Int[] | Int
+  position_lt?: Int
+  position_lte?: Int
+  position_gt?: Int
+  position_gte?: Int
+  product?: ProductWhereInput
+  shopBestSeller?: ShopWhereInput
+  shopNewProduct?: ShopWhereInput
+}
+
+export interface OrderableProductUpsertWithWhereUniqueWithoutShopBestSellerInput {
+  where: OrderableProductWhereUniqueInput
+  update: OrderableProductUpdateWithoutShopBestSellerDataInput
+  create: OrderableProductCreateWithoutShopBestSellerInput
+}
+
+export interface UserWhereUniqueInput {
+  id?: ID_Input
+  email?: String
 }
 
 export interface ShopUpsertWithoutProductsInput {
@@ -8712,25 +7907,106 @@ export interface ShopUpsertWithoutProductsInput {
   create: ShopCreateWithoutProductsInput
 }
 
-export interface OptionValueWhereUniqueInput {
+export interface VariantUpsertWithoutSelectedOptionsInput {
+  update: VariantUpdateWithoutSelectedOptionsDataInput
+  create: VariantCreateWithoutSelectedOptionsInput
+}
+
+export interface OrderableProductUpsertWithWhereUniqueWithoutProductInput {
+  where: OrderableProductWhereUniqueInput
+  update: OrderableProductUpdateWithoutProductDataInput
+  create: OrderableProductCreateWithoutProductInput
+}
+
+export interface ShopUpsertWithoutBestSellerProductsInput {
+  update: ShopUpdateWithoutBestSellerProductsDataInput
+  create: ShopCreateWithoutBestSellerProductsInput
+}
+
+export interface OrderableProductUpsertWithWhereUniqueWithoutShopNewProductInput {
+  where: OrderableProductWhereUniqueInput
+  update: OrderableProductUpdateWithoutShopNewProductDataInput
+  create: OrderableProductCreateWithoutShopNewProductInput
+}
+
+export interface ProductUpsertWithoutOrderablesInput {
+  update: ProductUpdateWithoutOrderablesDataInput
+  create: ProductCreateWithoutOrderablesInput
+}
+
+export interface OptionUpsertWithWhereUniqueWithoutCategoryInput {
+  where: OptionWhereUniqueInput
+  update: OptionUpdateWithoutCategoryDataInput
+  create: OptionCreateWithoutCategoryInput
+}
+
+export interface OrderLineItemUpdateDataInput {
+  deletedAt?: DateTime
+  quantity?: Int
+  variant?: VariantUpdateOneInput
+  owner?: UserUpdateOneWithoutCartInput
+}
+
+export interface ShopWhereInput {
+  AND?: ShopWhereInput[] | ShopWhereInput
+  OR?: ShopWhereInput[] | ShopWhereInput
+  NOT?: ShopWhereInput[] | ShopWhereInput
   id?: ID_Input
-}
-
-export interface OrderableProductCreateWithoutProductInput {
-  position: Int
-  shopBestSeller?: ShopCreateOneWithoutBestSellerProductsInput
-  shopNewProduct?: ShopCreateOneWithoutNewProductsInput
-}
-
-export interface ShopCreateWithoutNewProductsInput {
-  name: String
+  id_not?: ID_Input
+  id_in?: ID_Input[] | ID_Input
+  id_not_in?: ID_Input[] | ID_Input
+  id_lt?: ID_Input
+  id_lte?: ID_Input
+  id_gt?: ID_Input
+  id_gte?: ID_Input
+  id_contains?: ID_Input
+  id_not_contains?: ID_Input
+  id_starts_with?: ID_Input
+  id_not_starts_with?: ID_Input
+  id_ends_with?: ID_Input
+  id_not_ends_with?: ID_Input
+  name?: String
+  name_not?: String
+  name_in?: String[] | String
+  name_not_in?: String[] | String
+  name_lt?: String
+  name_lte?: String
+  name_gt?: String
+  name_gte?: String
+  name_contains?: String
+  name_not_contains?: String
+  name_starts_with?: String
+  name_not_starts_with?: String
+  name_ends_with?: String
+  name_not_ends_with?: String
   MOTD?: String
-  products?: ProductCreateManyWithoutShopInput
-  bestSellerProducts?: OrderableProductCreateManyWithoutShopBestSellerInput
-  options?: OptionCreateManyWithoutShopInput
-  categories?: CategoryCreateManyWithoutShopInput
-  attributes?: AttributeCreateManyWithoutShopInput
-  orders?: OrderCreateManyWithoutReceiverInput
+  MOTD_not?: String
+  MOTD_in?: String[] | String
+  MOTD_not_in?: String[] | String
+  MOTD_lt?: String
+  MOTD_lte?: String
+  MOTD_gt?: String
+  MOTD_gte?: String
+  MOTD_contains?: String
+  MOTD_not_contains?: String
+  MOTD_starts_with?: String
+  MOTD_not_starts_with?: String
+  MOTD_ends_with?: String
+  MOTD_not_ends_with?: String
+  products_every?: ProductWhereInput
+  products_some?: ProductWhereInput
+  products_none?: ProductWhereInput
+  newProducts_every?: OrderableProductWhereInput
+  newProducts_some?: OrderableProductWhereInput
+  newProducts_none?: OrderableProductWhereInput
+  bestSellerProducts_every?: OrderableProductWhereInput
+  bestSellerProducts_some?: OrderableProductWhereInput
+  bestSellerProducts_none?: OrderableProductWhereInput
+}
+
+export interface CategoryCreateWithoutOptionsInput {
+  name: String
+  shop: ShopCreateOneInput
 }
 
 /*
@@ -8739,15 +8015,6 @@ export interface ShopCreateWithoutNewProductsInput {
  */
 export interface Node {
   id: ID_Output
-}
-
-export interface File extends Node {
-  id: ID_Output
-  name: String
-  url: String
-  contentType: String
-  secret: String
-  size: Int
 }
 
 export interface OrderableProductPreviousValues {
@@ -8783,109 +8050,6 @@ export interface OrderableProductEdge {
   cursor: String
 }
 
-export interface AggregateOrderableProduct {
-  count: Int
-}
-
-export interface OrderLineItemPreviousValues {
-  id: ID_Output
-  deletedAt?: DateTime
-  quantity: Int
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface OrderableProductConnection {
-  pageInfo: PageInfo
-  edges: OrderableProductEdge[]
-  aggregate: AggregateOrderableProduct
-}
-
-export interface AggregateShop {
-  count: Int
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface ShopEdge {
-  node: Shop
-  cursor: String
-}
-
-export interface AggregateOrderLineItem {
-  count: Int
-}
-
-export interface User extends Node {
-  id: ID_Output
-  email: String
-  password: String
-  firstName?: String
-  lastName?: String
-  shop: Shop
-  role: Role
-  cart?: OrderLineItem[]
-  orders?: Order[]
-  stripeCustomerId?: String
-  oneSignalUserId?: String
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface OrderLineItemConnection {
-  pageInfo: PageInfo
-  edges: OrderLineItemEdge[]
-  aggregate: AggregateOrderLineItem
-}
-
-export interface OrderableProductSubscriptionPayload {
-  mutation: MutationType
-  node?: OrderableProduct
-  updatedFields?: String[]
-  previousValues?: OrderableProductPreviousValues
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface OrderEdge {
-  node: Order
-  cursor: String
-}
-
-export interface BrandSubscriptionPayload {
-  mutation: MutationType
-  node?: Brand
-  updatedFields?: String[]
-  previousValues?: BrandPreviousValues
-}
-
-export interface AggregateFile {
-  count: Int
-}
-
-export interface BrandPreviousValues {
-  id: ID_Output
-  name: String
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface FileConnection {
-  pageInfo: PageInfo
-  edges: FileEdge[]
-  aggregate: AggregateFile
-}
-
 export interface Order extends Node {
   id: ID_Output
   createdAt: DateTime
@@ -8899,6 +8063,109 @@ export interface Order extends Node {
   orderStatus: OrderStatus
 }
 
+export interface OrderLineItemPreviousValues {
+  id: ID_Output
+  deletedAt?: DateTime
+  quantity: Int
+}
+
+export interface AggregateOrderableProduct {
+  count: Int
+}
+
+export interface AggregateShop {
+  count: Int
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface OrderableProductConnection {
+  pageInfo: PageInfo
+  edges: OrderableProductEdge[]
+  aggregate: AggregateOrderableProduct
+}
+
+export interface AggregateOrderLineItem {
+  count: Int
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface ShopEdge {
+  node: Shop
+  cursor: String
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface OrderLineItemConnection {
+  pageInfo: PageInfo
+  edges: OrderLineItemEdge[]
+  aggregate: AggregateOrderLineItem
+}
+
+export interface User extends Node {
+  id: ID_Output
+  email: String
+  password: String
+  firstName?: String
+  lastName?: String
+  selectedShop: Shop
+  role: Role
+  cart?: OrderLineItem[]
+  orders?: Order[]
+  stripeCustomerId?: String
+  oneSignalUserId?: String
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface OrderEdge {
+  node: Order
+  cursor: String
+}
+
+export interface OrderableProductSubscriptionPayload {
+  mutation: MutationType
+  node?: OrderableProduct
+  updatedFields?: String[]
+  previousValues?: OrderableProductPreviousValues
+}
+
+export interface AggregateFile {
+  count: Int
+}
+
+export interface BrandSubscriptionPayload {
+  mutation: MutationType
+  node?: Brand
+  updatedFields?: String[]
+  previousValues?: BrandPreviousValues
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface FileConnection {
+  pageInfo: PageInfo
+  edges: FileEdge[]
+  aggregate: AggregateFile
+}
+
+export interface BrandPreviousValues {
+  id: ID_Output
+  name: String
+}
+
 /*
  * An edge in a connection.
 
@@ -8908,20 +8175,23 @@ export interface UserEdge {
   cursor: String
 }
 
-export interface CategorySubscriptionPayload {
-  mutation: MutationType
-  node?: Category
-  updatedFields?: String[]
-  previousValues?: CategoryPreviousValues
+export interface Option extends Node {
+  id: ID_Output
+  name: String
+  values?: OptionValue[]
+  category: Category
+  shop: Shop
 }
 
 export interface AggregateProduct {
   count: Int
 }
 
-export interface CategoryPreviousValues {
-  id: ID_Output
-  name: String
+export interface CategorySubscriptionPayload {
+  mutation: MutationType
+  node?: Category
+  updatedFields?: String[]
+  previousValues?: CategoryPreviousValues
 }
 
 /*
@@ -8934,10 +8204,9 @@ export interface ProductConnection {
   aggregate: AggregateProduct
 }
 
-export interface ShopPreviousValues {
+export interface CategoryPreviousValues {
   id: ID_Output
   name: String
-  MOTD?: String
 }
 
 /*
@@ -8949,20 +8218,21 @@ export interface VariantEdge {
   cursor: String
 }
 
-export interface AttributeSubscriptionPayload {
-  mutation: MutationType
-  node?: Attribute
-  updatedFields?: String[]
-  previousValues?: AttributePreviousValues
+export interface ShopPreviousValues {
+  id: ID_Output
+  name: String
+  MOTD?: String
 }
 
 export interface AggregateSelectedOption {
   count: Int
 }
 
-export interface AttributePreviousValues {
-  id: ID_Output
-  value: String
+export interface AttributeSubscriptionPayload {
+  mutation: MutationType
+  node?: Attribute
+  updatedFields?: String[]
+  previousValues?: AttributePreviousValues
 }
 
 /*
@@ -8975,12 +8245,9 @@ export interface SelectedOptionConnection {
   aggregate: AggregateSelectedOption
 }
 
-export interface OrderableProduct extends Node {
+export interface AttributePreviousValues {
   id: ID_Output
-  product: Product
-  position: Int
-  shopBestSeller?: Shop
-  shopNewProduct?: Shop
+  value: String
 }
 
 /*
@@ -8992,20 +8259,22 @@ export interface OptionValueEdge {
   cursor: String
 }
 
-export interface OptionSubscriptionPayload {
+export interface ShopSubscriptionPayload {
   mutation: MutationType
-  node?: Option
+  node?: Shop
   updatedFields?: String[]
-  previousValues?: OptionPreviousValues
+  previousValues?: ShopPreviousValues
 }
 
 export interface AggregateOption {
   count: Int
 }
 
-export interface OptionPreviousValues {
-  id: ID_Output
-  name: String
+export interface OptionSubscriptionPayload {
+  mutation: MutationType
+  node?: Option
+  updatedFields?: String[]
+  previousValues?: OptionPreviousValues
 }
 
 /*
@@ -9018,11 +8287,9 @@ export interface OptionConnection {
   aggregate: AggregateOption
 }
 
-export interface ShopSubscriptionPayload {
-  mutation: MutationType
-  node?: Shop
-  updatedFields?: String[]
-  previousValues?: ShopPreviousValues
+export interface OptionPreviousValues {
+  id: ID_Output
+  name: String
 }
 
 /*
@@ -9034,20 +8301,23 @@ export interface AttributeEdge {
   cursor: String
 }
 
-export interface OptionValueSubscriptionPayload {
-  mutation: MutationType
-  node?: OptionValue
-  updatedFields?: String[]
-  previousValues?: OptionValuePreviousValues
+export interface OrderableProduct extends Node {
+  id: ID_Output
+  product: Product
+  position: Int
+  shopBestSeller?: Shop
+  shopNewProduct?: Shop
 }
 
 export interface AggregateCategory {
   count: Int
 }
 
-export interface OptionValuePreviousValues {
-  id: ID_Output
-  name: String
+export interface OptionValueSubscriptionPayload {
+  mutation: MutationType
+  node?: OptionValue
+  updatedFields?: String[]
+  previousValues?: OptionValuePreviousValues
 }
 
 /*
@@ -9060,12 +8330,9 @@ export interface CategoryConnection {
   aggregate: AggregateCategory
 }
 
-export interface Attribute extends Node {
+export interface OptionValuePreviousValues {
   id: ID_Output
-  value: String
-  category: Category
-  shop: Shop
-  products?: Product[]
+  name: String
 }
 
 /*
@@ -9075,6 +8342,24 @@ export interface Attribute extends Node {
 export interface BrandEdge {
   node: Brand
   cursor: String
+}
+
+export interface Attribute extends Node {
+  id: ID_Output
+  value: String
+  category: Category
+  shop: Shop
+  products?: Product[]
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface BrandConnection {
+  pageInfo: PageInfo
+  edges: BrandEdge[]
+  aggregate: AggregateBrand
 }
 
 export interface SelectedOptionSubscriptionPayload {
@@ -9088,10 +8373,10 @@ export interface SelectedOptionSubscriptionPayload {
  * A connection to a list of items.
 
  */
-export interface BrandConnection {
+export interface ShopConnection {
   pageInfo: PageInfo
-  edges: BrandEdge[]
-  aggregate: AggregateBrand
+  edges: ShopEdge[]
+  aggregate: AggregateShop
 }
 
 export interface SelectedOptionPreviousValues {
@@ -9099,33 +8384,16 @@ export interface SelectedOptionPreviousValues {
   deletedAt?: DateTime
 }
 
-/*
- * A connection to a list of items.
-
- */
-export interface ShopConnection {
-  pageInfo: PageInfo
-  edges: ShopEdge[]
-  aggregate: AggregateShop
-}
-
-export interface Option extends Node {
-  id: ID_Output
-  name: String
-  values?: OptionValue[]
-  category: Category
-  shop: Shop
-}
-
 export interface AggregateOrder {
   count: Int
 }
 
-export interface VariantSubscriptionPayload {
-  mutation: MutationType
-  node?: Variant
-  updatedFields?: String[]
-  previousValues?: VariantPreviousValues
+export interface SelectedOption extends Node {
+  id: ID_Output
+  deletedAt?: DateTime
+  option: Option
+  variant: Variant
+  value: OptionValue
 }
 
 /*
@@ -9137,11 +8405,11 @@ export interface FileEdge {
   cursor: String
 }
 
-export interface VariantPreviousValues {
-  id: ID_Output
-  deletedAt?: DateTime
-  price: Float
-  available: Boolean
+export interface VariantSubscriptionPayload {
+  mutation: MutationType
+  node?: Variant
+  updatedFields?: String[]
+  previousValues?: VariantPreviousValues
 }
 
 /*
@@ -9154,16 +8422,33 @@ export interface UserConnection {
   aggregate: AggregateUser
 }
 
-export interface SelectedOption extends Node {
+export interface VariantPreviousValues {
   id: ID_Output
   deletedAt?: DateTime
-  option: Option
-  variant: Variant
-  value: OptionValue
+  price: Float
+  available: Boolean
 }
 
 export interface AggregateVariant {
   count: Int
+}
+
+export interface Variant extends Node {
+  id: ID_Output
+  deletedAt?: DateTime
+  selectedOptions?: SelectedOption[]
+  price: Float
+  available: Boolean
+  product?: Product
+}
+
+/*
+ * An edge in a connection.
+
+ */
+export interface SelectedOptionEdge {
+  node: SelectedOption
+  cursor: String
 }
 
 export interface ProductSubscriptionPayload {
@@ -9174,12 +8459,13 @@ export interface ProductSubscriptionPayload {
 }
 
 /*
- * An edge in a connection.
+ * A connection to a list of items.
 
  */
-export interface SelectedOptionEdge {
-  node: SelectedOption
-  cursor: String
+export interface OptionValueConnection {
+  pageInfo: PageInfo
+  edges: OptionValueEdge[]
+  aggregate: AggregateOptionValue
 }
 
 export interface ProductPreviousValues {
@@ -9193,65 +8479,8 @@ export interface ProductPreviousValues {
   imageUrl?: String
 }
 
-/*
- * A connection to a list of items.
-
- */
-export interface OptionValueConnection {
-  pageInfo: PageInfo
-  edges: OptionValueEdge[]
-  aggregate: AggregateOptionValue
-}
-
-export interface Variant extends Node {
-  id: ID_Output
-  deletedAt?: DateTime
-  selectedOptions?: SelectedOption[]
-  price: Float
-  available: Boolean
-  product?: Product
-}
-
 export interface AggregateAttribute {
   count: Int
-}
-
-export interface UserSubscriptionPayload {
-  mutation: MutationType
-  node?: User
-  updatedFields?: String[]
-  previousValues?: UserPreviousValues
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface CategoryEdge {
-  node: Category
-  cursor: String
-}
-
-export interface UserPreviousValues {
-  id: ID_Output
-  email: String
-  password: String
-  firstName?: String
-  lastName?: String
-  role: Role
-  stripeCustomerId?: String
-  oneSignalUserId?: String
-}
-
-/*
- * Information about pagination in a connection.
-
- */
-export interface PageInfo {
-  hasNextPage: Boolean
-  hasPreviousPage: Boolean
-  startCursor?: String
-  endCursor?: String
 }
 
 export interface Product extends Node {
@@ -9277,9 +8506,58 @@ export interface Product extends Node {
  * An edge in a connection.
 
  */
+export interface CategoryEdge {
+  node: Category
+  cursor: String
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType
+  node?: User
+  updatedFields?: String[]
+  previousValues?: UserPreviousValues
+}
+
+/*
+ * Information about pagination in a connection.
+
+ */
+export interface PageInfo {
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+  startCursor?: String
+  endCursor?: String
+}
+
+export interface UserPreviousValues {
+  id: ID_Output
+  email: String
+  password: String
+  firstName?: String
+  lastName?: String
+  role: Role
+  stripeCustomerId?: String
+  oneSignalUserId?: String
+}
+
+/*
+ * An edge in a connection.
+
+ */
 export interface OrderLineItemEdge {
   node: OrderLineItem
   cursor: String
+}
+
+export interface Brand extends Node {
+  id: ID_Output
+  name: String
+  category: Category
+  shop: Shop
+}
+
+export interface AggregateUser {
+  count: Int
 }
 
 export interface FileSubscriptionPayload {
@@ -9287,19 +8565,6 @@ export interface FileSubscriptionPayload {
   node?: File
   updatedFields?: String[]
   previousValues?: FilePreviousValues
-}
-
-export interface AggregateUser {
-  count: Int
-}
-
-export interface FilePreviousValues {
-  id: ID_Output
-  name: String
-  url: String
-  contentType: String
-  secret: String
-  size: Int
 }
 
 /*
@@ -9312,17 +8577,13 @@ export interface VariantConnection {
   aggregate: AggregateVariant
 }
 
-export interface Shop extends Node {
+export interface FilePreviousValues {
   id: ID_Output
   name: String
-  MOTD?: String
-  products?: Product[]
-  newProducts?: OrderableProduct[]
-  bestSellerProducts?: OrderableProduct[]
-  options?: Option[]
-  categories?: Category[]
-  attributes?: Attribute[]
-  orders?: Order[]
+  url: String
+  contentType: String
+  secret: String
+  size: Int
 }
 
 /*
@@ -9334,8 +8595,27 @@ export interface OptionEdge {
   cursor: String
 }
 
+export interface Shop extends Node {
+  id: ID_Output
+  name: String
+  MOTD?: String
+  products?: Product[]
+  newProducts?: OrderableProduct[]
+  bestSellerProducts?: OrderableProduct[]
+}
+
 export interface AggregateBrand {
   count: Int
+}
+
+/*
+ * A connection to a list of items.
+
+ */
+export interface OrderConnection {
+  pageInfo: PageInfo
+  edges: OrderEdge[]
+  aggregate: AggregateOrder
 }
 
 export interface OrderLineItemSubscriptionPayload {
@@ -9367,11 +8647,22 @@ export interface OrderSubscriptionPayload {
   previousValues?: OrderPreviousValues
 }
 
-export interface Brand extends Node {
+/*
+ * An edge in a connection.
+
+ */
+export interface ProductEdge {
+  node: Product
+  cursor: String
+}
+
+export interface File extends Node {
   id: ID_Output
   name: String
-  category: Category
-  shop: Shop
+  url: String
+  contentType: String
+  secret: String
+  size: Int
 }
 
 /*
@@ -9386,25 +8677,6 @@ export interface AttributeConnection {
 
 export interface AggregateOptionValue {
   count: Int
-}
-
-/*
- * An edge in a connection.
-
- */
-export interface ProductEdge {
-  node: Product
-  cursor: String
-}
-
-/*
- * A connection to a list of items.
-
- */
-export interface OrderConnection {
-  pageInfo: PageInfo
-  edges: OrderEdge[]
-  aggregate: AggregateOrder
 }
 
 /*
@@ -9424,11 +8696,6 @@ The `String` scalar type represents textual data, represented as UTF-8 character
 */
 export type String = string
 
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
-*/
-export type Int = number
-
 export type DateTime = string
 
 /*
@@ -9440,6 +8707,11 @@ export type Float = number
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean
+
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
+*/
+export type Int = number
 
 export interface Schema {
   query: Query

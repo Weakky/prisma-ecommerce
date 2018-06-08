@@ -73,8 +73,15 @@ export const Query = {
 
     return ctx.db.query.orders({ where: { receiver: { id: shopId } } }, info);
   },
-  allCustomers(parent, args, ctx: Context, info) {
-    return ctx.db.query.users({}, info);
+  async allCustomers(parent, args, ctx: Context, info) {
+    const shopId = await getShopId(ctx);
+    return ctx.db.query.users({
+      where: {
+        orders_some: {
+          receiver: { id: shopId }
+        }
+      }
+    }, info);
   },
   async allShops(parent, args, ctx: Context, info) {
     return ctx.db.query.shops({}, info);

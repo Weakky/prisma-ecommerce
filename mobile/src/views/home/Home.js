@@ -169,17 +169,17 @@ class Home extends Component {
             addOrderToCart={this.addOrderToCart}
           />
         )}
-        {me.shop.bestSellerProducts.length > 0 && (
+        {me.selectedShop.bestSellerProducts.length > 0 && (
           <SimpleProductList
             title={translate('best_sales')}
-            orderableProducts={me.shop.bestSellerProducts}
+            orderableProducts={me.selectedShop.bestSellerProducts}
             navigation={this.props.navigation}
           />
         )}
-        {me.shop.newProducts.length > 0 && (
+        {me.selectedShop.newProducts.length > 0 && (
           <SimpleProductList
             title={translate('new_products')}
-            orderableProducts={me.shop.newProducts}
+            orderableProducts={me.selectedShop.newProducts}
             navigation={this.props.navigation}
           />
         )}
