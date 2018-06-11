@@ -9,8 +9,6 @@ export const User = {
     const shopId = await getShopIdFromUserId(userId, ctx);
     const ordersIds = parent.orders.map(order => order.id);
 
-    console.log(parent);
-
     return ctx.db.query.orders({
       where: {
         id_in: ordersIds,
@@ -18,5 +16,19 @@ export const User = {
         receiver: { id: shopId }
       }
     }, info)
-  }
+  },
+
+  async cart(parent, args, ctx: Context, info) {
+    const userId = getUserId(ctx);
+    const shopId = await getShopIdFromUserId(userId, ctx);
+    const lineItemIds = parent.cart.map(lineItem => lineItem.id);
+
+    return ctx.db.query.orderLineItems({
+      where: {
+        id_in: lineItemIds,
+        shop: { id: shopId },
+        owner: { id: userId },
+      }
+    }, info)
+  },
 }
