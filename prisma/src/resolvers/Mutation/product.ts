@@ -152,7 +152,7 @@ export const product = {
     // Disconnect it from the carts
     const usersWithProductInCart = await ctx.db.query.users({
       where: {
-        shop: { id: shopId },
+        selectedShop: { id: shopId },
         cart_some: {
           variant: {
             product: { id: args.productId }
@@ -168,7 +168,7 @@ export const product = {
         where: {
           owner: {
             id_in: usersToDisconnectIds,
-            shop: { id: shopId },
+            selectedShop: { id: shopId },
           },
           variant: {
             product: { id: args.productId }

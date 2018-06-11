@@ -10,7 +10,7 @@ interface CreateOrderInput {
 }
 
 export async function createOrderFromCart(args: CreateOrderInput, db: Prisma): Promise<Order> {
-  const { shop: { id: shopId }, cart } = await db.query.user(
+  const { selectedShop: { id: shopId }, cart } = await db.query.user(
     { where: { id: args.userId } },
     `{
       shop { id }

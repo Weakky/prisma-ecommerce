@@ -1,4 +1,4 @@
-import { Context, getUserId, getShopId } from "../../utils";
+import { Context, getUserId, getShopId, getShopIdFromUserId } from "../../utils";
 import * as _ from 'lodash';
 import { OrderLineItem } from "../../generated/prisma";
 import {
@@ -19,6 +19,7 @@ export const cart = {
   //args: VariantId: ID!, quantity: Int!
   async addItemToCart(parent, args, ctx: Context, info) {
     const userId = getUserId(ctx);
+    const shopId = await getShopIdFromUserId(userId, ctx);
 
     if (!(await ctx.db.exists.Variant({ id: args.variantId }))) {
       throw new ProductNotFoundException();
@@ -50,6 +51,7 @@ export const cart = {
     return ctx.db.mutation.createOrderLineItem({
       data: {
         owner: { connect: { id: userId } },
+        shop: { connect: { id: shopId } },
         quantity: args.quantity,
         variant: { connect: { id: args.variantId } }
       }
@@ -120,6 +122,7 @@ export const cart = {
         return ctx.db.mutation.createOrderLineItem({
           data: {
             owner: { connect: { id: userId } },
+            shop: { connect: { id: shopId } },
             quantity: orderLineItem.quantity,
             variant: { connect: { id: orderLineItem.variant.id } }
           }
