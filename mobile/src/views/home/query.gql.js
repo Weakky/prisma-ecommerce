@@ -6,6 +6,26 @@ const homeInformation = gql`
       id
       firstName
       oneSignalUserId
+      cart {
+        id
+        quantity
+        variant {
+          id
+          available
+          price
+          selectedOptions {
+            id
+            option {
+              id
+              name
+            }
+            value {
+              id
+              name
+            }
+          }
+        }
+      }
       orders(first: 1, orderBy: createdAt_DESC) {
         id
         createdAt
@@ -24,6 +44,7 @@ const homeInformation = gql`
         totalPrice
       }
       selectedShop {
+        id
         bestSellerProducts(orderBy: position_ASC, first: 5) {
           id
           product {
