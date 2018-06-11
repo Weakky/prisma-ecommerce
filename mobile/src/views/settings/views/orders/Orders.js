@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import { FlatList } from 'react-native';
-import { Observable } from 'apollo-client-preset';
 import fecha from 'fecha';
 
 import Container from '../../../../components/layout/Container';
@@ -25,13 +24,15 @@ export default class Orders extends PureComponent {
   }
 
   async componentWillMount() {
-    const query = this.props.client.watchQuery({
-      query: commonQueries.userInformation,
-    });
+    this.subscription = this.props.client
+      .watchQuery({ query: commonQueries.userInformation })
+      .subscribe(({ data: updatedResult }) => {
+        this.setState({ cartLength: updatedResult.me.cart.length });
+      });
+  }
 
-    Observable.from(query).forEach(({ data: updatedResult }) => {
-      this.setState({ cartLength: updatedResult.me.cart.length });
-    });
+  componentWillUnmount() {
+    this.subscription.unsubscribe();
   }
 
   onPressAddToCart({ orderId, replace }) {

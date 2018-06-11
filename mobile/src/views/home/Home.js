@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, Alert, } from 'react-native';
-import { Observable } from 'apollo-client-preset';
 import OneSignal from 'react-native-onesignal';
 import PropTypes from 'prop-types';
 
@@ -71,17 +70,16 @@ class Home extends Component {
 
     OneSignal.addEventListener('ids', this.onIds);
 
-    const query = this.props.client.watchQuery({
-      query: commonQueries.userInformation,
-    });
-
-    Observable.from(query).forEach(({ data: updatedResult }) => {
-      this.setState({ cartLength: updatedResult.me.cart.length });
-    });
+    this.subscription = this.props.client
+      .watchQuery({ query: commonQueries.userInformation })
+      .subscribe(({ data: updatedResult }) => {
+        this.setState({ cartLength: updatedResult.me.cart.length });
+      });
   }
 
   componentWillUnmount() {
     OneSignal.removeEventListener('ids', this.onIds);
+    this.subscription.unsubscribe();
   }
 
   onIds(device) {

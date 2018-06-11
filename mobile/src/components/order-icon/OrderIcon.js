@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { Observable } from 'apollo-client-preset';
 import { withApollo } from 'react-apollo/withApollo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import sumBy from 'lodash/sumBy';
@@ -19,11 +18,9 @@ class OrderIcon extends React.PureComponent {
   }
 
   async componentWillMount() {
-    const query = this.props.client.watchQuery({
-      query: commonQueries.userInformation,
-    });
-
-    Observable.from(query).forEach(({ data }) => {
+    this.subscription = this.props.client
+      .watchQuery({ query: commonQueries.userInformation })
+      .subscribe(({ data }) => {
       if (data.me.cart.length > 0) {
         this.setState({
           itemsCount: sumBy(data.me.cart, lineItem => lineItem.quantity),
@@ -32,6 +29,10 @@ class OrderIcon extends React.PureComponent {
         this.setState({ itemsCount: 0 });
       }
     });
+  }
+
+  componentWillUnmount() {
+    this.subscription.unsubscribe();
   }
 
   render() {

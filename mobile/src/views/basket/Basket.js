@@ -31,30 +31,32 @@ class Basket extends Component {
   }
 
   async componentWillMount() {
-    const query = this.props.client.watchQuery({
-      query: commonQueries.userInformation,
-    });
+    this.subscription = this.props.client
+      .watchQuery({ query: commonQueries.userInformation })
+      .subscribe(({ data: updatedResult }) => {
+        this.setState({ cart: updatedResult.me.cart });
+      });
+  }
 
-    Observable.from(query).forEach(({ data: updatedResult }) => {
-      this.setState({ cart: updatedResult.me.cart });
-    });
+  componentWillUnmount() {
+    this.subscription.unsubscribe();
   }
 
   async removeItemFromBasket(lineItemId) {
-   try {
-     await this.props.removeItemFromBasket({ lineItemId });
-   } catch (e) {
-     const error = e.graphQLErrors[0];
+    try {
+      await this.props.removeItemFromBasket({ lineItemId });
+    } catch (e) {
+      const error = e.graphQLErrors[0];
 
-     if (error && error.data.code === 100) {
-       Alert.alert(error.message);
-       // Refetch basket
-       await this.props.client.query({
-         query: commonQueries.userInformation,
-         fetchPolicy: 'network-only'
-       });
-     }
-   }
+      if (error) {
+        Alert.alert(error.message);
+        // Refetch basket
+        await this.props.client.query({
+          query: commonQueries.userInformation,
+          fetchPolicy: 'network-only',
+        });
+      }
+    }
   }
 
   totalTTC() {
@@ -85,20 +87,25 @@ class Basket extends Component {
 
       // Check if any lineItem was deleted
       if (data.me.cart.some(lineItem => lineItem.deletedAt !== null)) {
-        return Alert.alert(translate('invalid_cart_title'), translate('invalid_cart_deleted'))
+        return Alert.alert(
+          translate('invalid_cart_title'),
+          translate('invalid_cart_deleted'),
+        );
       }
 
       // Check if some variants aren't available anymore
       if (data.me.cart.some(lineItem => this.isLineItemUnavailable(lineItem))) {
-        return Alert.alert(translate('invalid_cart_title'), translate('invalid_cart_not_available'))
+        return Alert.alert(
+          translate('invalid_cart_title'),
+          translate('invalid_cart_not_available'),
+        );
       }
 
       this.props.navigation.navigate('Recap', {
         totalTTC: this.totalTTC(),
         totalHT: this.totalHT(),
         totalVAT: this.totalVAT(),
-      })
-
+      });
     } catch (e) {
       const error = e.graphQLErrors[0];
 
@@ -107,11 +114,13 @@ class Basket extends Component {
   }
 
   isLineItemUnavailable(lineItem) {
-    const lineItemsValues = lineItem.variant.selectedOptions.map((option) => option.value.id);
+    const lineItemsValues = lineItem.variant.selectedOptions.map(
+      option => option.value.id,
+    );
 
-    return lineItem.variant.product.unavailableOptionsValues.some(optionValue => (
-      lineItemsValues.includes(optionValue.id)
-    ));
+    return lineItem.variant.product.unavailableOptionsValues.some(optionValue =>
+      lineItemsValues.includes(optionValue.id),
+    );
   }
 
   renderContinueButton() {
