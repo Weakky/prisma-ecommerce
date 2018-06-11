@@ -1,5 +1,5 @@
 # source: http://localhost:4466/aromaclop/dev1
-# timestamp: Fri Jun 08 2018 13:42:21 GMT+0200 (CEST)
+# timestamp: Mon Jun 11 2018 21:16:47 GMT+0200 (CEST)
 
 type AggregateAttribute {
   count: Int!
@@ -2071,6 +2071,7 @@ type OrderLineItem implements Node {
   quantity: Int!
   variant(where: VariantWhereInput): Variant
   owner(where: UserWhereInput): User
+  shop(where: ShopWhereInput): Shop!
 }
 
 """A connection to a list of items."""
@@ -2088,6 +2089,7 @@ input OrderLineItemCreateInput {
   quantity: Int!
   variant: VariantCreateOneInput
   owner: UserCreateOneWithoutCartInput
+  shop: ShopCreateOneInput!
 }
 
 input OrderLineItemCreateManyInput {
@@ -2104,6 +2106,7 @@ input OrderLineItemCreateWithoutOwnerInput {
   deletedAt: DateTime
   quantity: Int!
   variant: VariantCreateOneInput
+  shop: ShopCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -2178,6 +2181,7 @@ input OrderLineItemUpdateDataInput {
   quantity: Int
   variant: VariantUpdateOneInput
   owner: UserUpdateOneWithoutCartInput
+  shop: ShopUpdateOneInput
 }
 
 input OrderLineItemUpdateInput {
@@ -2185,6 +2189,7 @@ input OrderLineItemUpdateInput {
   quantity: Int
   variant: VariantUpdateOneInput
   owner: UserUpdateOneWithoutCartInput
+  shop: ShopUpdateOneInput
 }
 
 input OrderLineItemUpdateManyInput {
@@ -2209,6 +2214,7 @@ input OrderLineItemUpdateWithoutOwnerDataInput {
   deletedAt: DateTime
   quantity: Int
   variant: VariantUpdateOneInput
+  shop: ShopUpdateOneInput
 }
 
 input OrderLineItemUpdateWithWhereUniqueNestedInput {
@@ -2328,6 +2334,7 @@ input OrderLineItemWhereInput {
   quantity_gte: Int
   variant: VariantWhereInput
   owner: UserWhereInput
+  shop: ShopWhereInput
 }
 
 input OrderLineItemWhereUniqueInput {

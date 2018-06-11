@@ -108,11 +108,14 @@ const translations = {
     your_settings: 'Your settings',
     your_account: 'Your account',
     your_orders: 'Your orders',
-    your_shop: 'Your shop',
+    your_shop: 'Your shops',
 
     //Orders translations
-    order_of: 'Order of'
+    order_of: 'Order of',
 
+    //Shops translations
+    current_shop: 'Your current shop',
+    change_shop: 'Navigate to another shop'
   },
   fr: {
     login: 'Connexion',
@@ -211,10 +214,14 @@ const translations = {
     your_settings: 'Vos paramètres',
     your_account: 'Votre compte',
     your_orders: 'Vos commandes',
-    your_shop: 'Votre magasin',
+    your_shop: 'Vos magasins',
 
     //Orders translations
-    order_of: 'Commande du'
+    order_of: 'Commande du',
+
+    //Shops translations
+    current_shop: 'Votre boutique actuelle',
+    change_shop: 'Naviguer vers une autre boutique'
   }
 }[LANGUAGE];
 

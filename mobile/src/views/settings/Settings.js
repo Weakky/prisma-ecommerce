@@ -49,7 +49,7 @@ export default class Settings extends PureComponent {
                 <Ionicons name="ios-home-outline" size={37} color={Colors.text} />
               </View>
             }
-            onPress={() => null}
+            onPress={() => this.props.navigation.navigate('Shops')}
           />
           <SettingsList.Item
             title={translate('logout')}

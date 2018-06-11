@@ -13,7 +13,7 @@ const BigRedButton = props => (
     style={[
       styles.bigRedButton,
       props.style,
-      { backgroundColor: props.disabled ? 'rgba(204,97,85,0.6)' : Colors.red },
+      { backgroundColor: props.disabled ? 'rgba(204,97,85,0.5)' : Colors.red },
     ]}
     onPress={props.onPress}
     disabled={props.disabled || props.loading}

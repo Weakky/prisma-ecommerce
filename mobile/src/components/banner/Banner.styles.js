@@ -1,15 +1,12 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import font from '../../assets/fonts/index';
 import color from '../../statics/colors/index';
-
-const width = Dimensions.get('window').width;
 
 export default StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: width,
     padding: 20,
   },
   text: {

@@ -2321,6 +2321,7 @@ type OrderLineItem implements Node {
   quantity: Int!
   variant(where: VariantWhereInput): Variant
   owner(where: UserWhereInput): User
+  shop(where: ShopWhereInput): Shop!
 }
 
 """
@@ -2343,6 +2344,7 @@ input OrderLineItemCreateInput {
   quantity: Int!
   variant: VariantCreateOneInput
   owner: UserCreateOneWithoutCartInput
+  shop: ShopCreateOneInput!
 }
 
 input OrderLineItemCreateManyInput {
@@ -2359,6 +2361,7 @@ input OrderLineItemCreateWithoutOwnerInput {
   deletedAt: DateTime
   quantity: Int!
   variant: VariantCreateOneInput
+  shop: ShopCreateOneInput!
 }
 
 """
@@ -2438,6 +2441,7 @@ input OrderLineItemUpdateDataInput {
   quantity: Int
   variant: VariantUpdateOneInput
   owner: UserUpdateOneWithoutCartInput
+  shop: ShopUpdateOneInput
 }
 
 input OrderLineItemUpdateInput {
@@ -2445,6 +2449,7 @@ input OrderLineItemUpdateInput {
   quantity: Int
   variant: VariantUpdateOneInput
   owner: UserUpdateOneWithoutCartInput
+  shop: ShopUpdateOneInput
 }
 
 input OrderLineItemUpdateManyInput {
@@ -2469,6 +2474,7 @@ input OrderLineItemUpdateWithoutOwnerDataInput {
   deletedAt: DateTime
   quantity: Int
   variant: VariantUpdateOneInput
+  shop: ShopUpdateOneInput
 }
 
 input OrderLineItemUpdateWithWhereUniqueNestedInput {
@@ -2619,6 +2625,7 @@ input OrderLineItemWhereInput {
   quantity_gte: Int
   variant: VariantWhereInput
   owner: UserWhereInput
+  shop: ShopWhereInput
 }
 
 input OrderLineItemWhereUniqueInput {
@@ -6106,6 +6113,7 @@ export interface OrderLineItemWhereInput {
   quantity_gte?: Int
   variant?: VariantWhereInput
   owner?: UserWhereInput
+  shop?: ShopWhereInput
 }
 
 export interface ProductCreateWithoutOrderablesInput {
@@ -6469,6 +6477,7 @@ export interface OrderLineItemCreateWithoutOwnerInput {
   deletedAt?: DateTime
   quantity: Int
   variant?: VariantCreateOneInput
+  shop: ShopCreateOneInput
 }
 
 export interface OrderUpdateWithoutOwnerDataInput {
@@ -6537,6 +6546,7 @@ export interface OrderLineItemCreateInput {
   quantity: Int
   variant?: VariantCreateOneInput
   owner?: UserCreateOneWithoutCartInput
+  shop: ShopCreateOneInput
 }
 
 export interface UserUpdateInput {
@@ -7130,6 +7140,7 @@ export interface OrderLineItemUpdateInput {
   quantity?: Int
   variant?: VariantUpdateOneInput
   owner?: UserUpdateOneWithoutCartInput
+  shop?: ShopUpdateOneInput
 }
 
 export interface OptionUpdateWithWhereUniqueNestedInput {
@@ -7245,6 +7256,7 @@ export interface OrderLineItemUpdateWithoutOwnerDataInput {
   deletedAt?: DateTime
   quantity?: Int
   variant?: VariantUpdateOneInput
+  shop?: ShopUpdateOneInput
 }
 
 export interface SelectedOptionUpdateManyWithoutVariantInput {
@@ -7945,6 +7957,7 @@ export interface OrderLineItemUpdateDataInput {
   quantity?: Int
   variant?: VariantUpdateOneInput
   owner?: UserUpdateOneWithoutCartInput
+  shop?: ShopUpdateOneInput
 }
 
 export interface ShopWhereInput {
@@ -8028,6 +8041,7 @@ export interface OrderLineItem extends Node {
   quantity: Int
   variant?: Variant
   owner?: User
+  shop: Shop
 }
 
 export interface Category extends Node {

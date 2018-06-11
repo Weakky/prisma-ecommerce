@@ -11,6 +11,7 @@ import { translate } from '../../../i18n';
 
 const physicalShopData = {
   shop1: {
+    shopId: '1',
     shop: 'Shop1',
     address: '4671 Lightning Point Drive',
     postal: '54550',
@@ -19,6 +20,7 @@ const physicalShopData = {
     opening: 'Opened on Monday to Saturday, from 9AM to 7PM',
   },
   shop2: {
+    shopId: '2',
     shop: 'Shop2',
     address: '4671 Lightning Point Drive',
     postal: '54550',
@@ -39,8 +41,8 @@ class ThirdStep extends PureComponent {
     this.onBannerSelected = this.onBannerSelected.bind(this);
   }
 
-  onBannerSelected({ shop }) {
-    this.setState({ selectedShop: shop });
+  onBannerSelected({ shopId }) {
+    this.setState({ selectedShop: shopId });
   }
 
   render() {
@@ -61,12 +63,12 @@ class ThirdStep extends PureComponent {
         </View>
         <Banner
           {...physicalShopData.shop1}
-          selected={this.state.selectedShop === physicalShopData.shop1.shop}
+          selected={this.state.selectedShop === physicalShopData.shop1.shopId}
           onBannerSelected={this.onBannerSelected}
         />
         <Banner
           {...physicalShopData.shop2}
-          selected={this.state.selectedShop === physicalShopData.shop2.shop}
+          selected={this.state.selectedShop === physicalShopData.shop2.shopId}
           onBannerSelected={this.onBannerSelected}
         />
         {this.state.selectedShop && (

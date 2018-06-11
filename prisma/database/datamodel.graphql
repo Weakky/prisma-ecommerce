@@ -76,7 +76,7 @@ type User {
   firstName: String
   lastName: String
   selectedShop: Shop!
-  role: Role! @default(value: USER)
+  role: Role! @default(value: "USER")
   cart: [OrderLineItem!]! @relation(name: "UserCart" onDelete: CASCADE)
   orders: [Order!]! @relation(name: "UserOrders")
   stripeCustomerId: String
@@ -111,6 +111,7 @@ type OrderLineItem {
   quantity: Int!
   variant: Variant
   owner: User @relation(name: "UserCart", onDelete: SET_NULL)
+  shop: Shop!
 }
 
 type Shop {

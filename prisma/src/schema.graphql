@@ -75,7 +75,7 @@ type Mutation {
   pay(stripeTokenId: String!): PayPayload
 
   #User mutations
-  updateUser(firstName: String, lastName: String, oneSignalUserId: String): User
+  updateUser(firstName: String, lastName: String, oneSignalUserId: String, selectedShopId: ID): User
 }
 
 type Subscription {
