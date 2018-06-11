@@ -23,7 +23,6 @@ export default WrappedComponent =>
           },
         };
 
-        this._isMounted = false;
         this.applyFilters = this.applyFilters.bind(this);
         this.setFilter = this.setFilter.bind(this);
       }
@@ -56,15 +55,7 @@ export default WrappedComponent =>
       }
 
       async componentWillMount() {
-        this._isMounted = true;
-
-        if (this._isMounted) {
-          await this.fetchFilters(this.props.filterType);
-        }
-      }
-
-      componentWillUnmount() {
-        this._isMounted = false;
+        await this.fetchFilters(this.props.filterType);
       }
 
       async setFilter([filterName, filterValue]) {
