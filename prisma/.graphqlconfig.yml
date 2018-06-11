@@ -1,11 +1,13 @@
 projects:
   aromaclop:
     schemaPath: "src/schema.graphql"
+    includes: ["**/*.graphql"]
     extensions:
       endpoints:
         dev: "http://localhost:4000"
   database:
     schemaPath: "src/generated/prisma.graphql"
+    includes: ["**/*.graphql"]
     extensions:
       prisma: database/prisma.yml
       prepare-binding:
