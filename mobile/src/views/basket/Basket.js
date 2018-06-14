@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { FlatList, Platform, StatusBar, View, StyleSheet, Alert, ActivityIndicator } from 'react-native';
+import { FlatList, Platform, StatusBar, View, StyleSheet, Alert } from 'react-native';
 
 import sumBy from 'lodash/sumBy';
 import { withApollo } from 'react-apollo';
-import { Observable } from 'apollo-client-preset';
 
 import Container from '../../components/layout/Container';
 import Button from '../../components/button/Button';
@@ -67,7 +66,7 @@ class Basket extends Component {
   }
 
   totalHT() {
-    return (this.totalTTC() * 0.8).toFixed(2);
+    return (this.totalTTC() / 1.2).toFixed(2);
   }
 
   totalVAT() {
