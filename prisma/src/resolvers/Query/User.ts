@@ -1,10 +1,10 @@
-import { Context, getUserId, getShopIdFromUserId } from "../utils";
+import { Context, getUserId, getShopIdFromUserId } from "../../utils";
 
 export const User = {
   // Grab only orders made to the selectedShop of the user,
   // So that he cannot add an order to his cart with product
-  // That were ordered from another Shop (that can potentially not be available)
-  async orders(parent, args, ctx: Context, info) {
+  // That were ordered from another Shop (that can potentially not be existing)
+  async orders(parent, _, ctx: Context, info) {
     const userId = getUserId(ctx);
     const shopId = await getShopIdFromUserId(userId, ctx);
     const ordersIds = parent.orders.map(order => order.id);
@@ -18,7 +18,7 @@ export const User = {
     }, info)
   },
 
-  async cart(parent, args, ctx: Context, info) {
+  async cart(parent, _, ctx: Context, info) {
     const userId = getUserId(ctx);
     const shopId = await getShopIdFromUserId(userId, ctx);
     const lineItemIds = parent.cart.map(lineItem => lineItem.id);
