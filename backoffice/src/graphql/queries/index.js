@@ -22,6 +22,8 @@ export const ListAllProductsQuery = gql`
     allProducts {
       id
       name
+      description
+      available
       displayPrice
       imageUrl
       brand {

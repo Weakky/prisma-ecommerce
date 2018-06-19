@@ -24,6 +24,7 @@ export default gql`
         node {
           id
           name
+          available
           imageUrl
           displayPrice
           brand {

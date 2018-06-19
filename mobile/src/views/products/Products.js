@@ -124,6 +124,7 @@ class Products extends PureComponent {
               loading={false}
               brand={product.brand.name}
               name={product.name}
+              available={product.available}
               source={{ uri: product.imageUrl }}
               price={product.displayPrice}
               unavailableOptionsValues={product.unavailableOptionsValues}

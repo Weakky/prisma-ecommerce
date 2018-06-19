@@ -13,6 +13,7 @@ const propTypes = {
   onPress: PropTypes.func.isRequired,
   source: PropTypes.object,
   name: PropTypes.string,
+  available: PropTypes.bool,
   brand: PropTypes.string,
   price: PropTypes.number,
   notAvailableTaxons: PropTypes.array,
@@ -24,7 +25,8 @@ const defaultProps = {
   name: 'Bubble Gum',
   brand: 'ALFALIQUID',
   price: '5,95 €',
-  notAvailableTaxons: ['11 MG', '16 MG'],
+  available: false,
+  notAvailableTaxons: [],
   style: {},
 };
 
@@ -43,11 +45,20 @@ OptionsValuesNotAvailable.propTypes = {
   notAvailableTaxons: PropTypes.array,
 };
 
+const ProductNotAvailable = () => (
+  <View style={styles.optionValueContainer}>
+    <Text style={styles.optionValueTitle}>
+      {translate('not_available_product')}&nbsp;
+    </Text>
+  </View>
+);
+
 const Card = ({
   loading,
   onPress,
   source,
   name,
+  available,
   brand,
   price,
   unavailableOptionsValues,
@@ -67,7 +78,8 @@ const Card = ({
         <Ionicons name="ios-arrow-forward-outline" />
       </View>
     </View>
-    {unavailableOptionsValues.length > 0 && (
+    {!available && <ProductNotAvailable />}
+    {available && unavailableOptionsValues.length > 0 && (
       <OptionsValuesNotAvailable unavailableOptionsValues={unavailableOptionsValues} />
     )}
   </TouchableOpacity>

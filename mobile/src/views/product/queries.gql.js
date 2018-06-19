@@ -6,8 +6,9 @@ export default {
       product(id: $productId) {
         id
         name
-        imageUrl
+        description
         available
+        imageUrl
         displayPrice
         brand {
           id

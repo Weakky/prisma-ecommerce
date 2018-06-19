@@ -80,6 +80,8 @@ class CreateProduct extends Component {
 
     this.initialState = Object.freeze({
       name: '',
+      description: '',
+      available: true,
       brandId: '',
       displayPrice: '',
       packages: [],
@@ -102,6 +104,8 @@ class CreateProduct extends Component {
 
   componentWillReceiveProps({
     name,
+    description,
+    available,
     brandId,
     selectedOptions,
     attributes,
@@ -113,6 +117,8 @@ class CreateProduct extends Component {
   }) {
     this.setState({
       name,
+      description,
+      available,
       displayPrice,
       brandId,
       selectedOptions,
@@ -374,6 +380,8 @@ class CreateProduct extends Component {
   async upsertProduct() {
     const {
       name,
+      description,
+      available,
       displayPrice,
       brandId,
       categoryId,
@@ -413,10 +421,11 @@ class CreateProduct extends Component {
       await this.props.upsertProduct({
         productId,
         name,
+        description,
         brandId,
         categoryId,
         attributesIds,
-        available: true,
+        available,
         optionIds,
         variants: remappedVariants,
         displayPrice,
@@ -493,6 +502,24 @@ class CreateProduct extends Component {
                 placeholder="..."
                 onChange={e => this.setState({ name: e.target.value })}
               />
+            </label>
+            <label className="Createproduct-semi-label">
+              <FormattedMessage id="available"/>
+              <input
+                className="Createproduct-checkbox"
+                type="checkbox"
+                checked={this.state.available}
+                onChange={e => console.log(e.target.checked) || this.setState({ available: e.target.checked })}
+              />
+            </label>
+            <label className="Createproduct-semi-label">
+              <FormattedMessage id="description" />
+              <textarea
+                className="Createproduct-textarea"
+                value={this.state.description}
+                placeholder=""
+                onChange={e => this.setState({ description: e.target.value })}>
+              </textarea>
             </label>
             <label className="Createproduct-semi-label">
               {' '}
@@ -604,6 +631,8 @@ class CreateProduct extends Component {
 CreateProduct.proptypes = {
   closeModal: proptypes.func,
   name: proptypes.string,
+  description: proptypes.string,
+  available: proptypes.bool,
   brandId: proptypes.string,
   productId: proptypes.string,
   selectedOptions: proptypes.array,
@@ -619,6 +648,8 @@ CreateProduct.proptypes = {
 CreateProduct.defaultProps = {
   name: '',
   brandId: '',
+  description: '',
+  available: true,
   selectedOptions: [],
   attributes: [],
   imageUrl: null,

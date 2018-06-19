@@ -11,6 +11,7 @@ export default {
     no_data: 'There are no data.',
     reloading_data: 'Reloading data...',
     services_status: 'Services status',
+    back_to_list: 'Back to list',
 
     add: "Add",
     name: 'Name',
@@ -46,6 +47,7 @@ export default {
     clone: 'Clone',
     delete: 'Delete',
     unit_price_in: 'Unit price in €',
+    description: 'Description',
 
     //Options translations
     add_option: 'Add an option',
@@ -92,6 +94,7 @@ export default {
     no_data: 'Il n\'y a aucune données',
     reloading_data: 'Refrachissement des données...',
     services_status: 'Status des services',
+    back_to_list: 'Retour à la liste',
 
     add: "Ajouter",
     name: 'Nom',
@@ -127,6 +130,7 @@ export default {
     clone: 'Cloner',
     delete: 'Supprimer',
     unit_price_in: 'Prix unitaire en €',
+    description: 'Description',
 
     //Options translations
     add_option: 'Ajouter une option',

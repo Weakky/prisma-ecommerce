@@ -10,51 +10,9 @@ import font from '../../assets/fonts';
 import Title from '../title/Title';
 import { translate } from '../../i18n';
 
-const propTypes = {
-  source: PropTypes.object,
-  name: PropTypes.string,
-  brand: PropTypes.string,
-  price: PropTypes.number,
-  totalPrice: PropTypes.number,
-  selectedOptions: PropTypes.array,
-  quantity: PropTypes.number,
-  font: PropTypes.string,
-  isDeleted: PropTypes.bool,
-  isUnavailable: PropTypes.bool,
-  onPressViewProduct: PropTypes.func.isRequired,
-  onPressDeleteProduct: PropTypes.func.isRequired,
-};
-
-const defaultProps = {
-  source: require('../../assets/logo.png'),
-  name: 'Bubble Gum',
-  brand: 'ALFALIQUID',
-  totalPrice: 11.8,
-  price: 5.95,
-};
-
 const ItemDeletedSubBanner = (props) => (
-  <View
-    style={{
-      padding: 7,
-      backgroundColor: 'rgba(215, 133, 46, 0.8)',
-      borderLeftWidth: StyleSheet.hairlineWidth,
-      borderRightWidth: StyleSheet.hairlineWidth,
-      borderBottomWidth: StyleSheet.hairlineWidth,
-      borderColor: '#ddd',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    }}
-  >
-    <Text
-      style={{
-        fontFamily: 'Avenir Next',
-        fontWeight: '500',
-        fontSize: 11,
-        color: 'white'
-      }}
-    >
+  <View style={styles.itemDeletedContainer}>
+    <Text style={styles.itemDeletedText}>
       { props.text }
     </Text>
   </View>
@@ -168,8 +126,28 @@ class BasketCard extends React.PureComponent {
   }
 }
 
-BasketCard.propTypes = propTypes;
-BasketCard.defaultProps = defaultProps;
+BasketCard.propTypes = {
+  source: PropTypes.object,
+  name: PropTypes.string,
+  brand: PropTypes.string,
+  price: PropTypes.number,
+  totalPrice: PropTypes.number,
+  selectedOptions: PropTypes.array,
+  quantity: PropTypes.number,
+  font: PropTypes.string,
+  isDeleted: PropTypes.bool,
+  isUnavailable: PropTypes.bool,
+  onPressViewProduct: PropTypes.func.isRequired,
+  onPressDeleteProduct: PropTypes.func.isRequired,
+};
+
+BasketCard.defaultProps = {
+  source: require('../../assets/logo.png'),
+  name: 'Bubble Gum',
+  brand: 'ALFALIQUID',
+  totalPrice: 11.8,
+  price: 5.95,
+};
 
 export default BasketCard;
 
@@ -216,4 +194,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+  itemDeletedContainer: {
+    padding: 7,
+    backgroundColor: '#F2E3E3',
+    borderLeftWidth: StyleSheet.hairlineWidth,
+    borderRightWidth: StyleSheet.hairlineWidth,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: '#ddd',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  itemDeletedText: {
+    fontFamily: font,
+    fontWeight: '500',
+    fontSize: 12,
+    color: 'black'
+  }
 });

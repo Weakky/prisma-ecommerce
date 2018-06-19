@@ -92,7 +92,7 @@ class Basket extends Component {
         );
       }
 
-      // Check if some variants aren't available anymore
+      // Check if some variants or product aren't available anymore
       if (data.me.cart.some(lineItem => this.isLineItemUnavailable(lineItem))) {
         return Alert.alert(
           translate('invalid_cart_title'),
@@ -113,6 +113,8 @@ class Basket extends Component {
   }
 
   isLineItemUnavailable(lineItem) {
+    if (!lineItem.variant.product.available) { return true; }
+
     const lineItemsValues = lineItem.variant.selectedOptions.map(
       option => option.value.id,
     );

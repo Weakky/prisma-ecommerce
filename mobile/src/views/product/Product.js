@@ -211,7 +211,7 @@ class Product extends React.PureComponent {
         this.setState({
           selectedOptions,
           selectedVariant: this.findVariantFromSelectedOptions(selectedOptions),
-        })
+        });
       },
       pickerTitleText: '',
       pickerConfirmBtnColor: [204, 97, 85, 1],
@@ -232,8 +232,7 @@ class Product extends React.PureComponent {
       return variant.selectedOptions.every(selectedOption => {
         return (
           selectedOptions[selectedOption.option.id] &&
-          selectedOptions[selectedOption.option.id] ===
-            selectedOption.value.name
+          selectedOptions[selectedOption.option.id] === selectedOption.value.name
         );
       });
     });
@@ -255,7 +254,10 @@ class Product extends React.PureComponent {
       this.setState({ addingItemToCart: true });
 
       try {
-        await this.props.addItemToCart({ variantId: selectedVariant.variantId, quantity: this.state.quantity });
+        await this.props.addItemToCart({
+          variantId: selectedVariant.variantId,
+          quantity: this.state.quantity,
+        });
       } catch (e) {
         const error = e.graphQLErrors[0];
 
@@ -271,13 +273,19 @@ class Product extends React.PureComponent {
   }
 
   shouldButtonBeEnabled() {
-    return this.state.selectedVariant !== null && !this.state.addingItemToCart;
+    return (
+      this.state.selectedVariant !== null &&
+      this.state.product.available &&
+      !this.state.addingItemToCart
+    );
   }
 
   render() {
     if (!this.state.product) {
       return <FullLoading />;
     }
+
+    const addToCartButtonEnabled = this.shouldButtonBeEnabled();
 
     return (
       <View style={styles.container}>
@@ -289,7 +297,10 @@ class Product extends React.PureComponent {
         </TouchableOpacity>
         <ProductSheet
           product={this.state.product}
-          price={(this.state.selectedVariant && this.state.selectedVariant.price) || this.state.product.displayPrice}
+          price={
+            (this.state.selectedVariant && this.state.selectedVariant.price) ||
+            this.state.product.displayPrice
+          }
           selectedOptions={this.state.selectedOptions}
           unavailableOptionsValues={this.props.unavailableOptionsValues}
           quantity={this.state.quantity}
@@ -297,9 +308,16 @@ class Product extends React.PureComponent {
         />
 
         <TouchableOpacity
-          style={styles.addToCart}
+          style={[
+            styles.addToCart,
+            {
+              backgroundColor: addToCartButtonEnabled
+                ? colors.red
+                : 'rgba(204,97,85,0.5)'
+            },
+          ]}
           onPress={this.addItemToCart}
-          disabled={!this.shouldButtonBeEnabled()}
+          disabled={!addToCartButtonEnabled}
         >
           <Icon name="ios-cart" color={colors.white} size={35} />
         </TouchableOpacity>

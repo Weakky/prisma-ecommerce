@@ -81,6 +81,7 @@ const translations = {
 
     //Product translations
     no_longer_available_options: 'This product is no longer available in:',
+    not_available_product: 'This product is currently not longer available.',
 
     //Recap translations
     summary: 'Summary',
@@ -188,6 +189,7 @@ const translations = {
 
     //Product translations
     no_longer_available_options: 'Ce produit n\'est plus disponible en:',
+    not_available_product: 'Ce product n\'est actuellement plus disponible',
 
     //Recap translations
     summary: 'Récapitulatif',

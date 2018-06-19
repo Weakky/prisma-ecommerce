@@ -4,7 +4,6 @@ import { compose, graphql } from 'react-apollo';
 import {
   MdAdd,
   MdClose,
-  MdCreate,
   MdEdit,
   MdRefresh,
   MdLibraryAdd,
@@ -40,7 +39,6 @@ class ListProduct extends Component {
 
     this.state = {
       visible: false,
-      resume: { visible: false, messages: [] },
       loading: false,
       clone: false,
       edit: false,
@@ -80,6 +78,8 @@ class ListProduct extends Component {
       productToEditOrClone: {
         productId: product.id,
         name: product.name,
+        description: product.description,
+        available: product.available,
         displayPrice: product.displayPrice,
         categoryId: product.category.id,
         brandId: product.brand.id,
@@ -110,6 +110,8 @@ class ListProduct extends Component {
           closeModal={this.closeCreateModal}
           productId={productToEditOrClone.productId}
           name={productToEditOrClone.name}
+          available={productToEditOrClone.available}
+          description={productToEditOrClone.description}
           displayPrice={productToEditOrClone.displayPrice}
           brandId={productToEditOrClone.brandId}
           attributes={productToEditOrClone.attributes}
@@ -259,7 +261,7 @@ class ListProduct extends Component {
         width: 70,
       },
     ];
-    const buttons = [
+    const listButtons = [
       {
         color: 'transparent',
         callback: this.handleRefresh,
@@ -273,10 +275,18 @@ class ListProduct extends Component {
         label: <FormattedMessage id="add_product" />,
       },
     ];
+    const createButtons = [
+      {
+        color: 'transparent',
+        callback: () => this.setState({ visible: false }),
+        icon: <MdRefresh size={18} />,
+        label: <FormattedMessage id="back_to_list" />,
+      },
+    ];
 
     return (
       <div>
-        <Buttons buttons={buttons} />
+        <Buttons buttons={this.state.visible ? createButtons : listButtons} />
 
         {this.state.visible && this.renderCreateOrEditModal()}
         {!this.state.visible && (

@@ -39,6 +39,7 @@ type Mutation {
   upsertProduct(
     productId: ID,
     name: String!,
+    description: String,
     categoryId: ID!,
     brandId: ID!,
     available: Boolean!,

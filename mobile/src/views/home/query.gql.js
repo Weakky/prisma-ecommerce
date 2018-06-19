@@ -1,5 +1,23 @@
 import gql from 'graphql-tag';
 
+const productCardFragment = gql`
+  fragment ProductCardFragment on Product {
+    id
+    name
+    available
+    imageUrl
+    displayPrice
+    unavailableOptionsValues {
+      id
+      name
+    }
+    brand {
+      id
+      name
+    }
+  }
+`;
+
 const homeInformation = gql`
   query homeInformation {
     me {
@@ -57,40 +75,19 @@ const homeInformation = gql`
         bestSellerProducts(orderBy: position_ASC, first: 5) {
           id
           product {
-            id
-            name
-            displayPrice
-            imageUrl
-            brand {
-              id
-              name
-            }
-            unavailableOptionsValues {
-              id
-              name
-            }
+            ...ProductCardFragment
           }
         }
         newProducts(orderBy: position_ASC, first: 5) {
           id
           product {
-            id
-            name
-            displayPrice
-            imageUrl
-            brand {
-              id
-              name
-            }
-            unavailableOptionsValues {
-              id
-              name
-            }
+            ...ProductCardFragment
           }
         }
       }
     }
   }
+  ${productCardFragment}
 `;
 
 const addOrderToCart = gql`
@@ -114,21 +111,12 @@ const addOrderToCart = gql`
           }
         }
         product {
-          id
-          name
-          imageUrl
-          unavailableOptionsValues {
-            id
-            name
-          }
-          brand {
-            id
-            name
-          }
+          ...ProductCardFragment
         }
       }
     }
-  },
+  }
+  ${productCardFragment}
 `;
 
 const updateOneSignalUserId = gql`

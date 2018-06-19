@@ -174,6 +174,7 @@ export const DeleteProductQueryOptions = {
 export const CreateProductMutation = gql`
   mutation upsertProduct(
     $name: String!
+    $description: String
     $brandId: ID!
     $categoryId: ID!
     $available: Boolean!
@@ -188,6 +189,7 @@ export const CreateProductMutation = gql`
   ) {
     upsertProduct(
       name: $name
+      description: $description
       imageUrl: $imageUrl
       brandId: $brandId
       categoryId: $categoryId
@@ -201,6 +203,8 @@ export const CreateProductMutation = gql`
     ) {
       id
       name
+      description
+      available
       displayPrice
       imageUrl
       brand {
@@ -249,9 +253,9 @@ export const CreateProductMutation = gql`
 
 export const CreateProductMutationOptions = {
   props: ({ mutate }) => ({
-    upsertProduct: ({ name, brandId, categoryId, available, optionIds, variants, productId, attributesIds, displayPrice, imageUrl, unavailableOptionsValuesIds }) =>
+    upsertProduct: ({ name, description, brandId, categoryId, available, optionIds, variants, productId, attributesIds, displayPrice, imageUrl, unavailableOptionsValuesIds }) =>
       mutate({
-        variables: { name, brandId, categoryId, available, optionIds, variants, productId, attributesIds, displayPrice, imageUrl, unavailableOptionsValuesIds, nullValue: null },
+        variables: { name, description, brandId, categoryId, available, optionIds, variants, productId, attributesIds, displayPrice, imageUrl, unavailableOptionsValuesIds, nullValue: null },
         update: (store, { data: { upsertProduct } }) => {
           const data = store.readQuery({
             query: ListAllProductsQuery,

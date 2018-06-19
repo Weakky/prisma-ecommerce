@@ -101,6 +101,8 @@ export const product = {
         where: { id: args.productId },
         data: {
           name: args.name,
+          description: args.description,
+          available: args.available,
           category: { connect: { id: args.categoryId } },
           brand: { connect: { id: args.brandId } },
           attributes: {
@@ -115,9 +117,7 @@ export const product = {
             disconnect: unavailableOptionsValuesToDisconnect,
             connect: unavailableOptionsValuesToConnect,
           },
-          description: "",
           displayPrice: args.displayPrice,
-          available: true,
           SKU: "",
           variants: {
             update: variantsToUpdate,
@@ -131,13 +131,13 @@ export const product = {
     return ctx.db.mutation.createProduct({
       data: {
         name: args.name,
+        description: args.description,
+        available: args.available,
         shop: { connect: { id: shopId } },
         category: { connect: { id: args.categoryId } },
         brand: { connect: { id: args.brandId } },
         options: { connect: optionsToConnect },
-        description: "",
         displayPrice: args.displayPrice,
-        available: true,
         SKU: "",
         attributes: { connect: attributesToConnect },
         variants: { create: createVariantsInput(args.variants) },
