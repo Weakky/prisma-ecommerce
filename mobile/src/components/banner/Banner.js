@@ -18,12 +18,12 @@ const propTypes = {
 };
 
 const defaultProps = {
-  shop: 'Aromaclop',
+  name: 'Aromaclop',
   address: '10 rue Jean Jaurès',
-  postal: '54550',
+  zipCode: '54550',
   city: 'Pont-Saint-Vincent',
-  tel: '06 08 64 77 61',
-  opening: 'Ouvert du lundi au vendredi de 8h à 19h',
+  phoneNumber: '06 08 64 77 61',
+  openingHours: 'Ouvert du lundi au vendredi de 8h à 19h',
   selected: false,
   onBannerSelected: () => {},
   inverted: false,
@@ -50,7 +50,7 @@ class Banner extends Component {
   }
 
   render() {
-    const { shop, address, postal, city, tel, opening } = this.props;
+    const { name, address, zipCode, city, phoneNumber, openingHours } = this.props;
 
     return (
       <TouchableWithoutFeedback onPress={this.onBannerSelected}>
@@ -63,14 +63,14 @@ class Banner extends Component {
             },
           ]}
         >
-          <Text style={StyleSheet.flatten([styles.text, styles.title])}>{shop}</Text>
+          <Text style={StyleSheet.flatten([styles.text, styles.title])}>{name}</Text>
           <Text style={StyleSheet.flatten([styles.text, styles.margin])}>{address}</Text>
           <Text style={styles.text}>
-            {postal}
+            {zipCode}
             <Text style={StyleSheet.flatten([styles.text, styles.bold])}>, {city}</Text>
           </Text>
-          <Text style={StyleSheet.flatten([styles.text, styles.margin])}>{tel}</Text>
-          <Text style={styles.text}>{opening}</Text>
+          <Text style={StyleSheet.flatten([styles.text, styles.margin])}>{phoneNumber}</Text>
+          <Text style={styles.text}>{openingHours}</Text>
         </View>
       </TouchableWithoutFeedback>
     );

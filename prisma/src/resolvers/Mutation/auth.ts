@@ -4,13 +4,15 @@ import { Context } from '../../utils'
 
 export const auth = {
   async signup(parent, args, ctx: Context, info) {
-    const password = await bcrypt.hash(args.password, 10)
+    const password = await bcrypt.hash(args.password, 10);
     const user = await ctx.db.mutation.createUser({
       data: {
-        ...args,
+        email: args.email,
+        password,
+        firstName: args.firstName,
+        lastName: args.lastName,
+        selectedShop: { connect: { id: args.shopId } },
         role: "USER",
-        shop: { connect: { id: args.shopId} },
-        password
       },
     })
 

@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
-
+import gql from 'graphql-tag';
+import { graphql } from 'react-apollo';
 import Banner from '../../../components/banner/Banner';
 import { View } from 'react-native';
 
@@ -9,43 +10,26 @@ import Button from '../../../components/button/Button';
 import NavigationButton from '../../../components/navigation-button/NavigationButton';
 import { translate } from '../../../i18n';
 
-const physicalShopData = {
-  shop1: {
-    shopId: '1',
-    shop: 'Shop1',
-    address: '4671 Lightning Point Drive',
-    postal: '54550',
-    city: 'Memphis',
-    tel: '901-542-7005',
-    opening: 'Opened on Monday to Saturday, from 9AM to 7PM',
-  },
-  shop2: {
-    shopId: '2',
-    shop: 'Shop2',
-    address: '4671 Lightning Point Drive',
-    postal: '54550',
-    city: 'Memphis',
-    tel: '901-542-7005',
-    opening: 'Opened on Monday to Saturday, from 9AM to 7PM',
-  },
-};
-
 class ThirdStep extends PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      selectedShop: null,
+      selectedShopId: null,
     };
 
     this.onBannerSelected = this.onBannerSelected.bind(this);
   }
 
   onBannerSelected({ shopId }) {
-    this.setState({ selectedShop: shopId });
+    this.setState({ selectedShopId: shopId });
   }
 
   render() {
+    if (this.props.data.loading) {
+      return null;
+    }
+
     return (
       <View>
         <View style={{ marginLeft: 20 }}>
@@ -61,17 +45,18 @@ class ThirdStep extends PureComponent {
             {translate('change_your_store_later')}
           </Title>
         </View>
-        <Banner
-          {...physicalShopData.shop1}
-          selected={this.state.selectedShop === physicalShopData.shop1.shopId}
-          onBannerSelected={this.onBannerSelected}
-        />
-        <Banner
-          {...physicalShopData.shop2}
-          selected={this.state.selectedShop === physicalShopData.shop2.shopId}
-          onBannerSelected={this.onBannerSelected}
-        />
-        {this.state.selectedShop && (
+        {
+          this.props.data.allShops.map(shop => (
+            <Banner
+              key={shop.id}
+              {...shop}
+              shopId={shop.id}
+              selected={this.state.selectedShopId === shop.id}
+              onBannerSelected={this.onBannerSelected}
+            />
+          ))
+        }
+        {this.state.selectedShopId && (
           <Button
             style={{ marginLeft: 20, marginTop: 40, marginBottom: 10 }}
             label={translate('finish_sign_up')}
@@ -88,4 +73,14 @@ class ThirdStep extends PureComponent {
 ThirdStep.propTypes = {};
 ThirdStep.defaultProps = {};
 
-export default ThirdStep;
+export default graphql(gql`{
+    allShops {
+      id
+      name
+      address
+      zipCode
+      city
+      phoneNumber
+      openingHours
+    }
+  }`)(ThirdStep);

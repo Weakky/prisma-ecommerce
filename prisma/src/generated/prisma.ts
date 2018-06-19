@@ -4001,6 +4001,11 @@ input SelectedOptionWhereUniqueInput {
 type Shop implements Node {
   id: ID!
   name: String!
+  address: String!
+  zipCode: String!
+  city: String!
+  phoneNumber: String!
+  openingHours: String!
   MOTD: String
   products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product!]
   newProducts(where: OrderableProductWhereInput, orderBy: OrderableProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderableProduct!]
@@ -4024,6 +4029,11 @@ type ShopConnection {
 
 input ShopCreateInput {
   name: String!
+  address: String!
+  zipCode: String!
+  city: String!
+  phoneNumber: String!
+  openingHours: String!
   MOTD: String
   products: ProductCreateManyWithoutShopInput
   newProducts: OrderableProductCreateManyWithoutShopNewProductInput
@@ -4052,6 +4062,11 @@ input ShopCreateOneWithoutProductsInput {
 
 input ShopCreateWithoutBestSellerProductsInput {
   name: String!
+  address: String!
+  zipCode: String!
+  city: String!
+  phoneNumber: String!
+  openingHours: String!
   MOTD: String
   products: ProductCreateManyWithoutShopInput
   newProducts: OrderableProductCreateManyWithoutShopNewProductInput
@@ -4059,6 +4074,11 @@ input ShopCreateWithoutBestSellerProductsInput {
 
 input ShopCreateWithoutNewProductsInput {
   name: String!
+  address: String!
+  zipCode: String!
+  city: String!
+  phoneNumber: String!
+  openingHours: String!
   MOTD: String
   products: ProductCreateManyWithoutShopInput
   bestSellerProducts: OrderableProductCreateManyWithoutShopBestSellerInput
@@ -4066,6 +4086,11 @@ input ShopCreateWithoutNewProductsInput {
 
 input ShopCreateWithoutProductsInput {
   name: String!
+  address: String!
+  zipCode: String!
+  city: String!
+  phoneNumber: String!
+  openingHours: String!
   MOTD: String
   newProducts: OrderableProductCreateManyWithoutShopNewProductInput
   bestSellerProducts: OrderableProductCreateManyWithoutShopBestSellerInput
@@ -4090,6 +4115,16 @@ enum ShopOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  address_ASC
+  address_DESC
+  zipCode_ASC
+  zipCode_DESC
+  city_ASC
+  city_DESC
+  phoneNumber_ASC
+  phoneNumber_DESC
+  openingHours_ASC
+  openingHours_DESC
   MOTD_ASC
   MOTD_DESC
   updatedAt_ASC
@@ -4101,6 +4136,11 @@ enum ShopOrderByInput {
 type ShopPreviousValues {
   id: ID!
   name: String!
+  address: String!
+  zipCode: String!
+  city: String!
+  phoneNumber: String!
+  openingHours: String!
   MOTD: String
 }
 
@@ -4145,6 +4185,11 @@ input ShopSubscriptionWhereInput {
 
 input ShopUpdateDataInput {
   name: String
+  address: String
+  zipCode: String
+  city: String
+  phoneNumber: String
+  openingHours: String
   MOTD: String
   products: ProductUpdateManyWithoutShopInput
   newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
@@ -4153,6 +4198,11 @@ input ShopUpdateDataInput {
 
 input ShopUpdateInput {
   name: String
+  address: String
+  zipCode: String
+  city: String
+  phoneNumber: String
+  openingHours: String
   MOTD: String
   products: ProductUpdateManyWithoutShopInput
   newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
@@ -4195,6 +4245,11 @@ input ShopUpdateOneWithoutProductsInput {
 
 input ShopUpdateWithoutBestSellerProductsDataInput {
   name: String
+  address: String
+  zipCode: String
+  city: String
+  phoneNumber: String
+  openingHours: String
   MOTD: String
   products: ProductUpdateManyWithoutShopInput
   newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
@@ -4202,6 +4257,11 @@ input ShopUpdateWithoutBestSellerProductsDataInput {
 
 input ShopUpdateWithoutNewProductsDataInput {
   name: String
+  address: String
+  zipCode: String
+  city: String
+  phoneNumber: String
+  openingHours: String
   MOTD: String
   products: ProductUpdateManyWithoutShopInput
   bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
@@ -4209,6 +4269,11 @@ input ShopUpdateWithoutNewProductsDataInput {
 
 input ShopUpdateWithoutProductsDataInput {
   name: String
+  address: String
+  zipCode: String
+  city: String
+  phoneNumber: String
+  openingHours: String
   MOTD: String
   newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
   bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
@@ -4353,6 +4418,271 @@ input ShopWhereInput {
   All values not ending with the given string.
   """
   name_not_ends_with: String
+  address: String
+  """
+  All values that are not equal to given value.
+  """
+  address_not: String
+  """
+  All values that are contained in given list.
+  """
+  address_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  address_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  address_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  address_lte: String
+  """
+  All values greater than the given value.
+  """
+  address_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  address_gte: String
+  """
+  All values containing the given string.
+  """
+  address_contains: String
+  """
+  All values not containing the given string.
+  """
+  address_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  address_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  address_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  address_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  address_not_ends_with: String
+  zipCode: String
+  """
+  All values that are not equal to given value.
+  """
+  zipCode_not: String
+  """
+  All values that are contained in given list.
+  """
+  zipCode_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  zipCode_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  zipCode_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  zipCode_lte: String
+  """
+  All values greater than the given value.
+  """
+  zipCode_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  zipCode_gte: String
+  """
+  All values containing the given string.
+  """
+  zipCode_contains: String
+  """
+  All values not containing the given string.
+  """
+  zipCode_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  zipCode_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  zipCode_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  zipCode_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  zipCode_not_ends_with: String
+  city: String
+  """
+  All values that are not equal to given value.
+  """
+  city_not: String
+  """
+  All values that are contained in given list.
+  """
+  city_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  city_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  city_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  city_lte: String
+  """
+  All values greater than the given value.
+  """
+  city_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  city_gte: String
+  """
+  All values containing the given string.
+  """
+  city_contains: String
+  """
+  All values not containing the given string.
+  """
+  city_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  city_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  city_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  city_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  city_not_ends_with: String
+  phoneNumber: String
+  """
+  All values that are not equal to given value.
+  """
+  phoneNumber_not: String
+  """
+  All values that are contained in given list.
+  """
+  phoneNumber_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  phoneNumber_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  phoneNumber_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  phoneNumber_lte: String
+  """
+  All values greater than the given value.
+  """
+  phoneNumber_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  phoneNumber_gte: String
+  """
+  All values containing the given string.
+  """
+  phoneNumber_contains: String
+  """
+  All values not containing the given string.
+  """
+  phoneNumber_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  phoneNumber_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  phoneNumber_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  phoneNumber_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  phoneNumber_not_ends_with: String
+  openingHours: String
+  """
+  All values that are not equal to given value.
+  """
+  openingHours_not: String
+  """
+  All values that are contained in given list.
+  """
+  openingHours_in: [String!]
+  """
+  All values that are not contained in given list.
+  """
+  openingHours_not_in: [String!]
+  """
+  All values less than the given value.
+  """
+  openingHours_lt: String
+  """
+  All values less than or equal the given value.
+  """
+  openingHours_lte: String
+  """
+  All values greater than the given value.
+  """
+  openingHours_gt: String
+  """
+  All values greater than or equal the given value.
+  """
+  openingHours_gte: String
+  """
+  All values containing the given string.
+  """
+  openingHours_contains: String
+  """
+  All values not containing the given string.
+  """
+  openingHours_not_contains: String
+  """
+  All values starting with the given string.
+  """
+  openingHours_starts_with: String
+  """
+  All values not starting with the given string.
+  """
+  openingHours_not_starts_with: String
+  """
+  All values ending with the given string.
+  """
+  openingHours_ends_with: String
+  """
+  All values not ending with the given string.
+  """
+  openingHours_not_ends_with: String
   MOTD: String
   """
   All values that are not equal to given value.
@@ -5603,6 +5933,16 @@ export type ShopOrderByInput =
   'id_DESC' |
   'name_ASC' |
   'name_DESC' |
+  'address_ASC' |
+  'address_DESC' |
+  'zipCode_ASC' |
+  'zipCode_DESC' |
+  'city_ASC' |
+  'city_DESC' |
+  'phoneNumber_ASC' |
+  'phoneNumber_DESC' |
+  'openingHours_ASC' |
+  'openingHours_DESC' |
   'MOTD_ASC' |
   'MOTD_DESC' |
   'updatedAt_ASC' |
@@ -5919,6 +6259,11 @@ export interface VariantSubscriptionWhereInput {
 
 export interface ShopCreateWithoutBestSellerProductsInput {
   name: String
+  address: String
+  zipCode: String
+  city: String
+  phoneNumber: String
+  openingHours: String
   MOTD?: String
   products?: ProductCreateManyWithoutShopInput
   newProducts?: OrderableProductCreateManyWithoutShopNewProductInput
@@ -6162,6 +6507,11 @@ export interface BrandSubscriptionWhereInput {
 
 export interface ShopCreateWithoutProductsInput {
   name: String
+  address: String
+  zipCode: String
+  city: String
+  phoneNumber: String
+  openingHours: String
   MOTD?: String
   newProducts?: OrderableProductCreateManyWithoutShopNewProductInput
   bestSellerProducts?: OrderableProductCreateManyWithoutShopBestSellerInput
@@ -6181,6 +6531,11 @@ export interface OrderableProductCreateManyWithoutShopBestSellerInput {
 
 export interface ShopUpdateInput {
   name?: String
+  address?: String
+  zipCode?: String
+  city?: String
+  phoneNumber?: String
+  openingHours?: String
   MOTD?: String
   products?: ProductUpdateManyWithoutShopInput
   newProducts?: OrderableProductUpdateManyWithoutShopNewProductInput
@@ -6277,6 +6632,11 @@ export interface CategoryWhereInput {
 
 export interface ShopCreateWithoutNewProductsInput {
   name: String
+  address: String
+  zipCode: String
+  city: String
+  phoneNumber: String
+  openingHours: String
   MOTD?: String
   products?: ProductCreateManyWithoutShopInput
   bestSellerProducts?: OrderableProductCreateManyWithoutShopBestSellerInput
@@ -6733,6 +7093,11 @@ export interface OptionUpdateWithoutCategoryDataInput {
 
 export interface ShopCreateInput {
   name: String
+  address: String
+  zipCode: String
+  city: String
+  phoneNumber: String
+  openingHours: String
   MOTD?: String
   products?: ProductCreateManyWithoutShopInput
   newProducts?: OrderableProductCreateManyWithoutShopNewProductInput
@@ -6810,6 +7175,11 @@ export interface SelectedOptionCreateManyWithoutVariantInput {
 
 export interface ShopUpdateDataInput {
   name?: String
+  address?: String
+  zipCode?: String
+  city?: String
+  phoneNumber?: String
+  openingHours?: String
   MOTD?: String
   products?: ProductUpdateManyWithoutShopInput
   newProducts?: OrderableProductUpdateManyWithoutShopNewProductInput
@@ -7677,6 +8047,11 @@ export interface OrderLineItemUpsertWithWhereUniqueNestedInput {
 
 export interface ShopUpdateWithoutBestSellerProductsDataInput {
   name?: String
+  address?: String
+  zipCode?: String
+  city?: String
+  phoneNumber?: String
+  openingHours?: String
   MOTD?: String
   products?: ProductUpdateManyWithoutShopInput
   newProducts?: OrderableProductUpdateManyWithoutShopNewProductInput
@@ -7783,6 +8158,11 @@ export interface SelectedOptionCreateWithoutVariantInput {
 
 export interface ShopUpdateWithoutProductsDataInput {
   name?: String
+  address?: String
+  zipCode?: String
+  city?: String
+  phoneNumber?: String
+  openingHours?: String
   MOTD?: String
   newProducts?: OrderableProductUpdateManyWithoutShopNewProductInput
   bestSellerProducts?: OrderableProductUpdateManyWithoutShopBestSellerInput
@@ -7857,6 +8237,11 @@ export interface OptionUpdateInput {
 
 export interface ShopUpdateWithoutNewProductsDataInput {
   name?: String
+  address?: String
+  zipCode?: String
+  city?: String
+  phoneNumber?: String
+  openingHours?: String
   MOTD?: String
   products?: ProductUpdateManyWithoutShopInput
   bestSellerProducts?: OrderableProductUpdateManyWithoutShopBestSellerInput
@@ -7992,6 +8377,76 @@ export interface ShopWhereInput {
   name_not_starts_with?: String
   name_ends_with?: String
   name_not_ends_with?: String
+  address?: String
+  address_not?: String
+  address_in?: String[] | String
+  address_not_in?: String[] | String
+  address_lt?: String
+  address_lte?: String
+  address_gt?: String
+  address_gte?: String
+  address_contains?: String
+  address_not_contains?: String
+  address_starts_with?: String
+  address_not_starts_with?: String
+  address_ends_with?: String
+  address_not_ends_with?: String
+  zipCode?: String
+  zipCode_not?: String
+  zipCode_in?: String[] | String
+  zipCode_not_in?: String[] | String
+  zipCode_lt?: String
+  zipCode_lte?: String
+  zipCode_gt?: String
+  zipCode_gte?: String
+  zipCode_contains?: String
+  zipCode_not_contains?: String
+  zipCode_starts_with?: String
+  zipCode_not_starts_with?: String
+  zipCode_ends_with?: String
+  zipCode_not_ends_with?: String
+  city?: String
+  city_not?: String
+  city_in?: String[] | String
+  city_not_in?: String[] | String
+  city_lt?: String
+  city_lte?: String
+  city_gt?: String
+  city_gte?: String
+  city_contains?: String
+  city_not_contains?: String
+  city_starts_with?: String
+  city_not_starts_with?: String
+  city_ends_with?: String
+  city_not_ends_with?: String
+  phoneNumber?: String
+  phoneNumber_not?: String
+  phoneNumber_in?: String[] | String
+  phoneNumber_not_in?: String[] | String
+  phoneNumber_lt?: String
+  phoneNumber_lte?: String
+  phoneNumber_gt?: String
+  phoneNumber_gte?: String
+  phoneNumber_contains?: String
+  phoneNumber_not_contains?: String
+  phoneNumber_starts_with?: String
+  phoneNumber_not_starts_with?: String
+  phoneNumber_ends_with?: String
+  phoneNumber_not_ends_with?: String
+  openingHours?: String
+  openingHours_not?: String
+  openingHours_in?: String[] | String
+  openingHours_not_in?: String[] | String
+  openingHours_lt?: String
+  openingHours_lte?: String
+  openingHours_gt?: String
+  openingHours_gte?: String
+  openingHours_contains?: String
+  openingHours_not_contains?: String
+  openingHours_starts_with?: String
+  openingHours_not_starts_with?: String
+  openingHours_ends_with?: String
+  openingHours_not_ends_with?: String
   MOTD?: String
   MOTD_not?: String
   MOTD_in?: String[] | String
@@ -8235,6 +8690,11 @@ export interface VariantEdge {
 export interface ShopPreviousValues {
   id: ID_Output
   name: String
+  address: String
+  zipCode: String
+  city: String
+  phoneNumber: String
+  openingHours: String
   MOTD?: String
 }
 
@@ -8612,6 +9072,11 @@ export interface OptionEdge {
 export interface Shop extends Node {
   id: ID_Output
   name: String
+  address: String
+  zipCode: String
+  city: String
+  phoneNumber: String
+  openingHours: String
   MOTD?: String
   products?: Product[]
   newProducts?: OrderableProduct[]

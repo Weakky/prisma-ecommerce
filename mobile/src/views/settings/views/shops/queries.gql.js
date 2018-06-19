@@ -5,12 +5,22 @@ const allShopsQuery = gql`
     allShops {
       id
       name
+      address
+      zipCode
+      city
+      phoneNumber
+      openingHours
     }
     me {
       id
       selectedShop {
         id
         name
+        address
+        zipCode
+        city
+        phoneNumber
+        openingHours
       }
     }
   }

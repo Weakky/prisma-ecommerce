@@ -5,7 +5,7 @@ import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { ApolloProvider } from 'react-apollo';
 
-import SignUp from './src/views/sign-up/SignUp';
+import SignUp from './src/views/sign-up/SignUpContainer';
 import SignIn from './src/views/sign-in/SignInContainer';
 import Login from './src/views/login/Login';
 import Product from './src/views/product/ProductContainer';

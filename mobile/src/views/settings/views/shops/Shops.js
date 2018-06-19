@@ -92,11 +92,11 @@ class Shops extends PureComponent {
               {translate('current_shop')}
             </Title>
             <Banner
+              {...currentShop}
               shopId={currentShop.id}
               inverted={true}
               selected={this.state.selectedShopId === currentShop.id}
               onBannerSelected={this.selectShop}
-              shop={currentShop.name}
             />
           </View>
           {this.props.data.allShops
@@ -104,11 +104,11 @@ class Shops extends PureComponent {
             .map(shop => (
               <View key={shop.id} style={{ marginBottom: 16 }}>
                 <Banner
+                  {...shop}
                   shopId={shop.id}
                   inverted={true}
                   selected={this.state.selectedShopId === shop.id}
                   onBannerSelected={this.selectShop}
-                  shop={shop.name}
                 />
               </View>
             ))}

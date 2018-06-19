@@ -18,7 +18,7 @@ class SignUp extends Component {
       firstName: '',
       lastName: '',
       isMajor: false,
-      selectedShop: '',
+      selectedShopId: '',
       email: '',
       password: '',
     };
@@ -55,11 +55,7 @@ class SignUp extends Component {
       case 4:
         return <FourthStep previousStep={this.previousStep} nextStep={this.nextStep} />;
       case 5:
-        setTimeout(() => {
-          StatusBar.setBarStyle('dark-content');
-          this.props.navigation.navigate('MainView');
-        }, 3000);
-        return <FinalStep {...this.state} navigation={this.props.navigation} />;
+        return <FinalStep {...this.state} signUp={this.props.signUp} navigation={this.props.navigation} />;
     }
   }
 

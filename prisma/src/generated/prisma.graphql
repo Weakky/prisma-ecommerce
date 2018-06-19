@@ -1,5 +1,5 @@
 # source: http://localhost:4466/aromaclop/dev1
-# timestamp: Mon Jun 11 2018 21:16:47 GMT+0200 (CEST)
+# timestamp: Tue Jun 19 2018 22:15:30 GMT+0200 (CEST)
 
 type AggregateAttribute {
   count: Int!
@@ -3571,6 +3571,11 @@ input SelectedOptionWhereUniqueInput {
 type Shop implements Node {
   id: ID!
   name: String!
+  address: String!
+  zipCode: String!
+  city: String!
+  phoneNumber: String!
+  openingHours: String!
   MOTD: String
   products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product!]
   newProducts(where: OrderableProductWhereInput, orderBy: OrderableProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderableProduct!]
@@ -3589,6 +3594,11 @@ type ShopConnection {
 
 input ShopCreateInput {
   name: String!
+  address: String!
+  zipCode: String!
+  city: String!
+  phoneNumber: String!
+  openingHours: String!
   MOTD: String
   products: ProductCreateManyWithoutShopInput
   newProducts: OrderableProductCreateManyWithoutShopNewProductInput
@@ -3617,6 +3627,11 @@ input ShopCreateOneWithoutProductsInput {
 
 input ShopCreateWithoutBestSellerProductsInput {
   name: String!
+  address: String!
+  zipCode: String!
+  city: String!
+  phoneNumber: String!
+  openingHours: String!
   MOTD: String
   products: ProductCreateManyWithoutShopInput
   newProducts: OrderableProductCreateManyWithoutShopNewProductInput
@@ -3624,6 +3639,11 @@ input ShopCreateWithoutBestSellerProductsInput {
 
 input ShopCreateWithoutNewProductsInput {
   name: String!
+  address: String!
+  zipCode: String!
+  city: String!
+  phoneNumber: String!
+  openingHours: String!
   MOTD: String
   products: ProductCreateManyWithoutShopInput
   bestSellerProducts: OrderableProductCreateManyWithoutShopBestSellerInput
@@ -3631,6 +3651,11 @@ input ShopCreateWithoutNewProductsInput {
 
 input ShopCreateWithoutProductsInput {
   name: String!
+  address: String!
+  zipCode: String!
+  city: String!
+  phoneNumber: String!
+  openingHours: String!
   MOTD: String
   newProducts: OrderableProductCreateManyWithoutShopNewProductInput
   bestSellerProducts: OrderableProductCreateManyWithoutShopBestSellerInput
@@ -3650,6 +3675,16 @@ enum ShopOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  address_ASC
+  address_DESC
+  zipCode_ASC
+  zipCode_DESC
+  city_ASC
+  city_DESC
+  phoneNumber_ASC
+  phoneNumber_DESC
+  openingHours_ASC
+  openingHours_DESC
   MOTD_ASC
   MOTD_DESC
   updatedAt_ASC
@@ -3661,6 +3696,11 @@ enum ShopOrderByInput {
 type ShopPreviousValues {
   id: ID!
   name: String!
+  address: String!
+  zipCode: String!
+  city: String!
+  phoneNumber: String!
+  openingHours: String!
   MOTD: String
 }
 
@@ -3705,6 +3745,11 @@ input ShopSubscriptionWhereInput {
 
 input ShopUpdateDataInput {
   name: String
+  address: String
+  zipCode: String
+  city: String
+  phoneNumber: String
+  openingHours: String
   MOTD: String
   products: ProductUpdateManyWithoutShopInput
   newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
@@ -3713,6 +3758,11 @@ input ShopUpdateDataInput {
 
 input ShopUpdateInput {
   name: String
+  address: String
+  zipCode: String
+  city: String
+  phoneNumber: String
+  openingHours: String
   MOTD: String
   products: ProductUpdateManyWithoutShopInput
   newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
@@ -3755,6 +3805,11 @@ input ShopUpdateOneWithoutProductsInput {
 
 input ShopUpdateWithoutBestSellerProductsDataInput {
   name: String
+  address: String
+  zipCode: String
+  city: String
+  phoneNumber: String
+  openingHours: String
   MOTD: String
   products: ProductUpdateManyWithoutShopInput
   newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
@@ -3762,6 +3817,11 @@ input ShopUpdateWithoutBestSellerProductsDataInput {
 
 input ShopUpdateWithoutNewProductsDataInput {
   name: String
+  address: String
+  zipCode: String
+  city: String
+  phoneNumber: String
+  openingHours: String
   MOTD: String
   products: ProductUpdateManyWithoutShopInput
   bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
@@ -3769,6 +3829,11 @@ input ShopUpdateWithoutNewProductsDataInput {
 
 input ShopUpdateWithoutProductsDataInput {
   name: String
+  address: String
+  zipCode: String
+  city: String
+  phoneNumber: String
+  openingHours: String
   MOTD: String
   newProducts: OrderableProductUpdateManyWithoutShopNewProductInput
   bestSellerProducts: OrderableProductUpdateManyWithoutShopBestSellerInput
@@ -3883,6 +3948,206 @@ input ShopWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
+  address: String
+
+  """All values that are not equal to given value."""
+  address_not: String
+
+  """All values that are contained in given list."""
+  address_in: [String!]
+
+  """All values that are not contained in given list."""
+  address_not_in: [String!]
+
+  """All values less than the given value."""
+  address_lt: String
+
+  """All values less than or equal the given value."""
+  address_lte: String
+
+  """All values greater than the given value."""
+  address_gt: String
+
+  """All values greater than or equal the given value."""
+  address_gte: String
+
+  """All values containing the given string."""
+  address_contains: String
+
+  """All values not containing the given string."""
+  address_not_contains: String
+
+  """All values starting with the given string."""
+  address_starts_with: String
+
+  """All values not starting with the given string."""
+  address_not_starts_with: String
+
+  """All values ending with the given string."""
+  address_ends_with: String
+
+  """All values not ending with the given string."""
+  address_not_ends_with: String
+  zipCode: String
+
+  """All values that are not equal to given value."""
+  zipCode_not: String
+
+  """All values that are contained in given list."""
+  zipCode_in: [String!]
+
+  """All values that are not contained in given list."""
+  zipCode_not_in: [String!]
+
+  """All values less than the given value."""
+  zipCode_lt: String
+
+  """All values less than or equal the given value."""
+  zipCode_lte: String
+
+  """All values greater than the given value."""
+  zipCode_gt: String
+
+  """All values greater than or equal the given value."""
+  zipCode_gte: String
+
+  """All values containing the given string."""
+  zipCode_contains: String
+
+  """All values not containing the given string."""
+  zipCode_not_contains: String
+
+  """All values starting with the given string."""
+  zipCode_starts_with: String
+
+  """All values not starting with the given string."""
+  zipCode_not_starts_with: String
+
+  """All values ending with the given string."""
+  zipCode_ends_with: String
+
+  """All values not ending with the given string."""
+  zipCode_not_ends_with: String
+  city: String
+
+  """All values that are not equal to given value."""
+  city_not: String
+
+  """All values that are contained in given list."""
+  city_in: [String!]
+
+  """All values that are not contained in given list."""
+  city_not_in: [String!]
+
+  """All values less than the given value."""
+  city_lt: String
+
+  """All values less than or equal the given value."""
+  city_lte: String
+
+  """All values greater than the given value."""
+  city_gt: String
+
+  """All values greater than or equal the given value."""
+  city_gte: String
+
+  """All values containing the given string."""
+  city_contains: String
+
+  """All values not containing the given string."""
+  city_not_contains: String
+
+  """All values starting with the given string."""
+  city_starts_with: String
+
+  """All values not starting with the given string."""
+  city_not_starts_with: String
+
+  """All values ending with the given string."""
+  city_ends_with: String
+
+  """All values not ending with the given string."""
+  city_not_ends_with: String
+  phoneNumber: String
+
+  """All values that are not equal to given value."""
+  phoneNumber_not: String
+
+  """All values that are contained in given list."""
+  phoneNumber_in: [String!]
+
+  """All values that are not contained in given list."""
+  phoneNumber_not_in: [String!]
+
+  """All values less than the given value."""
+  phoneNumber_lt: String
+
+  """All values less than or equal the given value."""
+  phoneNumber_lte: String
+
+  """All values greater than the given value."""
+  phoneNumber_gt: String
+
+  """All values greater than or equal the given value."""
+  phoneNumber_gte: String
+
+  """All values containing the given string."""
+  phoneNumber_contains: String
+
+  """All values not containing the given string."""
+  phoneNumber_not_contains: String
+
+  """All values starting with the given string."""
+  phoneNumber_starts_with: String
+
+  """All values not starting with the given string."""
+  phoneNumber_not_starts_with: String
+
+  """All values ending with the given string."""
+  phoneNumber_ends_with: String
+
+  """All values not ending with the given string."""
+  phoneNumber_not_ends_with: String
+  openingHours: String
+
+  """All values that are not equal to given value."""
+  openingHours_not: String
+
+  """All values that are contained in given list."""
+  openingHours_in: [String!]
+
+  """All values that are not contained in given list."""
+  openingHours_not_in: [String!]
+
+  """All values less than the given value."""
+  openingHours_lt: String
+
+  """All values less than or equal the given value."""
+  openingHours_lte: String
+
+  """All values greater than the given value."""
+  openingHours_gt: String
+
+  """All values greater than or equal the given value."""
+  openingHours_gte: String
+
+  """All values containing the given string."""
+  openingHours_contains: String
+
+  """All values not containing the given string."""
+  openingHours_not_contains: String
+
+  """All values starting with the given string."""
+  openingHours_starts_with: String
+
+  """All values not starting with the given string."""
+  openingHours_not_starts_with: String
+
+  """All values ending with the given string."""
+  openingHours_ends_with: String
+
+  """All values not ending with the given string."""
+  openingHours_not_ends_with: String
   MOTD: String
 
   """All values that are not equal to given value."""
