@@ -94,16 +94,12 @@ export const shopMetadata = {
     }, info);
   },
 
-//   async upsertMOTD(parent, args, ctx: Context, info) {
-//     if (!ctx.db.exists.ShopMetadata({})) {
-//       return ctx.db.mutation.createShopMetadata({
-//         data: { MOTD: args.MOTD }
-//       });
-//     }
+  async updateMOTD(parent, args, ctx: Context, info) {
+    const shopId = await getShopId(ctx);
 
-//     return ctx.db.mutation.updateShopMetadata({
-//       where: { id: args.shopMetadataId },
-//       data: { MOTD: args.MOTD }
-//     });
-//   },
+    return ctx.db.mutation.updateShop({
+      where: { id: shopId },
+      data: { MOTD: args.MOTD }
+    });
+  },
 }

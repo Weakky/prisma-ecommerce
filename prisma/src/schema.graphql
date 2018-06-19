@@ -50,10 +50,10 @@ type Mutation {
     imageUrl: String
   ): Product
 
-  #Upsert Shop metadata
+  #Shop mutations
   upsertBestSellerProducts(bestSellerProducts: [OrderableProductInput!]!): Shop!
-  upsertNewProducts(shopMetadataId: ID, newProducts: [OrderableProductInput!]!): Shop!
-  #upsertMOTD(shopMetadataId: ID, MOTD: String!): Shop!
+  upsertNewProducts(newProducts: [OrderableProductInput!]!): Shop!
+  updateMOTD(MOTD: String!): Shop!
 
   # Delete mutations
   deleteProduct(productId: ID!): Product

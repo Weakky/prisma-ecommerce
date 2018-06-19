@@ -84,6 +84,7 @@ const updateSelectedShopMutation = gql`
       }
       selectedShop {
         id
+        MOTD
         bestSellerProducts(orderBy: position_ASC, first: 5) {
           id
           product {

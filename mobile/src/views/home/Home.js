@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Alert, } from 'react-native';
+import { View, Alert, } from 'react-native';
 import OneSignal from 'react-native-onesignal';
 import PropTypes from 'prop-types';
 
@@ -15,6 +15,7 @@ import Title from '../../components/title/Title';
 import { translate } from '../../i18n';
 
 import Colors from '../../statics/colors';
+import font from '../../assets/fonts'
 import styles from './Home.styles';
 import commonQueries from '../../graphql/queries';
 
@@ -147,7 +148,7 @@ class Home extends Component {
     return (
       <Container asScroll title={`${translate('hello')}, ${capitalize(me.firstName)} !`}>
         <View style={styles.messageOfTheDay}>
-          <Text>MESSAGE OF THE DAY (TODO LATER)</Text>
+          <Title font={font} size={16}>{me.selectedShop.MOTD}</Title>
         </View>
         {me.orders.length === 0 && (
           <BigRedButton

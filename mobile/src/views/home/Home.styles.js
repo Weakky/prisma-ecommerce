@@ -14,7 +14,7 @@ export default StyleSheet.create({
   messageOfTheDay: {
     marginTop: 16,
     marginBottom: 20,
-    padding: 15,
+    padding: 10,
     backgroundColor: 'rgba(240, 240, 240, 0.4)',
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: 'rgba(151, 151, 151, 0.8)',

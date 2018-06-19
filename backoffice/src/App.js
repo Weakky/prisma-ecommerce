@@ -14,6 +14,7 @@ import ListAttributes from './pages/attributes/components/ListAttribute';
 import ListUser from './pages/users/components/ListUser';
 import ListBestSales from './pages/best-sales/components/ListBestSales';
 import ListNewProducts from './pages/new-products/components/ListNewProducts';
+import MOTD from './pages/motd/MOTD';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import { addLocaleData, FormattedMessage, IntlProvider } from 'react-intl';
@@ -156,11 +157,11 @@ class App extends Component {
         route: '/new-products',
         icon: <TiBookmark size={19} className="App-icon" />,
       },
-      // {
-      //   name: <FormattedMessage id="motd"/>,
-      //   route: '/motd',
-      //   icon: <TiBookmark size={19} className="App-icon" />,
-      // },
+      {
+        name: <FormattedMessage id="motd"/>,
+        route: '/motd',
+        icon: <TiBookmark size={19} className="App-icon" />,
+      },
     ];
 
     return (
@@ -201,7 +202,7 @@ class App extends Component {
                   <Route exact={true} path="/customers" component={ListUser} />
                   <Route exact={true} path="/best-sales" component={ListBestSales} />
                   <Route exact={true} path="/new-products" component={ListNewProducts} />
-                  {/*<Route exact={true} path="/motd" component={ListBestSales} />*/}
+                  <Route exact={true} path="/motd" component={MOTD} />
                 </Main>
               </Root>
             )}

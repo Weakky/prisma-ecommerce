@@ -192,6 +192,7 @@ export const ListAllAttributes = gql`
 export const ListAllBestSalesProducts = gql`
   query allBestSalesProducts {
     me {
+      id
       selectedShop {
         id
         bestSellerProducts(orderBy: position_ASC) {
@@ -216,6 +217,7 @@ export const ListAllBestSalesProducts = gql`
 export const ListAllNewProductsQuery = gql`
   query allNewProducts {
     me {
+      id
       selectedShop {
         id
         newProducts(orderBy: position_ASC) {
@@ -233,6 +235,18 @@ export const ListAllNewProductsQuery = gql`
       id
       name
       imageUrl
+    }
+  }
+`;
+
+export const MotdQuery = gql`
+  query shopMOTD {
+    me {
+      id
+      selectedShop {
+        id
+        MOTD
+      }
     }
   }
 `;

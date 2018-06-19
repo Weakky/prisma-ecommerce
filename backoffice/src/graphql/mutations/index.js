@@ -355,3 +355,22 @@ export const SetOrderAsPreparedMutationOptions = {
     )
   })
 };
+
+export const UpdateMotdMutation = gql`
+  mutation updateShopMotd($MOTD: String!) {
+    updateMOTD(MOTD: $MOTD) {
+      id
+      MOTD
+    }
+  }
+`;
+
+export const UpdateMotdMutationOptions = {
+  props: ({ mutate }) => ({
+    updateMOTD: ({ MOTD }) => (
+      mutate({
+        variables: { MOTD },
+      })
+    )
+  })
+};

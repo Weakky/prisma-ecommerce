@@ -1,0 +1,19 @@
+.MOTD-container {
+    padding: 20px;
+}
+
+.MOTD-semi-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 30px;
+}
+
+.MOTD-input {
+    display: block;
+    width: 50%;
+    height: 200px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    padding-left: 10px;
+}
