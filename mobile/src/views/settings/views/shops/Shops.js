@@ -102,9 +102,8 @@ class Shops extends PureComponent {
           {this.props.data.allShops
             .filter(shop => shop.id !== currentShop.id)
             .map(shop => (
-              <View style={{ marginBottom: 16 }}>
+              <View key={shop.id} style={{ marginBottom: 16 }}>
                 <Banner
-                  key={shop.id}
                   shopId={shop.id}
                   inverted={true}
                   selected={this.state.selectedShopId === shop.id}
