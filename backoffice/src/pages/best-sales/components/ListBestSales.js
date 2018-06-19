@@ -46,7 +46,7 @@ class ListBestSales extends Component {
   componentWillReceiveProps({ data }) {
     if (!data.loading) {
       this.setState({
-        products: data.me.shop.bestSellerProducts.map((orderableProduct) => ({
+        products: data.me.selectedShop.bestSellerProducts.map((orderableProduct) => ({
           orderableProductId: orderableProduct.id,
           label: orderableProduct.product.name,
           value: orderableProduct.product.id,
