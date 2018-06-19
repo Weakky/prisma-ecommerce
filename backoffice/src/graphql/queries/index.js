@@ -192,7 +192,7 @@ export const ListAllAttributes = gql`
 export const ListAllBestSalesProducts = gql`
   query allBestSalesProducts {
     me {
-      shop {
+      selectedShop {
         id
         bestSellerProducts(orderBy: position_ASC) {
           id
@@ -216,7 +216,7 @@ export const ListAllBestSalesProducts = gql`
 export const ListAllNewProductsQuery = gql`
   query allNewProducts {
     me {
-      shop {
+      selectedShop {
         id
         newProducts(orderBy: position_ASC) {
           id

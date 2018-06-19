@@ -13,7 +13,7 @@ export async function createOrderFromCart(args: CreateOrderInput, db: Prisma): P
   const { selectedShop: { id: shopId }, cart } = await db.query.user(
     { where: { id: args.userId } },
     `{
-      shop { id }
+      selectedShop { id }
       cart {
         id
         quantity

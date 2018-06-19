@@ -49,7 +49,7 @@ class ListNewProducts extends Component {
   componentWillReceiveProps({ data }) {
     if (!data.loading) {
       this.setState({
-        products: data.me.shop.newProducts.map((orderableProduct) => ({
+        products: data.me.selectedShop.newProducts.map((orderableProduct) => ({
           newProductId: orderableProduct.id,
           label: orderableProduct.product.name,
           value: orderableProduct.product.id,
