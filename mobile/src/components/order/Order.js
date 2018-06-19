@@ -23,6 +23,10 @@ const RecapRow = props => (
 
 const Separator = () => <View style={styles.separator} />;
 
+function formatTicketTitle({ quantity, variant }) {
+  return `${quantity} x ${variant.product.name}  (${variant.selectedOptions.map(({ value }) => value.name).join(',  ')})`;
+}
+
 const Ticket = props => (
   <View style={styles.ticketContainer}>
     <Title
@@ -37,7 +41,7 @@ const Ticket = props => (
     {props.order.lineItems.map(lineItem => (
       <RecapRow
         key={lineItem.id}
-        title={`${lineItem.quantity} x ${lineItem.variant.product.name}`}
+        title={formatTicketTitle(lineItem)}
         value={`${(lineItem.variant.price * lineItem.quantity).toFixed(2)} €`}
       />
     ))}

@@ -21,6 +21,13 @@ const userOrders = gql`
               id
               name
             }
+            selectedOptions {
+              id
+              value {
+                id
+                name
+              }
+            }
           }
         }
         totalPrice
