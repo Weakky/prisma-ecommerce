@@ -336,3 +336,22 @@ export const UpsertNewProductsMutationOptions = {
     )
   })
 };
+
+export const SetOrderAsPreparedMutation = gql`
+  mutation setOrderAsPrepared($orderId: ID!) {
+    setOrderAsPrepared(orderId: $orderId) {
+      id
+      orderStatus
+    }
+  }
+`;
+
+export const SetOrderAsPreparedMutationOptions = {
+  props: ({ mutate }) => ({
+    setOrderAsPrepared: ({ orderId }) => (
+      mutate({
+        variables: { orderId },
+      })
+    )
+  })
+};

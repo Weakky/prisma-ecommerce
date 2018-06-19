@@ -120,7 +120,7 @@ export const order = {
 
     if (updatedOrder) {
       // Send notification to owner of order when set to prepared
-      if (updatedOrder.owner.oneSignalUserId) {
+      if (currentOrder.owner.oneSignalUserId) {
         try {
           await sendNotificationToOne(
             updatedOrder.owner.oneSignalUserId,

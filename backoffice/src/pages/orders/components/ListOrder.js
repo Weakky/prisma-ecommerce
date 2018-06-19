@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
 import ReactTable from 'react-table';
-import { ListAllOrdersQuery } from '../../../graphql/queries/index';
+import { ListAllOrdersQuery } from '../../../graphql/queries';
+import { SetOrderAsPreparedMutation, SetOrderAsPreparedMutationOptions } from '../../../graphql/mutations';
 import { MdRefresh } from 'react-icons/lib/md';
 import Buttons from '../../common/components/Buttons';
 
@@ -58,9 +59,9 @@ class ListOrder extends Component {
             value={filter ? filter.value : 'all'}
           >
             <option value="">Toutes les commandes</option>
-            <option value="PROCESSING">Traitement en cours</option>
-            <option value="PROCESSED">Traitée</option>
-            <option value="RECEIVED">Reçue</option>
+            <option value="SUBMITTED">En cours de paiement</option>
+            <option value="PAID">Payée</option>
+            <option value="PREPARED">Préparée</option>
           </select>
         ),
       },
@@ -87,6 +88,23 @@ class ListOrder extends Component {
         accessor: 'createdAt',
         Cell: props => <p className="Reactable-cell">{props.value.substring(0, 10)}</p>,
       },
+      {
+        Header: 'Actions',
+        Cell: props => (
+          <p style={{ textAlign: 'center', margin: 0 }}>
+            {
+              props.original.orderStatus === 'PAID' && (
+                <span
+                  onClick={() => this.props.setOrderAsPrepared({ orderId: props.original.id })}
+                  className="Reactable-edit"
+                >
+                  Set order as prepared
+                </span>
+              )
+            }
+          </p>
+        )
+      }
     ];
     const buttons = [
       {
@@ -107,7 +125,6 @@ class ListOrder extends Component {
           className="animated Reactable-table -highlight"
           columns={columns}
           SubComponent={row => {
-            console.log(row);
             const columns = [
               {
                 accessor: 'variant.product.imageUrl',
@@ -165,4 +182,7 @@ class ListOrder extends Component {
   }
 }
 
-export default graphql(ListAllOrdersQuery)(ListOrder);
+export default compose(
+  graphql(ListAllOrdersQuery),
+  graphql(SetOrderAsPreparedMutation, SetOrderAsPreparedMutationOptions)
+)(ListOrder);
