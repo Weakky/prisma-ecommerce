@@ -25,10 +25,10 @@ const NavigationButton = ({ dark, back, enabled, onPress }) => {
       {back ? (
         <TouchableOpacity
           hitSlop={{
-            top: 10,
-            bottom: 10,
-            left: 10,
-            right: 10,
+            top: 20,
+            bottom: 20,
+            left: 40,
+            right: 40,
           }}
           onPress={onPress}
         >
@@ -42,6 +42,12 @@ const NavigationButton = ({ dark, back, enabled, onPress }) => {
               backgroundColor: enabled ? color.white : 'rgba(255, 255, 255, 0.1)',
             },
           ]}
+          hitSlop={{
+            top: 20,
+            bottom: 20,
+            left: 40,
+            right: 40,
+          }}
           onPress={onPress}
         >
           <Icon

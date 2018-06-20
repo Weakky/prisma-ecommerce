@@ -292,8 +292,9 @@ class Product extends React.PureComponent {
         <TouchableOpacity
           onPress={() => this.props.navigation.goBack()}
           style={styles.close}
+          hitSlop={{top: 20, bottom: 20, left: 50, right: 40}}
         >
-          <Icon name="ios-arrow-back-outline" size={21} color={colors.text} />
+          <Icon name="ios-arrow-back-outline" size={30} color={colors.text} />
         </TouchableOpacity>
         <ProductSheet
           product={this.state.product}

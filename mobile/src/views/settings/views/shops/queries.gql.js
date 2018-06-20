@@ -1,4 +1,5 @@
 import { gql } from 'apollo-client-preset';
+import ProductCardFragment from '../../../../graphql/fragments/ProductCardFragment'
 
 const allShopsQuery = gql`
   query shops {
@@ -51,17 +52,7 @@ const updateSelectedShopMutation = gql`
             }
           }
           product {
-            id
-            name
-            imageUrl
-            unavailableOptionsValues {
-              id
-              name
-            }
-            brand {
-              id
-              name
-            }
+            ...ProductCardFragment
           }
         }
       }
@@ -88,40 +79,19 @@ const updateSelectedShopMutation = gql`
         bestSellerProducts(orderBy: position_ASC, first: 5) {
           id
           product {
-            id
-            name
-            displayPrice
-            imageUrl
-            brand {
-              id
-              name
-            }
-            unavailableOptionsValues {
-              id
-              name
-            }
+            ...ProductCardFragment
           }
         }
         newProducts(orderBy: position_ASC, first: 5) {
           id
           product {
-            id
-            name
-            displayPrice
-            imageUrl
-            brand {
-              id
-              name
-            }
-            unavailableOptionsValues {
-              id
-              name
-            }
+            ...ProductCardFragment
           }
         }
       }
     }
   }
+  ${ProductCardFragment}
 `;
 
 export default {

@@ -25,6 +25,8 @@ const translations = {
     password: 'Password',
     sign_in: 'Sign in !',
     sign_up: 'Create an account',
+    confirm: 'Confirm',
+    cancel: 'Cancel',
 
     //Sign up translations
     whats_your_name: 'What\'s your name ?',
@@ -130,6 +132,8 @@ const translations = {
     password: 'Mot de passe',
     sign_in: 'Connectez-vous !',
     sign_up: 'Créer un compte',
+    confirm: 'Confirmer',
+    cancel: 'Annuler',
 
     //Sign up translations
     whats_your_name: 'Comment vous appelez-vous ?',

@@ -11,8 +11,16 @@ import Colors from '../../statics/colors';
 
 const ModalNavigationBar = props => (
   <View style={[styles.topBarContainer, props.style]}>
-    <TouchableOpacity onPress={props.closeModal}>
-      <Ionicons color={Colors.text} size={40} name="ios-close" />
+    <TouchableOpacity
+      onPress={props.closeModal}
+      hitSlop={{
+        top: 20,
+        bottom: 20,
+        left: 40,
+        right: 40,
+      }}
+    >
+      <Ionicons color={Colors.text} size={45} name="ios-close" />
     </TouchableOpacity>
     <TouchableOpacity onPress={props.onPressRight}>
       <Title color={Colors.text}>{props.rightText}</Title>

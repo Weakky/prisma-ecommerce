@@ -1,5 +1,7 @@
 import gql from 'graphql-tag';
 
+import ProductCardFragment from '../../graphql/fragments/ProductCardFragment';
+
 export default gql`
   query productsWithFilters(
     $brandsIds: [ID!]!
@@ -22,21 +24,10 @@ export default gql`
       }
       edges {
         node {
-          id
-          name
-          available
-          imageUrl
-          displayPrice
-          brand {
-            id
-            name
-          }
-          unavailableOptionsValues {
-            id
-            name
-          }
+          ...ProductCardFragment
         }
       }
     }
   }
+  ${ProductCardFragment}
 `;

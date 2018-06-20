@@ -149,7 +149,9 @@ class Home extends Component {
     return (
       <Container asScroll title={`${translate('hello')}, ${capitalize(me.firstName)} !`}>
         <View style={styles.messageOfTheDay}>
-          <Title font={font} size={16}>{me.selectedShop.MOTD}</Title>
+          {
+            !!me.selectedShop.MOTD && <Title font={font} size={16}>{me.selectedShop.MOTD}</Title>
+          }
         </View>
         {me.orders.length === 0 && (
           <BigRedButton

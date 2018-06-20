@@ -1,22 +1,5 @@
 import gql from 'graphql-tag';
-
-const productCardFragment = gql`
-  fragment ProductCardFragment on Product {
-    id
-    name
-    available
-    imageUrl
-    displayPrice
-    unavailableOptionsValues {
-      id
-      name
-    }
-    brand {
-      id
-      name
-    }
-  }
-`;
+import ProductCardFragment from '../../graphql/fragments/ProductCardFragment'
 
 const homeInformation = gql`
   query homeInformation {
@@ -87,7 +70,7 @@ const homeInformation = gql`
       }
     }
   }
-  ${productCardFragment}
+  ${ProductCardFragment}
 `;
 
 const addOrderToCart = gql`
@@ -116,7 +99,7 @@ const addOrderToCart = gql`
       }
     }
   }
-  ${productCardFragment}
+  ${ProductCardFragment}
 `;
 
 const updateOneSignalUserId = gql`

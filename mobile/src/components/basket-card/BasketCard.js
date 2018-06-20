@@ -25,13 +25,8 @@ ItemDeletedSubBanner.propTypes = {
 
 // Find a way to put an overlay over the basket card
 class BasketCard extends React.PureComponent {
-
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      containerSize: null
-    };
+  constructor() {
+    super();
 
     this.promptQuantity = this.promptQuantity.bind(this);
   }
@@ -52,8 +47,8 @@ class BasketCard extends React.PureComponent {
       pickerTitleText: '',
       pickerConfirmBtnColor: [204, 97, 85, 1],
       pickerCancelBtnColor: [204, 97, 85, 1],
-      pickerConfirmBtnText: 'Confirmer',
-      pickerCancelBtnText: 'Annuler',
+      pickerConfirmBtnText: translate('confirm'),
+      pickerCancelBtnText: translate('cancel'),
     });
 
     Picker.show();
@@ -61,10 +56,7 @@ class BasketCard extends React.PureComponent {
 
   render() {
     return (
-      <View onLayout={(event) => {
-        const { width , height} = event.nativeEvent.layout;
-        this.setState({ containerSize: { width, height } });
-      }}>
+      <View>
         <View style={styles.basketCardContainer}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Image style={styles.thumbnail} source={this.props.source} />
