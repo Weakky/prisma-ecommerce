@@ -504,15 +504,6 @@ class CreateProduct extends Component {
               />
             </label>
             <label className="Createproduct-semi-label">
-              <FormattedMessage id="available"/>
-              <input
-                className="Createproduct-checkbox"
-                type="checkbox"
-                checked={this.state.available}
-                onChange={e => console.log(e.target.checked) || this.setState({ available: e.target.checked })}
-              />
-            </label>
-            <label className="Createproduct-semi-label">
               <FormattedMessage id="description" />
               <textarea
                 className="Createproduct-textarea"
@@ -612,6 +603,15 @@ class CreateProduct extends Component {
             value={this.state.displayPrice}
             placeholder="Unit price in €"
             onChange={e => this.setState({ displayPrice: e.target.value })}
+          />
+        </label>
+        <label className="Createproduct-semi-label">
+          <FormattedMessage id="available"/>
+          <input
+            className="Createproduct-checkbox"
+            type="checkbox"
+            checked={this.state.available}
+            onChange={e => this.setState({ available: e.target.checked })}
           />
         </label>
         {this.state.name && (
