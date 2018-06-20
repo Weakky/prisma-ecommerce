@@ -34,6 +34,7 @@ export default {
               id
               name
               imageUrl
+              available
               unavailableOptionsValues {
                 id
                 name

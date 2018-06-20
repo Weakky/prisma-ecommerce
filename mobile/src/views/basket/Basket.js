@@ -27,6 +27,7 @@ class Basket extends Component {
 
     this.removeItemFromBasket = this.removeItemFromBasket.bind(this);
     this.continueIfValidCart = this.continueIfValidCart.bind(this);
+    this.updateLineItemQuantity = this.updateLineItemQuantity.bind(this);
   }
 
   async componentWillMount() {
@@ -55,6 +56,14 @@ class Basket extends Component {
           fetchPolicy: 'network-only',
         });
       }
+    }
+  }
+
+  updateLineItemQuantity(lineItem) {
+    return async (quantity) => {
+        this.setState({ loading: true });
+        await this.props.updateLineItemQuantity({ variantId: lineItem.variant.id, quantity });
+        this.setState({ loading: false });
     }
   }
 
@@ -177,6 +186,7 @@ class Basket extends Component {
                 isDeleted={lineItem.deletedAt !== null}
                 isUnavailable={this.isLineItemUnavailable(lineItem)}
                 onPressDeleteProduct={() => this.removeItemFromBasket(lineItem.id)}
+                onPressQuantity={this.updateLineItemQuantity(lineItem)}
               />
             </View>
           )}

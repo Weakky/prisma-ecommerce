@@ -3,11 +3,11 @@ import { graphql, compose, withApollo } from 'react-apollo';
 import commonQueries from '../../graphql/queries';
 
 import Basket from './Basket';
-import query from './query.gql';
+import queries from './query.gql';
 
 export default compose(
   withApollo,
-  graphql(query, {
+  graphql(queries.removeItemFromCart, {
     props: ({ mutate }) => ({
       removeItemFromBasket: ({ lineItemId }) =>
         mutate({
@@ -24,4 +24,11 @@ export default compose(
         }),
     }),
   }),
+  graphql(queries.updateLineItemQuantity, {
+    props: ({ mutate }) => ({
+      updateLineItemQuantity: ({ variantId, quantity }) => (
+        mutate({ variables: { variantId, quantity } })
+      )
+    })
+  })
 )(Basket);

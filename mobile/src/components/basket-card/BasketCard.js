@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View, Image, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import Picker from 'react-native-picker';
 import truncate from 'lodash/truncate';
 
 import SubTotal from './sub-total/SubTotal';
@@ -31,10 +32,31 @@ class BasketCard extends React.PureComponent {
     this.state = {
       containerSize: null
     };
+
+    this.promptQuantity = this.promptQuantity.bind(this);
   }
 
   isValid() {
     return !this.props.isDeleted && !this.props.isUnavailable;
+  }
+
+  promptQuantity() {
+    const quantities = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+
+    Picker.init({
+      pickerData: quantities,
+      selectedValue: [this.props.quantity],
+      onPickerConfirm: ([quantity]) => {
+        this.props.onPressQuantity(quantity);
+      },
+      pickerTitleText: '',
+      pickerConfirmBtnColor: [204, 97, 85, 1],
+      pickerCancelBtnColor: [204, 97, 85, 1],
+      pickerConfirmBtnText: 'Confirmer',
+      pickerCancelBtnText: 'Annuler',
+    });
+
+    Picker.show();
   }
 
   render() {
@@ -103,7 +125,10 @@ class BasketCard extends React.PureComponent {
                   </View>
                 </View>
                 {this.isValid() && (
-                  <TouchableOpacity style={styles.quantityContainer}>
+                  <TouchableOpacity
+                    onPress={this.promptQuantity}
+                    style={styles.quantityContainer}
+                  >
                     <Title font={font} size={28} color="rgba(0,0,0,0.7)" weight="300">
                       {this.props.quantity}
                     </Title>
@@ -139,6 +164,7 @@ BasketCard.propTypes = {
   isUnavailable: PropTypes.bool,
   onPressViewProduct: PropTypes.func.isRequired,
   onPressDeleteProduct: PropTypes.func.isRequired,
+  onPressQuantity: PropTypes.func.isRequired,
 };
 
 BasketCard.defaultProps = {
