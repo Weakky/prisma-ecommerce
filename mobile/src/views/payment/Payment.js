@@ -77,8 +77,16 @@ export default class Payment extends React.PureComponent {
       this.setState({
         status: PAYMENT_STATUSES[newOrder.orderStatus],
         loading: newOrder.orderStatus === 'SUBMITTED',
+      }, () => {
+        if (newOrder.orderStatus === 'PAID') {
+          this.navigateToAfterPayment();
+        }
       });
     }
+  }
+
+  navigateToAfterPayment() {
+    this.props.navigation.navigate('AfterPayment');
   }
 
   handleCardPayPress = async () => {
@@ -104,15 +112,7 @@ export default class Payment extends React.PureComponent {
           status: PAYMENT_STATUSES.PAID,
           orderId: payPayload.order.id,
         }, () => {
-          // Temporary, there should be a last view before returning to the home
-          setTimeout(() => {
-            const resetAction = StackActions.reset({
-              index: 0,
-              actions: [NavigationActions.navigate({ routeName: 'Basket' })],
-            });
-            this.props.navigation.dispatch(resetAction);
-            this.props.navigation.navigate('WelcomeTab');
-          }, 1000);
+          this.navigateToAfterPayment()
         });
       }
 

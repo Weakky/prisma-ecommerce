@@ -17,6 +17,7 @@ import Basket from './src/views/basket/BasketContainer';
 import Recap from './src/views/recap/Recap';
 import HomeContainer from './src/views/home/HomeContainer';
 import PaymentContainer from './src/views/payment/PaymentContainer';
+import AfterPayment from './src/views/payment/AfterPayment';
 import Settings from './src/views/settings/Settings';
 import Orders from './src/views/settings/views/orders/OrdersContainer'
 import Shops from './src/views/settings/views/shops/ShopsContainer';
@@ -49,6 +50,7 @@ const BasketNavigator = createStackNavigator(
     Product: { screen: ProductWithMappedProps },
     Recap: { screen: withMappedNavigationProps(Recap) },
     Payment: { screen: withMappedNavigationProps(PaymentContainer) },
+    AfterPayment: { screen: AfterPayment },
   },
   {
     headerMode: 'none',

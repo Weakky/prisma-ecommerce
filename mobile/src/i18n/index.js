@@ -118,7 +118,12 @@ const translations = {
 
     //Shops translations
     current_shop: 'Your current shop',
-    change_shop: 'Navigate to another shop'
+    change_shop: 'Navigate to another shop',
+
+    // After payment translations
+    congratz_payment: 'Congratulations, your order was taken into account ! 🎉',
+    will_receive_notif: 'You will receive a notification as soon as we\'ll have prepared it.',
+    back_to_home: 'Back to home'
   },
   fr: {
     login: 'Connexion',
@@ -227,7 +232,12 @@ const translations = {
 
     //Shops translations
     current_shop: 'Votre boutique actuelle',
-    change_shop: 'Naviguer vers une autre boutique'
+    change_shop: 'Naviguer vers une autre boutique',
+
+    // After payment translations
+    congratz_payment: 'Félicitations, votre commande est bien prise en compte ! 🎉',
+    will_receive_notif: 'Vous recevrez une notification dès que nous aurons préparé votre commande.',
+    back_to_home: 'Retour à l\'accueil'
   }
 }[LANGUAGE];
 
