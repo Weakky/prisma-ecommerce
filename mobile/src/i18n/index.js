@@ -123,7 +123,11 @@ const translations = {
     // After payment translations
     congratz_payment: 'Congratulations, your order was taken into account ! 🎉',
     will_receive_notif: 'You will receive a notification as soon as we\'ll have prepared it.',
-    back_to_home: 'Back to home'
+    back_to_home: 'Back to home',
+
+    // Empty translations
+    empty_cart: 'You cart is empty !',
+    empty_orders: 'You haven\'t made any orders yet !',
   },
   fr: {
     login: 'Connexion',
@@ -237,7 +241,11 @@ const translations = {
     // After payment translations
     congratz_payment: 'Félicitations, votre commande est bien prise en compte ! 🎉',
     will_receive_notif: 'Vous recevrez une notification dès que nous aurons préparé votre commande.',
-    back_to_home: 'Retour à l\'accueil'
+    back_to_home: 'Retour à l\'accueil',
+
+    // Empty translations
+    empty_cart: 'Votre panier est vide !',
+    empty_orders: 'Vous n\'avez encore aucune commande !',
   }
 }[LANGUAGE];
 

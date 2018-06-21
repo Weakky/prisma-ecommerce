@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { FlatList, Platform, StatusBar, View, StyleSheet, Alert } from 'react-native';
-
 import sumBy from 'lodash/sumBy';
 import { withApollo } from 'react-apollo';
 
 import Container from '../../components/layout/Container';
-import Button from '../../components/button/Button';
+import EmptyList from '../../components/empty-list/EmptyList';
 import BasketCard from '../../components/basket-card/BasketCard';
+import Button from '../../components/button/Button';
 import Title from '../../components/title/Title';
 
 import { translate } from '../../i18n';
@@ -159,13 +159,14 @@ class Basket extends Component {
 
     return (
       <Container
-        title={translate('your_cart')}
+        title={this.state.cart.length > 0 ? translate('your_cart') : ''}
         leftButton={this.renderContinueButton()}
         innerStyle={{ marginTop: 16, padding: 0, flex: 1 }}
       >
         <FlatList
           data={this.state.cart}
           keyExtractor={item => item.id}
+          ListEmptyComponent={<EmptyList>{translate('empty_cart')}</EmptyList>}
           renderItem={({ item: lineItem }) => (
             <View style={{ padding: 5 }}>
               <BasketCard
@@ -191,15 +192,17 @@ class Basket extends Component {
             </View>
           )}
         />
-        <View style={styles.totalPriceContainer}>
-          <Title font={font} size={15} color="#484848" weight="500">
-            {translate('total_price')}
-          </Title>
-          <Title font={font} size={18} color="#484848" weight="600">
-            {this.totalTTC()}
-            €
-          </Title>
-        </View>
+        {this.state.cart.length > 0 && (
+          <View style={styles.totalPriceContainer}>
+            <Title font={font} size={15} color="#484848" weight="500">
+              {translate('total_price')}
+            </Title>
+            <Title font={font} size={18} color="#484848" weight="600">
+              {this.totalTTC()}
+              €
+            </Title>
+          </View>
+        )}
       </Container>
     );
   }

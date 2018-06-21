@@ -5,7 +5,7 @@ import Orders from './Orders';
 
 //TODO: Faster mutation by invalidating cache instead of using refetchQueries
 export default compose(
-  graphql(queries.userOrders),
+  graphql(queries.userOrders, { options: { fetchPolicy: 'cache-and-network' } }),
   graphql(queries.addOrderToCart, {
     props: ({ mutate }) => ({
       addOrderToCart: ({ orderId, replace }) =>

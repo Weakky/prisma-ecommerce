@@ -4,8 +4,9 @@ import fecha from 'fecha';
 
 import Container from '../../../../components/layout/Container';
 import FullLoading from '../../../../components/loading/FullLoading';
-
+import EmptyList from '../../../../components/empty-list/EmptyList';
 import Order from '../../../../components/order/Order';
+
 import commonQueries from '../../../../graphql/queries';
 import { translate } from '../../../../i18n';
 
@@ -67,7 +68,7 @@ export default class Orders extends PureComponent {
 
     return (
       <Container
-        title={translate('your_orders')}
+        title={this.props.data.me.orders.length > 0 ? translate('your_orders') : ''}
         navigation={this.props.navigation}
         innerStyle={{ flex: 1 }}
       >
@@ -75,6 +76,7 @@ export default class Orders extends PureComponent {
           data={this.props.data.me.orders}
           extraData={this.state}
           keyExtractor={order => order.id}
+          ListEmptyComponent={<EmptyList>{translate('empty_orders')}</EmptyList>}
           renderItem={({ item: order }) => (
             <Order
               title={`${translate('order_of')} ${fecha.format(
