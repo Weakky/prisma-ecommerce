@@ -2,6 +2,7 @@
 # import ProductCreateInput, BrandCreateInput, CategoryCreateInput from "./generated/prisma.graphql"
 # import ProductWhereInput, ProductOrderByInput from "./generated/prisma.graphql"
 
+
 type Query {
   me: User
 
@@ -30,6 +31,8 @@ type Query {
 type Mutation {
   signup(email: String!, password: String!, firstName: String!, lastName: String!, shopId: ID!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
+  resetPassword(email: String!): TriggerPasswordResetPayload!
+  changePassword(oldPassword: String!, newPassword: String!): UserIdPayload!
 
   # Upsert mutations
   upsertBrand(brandId: ID, categoryId: ID!, name: String!): Brand
@@ -115,4 +118,12 @@ input OrderableProductInput {
 type AuthPayload {
   token: String!
   user: User!
+}
+
+type UserIdPayload {
+  id: ID!
+}
+
+type TriggerPasswordResetPayload {
+  mailMaybeSent: Boolean!
 }

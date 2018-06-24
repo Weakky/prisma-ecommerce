@@ -1,12 +1,17 @@
-import { GraphQLServer, Options } from 'graphql-yoga'
-import { Prisma } from './generated/prisma'
-import resolvers from './resolvers';
-import { createChargeWithOrder, createChargeAndUpdateOrder, updateOrder } from './resolvers/Mutation/stripe';
+import { GraphQLServer, Options } from 'graphql-yoga';
+import { formatError } from 'apollo-errors';
 import * as Stripe from 'stripe';
-import { formatError } from "apollo-errors";
+import { mailer } from './third-party/nodemailer';
+
+import { Prisma } from './generated/prisma';
+import resolvers from './resolvers';
+import {
+  createChargeAndUpdateOrder,
+  updateOrder,
+} from './resolvers/Mutation/stripe';
 
 const options: Options = {
-  formatError
+  formatError,
 };
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -23,6 +28,8 @@ export const server = new GraphQLServer({
   context: req => ({
     ...req,
     db,
+    mailer,
+    stripe,
   }),
 });
 
@@ -41,7 +48,7 @@ server.express.post('/stripe', rawBodyParser, async (req, res, next) => {
       event = stripe.webhooks.constructEvent(
         req.body,
         signature,
-        process.env.STRIPE_WEBHOOK_SECRET
+        process.env.STRIPE_WEBHOOK_SECRET,
       );
     } catch (err) {
       console.log(`⚠️  Webhook signature verification failed.`, err.message);
@@ -64,24 +71,21 @@ server.express.post('/stripe', rawBodyParser, async (req, res, next) => {
     const source = object;
     console.log(`🔔  Webhook received! The source ${source.id} is chargeable.`);
 
-    await createChargeAndUpdateOrder({
-      sourceId: source.id,
-      amount: source.metadata.amount,
-      email: source.metadata.email,
-      orderId: source.metadata.orderId,
-      userId: source.metadata.userId
-    }, db);
+    await createChargeAndUpdateOrder(
+      {
+        sourceId: source.id,
+        amount: source.metadata.amount,
+        email: source.metadata.email,
+        orderId: source.metadata.orderId,
+        userId: source.metadata.userId,
+      }, db);
   }
 
   // Monitor `source.failed` events.
-  if (
-    object.object === 'source' &&
-    object.status === 'failed'
-  ) {
+  if (object.object === 'source' && object.status === 'failed') {
     const source = object;
     await updateOrder(source.metadata.orderId, 'FAILED');
   }
 
   next();
-
 });

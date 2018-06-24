@@ -61,7 +61,9 @@ class SignUp extends Component {
 
   render() {
     return (
-      <KeyboardAwareCenteredView>{this.renderCurrentStep()}</KeyboardAwareCenteredView>
+      <KeyboardAwareCenteredView>
+        {this.renderCurrentStep()}
+      </KeyboardAwareCenteredView>
     );
   }
 }

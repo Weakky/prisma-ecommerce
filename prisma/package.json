@@ -10,20 +10,26 @@
     "backup": "scripts/backup.sh"
   },
   "dependencies": {
-    "@types/stripe": "^5.0.10",
     "apollo-errors": "^1.9.0",
     "bcryptjs": "2.4.3",
     "bluebird": "^3.5.1",
+    "email-templates": "^4.0.1",
+    "generate-password": "^1.4.0",
     "graphql-yoga": "1.9.2",
     "jsonwebtoken": "8.2.1",
     "lodash": "^4.17.10",
+    "nodemailer": "^4.6.7",
     "onesignal-node": "^1.1.2",
     "prisma-binding": "1.5.17",
-    "stripe": "^6.0.0"
+    "stripe": "^6.0.0",
+    "validator": "^10.4.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "2.4.1",
+    "@types/email-templates": "^3.5.0",
     "@types/lodash": "^4.14.108",
+    "@types/nodemailer": "^4.6.2",
+    "@types/stripe": "^5.0.10",
     "dotenv-cli": "1.4.0",
     "graphql-cli": "2.15.9",
     "nodemon": "1.17.3",

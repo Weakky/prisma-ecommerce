@@ -20,6 +20,14 @@ const exceptions = {
   orderNotSentToCurrentShop: {
     message: 'The order wasn\'t sent to your configured shop',
     code: 104,
+  },
+  invalidEmail: {
+    message: 'Invalid email',
+    code: 200
+  },
+  invalidOldPassword: {
+    message: 'Invalid old password.',
+    code: 202
   }
 }
 
@@ -49,6 +57,15 @@ export const ProductOrVariantNotFoundException = (deletedVariants, deletedProduc
 
 export const OrderNotSentToCurrentShopException = createError('OrderNotSentToCurrentShop', {
   message: exceptions.orderNotSentToCurrentShop.message,
-  data: { code:exceptions.orderNotSentToCurrentShop.code },
+  data: { code: exceptions.orderNotSentToCurrentShop.code },
 })
 
+export const InvalidEmailException = createError('InvalidEmail', {
+  message: exceptions.invalidEmail.message,
+  data: { code: exceptions.invalidEmail.code },
+});
+
+export const InvalidOldPasswordException = createError('InvalidOldPassword', {
+  message: exceptions.invalidOldPassword.message,
+  data: { code: exceptions.invalidOldPassword.code },  
+});

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StatusBar, View } from 'react-native';
+import { Image, StatusBar, TouchableOpacity, View } from 'react-native';
 
 import styles from './Login.styles';
 import color from '../../statics/colors';
@@ -31,9 +31,11 @@ const Login = props => (
         labelColor={color.red}
         fontSize={14}
       />
-      <Title color={color.white} size={11} style={{ marginTop: 20 }}>
-        {translate('forgot_password')}
-      </Title>
+      <TouchableOpacity onPress={() => props.navigation.navigate('AskPasswordReset')}>
+        <Title color={color.white} size={11} style={{ marginTop: 20 }}>
+          {translate('forgot_password')}
+        </Title>
+      </TouchableOpacity>
       <View
         style={{
           width: 250,

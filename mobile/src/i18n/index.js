@@ -5,7 +5,7 @@
  *
  */
 
-const LANGUAGE = 'en';
+const LANGUAGE = 'fr';
 
 export function translate(key) {
  return translations[key] || key;
@@ -22,7 +22,6 @@ const translations = {
     loading: 'Loading...',
     cancel_sign_up: 'Cancel sign up',
     email: 'E-mail address',
-    password: 'Password',
     sign_in: 'Sign in !',
     sign_up: 'Create an account',
     confirm: 'Confirm',
@@ -41,6 +40,12 @@ const translations = {
     hard_password: 'Make sure your password will be hard to find, even for a relative or a friend of yours',
     thanks_trust: 'Thanks for your trust !',
     gathering_articles: 'Gathering articles...',
+
+    // Reset password translations
+    password: 'Password',
+    password_confirm: 'Repeat your password',
+    reset_password: 'Reset your password',
+    reset_token: 'Token received by mail',
 
     //Home translations
     hello: 'Hello',
@@ -138,7 +143,6 @@ const translations = {
     yes: 'Oui',
     loading: 'Chargement en cours...',
     email: 'Addresse email',
-    password: 'Mot de passe',
     sign_in: 'Connectez-vous !',
     sign_up: 'Créer un compte',
     confirm: 'Confirmer',
@@ -151,6 +155,12 @@ const translations = {
     are_you_major: 'Êtes vous majeur ?',
     e_cig_forbidden: 'Selon l’article L3511-2-1, il est interdit de vendre des dispositifs électroniques de vapotage ou des flacons de recharge à des mineurs.',
     cancel_sign_up: 'Annuler l\'inscription',
+
+    // Reset password translations
+    password: 'Mot de passe',
+    password_confirm: 'Répétez votre mot de passe',
+    reset_password: 'Réinitialisez votre mot de passe',
+    reset_token: 'Code reçue par mail',
 
     choose_your_store: 'Choisissez votre boutique !',
     change_your_store_later: 'A l’avenir si vous souhaitez changer de boutique, rendez-vous dans vos paramètres de compte.',
@@ -193,7 +203,7 @@ const translations = {
     // Filters translations
     our_brands: 'Nos marques',
     our_categories: 'Nos catégories',
-    our: 'Our',
+    our: 'Nos',
 
 
     // Products list translations

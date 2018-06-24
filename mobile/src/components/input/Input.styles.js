@@ -30,6 +30,6 @@ export default StyleSheet.create({
     fontWeight: '400',
     fontStyle: 'italic',
     fontFamily: font,
-    paddingTop: 12,
+    paddingTop: 8,
   },
 });

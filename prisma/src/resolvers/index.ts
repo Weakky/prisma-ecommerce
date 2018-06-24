@@ -7,7 +7,7 @@ import { User } from './Query/User'
 export default {
   Query,
   Mutation: {
-    ...Mutations
+    ...Mutations,
   },
   Subscription,
   AuthPayload,

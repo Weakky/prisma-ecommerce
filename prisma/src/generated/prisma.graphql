@@ -1,5 +1,5 @@
 # source: http://localhost:4466/aromaclop/dev1
-# timestamp: Tue Jun 19 2018 22:15:30 GMT+0200 (CEST)
+# timestamp: Sun Jun 24 2018 18:22:55 GMT+0200 (CEST)
 
 type AggregateAttribute {
   count: Int!

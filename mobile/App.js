@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator, createSwitchNavigator } from 'react-navigation';
 import { withMappedNavigationProps } from 'react-navigation-props-mapper';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -21,6 +21,7 @@ import AfterPayment from './src/views/payment/AfterPayment';
 import Settings from './src/views/settings/Settings';
 import Orders from './src/views/settings/views/orders/OrdersContainer'
 import Shops from './src/views/settings/views/shops/ShopsContainer';
+import AskPasswordReset from './src/views/password-reset/AskPasswordResetContainer';
 
 import OrderIcon from './src/components/order-icon/OrderIcon';
 import FullLoading from './src/components/loading/FullLoading';
@@ -126,6 +127,7 @@ const AuthStack = createStackNavigator(
     Login: { screen: Login },
     SignIn: { screen: SignIn },
     SignUp: { screen: SignUp },
+    AskPasswordReset: { screen: AskPasswordReset },
   },
   {
     headerMode: 'none'

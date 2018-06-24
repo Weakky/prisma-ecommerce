@@ -1,8 +1,9 @@
 import * as jwt from 'jsonwebtoken'
 import { Prisma } from './generated/prisma'
-
+import * as Email from 'email-templates';
 export interface Context {
   db: Prisma
+  mailer: Email
   request: any
 }
 

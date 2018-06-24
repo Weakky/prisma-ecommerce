@@ -19,6 +19,7 @@ const propTypes = {
   borderColor: PropTypes.string,
   fontSize: PropTypes.number,
   loading: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 const defaultProps = {
@@ -30,6 +31,7 @@ const defaultProps = {
   width: Dimensions.get('window').width - 40,
   borderColor: color.white,
   fontSize: 14,
+  disabled: false,
 };
 
 const Button = props => {
@@ -45,10 +47,11 @@ const Button = props => {
     borderColor,
     fontSize,
     loading,
+    disabled,
   } = props;
   return (
     <TouchableOpacity
-      onPress={onPress}
+      onPress={() => !disabled && onPress()}
       style={[
         styles.touchable,
         {
