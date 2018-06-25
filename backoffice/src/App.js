@@ -15,7 +15,10 @@ import ListUser from './pages/users/components/ListUser';
 import ListBestSales from './pages/best-sales/components/ListBestSales';
 import ListNewProducts from './pages/new-products/components/ListNewProducts';
 import MOTD from './pages/motd/MOTD';
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { createHttpLink } from 'apollo-link-http';
+import { ApolloLink,Observable, split } from 'apollo-link'
 import { ApolloProvider } from 'react-apollo';
 import { addLocaleData, FormattedMessage, IntlProvider } from 'react-intl';
 import { BrowserRouter as Router, Route, Redirect, NavLink } from 'react-router-dom';
@@ -51,24 +54,50 @@ const languageWithoutRegionCode = language.toLowerCase().split(/[_-]+/)[0];
 // Try full locale, try locale without region code, fallback to 'en'
 const messages = localeData[languageWithoutRegionCode] || localeData[language] || localeData.en;
 
-const networkInterface = createNetworkInterface({
+const networkInterface = createHttpLink({
   uri: 'http://localhost:4000/',
-});
+  credentials: 'same-origin'
+})
 
-networkInterface.use([{
-  applyMiddleware(req, next) {
-    if (!req.options.headers) {
-      req.options.headers = {};
-    }
-    const token = localStorage.getItem(GC_AUTH_TOKEN);
-    req.options.headers.authorization = token ? `Bearer ${token}` : null;
-    next();
-  }
-}]);
+const middlewareAuthLink = new ApolloLink(
+  (operation, forward) =>
+    new Observable(observer => {
+      let handle: any;
+      const myf = (oper) => {
+        console.log('middlewarerun', oper)
+        const token = localStorage.getItem(GC_AUTH_TOKEN)
+        const authorizationHeader = token ? `Bearer ${token}` : null
+        oper.setContext({
+          headers: {
+            authorization: authorizationHeader
+          }
+        })
+      }
+
+      Promise.resolve(operation)
+        .then(oper => myf(oper))
+        .then(() => {
+          handle = forward(operation).subscribe({
+            next: observer.next.bind(observer),
+            error: observer.error.bind(observer),
+            complete: observer.complete.bind(observer),
+          });
+        })
+        .catch(observer.error.bind(observer));
+
+      return () => {
+        if (handle) {
+          handle.unsubscribe();
+        }
+      };
+    }))
+
+const httpLinkWithAuthToken = middlewareAuthLink.concat(networkInterface)
 
 const client = new ApolloClient({
-  networkInterface,
+  link: httpLinkWithAuthToken,
   dataIdFromObject: o => o.id,
+  cache: new InMemoryCache()
 });
 
 class App extends Component {
