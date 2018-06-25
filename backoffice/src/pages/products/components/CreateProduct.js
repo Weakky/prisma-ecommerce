@@ -101,8 +101,9 @@ class CreateProduct extends Component {
     this.onSelectedOptionChanged = this.onSelectedOptionChanged.bind(this);
     this.onVariantPriceChanged = this.onVariantPriceChanged.bind(this);
   }
-
-  componentWillReceiveProps({
+  
+componentWillMount() {
+const {
     name,
     description,
     available,
@@ -114,23 +115,27 @@ class CreateProduct extends Component {
     categoryId,
     variants,
     imageUrl,
-  }) {
-    this.setState({
-      name,
-      description,
-      available,
-      displayPrice,
-      brandId,
-      selectedOptions,
-      attributes,
-      productId,
-      categoryId,
-      variants,
-      imageUrl,
-      selectedOptionsValues: this.computeSelectedOptionsValues(selectedOptions, variants),
-    });
-  }
+  }=this.props;
+this.state = {...this.state,
+	name,
+    description,
+    available,
+    brandId,
+    selectedOptions,
+    attributes,
+    productId,
+    displayPrice,
+    categoryId,
+    variants,
+    imageUrl,
+    selectedOptionsValues: this.computeSelectedOptionsValues(selectedOptions, variants)}
+}
 
+ componentWillReceiveProps(props){
+ //see https://github.com/apollographql/react-apollo/issues/1611 the problem inherent with componentWillReceiveProps and react-apollo 2
+ console.log("TestWillReceiveProps",props)
+ }
+ 
   async uploadImageAndGetLink() {
     const { file } = this.state;
 
