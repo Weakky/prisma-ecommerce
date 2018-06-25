@@ -17,7 +17,6 @@ import {
 import { AllDetailsQuery } from '../../../graphql/queries';
 
 import '../styles/createproduct.css';
-import 'react-select/dist/react-select.css';
 import { FormattedMessage } from 'react-intl';
 
 function getCombinations(arrays, combine = [], finalList = []) {
