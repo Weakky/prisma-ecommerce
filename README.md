@@ -43,3 +43,31 @@ Homepage view             |  Browsing product view          | Cart view         
 # Philosophy
 
 You'll quickly realize that there are no state-management library whatsoever. I'm actively militating against the wrong usage of those. Although a sweet Redux or MobX could have been used in some places (especially on the RN app), this app also acts as a showcase to promote vanilla React. Especially since the new Context API (Although I haven't updated React yet).
+
+# Troubleshooting
+
+<details><summary><strong>[Mobile][Android] Error: Network error: Network request failed.</strong></summary>
+<p>
+
+Android is running in an emulator.
+
+The localhost is pointing to the environment in which the code is running. The emulator emulates a real device while the simulator is only imitating the device.
+
+Therefore the localhost on Android is pointing to the emulated Android device. And not to the machine on which your server is running.
+
+The solution is to replace <strong>localhost</strong> with the <strong>local IP address</strong> of your machine.
+
+```
+mobile/src/graphql/setupApollo.js
+
+
+const httpLink = new HttpLink({
+  uri: YOUR_LOCAL_IP,
+});
+```
+
+</p>
+</details>
+
+
+
