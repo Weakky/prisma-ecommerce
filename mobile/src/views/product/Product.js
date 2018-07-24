@@ -292,7 +292,7 @@ class Product extends React.PureComponent {
         <TouchableOpacity
           onPress={() => this.props.navigation.goBack()}
           style={styles.close}
-          hitSlop={{top: 20, bottom: 20, left: 50, right: 40}}
+          hitSlop={{ top: 20, bottom: 20, left: 50, right: 40 }}
         >
           <Icon name="ios-arrow-back-outline" size={30} color={colors.text} />
         </TouchableOpacity>
@@ -314,7 +314,7 @@ class Product extends React.PureComponent {
             {
               backgroundColor: addToCartButtonEnabled
                 ? colors.red
-                : 'rgba(204,97,85,0.5)'
+                : 'rgba(204,97,85,0.5)',
             },
           ]}
           onPress={this.addItemToCart}

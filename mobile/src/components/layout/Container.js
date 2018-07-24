@@ -6,27 +6,31 @@ import Colors from '../../statics/colors';
 import Title from '../title/Title';
 import NavigationButton from '../navigation-button/NavigationButton';
 
-
-const TopBar = (props) => (
-  <View style={[styles.containerTitle, {
-    paddingLeft: props.asScroll ? 0 : 16,
-    paddingTop: props.asScroll ? 0 : 16
-  }]}>
+const TopBar = props => (
+  <View
+    style={[
+      styles.containerTitle,
+      {
+        paddingLeft: props.asScroll ? 0 : 16,
+        paddingTop: props.asScroll ? 0 : 16,
+      },
+    ]}
+  >
     <View>
       {props.navigation && (
         <NavigationButton onPress={() => props.navigation.goBack()} back dark />
       )}
-      {props.title && (
+      {props.title ? (
         <Title size={22} color={Colors.text}>
           {props.title}
         </Title>
-      )}
+      ) : null}
     </View>
     {props.leftButton}
   </View>
 );
 
-const Container = (props) => {
+const Container = props => {
   if (props.asScroll) {
     return (
       <View style={[styles.container, props.containerStyle]}>
@@ -41,9 +45,7 @@ const Container = (props) => {
   return (
     <View style={[styles.container, props.containerStyle]}>
       <TopBar {...props} />
-      <View style={[styles.subContainer, props.innerStyle]}>
-        {props.children}
-      </View>
+      <View style={[styles.subContainer, props.innerStyle]}>{props.children}</View>
     </View>
   );
 };

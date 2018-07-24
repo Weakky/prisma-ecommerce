@@ -11,11 +11,9 @@ import font from '../../assets/fonts';
 import Title from '../title/Title';
 import { translate } from '../../i18n';
 
-const ItemDeletedSubBanner = (props) => (
+const ItemDeletedSubBanner = props => (
   <View style={styles.itemDeletedContainer}>
-    <Text style={styles.itemDeletedText}>
-      { props.text }
-    </Text>
+    <Text style={styles.itemDeletedText}>{props.text}</Text>
   </View>
 );
 
@@ -109,14 +107,19 @@ class BasketCard extends React.PureComponent {
                         >
                           {selectedOption.option.name.toUpperCase()}
                         </Title>
-                        <Title font={font} size={11} color="rgba(71,71,71,0.8)" weight="600">
+                        <Title
+                          font={font}
+                          size={11}
+                          color="rgba(71,71,71,0.8)"
+                          weight="600"
+                        >
                           {selectedOption.value.name}
                         </Title>
                       </View>
                     ))}
                   </View>
                 </View>
-                {this.isValid() && (
+                {this.isValid() ? (
                   <TouchableOpacity
                     onPress={this.promptQuantity}
                     style={styles.quantityContainer}
@@ -125,19 +128,21 @@ class BasketCard extends React.PureComponent {
                       {this.props.quantity}
                     </Title>
                   </TouchableOpacity>
-                )}
+                ) : null}
               </View>
             </View>
           </View>
         </View>
-        {this.isValid() && (
-          <SubTotal totalPrice={this.props.totalPrice} />
-        )}
-        {!this.isValid() && (
+        {this.isValid() ? <SubTotal totalPrice={this.props.totalPrice} /> : null}
+        {!this.isValid() ? (
           <ItemDeletedSubBanner
-            text={this.props.isDeleted ? translate('product_deleted') : translate('product_not_available')}
+            text={
+              this.props.isDeleted
+                ? translate('product_deleted')
+                : translate('product_not_available')
+            }
           />
-        )}
+        ) : null}
       </View>
     );
   }
@@ -189,7 +194,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 10,
-    marginBottom: 8
+    marginBottom: 8,
   },
   topContainer: { flex: 1, flexDirection: 'row', justifyContent: 'space-between' },
   basketCardSubContainer: {
@@ -227,6 +232,6 @@ const styles = StyleSheet.create({
     fontFamily: font,
     fontWeight: '500',
     fontSize: 12,
-    color: 'black'
-  }
+    color: 'black',
+  },
 });
