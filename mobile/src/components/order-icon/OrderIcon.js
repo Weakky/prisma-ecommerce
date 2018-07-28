@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { withApollo } from 'react-apollo/withApollo';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import sumBy from 'lodash/sumBy';
 
 import commonQueries from '../../graphql/queries';
@@ -17,18 +17,18 @@ class OrderIcon extends React.PureComponent {
     };
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     this.subscription = this.props.client
       .watchQuery({ query: commonQueries.userInformation })
       .subscribe(({ data }) => {
-      if (data.me.cart.length > 0) {
-        this.setState({
-          itemsCount: sumBy(data.me.cart, lineItem => lineItem.quantity),
-        });
-      } else {
-        this.setState({ itemsCount: 0 });
-      }
-    });
+        if (data.me.cart.length > 0) {
+          this.setState({
+            itemsCount: sumBy(data.me.cart, lineItem => lineItem.quantity),
+          });
+        } else {
+          this.setState({ itemsCount: 0 });
+        }
+      });
   }
 
   componentWillUnmount() {
@@ -43,8 +43,8 @@ class OrderIcon extends React.PureComponent {
             <Text style={styles.badgeText}>{this.state.itemsCount}</Text>
           </View>
         )}
-        <Ionicons
-          name="ios-cart-outline"
+        <SimpleLineIcons
+          name="basket"
           size={22}
           style={{ color: this.props.tintColor }}
         />
