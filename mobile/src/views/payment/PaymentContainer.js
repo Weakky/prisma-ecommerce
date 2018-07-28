@@ -2,7 +2,7 @@ import { graphql, compose } from 'react-apollo';
 
 import Payment from './Payment';
 import queries from './query.gql';
-import orderQueries from '../../views/settings/views/orders/query.gql';
+import orderQueries from '../../views/profile/views/orders/query.gql';
 import homeQueries from '../../views/home/query.gql';
 
 export default compose(
@@ -44,7 +44,10 @@ export default compose(
       pay: ({ stripeTokenId }) =>
         mutate({
           variables: { stripeTokenId },
-          refetchQueries: [{ query: orderQueries.userOrders }, { query: homeQueries.homeInformation }],
+          refetchQueries: [
+            { query: orderQueries.userOrders },
+            { query: homeQueries.homeInformation },
+          ],
           update: (store, { data: { pay } }) => {
             const data = store.readQuery({ query: queries.orderStatuses });
 
