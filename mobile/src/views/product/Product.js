@@ -147,23 +147,24 @@ class Product extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = {
+    this.state = this.getInitialState();
+
+    this.configPicker = this.configPicker.bind(this);
+    this.addItemToCart = this.addItemToCart.bind(this);
+  }
+
+  getInitialState() {
+    return {
       product: null,
       selectedOptions: {},
       selectedVariant: null,
       quantity: 1,
       addingItemToCart: false,
     };
-
-    this.configPicker = this.configPicker.bind(this);
-    this.addItemToCart = this.addItemToCart.bind(this);
   }
 
-  async componentWillMount() {
-    const { data } = await this.props.client.query({
-      query: queries.queryProductInfo,
-      variables: { productId: this.props.productId, nullValue: null },
-    });
+  async componentDidMount() {
+    this.queryProduct();
 
     // TODO: Later, allow to edit a variant of a cart's lineItem ?
     // => Navigate to Product view with options already configured
@@ -176,10 +177,27 @@ class Product extends React.PureComponent {
     //     return acc;
     //   }, {});
     // }
+  }
 
-    this.setState({
-      product: data.product,
-    });
+  componentDidUpdate(prevProps) {
+    if (this.props.productId !== prevProps.productId) {
+      this.setState(this.getInitialState());
+      this.queryProduct();
+    }
+  }
+
+  async queryProduct() {
+    await this.props.client
+      .query({
+        query: queries.queryProductInfo,
+        variables: { productId: this.props.productId, nullValue: null },
+      })
+      .then(({ data }) => {
+        this.setState({
+          product: data.product,
+        });
+      })
+      .catch(error => console.error('fetchProduct', error));
   }
 
   configPicker(option, forQuantity = false) {
