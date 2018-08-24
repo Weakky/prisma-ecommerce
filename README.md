@@ -9,10 +9,9 @@ Homepage view             |  Browsing product view          | Cart view         
 :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
 ![](https://image.ibb.co/mzo0wJ/Simulator_Screen_Shot_i_Phone_6_2018_05_13_at_15_26_52.png)  | ![](https://image.ibb.co/hGoNAd/Simulator_Screen_Shot_i_Phone_6_2018_05_13_at_15_26_45.png) | ![](https://image.ibb.co/cu4CAd/Simulator_Screen_Shot_i_Phone_6_2018_05_13_at_15_31_16.png) | ![](https://image.ibb.co/gsN4ao/Simulator_Screen_Shot_i_Phone_6_2018_05_22_at_22_25_13.png)
 
-### This project is still under active development and not ready for production use.
 
-**Project paused for a moment while I'm finishing https://github.com/Weakky/ra-data-prisma.  
-This will make the backend far more robust, maintainable, and easier to develop.**
+### Project paused for a moment while I'm finishing https://github.com/Weakky/ra-data-prisma.  
+**This will allow the backend to be far more robust, maintainable, and easier to develop.**
 
 # Features
 
