@@ -11,6 +11,8 @@ Homepage view             |  Browsing product view          | Cart view         
 
 ### This project is still under active development and not ready for production use.
 
+**Project paused for a moment while I'm finishing https://github.com/Weakky/ra-data-prisma.  
+This will make the backend far more robust, maintainable, and easier to develop.**
 
 # Features
 
