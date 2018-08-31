@@ -8,6 +8,7 @@ import styles from './Input.styles';
 
 const propTypes = {
   style: TextInput.propTypes.style,
+  helperStyle: Text.propTypes.style,
   width: PropTypes.number,
   label: PropTypes.string,
   placeHolder: PropTypes.string,
@@ -114,7 +115,9 @@ class Input extends PureComponent {
           value={this.props.value}
         />
         {this.props.withValidation && this.renderValidationIcon()}
-        {this.props.helper && <Text style={styles.helper}>{this.props.helper}</Text>}
+        {this.props.helper && (
+          <Text style={[styles.helper, this.props.helperStyle]}>{this.props.helper}</Text>
+        )}
       </View>
     );
   }

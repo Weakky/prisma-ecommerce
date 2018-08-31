@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import colors from '../../statics/colors';
 
 export default StyleSheet.create({
   productPrice: {
@@ -17,9 +18,10 @@ export default StyleSheet.create({
   productImage: { width: 60, height: 60, margin: 5 },
   productName: { fontFamily: 'Avenir Next', fontWeight: '300', fontSize: 14 },
   container: {
-    backgroundColor: '#F9F9F9',
+    backgroundColor: colors.white,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: '#ddd',
+    borderRadius: 6,
     height: 77,
     flexDirection: 'row',
     alignItems: 'center',
