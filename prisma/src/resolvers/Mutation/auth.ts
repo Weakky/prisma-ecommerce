@@ -7,6 +7,7 @@ import { User } from '../../generated/prisma';
 import {
   InvalidEmailException,
   InvalidOldPasswordException,
+  InvalidPasswordException,
 } from '../../exceptions';
 
 function hashPassword(password) {
@@ -89,20 +90,43 @@ export const auth = {
     };
   },
 
-  async changePassword(parent: any, args, ctx: Context) {
+  async deleteAccount(parent: any, args, ctx: Context) {
+    const { password } = args;
+
     const userId = await getUserId(ctx);
     const user = await ctx.db.query.user({ where: { id: userId } }, '{ password }');
 
-    const valid = await bcrypt.compare(user.password, args.oldPassword);
+    const valid = await bcrypt.compare(password, user.password);
+
+    if (!valid) {
+      throw new InvalidPasswordException();
+    }
+
+    await ctx.db.mutation.deleteUser({
+      where: { id: userId },
+    });
+
+    return {
+      id: user!.id,
+    };
+  },
+
+  async changePassword(parent: any, args, ctx: Context) {
+    const { oldPassword, newPassword } = args;
+
+    const userId = await getUserId(ctx);
+    const user = await ctx.db.query.user({ where: { id: userId } }, '{ password }');
+
+    const valid = await bcrypt.compare(oldPassword, user.password);
 
     if (!valid) {
       throw new InvalidOldPasswordException();
     }
 
-    const password = await hashPassword(args.newPassword);
+    const password = await hashPassword(newPassword);
 
     const newUser = await ctx.db.mutation.updateUser({
-      where: { id: user.id },
+      where: { id: userId },
       data: { password },
     });
 
