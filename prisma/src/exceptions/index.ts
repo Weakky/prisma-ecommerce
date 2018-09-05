@@ -27,7 +27,7 @@ const exceptions = {
   },
   invalidPassword: {
     message: 'Invalid password.',
-    code: 403,
+    code: 201,
   },
   invalidOldPassword: {
     message: 'Invalid old password.',
