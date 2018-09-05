@@ -44,7 +44,7 @@ class OrderIcon extends React.PureComponent {
           </View>
         )}
         <SimpleLineIcons
-          name="basket"
+          name={this.state.itemsCount > 0 ? 'basket-loaded' : 'basket'}
           size={22}
           style={{ color: this.props.tintColor }}
         />

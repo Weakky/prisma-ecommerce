@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import Colors from '../../statics/colors';
 
 export default StyleSheet.create({
@@ -8,8 +8,8 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: 45,
-    width: Dimensions.get('window').width * 0.85,
-    borderRadius: 100,
+    height: 44,
+    width: '100%',
+    borderRadius: 6,
   },
 });

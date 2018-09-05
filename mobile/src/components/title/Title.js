@@ -18,7 +18,7 @@ const defaultProps = {
   weight: 'normal',
   color: 'black',
   ...Platform.select({
-    ios: { font: 'Futura' },
+    ios: { font: 'Avenir Next' },
     android: { font: 'Roboto' },
   }),
   fontStyle: 'normal',

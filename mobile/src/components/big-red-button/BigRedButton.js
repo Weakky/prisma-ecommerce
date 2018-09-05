@@ -20,7 +20,12 @@ const BigRedButton = props => (
   >
     {props.loading && <ActivityIndicator color="white" animating size="small" />}
     {!props.loading && (
-      <Title size={16} weight="100" style={{ marginRight: 14 }} color={Colors.white}>
+      <Title
+        size={14}
+        weight="500"
+        style={{ marginRight: props.icon ? 14 : 0 }}
+        color={Colors.white}
+      >
         {props.label}
       </Title>
     )}

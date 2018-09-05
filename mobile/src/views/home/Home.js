@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Alert, } from 'react-native';
+import { View, Alert } from 'react-native';
 import OneSignal from 'react-native-onesignal';
 import PropTypes from 'prop-types';
 
@@ -15,7 +15,7 @@ import Title from '../../components/title/Title';
 import { translate } from '../../i18n';
 
 import Colors from '../../statics/colors';
-import font from '../../assets/fonts'
+import font from '../../assets/fonts';
 import styles from './Home.styles';
 import commonQueries from '../../graphql/queries';
 
@@ -57,7 +57,7 @@ class Home extends Component {
 
     this.state = {
       askToReplaceOrMergeOrder: false,
-      cartLength: 0
+      cartLength: 0,
     };
 
     this.oneSignalUserId = null;
@@ -67,7 +67,9 @@ class Home extends Component {
   }
 
   componentWillMount() {
-    OneSignal.init("22fcdd38-fb1c-43ce-8619-947d613c84d4", { kOSSettingsKeyAutoPrompt: true });
+    OneSignal.init('22fcdd38-fb1c-43ce-8619-947d613c84d4', {
+      kOSSettingsKeyAutoPrompt: true,
+    });
     OneSignal.configure();
 
     OneSignal.addEventListener('ids', this.onIds);
@@ -108,11 +110,16 @@ class Home extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.data.loading && this.shouldUpdateOneSignalUserId(nextProps.data.me.oneSignalUserId, this.oneSignalUserId)) {
+    if (
+      !nextProps.data.loading &&
+      this.shouldUpdateOneSignalUserId(
+        nextProps.data.me.oneSignalUserId,
+        this.oneSignalUserId,
+      )
+    ) {
       return this.props.updateOneSignalUserId({ oneSignalUserId: this.oneSignalUserId });
     }
   }
-
 
   onPressAddToCart({ orderId, replace }) {
     if (this.state.cartLength > 0) {
@@ -149,9 +156,11 @@ class Home extends Component {
     return (
       <Container asScroll title={`${translate('hello')}, ${capitalize(me.firstName)} !`}>
         <View style={styles.messageOfTheDay}>
-          {
-            !!me.selectedShop.MOTD && <Title font={font} size={16}>{me.selectedShop.MOTD}</Title>
-          }
+          {!!me.selectedShop.MOTD && (
+            <Title font={font} size={16}>
+              {me.selectedShop.MOTD}
+            </Title>
+          )}
         </View>
         {me.orders.length === 0 && (
           <BigRedButton

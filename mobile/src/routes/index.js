@@ -29,6 +29,10 @@ import AfterPayment from '../views/payment/AfterPayment';
 import Profile from '../views/profile/Profile';
 import Orders from '../views/profile/views/orders/OrdersContainer';
 import Shops from '../views/profile/views/shops/ShopsContainer';
+import Username from '../views/profile/views/username/UsernameContainer';
+import Password from '../views/profile/views/password/PasswordContainer';
+import Delete from '../views/profile/views/delete/DeleteContainer';
+import Terms from '../views/profile/views/terms/Terms';
 import Recovery from '../views/password-reset/AskPasswordResetContainer';
 import OrderIcon from '../components/order-icon/OrderIcon';
 import Colors from '../statics/colors';
@@ -79,6 +83,10 @@ const ProfileStack = createStackNavigator(
     Profile: { screen: Profile },
     Orders: { screen: Orders },
     Shops: { screen: Shops },
+    Username: { screen: Username },
+    Password: { screen: Password },
+    Delete: { screen: Delete },
+    Terms: { screen: Terms },
   },
   {
     headerMode: 'none',
@@ -98,7 +106,7 @@ const AppTabs = createBottomTabNavigator(
     order: ['HomeTab', 'BrowseTab', 'BasketTab', 'ProfileTab'],
     tabBarOptions: {
       activeTintColor: Colors.red,
-      inactiveTintColor: Colors.grey,
+      inactiveTintColor: Colors.text,
       style: styles.tabBarStyle,
       tabStyle: styles.tabStyle,
       showLabel: false,
@@ -127,7 +135,7 @@ const AppTabs = createBottomTabNavigator(
           case 'ProfileTab':
             return (
               <SimpleLineIcons
-                name="user"
+                name="settings"
                 size={ICON_TAB_SIZE}
                 style={{ color: tintColor }}
               />

@@ -33,6 +33,7 @@ type Mutation {
   login(email: String!, password: String!): AuthPayload!
   resetPassword(email: String!): TriggerPasswordResetPayload!
   changePassword(oldPassword: String!, newPassword: String!): UserIdPayload!
+  deleteAccount(password: String!): UserIdPayload!
 
   # Upsert mutations
   upsertBrand(brandId: ID, categoryId: ID!, name: String!): Brand
