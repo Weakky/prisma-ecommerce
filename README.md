@@ -13,7 +13,7 @@ Homepage view             |  Browsing product view          | Cart view         
 ### Project paused for a moment while I'm finishing https://github.com/Weakky/ra-data-prisma.  
 **This will allow the backoffice to be far more robust, maintainable, and easier to develop.**
 
-**[Read more about it here](https://www.prisma.io/t/prisma-with-react-admin-build-a-working-backoffice-in-a-few-hours/4400)**
+**[Read more about it here](https://www.prisma.io/forum/t/prisma-with-react-admin-build-a-working-backoffice-in-a-few-hours/4400)**
 
 # Features
 
